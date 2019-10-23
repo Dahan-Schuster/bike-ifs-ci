@@ -4,7 +4,7 @@
 class TagRFID extends CI_Model
 {
     /**
-     * ### TagRFID constructor.
+     * TagRFID constructor.
      */
     public function __construct()
     {
@@ -13,7 +13,7 @@ class TagRFID extends CI_Model
     }
 
     /**
-     * ### Exclui um registro da tabela TagRFID.
+     * Exclui um registro da tabela TagRFID.
      * 
      * @param $id -  O id do registro a ser excluído
      */
@@ -23,7 +23,7 @@ class TagRFID extends CI_Model
     }
 
     /**
-     * ### Edita os valores do registro na tabela TagRFID.
+     * Edita os valores do registro na tabela TagRFID.
      * 
      * @param mixed $id - id do TagRFID a ser editado
      * @param array $camposValores - array associativo com as colunas para editar 
@@ -35,7 +35,7 @@ class TagRFID extends CI_Model
     }
 
     /**
-     * ### Insere um registro na tabela TagRFID.
+     * Insere um registro na tabela TagRFID.
      * 
      * @return bool - True se a query for bem sucedida, False se não.
      */
@@ -45,7 +45,7 @@ class TagRFID extends CI_Model
     }
 
     /**
-     * ### Carrega os valores do objeto instanciado com os valores de um registro da tabela TagRFID. 
+     * Carrega os valores do objeto instanciado com os valores de um registro da tabela TagRFID. 
      * 
      * @param $id - o id do registro na tabela
      * @return bool - o registro encontrado .
@@ -57,7 +57,7 @@ class TagRFID extends CI_Model
 
 
     /**
-     * ### Lista todos os registros da tabela TagRFID
+     * Lista todos os registros da tabela TagRFID
      * 
      * @return array - Array associativo com os registros e seus atributos. 
      */
@@ -67,7 +67,7 @@ class TagRFID extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros da tabela TagRFID que se encaixam nos atributos enviados por parâmetro.
+     * Lista todos os registros da tabela TagRFID que se encaixam nos atributos enviados por parâmetro.
      * 
      * @param $camposValores - array associativo com as colunas e seus valores para verificar igualdade.
      * 
@@ -80,7 +80,7 @@ class TagRFID extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros da tabela TagRFID associados à chave estrangeira enviada por parâmetro
+     * Lista todos os registros da tabela TagRFID associados à chave estrangeira enviada por parâmetro
      * 
      * @param $foreignKey - a coluna referente à chave estrangeira
      * @param $valor - o valor da chave estrangeira
@@ -92,7 +92,7 @@ class TagRFID extends CI_Model
     }
 
     /**
-     * ### Conta quantas tags RFID estão cadastradas do sistema
+     * Conta quantas tags RFID estão cadastradas do sistema
      * 
      * @return array - array de uma posição com a quantidade de tags RFID cadastradas
      * 

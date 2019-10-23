@@ -4,7 +4,7 @@
 class Email extends CI_Model
 {
     /**
-     * ### Email constructor.
+     * Email constructor.
      */
     public function __construct()
     {
@@ -13,7 +13,7 @@ class Email extends CI_Model
     }
 
     /**
-     * ### Exclui um registro da tabela Email.
+     * Exclui um registro da tabela Email.
      * 
      * @param $id -  O id do registro a ser excluído
      */
@@ -23,7 +23,7 @@ class Email extends CI_Model
     }
 
     /**
-     * ### Edita os valores do registro na tabela Email.
+     * Edita os valores do registro na tabela Email.
      * 
      * @param mixed $id - id do Email a ser editado
      * @param array $camposValores - array associativo com as colunas para editar 
@@ -35,7 +35,7 @@ class Email extends CI_Model
     }
 
     /**
-     * ### Insere um registro na tabela Email.
+     * Insere um registro na tabela Email.
      * 
      * @return bool - True se a query for bem sucedida, False se não.
      */
@@ -45,7 +45,7 @@ class Email extends CI_Model
     }
 
     /**
-     * ### Carrega os valores do objeto instanciado com os valores de um registro da tabela Email. 
+     * Carrega os valores do objeto instanciado com os valores de um registro da tabela Email. 
      * 
      * @param $id - o id do registro na tabela
      * @return bool - o registro encontrado .
@@ -57,7 +57,7 @@ class Email extends CI_Model
 
 
     /**
-     * ### Lista todos os registros da tabela Email
+     * Lista todos os registros da tabela Email
      * 
      * @return array - Array associativo com os registros e seus atributos. 
      */
@@ -67,7 +67,7 @@ class Email extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros da tabela Email que se encaixam nos atributos enviados por parâmetro.
+     * Lista todos os registros da tabela Email que se encaixam nos atributos enviados por parâmetro.
      * 
      * @param $camposValores - array associativo com as colunas e seus valores para verificar igualdade.
      * 
@@ -80,7 +80,7 @@ class Email extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros da tabela Email associados à chave estrangeira enviada por parâmetro
+     * Lista todos os registros da tabela Email associados à chave estrangeira enviada por parâmetro
      * 
      * @param $foreignKey - a coluna referente à chave estrangeira
      * @param $valor - o valor da chave estrangeira
@@ -92,7 +92,7 @@ class Email extends CI_Model
     }
 
     /**
-     * ### Conta quantos emails estão cadastrados do sistema
+     * Conta quantos emails estão cadastrados do sistema
      * 
      * @return array - array de uma posição com a quantidade de emails cadastrados
      * 
@@ -103,7 +103,7 @@ class Email extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros de um dia específico enviado por parâmetro.
+     * Lista todos os registros de um dia específico enviado por parâmetro.
      * A String $dia será convertida em um timestamp e depois formatada em uma 
      * data no formado Y-m-d (padrão PostgreSQL)
      * 

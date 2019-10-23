@@ -4,7 +4,7 @@
 class Usuario extends CI_Model
 {
     /**
-     * ### Usuario constructor.
+     * Usuario constructor.
      */
     public function __construct()
     {
@@ -30,7 +30,7 @@ class Usuario extends CI_Model
     }
 
     /**
-     * ### Exclui um registro da tabela Usuario.
+     * Exclui um registro da tabela Usuario.
      * 
      * @param $id -  O id do registro a ser excluído
      */
@@ -40,7 +40,7 @@ class Usuario extends CI_Model
     }
 
     /**
-     * ### Edita os valores do registro na tabela Usuario.
+     * Edita os valores do registro na tabela Usuario.
      * 
      * @param mixed $id - id do Usuario a ser editado
      * @param array $camposValores - array associativo com as colunas para editar 
@@ -52,7 +52,7 @@ class Usuario extends CI_Model
     }
 
     /**
-     * ### Insere um registro na tabela Usuario.
+     * Insere um registro na tabela Usuario.
      * 
      * @return bool - True se a query for bem sucedida, False se não.
      */
@@ -62,7 +62,7 @@ class Usuario extends CI_Model
     }
 
     /**
-     * ### Carrega os valores do objeto instanciado com os valores de um registro da tabela Usuario. 
+     * Carrega os valores do objeto instanciado com os valores de um registro da tabela Usuario. 
      * 
      * @param $id - o id do registro na tabela
      * @return bool - o registro encontrado .
@@ -74,7 +74,7 @@ class Usuario extends CI_Model
 
 
     /**
-     * ### Lista todos os registros da tabela Usuario
+     * Lista todos os registros da tabela Usuario
      * 
      * @return array - Array associativo com os registros e seus atributos. 
      */
@@ -84,7 +84,7 @@ class Usuario extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros da tabela Usuario que se encaixam nos atributos enviados por parâmetro.
+     * Lista todos os registros da tabela Usuario que se encaixam nos atributos enviados por parâmetro.
      * 
      * @param $camposValores - array associativo com as colunas e seus valores para verificar igualdade.
      * 
@@ -118,7 +118,7 @@ class Usuario extends CI_Model
 
 
     /**
-     * ### Lista os tipos dos usuários cadastrados
+     * Lista os tipos dos usuários cadastrados
      * Usado para criação de relatórios.
      * O controlador Relatorio irá contar a quantidade de cada tipo
      * e retornar um JSON para ser transformado em gráfico via js
@@ -132,7 +132,7 @@ class Usuario extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros da tabela Usuario associados à chave estrangeira enviada por parâmetro
+     * Lista todos os registros da tabela Usuario associados à chave estrangeira enviada por parâmetro
      * 
      * @param $foreignKey - a coluna referente à chave estrangeira
      * @param $valor - o valor da chave estrangeira
@@ -144,7 +144,7 @@ class Usuario extends CI_Model
     }
 
     /**
-     * ### Conta quantas usuarios estão cadastradas do sistema
+     * Conta quantas usuarios estão cadastradas do sistema
      * 
      * @return array - array de uma posição com a quantidade de usuarios cadastradas
      * 

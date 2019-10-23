@@ -4,7 +4,7 @@
 class Registro extends CI_Model
 {
     /**
-     * ### Registro constructor.
+     * Registro constructor.
      */
     public function __construct()
     {
@@ -13,7 +13,7 @@ class Registro extends CI_Model
     }
 
     /**
-     * ### Exclui um registro da tabela Registro.
+     * Exclui um registro da tabela Registro.
      * 
      * @param $id -  O id do registro a ser excluído
      */
@@ -23,7 +23,7 @@ class Registro extends CI_Model
     }
 
     /**
-     * ### Edita os valores do registro na tabela Registro.
+     * Edita os valores do registro na tabela Registro.
      * 
      * @param mixed $id - id do Registro a ser editado
      * @param array $camposValores - array associativo com as colunas para editar 
@@ -35,7 +35,7 @@ class Registro extends CI_Model
     }
 
     /**
-     * ### Insere um registro na tabela Registro.
+     * Insere um registro na tabela Registro.
      * 
      * @return bool - True se a query for bem sucedida, False se não.
      */
@@ -45,7 +45,7 @@ class Registro extends CI_Model
     }
 
     /**
-     * ### Carrega os valores do objeto instanciado com os valores de um registro da tabela Registro. 
+     * Carrega os valores do objeto instanciado com os valores de um registro da tabela Registro. 
      * 
      * @param $id - o id do registro na tabela
      * @return bool - o registro encontrado .
@@ -57,7 +57,7 @@ class Registro extends CI_Model
 
 
     /**
-     * ### Lista todos os registros da tabela Registro
+     * Lista todos os registros da tabela Registro
      * 
      * @return array - Array associativo com os registros e seus atributos. 
      */
@@ -67,7 +67,7 @@ class Registro extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros da tabela Registro que se encaixam nos atributos enviados por parâmetro.
+     * Lista todos os registros da tabela Registro que se encaixam nos atributos enviados por parâmetro.
      * 
      * @param $camposValores - array associativo com as colunas e seus valores para verificar igualdade.
      * 
@@ -80,7 +80,7 @@ class Registro extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros da tabela Registro associados à chave estrangeira enviada por parâmetro
+     * Lista todos os registros da tabela Registro associados à chave estrangeira enviada por parâmetro
      * 
      * @param $foreignKey - a coluna referente à chave estrangeira
      * @param $valor - o valor da chave estrangeira
@@ -92,7 +92,7 @@ class Registro extends CI_Model
     }
 
     /**
-     * ### Conta quantos registros estão cadastrados do sistema
+     * Conta quantos registros estão cadastrados do sistema
      * 
      * @return array - array de uma posição com a quantidade de registros cadastrados
      * 
@@ -103,7 +103,7 @@ class Registro extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros de um dia específico enviado por parâmetro.
+     * Lista todos os registros de um dia específico enviado por parâmetro.
      * A String $dia será convertida em um timestamp e depois formatada em uma 
      * data no formado Y-m-d (padrão PostgreSQL)
      * 
@@ -118,7 +118,7 @@ class Registro extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros em que a FK id_bicicleta estiver associada ao id_usuario enviado por parâmetro.
+     * Lista todos os registros em que a FK id_bicicleta estiver associada ao id_usuario enviado por parâmetro.
      * 
      * @param $idUsuario - o id do usuário em questão
      * @return array - Array associativo com os registros encontrados.
@@ -135,7 +135,7 @@ class Registro extends CI_Model
     }
 
     /**
-     * ### Conta os registros de um dia específico enviado por parâmetro
+     * Conta os registros de um dia específico enviado por parâmetro
      * Este método poderá ser atualizado no futuro para recber duas datas e listar os registros entre elas
      * Na versão atual, isto ainda não foi implementado
      * 
@@ -149,7 +149,7 @@ class Registro extends CI_Model
     }
 
     /**
-     * ### Conta os registros de uma semana específica enviada por parâmetro
+     * Conta os registros de uma semana específica enviada por parâmetro
      * Este método poderá ser atualizado no futuro para recber duas datas e listar os registros entre elas
      * Na versão atual, isto ainda não foi implementado
      * 
@@ -158,15 +158,15 @@ class Registro extends CI_Model
      * @return array - Array associativo com quantidade de registros encontrados.
      * 
      */
-    public  function contarRegistrosDaSemana($semana, $ano)
+    public function contarRegistrosDaSemana($semana, $ano)
     {
         $this->db->where("date_part('year', hora::date)", $ano);
         $this->db->where("date_part('week', hora::date)", $semana);
-        return $this-db->from('REGISTRO')->count_all_results();
+        return $this->db->from('REGISTRO')->count_all_results();
     }
 
     /**
-     * ### Conta os registros de um mês-ano específico enviado por parâmetro
+     * Conta os registros de um mês-ano específico enviado por parâmetro
      * Este método poderá ser atualizado no futuro para recber mais de um mês listar os registros entre eles
      * Na versão atual, isto ainda não foi implementado
      * 
@@ -179,11 +179,11 @@ class Registro extends CI_Model
     {
         $this->db->where("date_part('year', hora::date)", $ano);
         $this->db->where("date_part('month', hora::date)", $mes);
-        return $this-db->from('REGISTRO')->count_all_results();
+        return $this->db->from('REGISTRO')->count_all_results();
     }
 
     /**
-     * ### Lista todos os registros de uma bicicleta em que a FK id_saida for nula.
+     * Lista todos os registros de uma bicicleta em que a FK id_saida for nula.
      * 
      * @param $idBicicleta - o id da bicicleta em questão
      * @return array - Array associativo com os registros encontrados.
@@ -193,6 +193,6 @@ class Registro extends CI_Model
     {
         $this->db->where("id_bicicleta", $idBicicleta);
         $this->db->where("id_saida IS NULL");
-        return $this-db->from('REGISTRO')->get();
+        return $this->db->from('REGISTRO')->get();
     }
 }

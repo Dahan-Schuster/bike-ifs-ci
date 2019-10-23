@@ -3,7 +3,7 @@
 class Bicicleta extends CI_Model
 {
     /**
-     * ### Bicicleta constructor.
+     * Bicicleta constructor.
      */
     public function __construct()
     {
@@ -12,7 +12,7 @@ class Bicicleta extends CI_Model
     }
 
     /**
-     * ### Exclui um registro da tabela Bicicleta.
+     * Exclui um registro da tabela Bicicleta.
      * 
      * @param $id -  O id do registro a ser excluído
      */
@@ -22,7 +22,7 @@ class Bicicleta extends CI_Model
     }
 
     /**
-     * ### Edita os valores do registro na tabela Bicicleta.
+     * Edita os valores do registro na tabela Bicicleta.
      * 
      * @param mixed $id - id do Bicicleta a ser editado
      * @param array $camposValores - array associativo com as colunas para editar 
@@ -34,7 +34,7 @@ class Bicicleta extends CI_Model
     }
 
     /**
-     * ### Insere um registro na tabela Bicicleta.
+     * Insere um registro na tabela Bicicleta.
      * 
      * @return bool - True se a query for bem sucedida, False se não.
      */
@@ -44,7 +44,7 @@ class Bicicleta extends CI_Model
     }
 
     /**
-     * ### Carrega os valores do objeto instanciado com os valores de um registro da tabela Bicicleta. 
+     * Carrega os valores do objeto instanciado com os valores de um registro da tabela Bicicleta. 
      * 
      * @param $id - o id do registro na tabela
      * @return bool - o registro encontrado .
@@ -56,7 +56,7 @@ class Bicicleta extends CI_Model
 
 
     /**
-     * ### Lista todos os registros da tabela Bicicleta
+     * Lista todos os registros da tabela Bicicleta
      * 
      * @return array - Array associativo com os registros e seus atributos. 
      */
@@ -66,7 +66,7 @@ class Bicicleta extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros da tabela Bicicleta que se encaixam nos atributos enviados por parâmetro.
+     * Lista todos os registros da tabela Bicicleta que se encaixam nos atributos enviados por parâmetro.
      * 
      * @param $camposValores - array associativo com as colunas e seus valores para verificar igualdade.
      * 
@@ -100,7 +100,7 @@ class Bicicleta extends CI_Model
 
 
     /**
-     * ### Lista os modelos das bicicletas cadastradas
+     * Lista os modelos das bicicletas cadastradas
      * Usado para criação de relatórios.
      * O controlador Relatorio irá contar a quantidade de cada modelo
      * e retornar um JSON para ser transformado em gráfico via js
@@ -114,7 +114,7 @@ class Bicicleta extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros da tabela Bicicleta associados à chave estrangeira enviada por parâmetro
+     * Lista todos os registros da tabela Bicicleta associados à chave estrangeira enviada por parâmetro
      * 
      * @param $foreignKey - a coluna referente à chave estrangeira
      * @param $valor - o valor da chave estrangeira
@@ -126,7 +126,7 @@ class Bicicleta extends CI_Model
     }
 
     /**
-     * ### Conta quantas bikes estão cadastradas do sistema
+     * Conta quantas bikes estão cadastradas do sistema
      * 
      * @return array - array de uma posição com a quantidade de bikes cadastradas
      * 

@@ -5,7 +5,7 @@ require_once('Tools.php');
 class Administrador extends CI_Model
 {
     /**
-     * ### Administrador constructor.
+     * Administrador constructor.
      */
     public function __construct()
     {
@@ -32,7 +32,7 @@ class Administrador extends CI_Model
 
 
     /**
-     * ### Exclui um registro da tabela Administrador.
+     * Exclui um registro da tabela Administrador.
      * 
      * @param $id -  O id do registro a ser excluído
      */
@@ -42,7 +42,7 @@ class Administrador extends CI_Model
     }
 
     /**
-     * ### Edita os valores do registro na tabela Administrador.
+     * Edita os valores do registro na tabela Administrador.
      * 
      * @param mixed $id - id do Administrador a ser editado
      * @param array $camposValores - array associativo com as colunas para editar 
@@ -54,7 +54,7 @@ class Administrador extends CI_Model
     }
 
     /**
-     * ### Insere um registro na tabela Administrador.
+     * Insere um registro na tabela Administrador.
      * 
      * @return bool - True se a query for bem sucedida, False se não.
      */
@@ -64,7 +64,7 @@ class Administrador extends CI_Model
     }
 
     /**
-     * ### Carrega os valores do objeto instanciado com os valores de um registro da tabela Administrador. 
+     * Carrega os valores do objeto instanciado com os valores de um registro da tabela Administrador. 
      * 
      * @param $id - o id do registro na tabela
      * @return bool - o registro encontrado .
@@ -76,7 +76,7 @@ class Administrador extends CI_Model
 
 
     /**
-     * ### Lista todos os registros da tabela Administrador
+     * Lista todos os registros da tabela Administrador
      * 
      * @return array - Array associativo com os registros e seus atributos. 
      */
@@ -86,7 +86,7 @@ class Administrador extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros da tabela Administrador que se encaixam nos atributos enviados por parâmetro.
+     * Lista todos os registros da tabela Administrador que se encaixam nos atributos enviados por parâmetro.
      * 
      * @param $camposValores - array associativo com as colunas e seus valores para verificar igualdade.
      * 

@@ -5,7 +5,7 @@ require_once('Tools.php');
 class Funcionario extends CI_Model
 {
     /**
-     * ### Funcionario constructor.
+     * Funcionario constructor.
      */
     public function __construct()
     {
@@ -31,7 +31,7 @@ class Funcionario extends CI_Model
     }
 
     /**
-     * ### Exclui um registro da tabela Funcionario.
+     * Exclui um registro da tabela Funcionario.
      * 
      * @param $id -  O id do registro a ser excluído
      */
@@ -41,7 +41,7 @@ class Funcionario extends CI_Model
     }
 
     /**
-     * ### Edita os valores do registro na tabela Funcionario.
+     * Edita os valores do registro na tabela Funcionario.
      * 
      * @param mixed $id - id do Funcionario a ser editado
      * @param array $camposValores - array associativo com as colunas para editar 
@@ -53,7 +53,7 @@ class Funcionario extends CI_Model
     }
 
     /**
-     * ### Insere um registro na tabela Funcionario.
+     * Insere um registro na tabela Funcionario.
      * 
      * @return bool - True se a query for bem sucedida, False se não.
      */
@@ -63,7 +63,7 @@ class Funcionario extends CI_Model
     }
 
     /**
-     * ### Carrega os valores do objeto instanciado com os valores de um registro da tabela Funcionario. 
+     * Carrega os valores do objeto instanciado com os valores de um registro da tabela Funcionario. 
      * 
      * @param $id - o id do registro na tabela
      * @return bool - o registro encontrado .
@@ -75,7 +75,7 @@ class Funcionario extends CI_Model
 
 
     /**
-     * ### Lista todos os registros da tabela Funcionario
+     * Lista todos os registros da tabela Funcionario
      * 
      * @return array - Array associativo com os registros e seus atributos. 
      */
@@ -85,7 +85,7 @@ class Funcionario extends CI_Model
     }
 
     /**
-     * ### Lista todos os registros da tabela Funcionario que se encaixam nos atributos enviados por parâmetro.
+     * Lista todos os registros da tabela Funcionario que se encaixam nos atributos enviados por parâmetro.
      * 
      * @param $camposValores - array associativo com as colunas e seus valores para verificar igualdade.
      * 
@@ -119,7 +119,7 @@ class Funcionario extends CI_Model
 
 
     /**
-     * ### Lista todos os registros da tabela Funcionario associados à chave estrangeira enviada por parâmetro
+     * Lista todos os registros da tabela Funcionario associados à chave estrangeira enviada por parâmetro
      * 
      * @param $foreignKey - a coluna referente à chave estrangeira
      * @param $valor - o valor da chave estrangeira
@@ -131,7 +131,7 @@ class Funcionario extends CI_Model
     }
 
     /**
-     * ### Conta quantos funcionarios estão cadastrados do sistema
+     * Conta quantos funcionarios estão cadastrados do sistema
      * 
      * @return array - array de uma posição com a quantidade de funcionarios cadastrados
      * 
