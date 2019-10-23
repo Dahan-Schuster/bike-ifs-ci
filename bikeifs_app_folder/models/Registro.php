@@ -52,7 +52,8 @@ class Registro extends CI_Model
      */
     public function carregarPorId($id)
     {
-        return $this->db->get_where('REGISTRO', array('id' => $id));
+        $result = $this->db->get_where('REGISTRO', array('id' => $id));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
 
@@ -63,7 +64,8 @@ class Registro extends CI_Model
      */
     public function listarTodos()
     {
-        return $this->db->get('REGISTRO');
+        $result = $this->db->get('REGISTRO');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -76,7 +78,8 @@ class Registro extends CI_Model
      */
     public function listarPorCampos($camposValores)
     {
-        return $this->db->get_where('REGISTRO', $camposValores);
+        $result = $this->db->get_where('REGISTRO', $camposValores);
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -88,7 +91,8 @@ class Registro extends CI_Model
      */
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
-        return $this->db->get_where('REGISTRO', array($foreignKey => $valor));
+        $result = $this->db->get_where('REGISTRO', array($foreignKey => $valor));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -114,7 +118,8 @@ class Registro extends CI_Model
     public function listarRegistrosPorDia($dia)
     {
         $dia = date('Y-m-d', strtotime($dia));
-        return $this->db->where("hora::date =", $dia)->get('REGISTRO');
+        $result = $this->db->where("hora::date =", $dia)->get('REGISTRO');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -131,7 +136,8 @@ class Registro extends CI_Model
                  ->join("BICICLETA", 'REGISTRO.id_bicicleta = "BICICLETA".id')
                  ->where('"BICICLETA".id_usuario', $idUsuario)
                  ->order_by('"REGISTRO".hora', 'DESC');
-        return $this->db->get();
+        $result = $this->db->get();
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -145,7 +151,7 @@ class Registro extends CI_Model
      */
     public  function contarRegistrosDoDia($dia)
     {
-        return $this->db->where('hora::date', $dia)->from('REGISTRO')->count_all_results();
+        $result = $this->db->where('hora::date', $dia)->from('REGISTRO')->count_all_results();
     }
 
     /**
@@ -193,6 +199,7 @@ class Registro extends CI_Model
     {
         $this->db->where("id_bicicleta", $idBicicleta);
         $this->db->where("id_saida IS NULL");
-        return $this->db->from('REGISTRO')->get();
+        $result = $this->db->from('REGISTRO')->get();
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 }

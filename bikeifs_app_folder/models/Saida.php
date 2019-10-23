@@ -52,7 +52,8 @@ class Saida extends CI_Model
      */
     public function carregarPorId($id)
     {
-        return $this->db->get_where('SAIDA', array('id' => $id));
+        $result = $this->db->get_where('SAIDA', array('id' => $id));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
 
@@ -63,7 +64,8 @@ class Saida extends CI_Model
      */
     public function listarTodos()
     {
-        return $this->db->get('SAIDA');
+        $result = $this->db->get('SAIDA');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -76,7 +78,8 @@ class Saida extends CI_Model
      */
     public function listarPorCampos($camposValores)
     {
-        return $this->db->get_where('SAIDA', $camposValores);
+        $result = $this->db->get_where('SAIDA', $camposValores);
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -88,7 +91,8 @@ class Saida extends CI_Model
      */
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
-        return $this->db->get_where('SAIDA', array($foreignKey => $valor));
+        $result = $this->db->get_where('SAIDA', array($foreignKey => $valor));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**

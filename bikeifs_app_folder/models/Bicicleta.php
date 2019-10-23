@@ -51,7 +51,8 @@ class Bicicleta extends CI_Model
      */
     public function carregarPorId($id)
     {
-        return $this->db->get_where('BICICLETA', array('id' => $id));
+        $result = $this->db->get_where('BICICLETA', array('id' => $id));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
 
@@ -62,7 +63,8 @@ class Bicicleta extends CI_Model
      */
     public function listarTodos()
     {
-        return $this->db->get('BICICLETA');
+        $result = $this->db->get('BICICLETA');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -75,7 +77,8 @@ class Bicicleta extends CI_Model
      */
     public function listarPorCampos($camposValores)
     {
-        return $this->db->get_where('BICICLETA', $camposValores);
+        $result = $this->db->get_where('BICICLETA', $camposValores);
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -110,7 +113,8 @@ class Bicicleta extends CI_Model
      */
     public function listarModelos()
     {
-        return $this->db->select('modelo')->from('BICICLETA')->get();
+        $result = $this->db->select('modelo')->get('BICICLETA');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -122,7 +126,8 @@ class Bicicleta extends CI_Model
      */
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
-        return $this->db->get_where('BICICLETA', array($foreignKey => $valor));
+        $result = $this->db->get_where('BICICLETA', array($foreignKey => $valor));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**

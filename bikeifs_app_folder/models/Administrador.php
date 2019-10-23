@@ -71,7 +71,8 @@ class Administrador extends CI_Model
      */
     public function carregarPorId($id)
     {
-        return $this->db->get_where('ADMINISTRADOR', array('id' => $id));
+        $result = $this->db->get_where('ADMINISTRADOR', array('id' => $id));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
 
@@ -82,7 +83,8 @@ class Administrador extends CI_Model
      */
     public function listarTodos()
     {
-        return $this->db->get('ADMINISTRADOR');
+        $result = $this->db->get('ADMINISTRADOR');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -95,6 +97,7 @@ class Administrador extends CI_Model
      */
     public  function listarPorCampos($camposValores)
     {
-        return $this->db->get_where('ADMINISTRADOR', $camposValores);
+        $result = $this->db->get_where('ADMINISTRADOR', $camposValores);
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 }

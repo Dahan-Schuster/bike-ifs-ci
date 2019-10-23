@@ -69,7 +69,8 @@ class Usuario extends CI_Model
      */
     public function carregarPorId($id)
     {
-        return $this->db->get_where('USUARIO', array('id' => $id));
+        $result = $this->db->get_where('USUARIO', array('id' => $id));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
 
@@ -80,7 +81,8 @@ class Usuario extends CI_Model
      */
     public function listarTodos()
     {
-        return $this->db->get('USUARIO');
+        $result = $this->db->get('USUARIO');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -93,7 +95,8 @@ class Usuario extends CI_Model
      */
     public function listarPorCampos($camposValores)
     {
-        return $this->db->get_where('USUARIO', $camposValores);
+        $result = $this->db->get_where('USUARIO', $camposValores);
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -128,7 +131,8 @@ class Usuario extends CI_Model
      */
     public function listarTipos()
     {
-        return $this->db->select('tipo')->from('USUARIO')->get();
+        $result = $this->db->select('tipo')->from('USUARIO')->get();
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -140,7 +144,8 @@ class Usuario extends CI_Model
      */
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
-        return $this->db->get_where('USUARIO', array($foreignKey => $valor));
+        $result = $this->db->get_where('USUARIO', array($foreignKey => $valor));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**

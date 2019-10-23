@@ -52,7 +52,8 @@ class Email extends CI_Model
      */
     public function carregarPorId($id)
     {
-        return $this->db->get_where('EMAIL', array('id' => $id));
+        $result = $this->db->get_where('EMAIL', array('id' => $id));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
 
@@ -63,7 +64,8 @@ class Email extends CI_Model
      */
     public function listarTodos()
     {
-        return $this->db->get('EMAIL');
+        $result = $this->db->get('EMAIL');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -76,7 +78,8 @@ class Email extends CI_Model
      */
     public function listarPorCampos($camposValores)
     {
-        return $this->db->get_where('EMAIL', $camposValores);
+        $result = $this->db->get_where('EMAIL', $camposValores);
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -88,7 +91,8 @@ class Email extends CI_Model
      */
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
-        return $this->db->get_where('EMAIL', array($foreignKey => $valor));
+        $result = $this->db->get_where('EMAIL', array($foreignKey => $valor));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -114,7 +118,8 @@ class Email extends CI_Model
     public function listarEmailsPorDia($dia)
     {
         $dia = date('Y-m-d', strtotime($dia));
-        return $this->db->where("hora::date =", $dia)->get('EMAIL');
+        $result = $this->db->where("hora::date =", $dia)->get('EMAIL');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
 
     }
 }

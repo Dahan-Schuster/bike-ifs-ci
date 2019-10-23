@@ -70,7 +70,8 @@ class Funcionario extends CI_Model
      */
     public function carregarPorId($id)
     {
-        return $this->db->get_where('FUNCIONARIO', array('id' => $id));
+        $result = $this->db->get_where('FUNCIONARIO', array('id' => $id));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
 
@@ -81,8 +82,10 @@ class Funcionario extends CI_Model
      */
     public function listarTodos()
     {
-        return $this->db->get('FUNCIONARIO');
+        $result = $this->db->get('FUNCIONARIO');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
+
 
     /**
      * Lista todos os registros da tabela Funcionario que se encaixam nos atributos enviados por parâmetro.
@@ -94,7 +97,8 @@ class Funcionario extends CI_Model
      */
     public function listarPorCampos($camposValores)
     {
-        return $this->db->get_where('FUNCIONARIO', $camposValores);
+        $result = $this->db->get_where('FUNCIONARIO', $camposValores);
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -127,7 +131,8 @@ class Funcionario extends CI_Model
      */
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
-        return $this->db->get_where('FUNCIONARIO', array($foreignKey => $valor));
+        $result = $this->db->get_where('FUNCIONARIO', array($foreignKey => $valor));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**

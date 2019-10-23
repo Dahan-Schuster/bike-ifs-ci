@@ -52,7 +52,8 @@ class TagRFID extends CI_Model
      */
     public function carregarPorId($id)
     {
-        return $this->db->get_where('TagRFID', array('id' => $id));
+        $result = $this->db->get_where('TagRFID', array('id' => $id));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
 
@@ -63,7 +64,8 @@ class TagRFID extends CI_Model
      */
     public function listarTodos()
     {
-        return $this->db->get('TagRFID');
+        $result = $this->db->get('TagRFID');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -76,7 +78,8 @@ class TagRFID extends CI_Model
      */
     public function listarPorCampos($camposValores)
     {
-        return $this->db->get_where('TagRFID', $camposValores);
+        $result = $this->db->get_where('TagRFID', $camposValores);
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
@@ -88,7 +91,8 @@ class TagRFID extends CI_Model
      */
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
-        return $this->db->get_where('TagRFID', array($foreignKey => $valor));
+        $result = $this->db->get_where('TagRFID', array($foreignKey => $valor));
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
