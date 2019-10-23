@@ -1,0 +1,339 @@
+<!-- Modal Escolher cor -->
+<div id="modalEscolherCor" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert sticky-top header-gradient">
+                <h3 class="modal-title"><b>Escolher cor</b></h3>
+                <button type="button" class="ml-auto btn btn-primary" onclick="selecionarCores();">
+                    Adicionar
+                </button>
+                <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">Cancelar</button>
+            </div>
+            <div id="modalCorBody" class="modal-body">
+                <div class="row color-list">
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="FFFFFF">
+                        <header>
+                            <strong>
+                                Branco
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: white;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'FFFFFF');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="C0C0C0">
+                        <header>
+                            <strong>
+                                Prata
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #c0c0c0;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'C0C0C0');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="000000">
+                        <header>
+                            <strong>
+                                Preto
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: black;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, '000000');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="FF0000">
+                        <header>
+                            <strong>
+                                Vermelho
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #ff0000;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'FF0000');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="BB0000">
+                        <header>
+                            <strong>
+                                Vermelho-escuro
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #BB0000;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'BB0000');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="8F5526">
+                        <header>
+                            <strong>
+                                Marrom
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #8f5526;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, '8F5526');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="D4BC6D">
+                        <header>
+                            <strong>
+                                Madeira
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #d4bc6d;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'D4BC6D');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="FF8800">
+                        <header>
+                            <strong>
+                                Laranja
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #ff8800;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'FF8800');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="FF5E00">
+                        <header>
+                            <strong>
+                                Laranja avermelhado
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #ff5e00;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'FF5E00');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="D86C15">
+                        <header>
+                            <strong>
+                                Cobre
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #d86c15;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'D86C15');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="FFC400">
+                        <header>
+                            <strong>
+                                Amarelo alaranjado
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #ffc400;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'FFC400');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="FFFF00">
+                        <header>
+                            <strong>
+                                Amarelo
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #ffff00;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'FFFF00');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="D9FF00">
+                        <header>
+                            <strong>
+                                Verde limão
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #d9ff00;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'D9FF00');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="00A800">
+                        <header>
+                            <strong>
+                                Verde
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #00a800"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, '00A800');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="00FF80">
+                        <header>
+                            <strong>
+                                Verde aqua
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #00ff80;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, '00FF80');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="00FFFF">
+                        <header>
+                            <strong>
+                                Ciano
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #00ffff;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, '00FFFF');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="00BFFF">
+                        <header>
+                            <strong>
+                                Azul claro
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #00bfff;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, '00BFFF');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="0042F8">
+                        <header>
+                            <strong>
+                                Azul
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color:#0042f8;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, '0042F8');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="0C00B3">
+                        <header>
+                            <strong>
+                                Azul marinho
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color:#0c00b3;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, '0C00B3');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="7400F8">
+                        <header>
+                            <strong>
+                                Violeta
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color:#7400f8;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, '7400F8');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="800080">
+                        <header>
+                            <strong>
+                                Roxo
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color:#800080;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, '800080');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="F500F5">
+                        <header>
+                            <strong>
+                                Magenta
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color: #f500f5;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'F500F5');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="FF94EB">
+                        <header>
+                            <strong>
+                                Rosa
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color:#ff84eb;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'FF94EB');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 color-list-item" id="FF0080">
+                        <header>
+                            <strong>
+                                Rosa choque
+                            </strong>
+                        </header>
+                        <div class="color-list-item-color" style="background-color:#ff0080;"></div>
+                        <div class="color-list-buttons">
+                            <button type="button" class="btn btn-success" onclick="adicionarOuRemoverCor(this, 'FF0080');">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="ml-auto btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="selecionarCores();">
+                    Adicionar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim modal Cscolher Cor -->
+<!-- --------------------------- -->

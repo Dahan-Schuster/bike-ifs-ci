@@ -1,0 +1,674 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+.dropdown-menu-center {
+  left: 50% !important;
+  right: 50% !important;
+  text-align: left !important;
+  transform: translate(-50%, 0) scale(1.2) !important;
+  display: block;
+  position: relative;
+  margin: 40px auto;
+}
+
+.canvas-list div canvas {
+  transition: all .3s linear;
+}
+
+.canvas-list div canvas:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.dropdown-filtro {
+  /* Estiliza o container do filtro de pesquisa */
+  box-shadow: 2px 2px 3px rgb(130, 130, 130);
+}
+
+.dropdown-filtro-item:active, .dropdown-filtro-item:hover {
+  /* Suprime o estilo padrão da classe dropdown-item */
+  color: initial !important;
+  text-decoration: initial !important;
+  background-color: initial !important;
+}
+
+table.dataTable tr.dtrg-group td {
+  background-color: rgba(188, 255, 182, 0.459) !important;
+}
+
+
+/* Modal gerado pelas DataTables
+    É necessário reconfigurar a propriedade z-index para que não conflite com o header da página
+*/
+
+.dtr-modal {
+  z-index: 1100 !important;
+}
+
+.div-destinatarios {
+  padding: 10px;
+  min-height: 70px;
+  height: auto;
+  max-height: 70px;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+.bloco-destinatario {
+  width: fit-content;
+  display: contents;
+}
+
+.span-destinatario {
+  margin: 5px 0 5px 5px;
+  padding: 8px 5px;
+  background: #15a334b3;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px 0 0 5px;
+  white-space: nowrap;
+}
+
+.remover-destinatario {
+  margin-left: 0 !important;
+  border-radius: 0 5px 5px 0;
+  font-size: 14pt;
+  padding-top: .3rem!important;
+  padding-bottom: .5rem!important;
+  border-left: 1px solid #15a334;
+}
+
+.remover-destinatario:hover {
+  color: white;
+}
+
+.span-destinatario:hover {
+  background: #15a334;
+}
+
+.selecionada {
+  background-color: rgba(75, 194, 19, 0.671) !important;
+}
+
+.modal-header.alert.sticky-top {
+  margin-right: 0 !important
+}
+
+.modal-header.header-gradient {
+  filter: brightness(1.2)
+}
+
+.tooltip-w3 {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-w3-dotted {
+  border-bottom: 1px dotted black;
+}
+
+.tooltiptext-w3 {
+  visibility: hidden;
+  width: fit-content;
+  color: #fff;
+  text-align: justify;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1049;
+  left: 50%;
+  bottom: 110%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+  font-family: 'Roboto Mono', monospace;
+  border: 2px solid #888;
+  background: #333;
+}
+
+.tooltiptext-w3 a {
+  color: white;
+}
+
+.tooltip-w3:hover .tooltiptext-w3 {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip-w3 .tooltiptext-w3::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #888 transparent transparent transparent;
+}
+
+.jumbotron-main {
+  box-shadow: 5px 5px 20px gray;
+  background: linear-gradient(rgba(30, 30, 50, 0.9), rgba(30, 30, 50, 0.9)), url('http://bikeifs.com/public/img/jumbotrom-bg.jpg');
+}
+
+.jumbotron-main .dropdown-menu {
+  background-color: rgba(30, 30, 30, 8);
+}
+
+#botaoVisibilidade {
+  background: rgba(0, 186, 186, 0.596);
+}
+
+#botaoEsqueciSenha {
+  text-align: right;
+  background: transparent;
+  border: 0;
+  margin-top: 10px;
+  padding: 5px;
+  color: #35bfff;
+  outline: none;
+}
+
+#botaoEsqueciSenha:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: white;
+}
+
+.carousel-caption {
+  background: rgba(255, 255, 255, 0.8);
+  color: black;
+  font-weight: bolder;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.carousel-caption:hover {
+  filter: opacity(0.2);
+}
+
+.carousel-caption p {
+  font-size: 1.5rem;
+}
+
+.heading-login {
+  background-color: rgb(16, 161, 149);
+  color: white;
+  display: inline-block;
+  padding: .25em 0.5em;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .35rem;
+  font-size: 1.5rem;
+}
+
+.heading-home {
+  background-color: #10A14B;
+  color: white;
+  display: inline-block;
+  padding: .25em 1em;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25rem;
+}
+
+.p-home {
+  text-align: justify;
+  color: #f8f9fa!important;
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+.breadcrumb-home {
+  box-shadow: 5px 5px 20px rgba(100, 100, 100, 0.2) !important;
+  filter: brightness(1.2) !important;
+}
+
+.breadcrumb-home a {
+  color: rgb(212, 212, 212) !important;
+  font-weight: 600 !important;
+}
+
+.icon-home {
+  width: 85px;
+}
+
+.img-home {
+  width: 25%;
+  min-width: 150px;
+}
+
+.img-home.float-left {
+  margin-right: 50px;
+}
+
+.img-home.float-right {
+  margin-left: 50px;
+}
+
+.img-home.img-thumbnail {
+  background-color: #cbcbcbd4;
+}
+
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+.breadcrumb {
+  background-color: #fff;
+  box-shadow: 2px 2px 5px darkgrey;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
+
+.topo {
+  display: block;
+  position: fixed;
+  bottom: 0%;
+  right: 10%;
+  width: 55px;
+  height: 100px;
+  z-index: 2000;
+  border: none;
+}
+
+.topo:focus {
+  outline: none;
+  border: none;
+}
+
+.topo button {
+  font-size: 20pt;
+  display: block;
+  position: fixed;
+  bottom: -6%;
+  right: inherit;
+  width: 55px;
+  height: 100px;
+  padding: 5px;
+  padding-bottom: 10px;
+  border: none;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 3% 3% 0 0;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+.topo button:focus {
+  outline: none;
+  border: none;
+}
+
+.topo button img {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  bottom: -1%;
+  right: inherit;
+  transition: all 0.2s linear;
+}
+
+.topo:hover button {
+  bottom: 3%;
+  border-radius: 50%;
+  height: 55px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+  filter: brightness(1.2);
+}
+
+.topo:hover button img {
+  bottom: 10%;
+  right: 1%;
+}
+
+.invert {
+  filter: invert(100%);
+}
+
+.text-sm {
+  font-size: 10pt;
+}
+
+.select-bike option:hover {
+  background: white;
+}
+
+.color-list {
+  display: flex;
+  justify-content: center;
+}
+
+.color-list-item {
+  margin-bottom: 5px;
+  border-width: 2.5px 5px;
+  border-style: solid;
+  border-color: white;
+  background-color: rgb(241, 241, 241);
+  text-align: center;
+}
+
+.color-list-item header {
+  background-color: white;
+  color: black;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+  padding: 3px 2px;
+  margin: 3px 2px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.color-list-buttons {
+  margin: 10px auto;
+}
+
+.color-list-item-color {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  border: 2px solid black;
+  margin: 10px auto;
+}
+
+.bike-color {
+  border: 1px solid black;
+  width: 100%;
+  text-align: center;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.bike-color img {
+  position: relative;
+  top: -30%;
+}
+
+.table-responsive {
+  overflow-x: hidden !important;
+}
+
+.table-h,
+.table-f {
+  /* table head / foot */
+  background-color: rgb(60, 200, 100);
+}
+
+.table {
+  z-index: 1039;
+}
+
+.text-center {
+  text-align: center;
+}
+
+th.dt-center,
+td.dt-center {
+  text-align: center;
+}
+
+.logo {
+  width: 100px;
+}
+
+.navbar {
+  margin-bottom: 30px;
+}
+
+body {
+  font-family: helvetica, arial;
+  font-size: 16px;
+  color: #333;
+  background-color: #dfebf0;
+}
+
+.container {
+  width: 100%;
+}
+
+.bg-darksecondary {
+  background-color: #0c5460;
+}
+
+.jumbotron-cadastro {
+  background-color: rgb(240, 240, 240);
+}
+
+.card {
+  transition: all .2s ease-in-out;
+  border-radius: 15px;
+}
+
+.card-header {
+  background: #27ecaaa1;
+}
+
+.card-danger a {
+  color: #fff !important;
+  background: #dc3545 !important;
+  border-color: #dc3545 !important;
+}
+
+.card-danger a:hover {
+  color: #fff !important;
+  background: #bd2130 !important;
+  border-color: #b21f2d !important;
+}
+
+.card-danger .card-header {
+  color: white !important;
+  background: #b40d2f !important;
+}
+
+.card-header:first-child {
+  border-radius: 15px 15px 0 0;
+}
+
+.card-body a,
+.btn-card {
+  background: linear-gradient(to right, rgba(100, 255, 200, 0.5), rgba(100, 175, 255, 0.5));
+  border: 1px solid black;
+}
+
+.card-body a:hover,
+.btn-card:hover {
+  background: linear-gradient(to right, rgba(0, 155, 100, 0.5), rgba(0, 75, 155, 0.5));
+}
+
+.card:hover {
+  box-shadow: 5px 5px 15px gray;
+  transform: scale(1.05);
+}
+
+.card-inativo {
+  filter: grayscale(1);
+  transition: all 0.2s linear;
+}
+
+.card-inativo:hover {
+  filter: grayscale(1) blur(5px);
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.card-inativo-aviso {
+  visibility: hidden;
+  position: relative;
+  top: -55%;
+  left: 15%;
+  filter: blur(0) !important;
+  transition: visibility 0.2s linear;
+}
+
+.card-inativo-col:hover .card-inativo-aviso {
+  visibility: visible;
+}
+
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+
+.snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px gray;
+  padding: 16px;
+  position: fixed;
+  left: 50%;
+  bottom: 30px;
+}
+
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+
+.snackbar.show {
+  z-index: 2000;
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 4.5s;
+  animation: fadein 0.5s, fadeout 0.5s 4.5s;
+}
+
+.snackbar-invalido {
+  background-color: rgb(195, 46, 46);
+  color: #fff;
+}
+
+.snackbar-sucesso {
+  background-color: rgb(46, 195, 121);
+  color: rgb(0, 0, 0);
+}
+
+
+/* Animations to fade the snackbar in and out */
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+.header-gradient {
+  background: -moz-linear-gradient(140deg, #15A334 0%, #12A242 8%, #10A14B 13%, #009BBA 73%);
+  /* ff3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(27%, #009BBA), color-stop(87%, #10A14B), color-stop(92%, #12A242), color-stop(100%, #15A334));
+  /* safari4+,chrome */
+  background: -webkit-linear-gradient(140deg, #15A334 0%, #12A242 8%, #10A14B 13%, #009BBA 73%);
+  /* safari5.1+,chrome10+ */
+  background: -o-linear-gradient(140deg, #15A334 0%, #12A242 8%, #10A14B 13%, #009BBA 73%);
+  /* opera 11.10+ */
+  background: -ms-linear-gradient(140deg, #15A334 0%, #12A242 8%, #10A14B 13%, #009BBA 73%);
+  /* ie10+ */
+  background: linear-gradient(310deg, #15A334 0%, #12A242 8%, #10A14B 13%, #009BBA 73%);
+  /* w3c */
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#009BBA', endColorstr='#15A334', GradientType=1);
+}
+
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  /* border-color: #80bdff; */
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 255, 13, 0.25);
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+  color: #fff;
+  border-color: #0ea700;
+  background-color: #0ea700;
+  box-shadow: 0 0 0 0.2rem rgba(0, 255, 128, 0.25);
+}
+
+#pagina {
+  position: relative;
+  min-height: 90vh;
+}
+
+#conteudo {
+  padding-bottom: 2.5rem;
+}
+
+footer {
+  background-color: #0c5460;
+  padding: 10px 0 10px 0;
+  text-align: center;
+  font-size: 12pt;
+  color: lightgray;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2.5rem;
+}

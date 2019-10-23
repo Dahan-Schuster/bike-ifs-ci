@@ -1,0 +1,54 @@
+<!-- Modal Pesquisar Usuário -->
+<div id="modalPesquisarUsuario" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert alert-primary mb-1">
+                <h3 class="modal-title">Pesquisar usuário</i></h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body pt-0">
+                <p class="lead">Clique em um usuário para selecioná-lo.</p>
+                <div class="alert alert-info alert-dismissible p-1">Segure a tecla <b>ctrl</b> (Windows) ou
+                    <b>command</b> (Mac) para selecionar
+                    múltiplos usuários um por um, ou segure <b>shift</b> para clicar em dois usuários e selecionar todos
+                    entres eles. Clique em um usuário qualquer para desselecionar os outros.</div>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-sm responsive bg-light table-bordered table-striped table-hover"
+                        id="tableUsuarios" style="width: 100%;">
+                        <caption>
+                            <button id="btnSelecionar" class="btn btn-sm btn-primary">Selecionar
+                                todos</button>
+                        </caption>
+                        <thead class="table-h">
+                            <tr>
+                                <th>&#9432;</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th class="desktop">Tipo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot class="table-f">
+                            <tr>
+                                <th>&#9432;</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Tipo</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" onclick="recuperarUsuarioSelecionado(tabelaUsuarios);"
+                    data-dismiss="modal">Selecionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim modal Pesquisar Usuário -->

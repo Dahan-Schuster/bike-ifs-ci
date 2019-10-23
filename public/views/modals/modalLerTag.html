@@ -1,0 +1,24 @@
+<!-- Modal ler tag -->
+<div id="modalLerTag" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert alert-info" >
+                <h3 class="modal-title">Leitura RFID</i></h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="embed-responsive embed-responsive-1by1">
+                    <iframe id="iframeRFID" class="embed-responsive-item" 
+                        frameborder="0"> <!-- HOME: http://192.168.25.12/  | IFSLAB: http://192.168.101.151/ -->
+                    </iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onClick="recuperarTagLida();">Pronto</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim modal ler tag -->

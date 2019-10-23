@@ -13,6 +13,23 @@ class Usuario extends CI_Model
     }
 
     /**
+     * Verifica se o login e a senha enviados como parâmetro encontram
+     * um registro na tabela USUARIO
+     * 
+     * @param $login - Email, cpf ou matrícula do usuário. O cpf será formatado com pontos e traço
+     * @param $senha - Senha do usuário em string. Será criptografada com md5() antes de realizar a query
+     */
+    public function verificarLogin($login, $senha)
+    {
+        $cpf = Tools::formatCnpjCpf($login);
+        $this->db->where("(email='$login' OR cpf='$cpf' OR matricula='$login')");
+        $this->db->where("senha", md5($senha));
+
+        $result = $this->db->get('USUARIO');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
+    }
+
+    /**
      * ### Exclui um registro da tabela Usuario.
      * 
      * @param $id -  O id do registro a ser excluído

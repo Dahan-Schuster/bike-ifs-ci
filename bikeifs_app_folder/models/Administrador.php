@@ -1,5 +1,6 @@
 <?php
 
+require_once('Tools.php');
 
 class Administrador extends CI_Model
 {
@@ -10,6 +11,23 @@ class Administrador extends CI_Model
     {
         parent::__construct();
         $this->load->database();
+    }
+
+    /**
+     * Verifica se o login e a senha enviados como parâmetro encontram
+     * um registro na tabela ADMINISTRADOR
+     * 
+     * @param $login - Email ou cpf do admin. O cpf será formatado com pontos e traço
+     * @param $senha - Senha do admin em string. Será criptografada com md5() antes de realizar a query
+     */
+    public function verificarLogin($login, $senha)
+    {
+        $cpf = Tools::formatCnpjCpf($login);
+        $this->db->where("(email='$login' OR documento='$cpf')");
+        $this->db->where("senha", md5($senha));
+
+        $result = $this->db->get('ADMINISTRADOR');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
 

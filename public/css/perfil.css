@@ -1,0 +1,99 @@
+.perfil-sidebar {
+  background: #fff;
+  margin-bottom: 20px;
+}
+
+.perfil-foto {
+  display: flex;
+  justify-content: center;
+}
+
+.perfil-foto img {
+  float: none;
+  margin: 10px auto 0;
+  width: 50%;
+  height: 50%;
+}
+
+.perfil-titulo {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.perfil-titulo-nome {
+  color: #5a7391;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.perfil-titulo-tipo {
+  text-transform: uppercase;
+  color: #5b9bd1;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+   
+.perfil-titulo-email {
+  color: #5b9bd1;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.perfil-menu {
+  margin-top: 30px;
+}
+
+.perfil-menu ul li {
+  border-bottom: 1px solid #f0f4f7;
+  padding: 6px;
+  padding-left: 3px;
+  width: 100%;
+}
+
+.perfil-menu ul li button {
+  font-size: 14px;
+  padding: 10px;
+  padding-left: 3px;
+  border: 0px;
+  background-color: rgba(255, 255, 255, 0);
+  outline: none;
+  width: -webkit-fill-available;
+  display: flex;
+}
+
+.perfil-menu ul li button img {
+  margin-right: 8px;
+}
+
+.perfil-menu ul li button span {
+  margin-top: 0.45rem;
+}
+
+.perfil-menu ul li:hover {
+  cursor: pointer;
+  background-color: #6c757d38;
+}
+
+.perfil-menu ul li button:hover {
+  cursor: pointer;
+}
+.remover a {
+  color: #ce0000;
+}
+
+.conteudo-perfil {
+  padding: 20px;
+  background: #fff;
+  min-height: 460px;
+}
+
+#conteudo-perfil-sidepanel {
+  background: rgb(240, 240, 240);
+}
+
+#body-perfil-sidepanel {
+  background: rgb(240, 240, 240);
+}

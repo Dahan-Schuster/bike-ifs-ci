@@ -1,5 +1,6 @@
 <?php
 
+require_once('Tools.php');
 
 class Funcionario extends CI_Model
 {
@@ -10,6 +11,23 @@ class Funcionario extends CI_Model
     {
         parent::__construct();
         $this->load->database();
+    }
+
+    /**
+     * Verifica se o login e a senha enviados como parâmetro encontram
+     * um registro na tabela FUNCIONARIO
+     * 
+     * @param $login - Email ou cpf do funcionáiro. O cpf será formatado com pontos e traço
+     * @param $senha - Senha do funcionário em string. Será criptografada com md5() antes de realizar a query
+     */
+    public function verificarLogin($login, $senha)
+    {
+        $cpf = Tools::formatCnpjCpf($login);
+        $this->db->where("(email='$login' OR cpf='$cpf')");
+        $this->db->where("senha", md5($senha));
+
+        $result = $this->db->get('FUNCIONARIO');
+        return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
     /**
