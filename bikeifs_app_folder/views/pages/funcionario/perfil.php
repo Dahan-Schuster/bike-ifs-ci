@@ -3,7 +3,7 @@
 if (isset($_SESSION['login']) and $_SESSION['tipoAcesso'] == 'funcionario') { ?>
 
     <head>
-        <link rel="stylesheet" type="text/css" href="./../../lib/css/perfil.css">
+        <link rel="stylesheet" type="text/css" href="./../../css/perfil.css">
     </head>
     <h2>Perfil de funcionário</h2>
     <hr>
@@ -13,7 +13,7 @@ if (isset($_SESSION['login']) and $_SESSION['tipoAcesso'] == 'funcionario') { ?>
                 <div class="col-lg-3 col-md-5">
                     <div class="perfil-sidebar">
                         <div class="perfil-foto">
-                            <img src="http://bikeifs.com/public/img/icons/manager.png" title="Funcionário" class="img-responsive" alt="Funcionário">
+                            <img src="<?= base_url() ?>/public/img/icons/manager.png" title="Funcionário" class="img-responsive" alt="Funcionário">
                         </div>
                         <div class="perfil-titulo">
                             <div id="perfil-nome" class="perfil-titulo-nome">
@@ -25,13 +25,13 @@ if (isset($_SESSION['login']) and $_SESSION['tipoAcesso'] == 'funcionario') { ?>
                             <ul class="nav">
                                 <li>
                                     <button id="btn-info">
-                                        <img src="http://bikeifs.com/public/img/icons/info.png" title="Informações da Conta" alt="Informações">
+                                        <img src="<?= base_url() ?>/public/img/icons/info.png" title="Informações da Conta" alt="Informações">
                                         <span>Informações</span>
                                     </button>
                                 </li>
                                 <li>
                                     <button id="btn-config">
-                                        <img src="http://bikeifs.com/public/img/icons/management.png" title="Configurações da Conta" alt="Configurações">
+                                        <img src="<?= base_url() ?>/public/img/icons/management.png" title="Configurações da Conta" alt="Configurações">
                                         <span>Configurações da conta</span>
                                     </button>
                                 </li>
@@ -66,13 +66,13 @@ if (isset($_SESSION['login']) and $_SESSION['tipoAcesso'] == 'funcionario') { ?>
 
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/carregar/funcionario-por-id.php',
+            url: '<?= base_url() ?>/app/src/controller/carregar/funcionario-por-id.php',
             data: {
                 funcionario: "<?php echo $_SESSION['id'] ?>"
             },
             success: function(funcionario) {
                 $("#perfil-nome").html(funcionario.nome.split(" ")[0]); // Retorna apenas o primeiro nome
-                $("#perfil-tipo").html(funcionario.documento);
+                $("#perfil-tipo").html(funcionario.cpf);
             }
         });
     });

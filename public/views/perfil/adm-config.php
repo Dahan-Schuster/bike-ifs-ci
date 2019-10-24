@@ -34,29 +34,9 @@ include_once('../modals/modalSenha.html');
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
-        
-
         atualizarCampos();
     })
 
-    /* CARREGAMENTO DE DADOS INICIAIS */
-    function atualizarCampos() {
-        $.ajax({
-            type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/carregar/admin-por-id.php',
-            data: {
-                adm: "<?php echo $_SESSION['id'] ?>"
-            },
-            success: function(adm) {
-                $("#email").val(adm.email);
-            }
-        });
-    }
-
-
-    /* FIM CARREGAMENTO DE DADOS INICIAIS */
-
-    /************************************/
 
     /* ALTERAÇÃO DE EMAIL */
 
@@ -76,7 +56,7 @@ include_once('../modals/modalSenha.html');
         $("#email").val(email);
 
         if (inputCodigo === codigo) {
-            var url = 'http://bikeifs.com/app/src/controller/editar/admin.php';
+            var url = '<?= base_url() ?>/app/src/controller/editar/admin.php';
 
             $.ajax({
                 type: "POST",
@@ -128,7 +108,7 @@ include_once('../modals/modalSenha.html');
         var senhaInserida = $("#modalSenha").find('#oldSenha').val();
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/verificar/senha-admin.php',
+            url: '<?= base_url() ?>/app/src/controller/verificar/senha-admin.php',
             data: {
                 "adm": "<?php echo $_SESSION['id'] ?>",
                 "senha": senhaInserida
@@ -168,7 +148,7 @@ include_once('../modals/modalSenha.html');
 
     function enviarFormulario(senha) {
 
-        var url = 'http://bikeifs.com/app/src/controller/editar/admin.php';
+        var url = '<?= base_url() ?>/app/src/controller/editar/admin.php';
 
         $.ajax({
             type: "POST",

@@ -8,7 +8,7 @@ function popularTabelaHistoricoUsuario(user) {
                 "render" : function(cores) {
                     atualizarArrayCores(cores);
                     cssBackground = criarCssBackground();
-                    return '<div class="bike-color" style="background: ' + cssBackground + ';"><img src="http://bikeifs.com/public/img/icons/bycicle.png" title="Bike" alt=""></div>'; 
+                    return '<div class="bike-color" style="background: ' + cssBackground + ';"><img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Bike" alt=""></div>'; 
                 },
                 "targets": 5 // Coluna referente à cor.
             },
@@ -22,11 +22,11 @@ function popularTabelaHistoricoUsuario(user) {
             { "width": "10%", "targets": 5 }, // Garante que a coluna da cor terá um tamanho adequado
         ],
         "language": {
-            "url": "http://bikeifs.com/public/lib/scripts/Portuguese.json"
+            "url": "<?= base_url() ?>/public/js/Portuguese.json"
         },
         ajax: {
             type: "POST",
-            url: "http://bikeifs.com/app/src/controller/carregar/historico-usuario.php",
+            url: "<?= base_url() ?>/app/src/controller/carregar/historico-usuario.php",
             data: {id : user}
         },
         'processing': true,

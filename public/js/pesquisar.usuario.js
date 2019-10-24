@@ -9,11 +9,11 @@ function popularTabelaPesquisarUsuario() {
         },
         "order": [[ 1, "asc" ]],
         "language": {
-            "url": "http://bikeifs.com/public/lib/scripts/Portuguese.json"
+            "url": "<?= base_url() ?>/public/js/Portuguese.json"
         },
         ajax: {
             type: "POST",
-            url: "http://bikeifs.com/app/src/controller/carregar/usuarios.php"
+            url: "<?= base_url() ?>/app/src/controller/carregar/usuarios.php"
         },
         "processing" : true,
         "columns": [
@@ -31,7 +31,7 @@ function popularTabelaPesquisarUsuario() {
 function preencherSelectUsuario() {
     $.ajax({
     type: "POST",
-    url: 'http://bikeifs.com/app/src/controller/carregar/usuarios.php',
+    url: '<?= base_url() ?>/app/src/controller/carregar/usuarios.php',
     success: function(users) {
             $.each(users.data, function (i, user) {
                 $('#selectUsuario').append($('<option>', { 

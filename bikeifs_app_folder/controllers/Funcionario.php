@@ -18,7 +18,8 @@ class Funcionario extends CI_Controller
      */
     public function index()
     {
-        if ($this->session->userdata['permissions_level'] != 'funcionario')
+        if (!isset($this->session->userdata['permissions_level'])) show_404();
+        elseif ($this->session->userdata['permissions_level'] != 'funcionario')
             show_error("<h2><b>Acesso negado.</b></h2>");
 
         $data = array(
@@ -34,10 +35,12 @@ class Funcionario extends CI_Controller
 
     public function view($page = 'restrita')
     {
+        $page_dir = 'pages' . ($page == 'home' ? '' : '/funcionario');
 
-        if ($this->session->userdata['permissions_level'] != 'funcionario')
+        if (!isset($this->session->userdata['permissions_level'])) show_404();
+        elseif ($this->session->userdata['permissions_level'] != 'funcionario')
             show_error("<h2><b>Acesso negado.</b></h2>");
-        elseif (!$page || !file_exists(APPPATH . "views/pages/funcionario/$page.php"))
+        elseif (!$page || !file_exists(APPPATH . "views/$page_dir/$page.php"))
             show_404();
 
         $data = array(
@@ -47,7 +50,7 @@ class Funcionario extends CI_Controller
         );
 
         $this->load->view('templates/header-funcionario', $data);
-        $this->load->view("pages/funcionario/$page", $data);
+        $this->load->view("$page_dir/$page", $data);
         $this->load->view('templates/footer-funcionario', $data);
     }
 
@@ -75,6 +78,6 @@ class Funcionario extends CI_Controller
     public function sair()
     {
         $this->session->sess_destroy();
-        header('location: ' . base_url('home/login'));
+        header('location: ' . base_url('home/view/login'));
     }
 }

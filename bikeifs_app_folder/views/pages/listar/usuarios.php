@@ -80,7 +80,7 @@ include_once('../modals/modalTipoVisitante.html');
     function ativar(user) {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/ativar/usuario.php',
+            url: '<?= base_url() ?>/app/src/controller/ativar/usuario.php',
             data: {
                 user
             },
@@ -94,7 +94,7 @@ include_once('../modals/modalTipoVisitante.html');
     function desativar(user) {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/desativar/usuario.php',
+            url: '<?= base_url() ?>/app/src/controller/desativar/usuario.php',
             data: {
                 user
             },
@@ -178,11 +178,11 @@ include_once('../modals/modalTipoVisitante.html');
                 }
             ],
             "language": {
-                "url": "http://bikeifs.com/public/lib/scripts/Portuguese.json"
+                "url": "<?= base_url() ?>/public/js/Portuguese.json"
             },
             ajax: {
                 type: "POST",
-                url: "http://bikeifs.com/app/src/controller/carregar/usuarios.php"
+                url: "<?= base_url() ?>/app/src/controller/carregar/usuarios.php"
             },
             "processing": true,
             "columns": [{

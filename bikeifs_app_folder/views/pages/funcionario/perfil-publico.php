@@ -3,7 +3,7 @@
 if (isset($_SESSION['login']) and ($_SESSION['tipoAcesso'] == 'admin' || $_SESSION['tipoAcesso'] == 'funcionario')) { ?>
 
     <head>
-        <link rel="stylesheet" type="text/css" href="http://bikeifs.com/public/lib/css/perfil.css">
+        <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/perfil.css">
     </head>
     <h2>Perfil de funcionário</h2>
     <hr>
@@ -13,7 +13,7 @@ if (isset($_SESSION['login']) and ($_SESSION['tipoAcesso'] == 'admin' || $_SESSI
                 <div class="col-lg-3 col-md-5">
                     <div class="perfil-sidebar pb-3">
                         <div class="perfil-foto">
-                            <img src="http://bikeifs.com/public/img/icons/manager.png" title="Funcionário" class="img-responsive" alt="Funcionário">
+                            <img src="<?= base_url() ?>/public/img/icons/manager.png" title="Funcionário" class="img-responsive" alt="Funcionário">
                         </div>
                         <div class="perfil-titulo">
                             <div id="perfil-nome" class="perfil-titulo-nome">
@@ -63,17 +63,17 @@ if (isset($_SESSION['login']) and ($_SESSION['tipoAcesso'] == 'admin' || $_SESSI
     $(document).ready(function() {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/carregar/funcionario-por-id.php',
+            url: '<?= base_url() ?>/app/src/controller/carregar/funcionario-por-id.php',
             data: {
                 funcionario: "<?php echo $_GET['fun'] ?>"
             },
             success: function(funcionario) {
                 $("#perfil-nome").html(funcionario.nome.split(" ")[0]);
-                $("#perfil-tipo").html(funcionario.documento);
+                $("#perfil-tipo").html(funcionario.cpf);
                 $("#nome").html(funcionario.nome);
                 $("#telefone").html(funcionario.telefone);
                 $("#email").html(funcionario.email);
-                $("#cpf").html(funcionario.documento);
+                $("#cpf").html(funcionario.cpf);
             }
         });
     });

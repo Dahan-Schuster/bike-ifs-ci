@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('Não é permitido acesso direto aos scripts.');
 
+require_once('../models/SituacaoUsuario.php');
+
 class Home extends CI_Controller
 {
 
@@ -20,7 +22,8 @@ class Home extends CI_Controller
     {
         $data = array(
             'scripts' => array(
-                'util.js'
+                'util.js',
+                'sweetalert2.all.min.js'
             )
         );
 
@@ -30,19 +33,21 @@ class Home extends CI_Controller
     }
 
     /**
-     * Carrega a página de login
+     * Carrega uma página enviada por parâmetro
      */
-    public function login()
+    public function view($page = 'home')
     {
         $data = array(
             'scripts' => array(
                 'util.js',
-                'login.js'
+                'sweetalert2.all.min.js'
             )
         );
 
+        if ($page == 'login') array_push($data['scripts'], 'login.js');;
+
         $this->load->view('templates/header', $data);
-        $this->load->view("pages/login", $data);
+        $this->load->view("pages/$page", $data);
         $this->load->view('templates/footer', $data);
     }
 
@@ -52,7 +57,7 @@ class Home extends CI_Controller
     public function sair()
     {
         $this->session->sess_destroy();
-        header('location: ' . base_url('home/login'));
+        header('location: ' . base_url('home/view/login'));
     }
 
     /**
@@ -84,17 +89,17 @@ class Home extends CI_Controller
                 case 'funcionario':
                     $this->load->model("funcionario");
                     $result = $this->funcionario->verificarLogin($login, $senha);
-                    $json['location'] = base_url('funcionario');    # Rota para redirecionamento após o login
+                    if ($result) $json['location'] = base_url('funcionario');    # Rota para redirecionamento após o login
                     break;
                 case 'usuario':
                     $this->load->model("usuario");
                     $result = $this->usuario->verificarLogin($login, $senha);
-                    $json['location'] = base_url('usuario');
+                    if ($result) $json['location'] = base_url('usuario');
                     break;
                 case 'admin':
                     $this->load->model("administrador");
                     $result = $this->administrador->verificarLogin($login, $senha);
-                    $json['location'] = base_url('admin');
+                    if ($result) $json['location'] = base_url('admin');
                     break;
                 default:
                     $json['status'] = 0;
@@ -104,9 +109,8 @@ class Home extends CI_Controller
 
             # Verifica se a pesquisa por login e senha retornou um registro
             if ($result) :
-
                 # Mesmo que os dados de login e senha estejam corretos, é necessário verificar se a conta está desativada
-                if (isset($result->situacao) and $result->situacao == SituacaoUsuario::INATIVO) :
+                if (isset($result->situacao) && $result->situacao == SituacaoUsuario::INATIVO) :
                     $json['status'] = 0;
                     $json['error_message'] = 'Prezado usuário, sua conta encontra-se inativa e está impossibilidata de realizar logins. Contate um administrador do sistema para obter ajudar.';
 
@@ -117,6 +121,7 @@ class Home extends CI_Controller
                     $this->session->set_userdata("permissions_level", strtolower($tipoAcesso));
                 endif;
             else :
+                $json['status'] = 0;
                 $json['error_message'] = 'Usuário e/ou senha inválidos!';
             endif;
 

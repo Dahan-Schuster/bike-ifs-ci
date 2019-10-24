@@ -1,5 +1,7 @@
 <?php
 
+require_once('Tools.php');
+require_once('../models/SituacaoUsuario.php');
 
 class Usuario extends CI_Model
 {
@@ -23,10 +25,12 @@ class Usuario extends CI_Model
     {
         $cpf = Tools::formatCnpjCpf($login);
         $this->db->where("(email='$login' OR cpf='$cpf' OR matricula='$login')");
-        $this->db->where("senha", md5($senha));
-
         $result = $this->db->get('USUARIO');
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+
+        if ($result->num_rows() > 0)
+            return  password_verify($senha, $result->row()->senha);
+
+        return false;
     }
 
     /**
@@ -59,6 +63,7 @@ class Usuario extends CI_Model
     public function inserir($valores)
     {
         $this->db->insert('USUARIO', $valores);
+        return $this->db->insert_id();
     }
 
     /**
@@ -82,7 +87,7 @@ class Usuario extends CI_Model
     public function listarTodos()
     {
         $result = $this->db->get('USUARIO');
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
@@ -96,27 +101,33 @@ class Usuario extends CI_Model
     public function listarPorCampos($camposValores)
     {
         $result = $this->db->get_where('USUARIO', $camposValores);
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
-     * Ativa a Usuario encontrada com o id enviado
+     * Ativa os Usuarios encontrados com os ids enviados
      * 
-     * @param $id - o id da usuario a ser ativada
+     * @param array $ids - os ids dos usuarios a serem ativados
      */
-    public function ativar($id)
+    public function ativar($ids)
     {
-        $this->db->where('id', $id)->update('USUARIO', array('situacao', SituacaoUsuario::ATIVO));
+        foreach ($ids as $id) {
+            $this->db->or_where('id', $id);
+        }
+        $this->db->update('USUARIO', array('situacao', SituacaoUsuario::ATIVO));
     }
 
     /**
-     * Desativa a Usuario encontrada com o id enviado
+     * Desativa os Usuarios encontrados com os ids enviados
      * 
-     * @param $id - o id da usuario a ser desativada
+     * @param array $id - os ids dos usuarios a serem desativados
      */
-    public function desativar($id)
+    public function desativar($ids)
     {
-        $this->db->where('id', $id)->update('USUARIO', array('situacao', SituacaoUsuario::INATIVO));
+        foreach ($ids as $id) {
+            $this->db->or_where('id', $id);
+        }
+        $this->db->update('USUARIO', array('situacao', SituacaoUsuario::INATIVO));
     }
 
 
@@ -132,7 +143,7 @@ class Usuario extends CI_Model
     public function listarTipos()
     {
         $result = $this->db->select('tipo')->from('USUARIO')->get();
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
@@ -145,7 +156,17 @@ class Usuario extends CI_Model
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
         $result = $this->db->get_where('USUARIO', array($foreignKey => $valor));
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
+    }
+
+    /**
+     * Verifica se existe um registro com um atributo igual ao enviado por parâmetro
+     * Usado para evitar duplicidade em campos UNIQUE (cpf, email, matrícula)
+     */
+    public function estaCadastrado($campo, $valor)
+    {
+        $this->db->from('USUARIO')->where($campo, $valor);
+        return $this->db->get()->num_rows() > 0;
     }
 
     /**

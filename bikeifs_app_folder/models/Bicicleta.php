@@ -1,5 +1,7 @@
 <?php
 
+require_once('../models/SituacaoBicicleta.php');
+
 class Bicicleta extends CI_Model
 {
     /**
@@ -41,6 +43,7 @@ class Bicicleta extends CI_Model
     public function inserir($valores)
     {
         $this->db->insert('BICICLETA', $valores);
+        return $this->db->insert_id();
     }
 
     /**
@@ -64,7 +67,7 @@ class Bicicleta extends CI_Model
     public function listarTodos()
     {
         $result = $this->db->get('BICICLETA');
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
@@ -78,27 +81,33 @@ class Bicicleta extends CI_Model
     public function listarPorCampos($camposValores)
     {
         $result = $this->db->get_where('BICICLETA', $camposValores);
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
-     * Ativa a Bicicleta encontrada com o id enviado
+     * Ativa as Bicicletas encontradas com o array de IDs enviado
      * 
-     * @param $id - o id da bicicleta a ser ativada
+     * @param array $ids - os ids das bicicletas a seresm ativadas
      */
-    public function ativar($id)
+    public function ativar($ids)
     {
-        $this->db->where('id', $id)->update('BICICLETA', array('situacao', SituacaoBicicleta::ATIVA));
+        foreach ($ids as $id) {
+            $this->db->or_where('id', $id);
+        }
+        $this->db->update('BICICLETA', array('situacao', SituacaoBicicleta::ATIVA));
     }
 
     /**
-     * Desativa a Bicicleta encontrada com o id enviado
+     * Destiva as Bicicletas encontradas com o array de IDs enviado
      * 
-     * @param $id - o id da bicicleta a ser desativada
+     * @param array $ids - os ids das bicicletas a seresm desativadas
      */
-    public function desativar($id)
+    public function desativar($ids)
     {
-        $this->db->where('id', $id)->update('BICICLETA', array('situacao', SituacaoBicicleta::INATIVA));
+        foreach ($ids as $id) {
+            $this->db->or_where('id', $id);
+        }
+        $this->db->update('BICICLETA', array('situacao', SituacaoBicicleta::INATIVA));
     }
 
 
@@ -114,7 +123,7 @@ class Bicicleta extends CI_Model
     public function listarModelos()
     {
         $result = $this->db->select('modelo')->get('BICICLETA');
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
@@ -127,7 +136,17 @@ class Bicicleta extends CI_Model
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
         $result = $this->db->get_where('BICICLETA', array($foreignKey => $valor));
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
+    }
+
+    /**
+     * Verifica se existe um registro com um atributo igual ao enviado por parâmetro
+     * Usado para evitar duplicidade em campos UNIQUE (cpf, email, matrícula)
+     */
+    public function estaCadastrado($campo, $valor)
+    {
+        $this->db->from('BICICLETA')->where($campo, $valor);
+        return $this->db->get()->num_rows() > 0;
     }
 
     /**

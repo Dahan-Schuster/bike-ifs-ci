@@ -44,7 +44,7 @@ include_once('../modals/modalSenha.html');
     function atualizarCampos() {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/carregar/funcionario-por-id.php',
+            url: '<?= base_url() ?>/app/src/controller/carregar/funcionario-por-id.php',
             data: {
                 funcionario: "<?php echo $_SESSION['id'] ?>"
             },
@@ -77,7 +77,7 @@ include_once('../modals/modalSenha.html');
         $("#email").val(email);
 
         if (inputCodigo === codigo) {
-            var url = 'http://bikeifs.com/app/src/controller/editar/funcionario.php';
+            var url = '<?= base_url() ?>/app/src/controller/editar/funcionario.php';
 
             $.ajax({
                 type: "POST",
@@ -130,7 +130,7 @@ include_once('../modals/modalSenha.html');
         var senhaInserida = $("#modalSenha").find('#oldSenha').val();
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/verificar/senha-funcionario.php',
+            url: '<?= base_url() ?>/app/src/controller/verificar/senha-funcionario.php',
             data: {
                 "id": "<?php echo $_SESSION['id'] ?>",
                 "senha": senhaInserida
@@ -170,7 +170,7 @@ include_once('../modals/modalSenha.html');
 
     function enviarFormulario(senha) {
 
-        var url = 'http://bikeifs.com/app/src/controller/editar/funcionario.php';
+        var url = '<?= base_url() ?>/app/src/controller/editar/funcionario.php';
 
         $.ajax({
             type: "POST",

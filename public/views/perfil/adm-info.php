@@ -28,14 +28,14 @@
 
     $.ajax({
         type: "POST",
-        url: 'http://bikeifs.com/app/src/controller/carregar/admin-por-id.php',
+        url: '<?= base_url() ?>/app/src/controller/carregar/admin-por-id.php',
         data: {
             adm: "<?php echo $_SESSION['id'] ?>"
         },
         success: function(adm) {
             $("#nome").val(adm.nome);
             $("#email").val(adm.email);
-            $("#cpf").val(adm.documento);
+            $("#cpf").val(adm.cpf);
         }
     });
 
@@ -46,7 +46,7 @@
         if (!this.checkValidity())
             return; // impede que o formulário utilize o botão submit para enviar informações
 
-        var url = 'http://bikeifs.com/app/src/controller/editar/admin.php';
+        var url = '<?= base_url() ?>/app/src/controller/editar/admin.php';
         var nome = $("#nome").val();
         var telefone = $("#telefone").val();
 

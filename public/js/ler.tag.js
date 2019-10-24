@@ -46,7 +46,7 @@ function configurarModalLerTag() {
 function pesquisarBikePorUID(uid) {
     $.ajax({
         type:'POST',
-        url: 'http://bikeifs.com/app/src/controller/carregar/bike-por-uid.php',
+        url: '<?= base_url() ?>/app/src/controller/carregar/bike-por-uid.php',
         data: {uid},
         success:function(data){
             if (data == 'error_1')

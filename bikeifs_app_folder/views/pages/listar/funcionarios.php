@@ -71,7 +71,7 @@ if (isset($_SESSION['login'])) {
     function ativar(fun) {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/ativar/funcionario.php',
+            url: '<?= base_url() ?>/app/src/controller/ativar/funcionario.php',
             data: {
                 fun
             },
@@ -87,7 +87,7 @@ if (isset($_SESSION['login'])) {
         alert('Aguarde enquanto um email é enviado para o funcionário notificando sua desativação.')
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/desativar/funcionario.php',
+            url: '<?= base_url() ?>/app/src/controller/desativar/funcionario.php',
             data: {
                 fun
             },
@@ -159,11 +159,11 @@ if (isset($_SESSION['login'])) {
                 },
             ],
             "language": {
-                "url": "http://bikeifs.com/public/lib/scripts/Portuguese.json"
+                "url": "<?= base_url() ?>/public/js/Portuguese.json"
             },
             ajax: {
                 type: "POST",
-                url: "http://bikeifs.com/app/src/controller/carregar/funcionarios.php"
+                url: "<?= base_url() ?>/app/src/controller/carregar/funcionarios.php"
             },
             'processing': true,
             "columns": [{

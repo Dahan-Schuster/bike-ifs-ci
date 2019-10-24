@@ -3,7 +3,7 @@
 if (isset($_SESSION['login']) and ($_SESSION['tipoAcesso'] == 'admin' || $_SESSION['tipoAcesso'] == 'funcionario' || $_SESSION['tipoAcesso'] == 'usuario')) { ?>
 
     <head>
-        <link rel="stylesheet" type="text/css" href="./../../lib/css/perfil.css">
+        <link rel="stylesheet" type="text/css" href="./../../css/perfil.css">
     </head>
     <h2>Perfil de usuário</h2>
     <hr>
@@ -13,7 +13,7 @@ if (isset($_SESSION['login']) and ($_SESSION['tipoAcesso'] == 'admin' || $_SESSI
                 <div class="col-lg-3 col-md-5">
                     <div class="perfil-sidebar pb-3">
                         <div class="perfil-foto">
-                            <img src="http://bikeifs.com/public/img/icons/cyclist.png" title="Usuário" class="img-responsive" alt="Usuário">
+                            <img src="<?= base_url() ?>/public/img/icons/cyclist.png" title="Usuário" class="img-responsive" alt="Usuário">
                         </div>
                         <div class="perfil-titulo">
                             <div id="perfil-nome" class="perfil-titulo-nome">
@@ -25,13 +25,13 @@ if (isset($_SESSION['login']) and ($_SESSION['tipoAcesso'] == 'admin' || $_SESSI
                             <ul class="nav">
                                 <li>
                                     <button type="button" data-toggle="modal" data-target="#modalBicicletasUsuario">
-                                        <img src="http://bikeifs.com/public/img/icons/bikes.png" title="Bicicletas do usuário" alt="Bicicletas">
+                                        <img src="<?= base_url() ?>/public/img/icons/bikes.png" title="Bicicletas do usuário" alt="Bicicletas">
                                         <span>Bicicletas</span>
                                     </button>
                                 </li>
                                 <li>
                                     <button type="button" data-toggle="modal" data-target="#modalHistoricoUsuario">
-                                        <img src="http://bikeifs.com/public/img/icons/history.png" title="Histórico do usuário" alt="Histórico">
+                                        <img src="<?= base_url() ?>/public/img/icons/history.png" title="Histórico do usuário" alt="Histórico">
                                         <span>Histórico do usuário</span>
                                     </button>
                                 </li>
@@ -87,15 +87,15 @@ if (isset($_SESSION['login']) and ($_SESSION['tipoAcesso'] == 'admin' || $_SESSI
 include_once('../modals/modalBicicletasUsuario.html');
 include_once('../modals/modalHistoricoUsuario.html');
 ?>
-<script language="javascript" src="http://bikeifs.com/public/lib/scripts/bicicletas.usuario.js"></script>
-<script language="javascript" src="http://bikeifs.com/public/lib/scripts/historico.usuario.js"></script>
-<script language="JavaScript" src="http://bikeifs.com/public/lib/scripts/escolher.cores.slim.js"></script>
+<script language="javascript" src="<?= base_url() ?>/public/js/bicicletas.usuario.js"></script>
+<script language="javascript" src="<?= base_url() ?>/public/js/historico.usuario.js"></script>
+<script language="JavaScript" src="<?= base_url() ?>/public/js/escolher.cores.slim.js"></script>
 <script>
     var tabelaHistorico;
     $(document).ready(function() {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/carregar/usuario-por-id.php',
+            url: '<?= base_url() ?>/app/src/controller/carregar/usuario-por-id.php',
             data: {
                 user: "<?php echo $_GET['user'] ?>"
             },

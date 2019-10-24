@@ -92,7 +92,7 @@
     function atualizarCampos() {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/carregar/usuario-por-id.php',
+            url: '<?= base_url() ?>/app/src/controller/carregar/usuario-por-id.php',
             data: {user : "<?php echo $_SESSION['id'] ?>"},
             success: function(user) 
             {
@@ -127,7 +127,7 @@
         $("#email").val(email); 
 
         if (inputCodigo === codigo) {
-            var url = 'http://bikeifs.com/app/src/controller/editar/usuario.php';
+            var url = '<?= base_url() ?>/app/src/controller/editar/usuario.php';
 
             $.ajax({
                 type: "POST",
@@ -176,7 +176,7 @@
         var senhaInserida = $("#modalSenha").find('#oldSenha').val();
         $.ajax({
                 type: "POST",
-                url: 'http://bikeifs.com/app/src/controller/verificar/senha-usuario.php',
+                url: '<?= base_url() ?>/app/src/controller/verificar/senha-usuario.php',
                 data: {"user": "<?php echo $_SESSION['id'] ?>", "senha": senhaInserida},
                 
                 // Após o término da função assíncrona, as funções necessárias são chamadas
@@ -214,7 +214,7 @@
 
     function enviarFormulario(senha){
 
-        var url = 'http://bikeifs.com/app/src/controller/editar/usuario.php';
+        var url = '<?= base_url() ?>/app/src/controller/editar/usuario.php';
 
         $.ajax({
             type: "POST",
@@ -248,7 +248,7 @@
 
         var privado = (privacidade === 'privado' ? 'y' : 'n'); // 'y' e 'n' são caracteres aceitos pelo PostgreSQL para representar true e false
 
-        var url = 'http://bikeifs.com/app/src/controller/editar/usuario.php';
+        var url = '<?= base_url() ?>/app/src/controller/editar/usuario.php';
 
         $.ajax({
             type: "POST",

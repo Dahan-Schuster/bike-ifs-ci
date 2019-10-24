@@ -58,4 +58,4 @@
     </div>
 </div>
 <br>
-<?php include('http://bikeifs.com/public/view/modals/modalTodosOsRegistros.html') ?>
+<?php include('<?= base_url() ?>/public/view/modals/modalTodosOsRegistros.html') ?>

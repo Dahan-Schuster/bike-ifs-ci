@@ -14,7 +14,7 @@
             <h5 class="card-header">Registros</h5>
             <div class="card-body">
                 <h5 class="card-title">Excluir os registros de entrada e saída</h5>
-                <a href="?pagina=excluirRegistros" class="btn">Excluir registros</a>
+                <a href="<?= base_url('admin/excluir/registros') ?>" class="btn">Excluir registros</a>
             </div>
         </div>
     </div>

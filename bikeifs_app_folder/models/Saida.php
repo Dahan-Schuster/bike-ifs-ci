@@ -37,11 +37,12 @@ class Saida extends CI_Model
     /**
      * Insere um registro na tabela Saida.
      * 
-     * @return bool - True se a query for bem sucedida, False se não.
+     * @return id - O ID do registro inserido
      */
     public function inserir($valores)
     {
         $this->db->insert('SAIDA', $valores);
+        return $this->db->insert_id();
     }
 
     /**
@@ -65,7 +66,7 @@ class Saida extends CI_Model
     public function listarTodos()
     {
         $result = $this->db->get('SAIDA');
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
@@ -79,7 +80,7 @@ class Saida extends CI_Model
     public function listarPorCampos($camposValores)
     {
         $result = $this->db->get_where('SAIDA', $camposValores);
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
@@ -92,7 +93,7 @@ class Saida extends CI_Model
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
         $result = $this->db->get_where('SAIDA', array($foreignKey => $valor));
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**

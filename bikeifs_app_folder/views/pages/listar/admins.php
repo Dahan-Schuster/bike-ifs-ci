@@ -22,7 +22,7 @@ if (isset($_SESSION['login'])) {
                         <th>&#9432;</th>
                         <th>Nome</th>
                         <th>E-mail</th>
-                        <th>Documento</th>
+                        <th>CPF</th>
                         <th>Excluir</th>
                     </tr>
                 </thead>
@@ -32,7 +32,7 @@ if (isset($_SESSION['login'])) {
                         <th>&#9432;</th>
                         <th>Nome</th>
                         <th>E-mail</th>
-                        <th>Documento</th>
+                        <th>CPF</th>
                         <th>Excluir</th>
                     </tr>
                 </tfoot>
@@ -77,7 +77,7 @@ if (isset($_SESSION['login'])) {
 <script type="text/javascript">
     var tabela;
     var botaoExcluir = `<a onclick="confirmarExclusao(this);" class="link btn btn-danger excluir">
-                                <img src="http://bikeifs.com/public/img/icons/delete-person-24.png" title="Excluir Conta" alt="Excluir">
+                                <img src="<?= base_url() ?>/public/img/icons/delete-person-24.png" title="Excluir Conta" alt="Excluir">
                             </a>`;
 
     $(document).ready(function() {
@@ -130,11 +130,11 @@ if (isset($_SESSION['login'])) {
                 },
             ],
             "language": {
-                "url": "http://bikeifs.com/public/lib/scripts/Portuguese.json"
+                "url": "<?= base_url() ?>/public/js/Portuguese.json"
             },
             ajax: {
                 type: "POST",
-                url: "http://bikeifs.com/app/src/controller/carregar/admins.php"
+                url: "<?= base_url() ?>/app/src/controller/carregar/admins.php"
             },
             "processing": true,
             "columns": [{
@@ -147,7 +147,7 @@ if (isset($_SESSION['login'])) {
                     data: "email"
                 },
                 {
-                    data: "documento"
+                    data: "cpf"
                 },
                 {
                     "render": function() {

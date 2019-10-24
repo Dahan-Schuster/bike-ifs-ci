@@ -30,7 +30,7 @@ if (isset($_SESSION['login'])) {
                                 CPF <span class="text-danger"><b>*</b></span>
                             </label>
                             <input type="hidden" id="radioCPF" checked>
-                            <input type="text" name="documento" class="form-control" id="inputCpf" placeholder="CPF" required>
+                            <input type="text" name="cpf" class="form-control" id="inputCpf" placeholder="CPF" required>
                             <div class="invalid-feedback">
                                 Por favor, informe seu CPF.
                             </div>
@@ -81,11 +81,11 @@ include_once('../modals/modalErroCadastro.html');
         else if (!validarDados())
             return;
 
-        var url = "http://bikeifs.com/app/src/controller/inserir/admin.php";
+        var url = "<?= base_url() ?>/app/src/controller/inserir/admin.php";
 
         var nome = $("#inputNome").val();
         var email = $("#inputEmail").val();
-        var documento = $("#inputCpf").val();
+        var cpf = $("#inputCpf").val();
         var senha = $("#inputSenha").val();
 
         $.ajax({
@@ -94,7 +94,7 @@ include_once('../modals/modalErroCadastro.html');
             data: {
                 nome,
                 email,
-                documento,
+                cpf,
                 senha
             },
             success: function(resultado) {

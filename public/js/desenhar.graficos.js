@@ -1,6 +1,6 @@
 function desenharGraficoTiposUsuarios(canvas, ctx) {
     $.ajax({
-        url: 'http://bikeifs.com/app/src/controller/contar/tipos-de-usuarios.php',
+        url: '<?= base_url() ?>/app/src/controller/contar/tipos-de-usuarios.php',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -44,7 +44,7 @@ function desenharGraficoTiposUsuarios(canvas, ctx) {
 
 function desenharGraficoModelosBikes(canvas, ctx) {
     $.ajax({
-        url: 'http://bikeifs.com/app/src/controller/contar/modelos-de-bikes.php',
+        url: '<?= base_url() ?>/app/src/controller/contar/modelos-de-bikes.php',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -100,7 +100,7 @@ function desenharGraficoModelosBikes(canvas, ctx) {
 
 function desenharGraficoBikesRfid(canvas, ctx) {
     $.ajax({
-        url: 'http://bikeifs.com/app/src/controller/contar/bikes-com-rfid.php',
+        url: '<?= base_url() ?>/app/src/controller/contar/bikes-com-rfid.php',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -135,7 +135,7 @@ function desenharGraficoBikesRfid(canvas, ctx) {
 
 function desenharGraficoRegistrosPorDia(canvas, ctx) {
     $.ajax({
-        url: 'http://bikeifs.com/app/src/controller/contar/registros-por-dia.php',
+        url: '<?= base_url() ?>/app/src/controller/contar/registros-por-dia.php',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -203,7 +203,7 @@ function desenharGraficoRegistrosPorDia(canvas, ctx) {
 
 function desenharGraficoRegistrosPorSemana(canvas, ctx) {
     $.ajax({
-        url: 'http://bikeifs.com/app/src/controller/contar/registros-por-semana.php',
+        url: '<?= base_url() ?>/app/src/controller/contar/registros-por-semana.php',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -259,7 +259,7 @@ function desenharGraficoRegistrosPorSemana(canvas, ctx) {
 
 function desenharGraficoRegistrosPorMes(canvas, ctx) {
     $.ajax({
-        url: 'http://bikeifs.com/app/src/controller/contar/registros-por-mes.php',
+        url: '<?= base_url() ?>/app/src/controller/contar/registros-por-mes.php',
         method: 'GET',
         dataType: 'json',
         success: function(res) {

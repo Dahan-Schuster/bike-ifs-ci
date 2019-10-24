@@ -10,7 +10,7 @@ if (isset($_SESSION['login'])) {
                 Registrar entrada
             </button>
             <button class="col-2 col-md-1 ml-3 mr-auto btn btn-outline-warning border border-dark text-dark mu-0 mb-3" type="button" data-toggle="modal" data-target="#modalLerTag">
-                <img src="http://bikeifs.com/public/img/icons/rfid.png" class="img-responsive" title="Ler Tag RFID" alt="Ler Tag Rfid">
+                <img src="<?= base_url() ?>/public/img/icons/rfid.png" class="img-responsive" title="Ler Tag RFID" alt="Ler Tag Rfid">
             </button>
         </div>
         <hr class="my-3">
@@ -78,16 +78,16 @@ if (isset($_SESSION['login'])) {
     include_once('../modals/modalTagNaoEncontrada.html');
     ?>
 
-    <script language="javascript" src="http://bikeifs.com/public/lib/scripts/pesquisar.usuario.js"></script>
-    <script language="JavaScript" src="http://bikeifs.com/public/lib/scripts/escolher.cores.slim.js"></script>
+    <script language="javascript" src="<?= base_url() ?>/public/js/pesquisar.usuario.js"></script>
+    <script language="JavaScript" src="<?= base_url() ?>/public/js/escolher.cores.slim.js"></script>
     <script type="text/javascript">
         var tabelaRegistros;
         var tabelaUsuarios;
         var botaoRealizarCheckout = `<a onclick="confirmarCheckOut(this);" class="btn btn-danger text-light">
-    <img src="http://bikeifs.com/public/img/icons/checkout.png" title="Realizar checkout" alt="Checkout">
+    <img src="<?= base_url() ?>/public/img/icons/checkout.png" title="Realizar checkout" alt="Checkout">
                                     </a>`;
         var botaoCheckoutRealizado = `<a onclick="confirmarCheckOut(this);" class="btn btn-success">
-    <img src="http://bikeifs.com/public/img/icons/checked.png" title="Checkout realizado" alt="Checked">
+    <img src="<?= base_url() ?>/public/img/icons/checked.png" title="Checkout realizado" alt="Checked">
                                     </a`;
 
         $(document).ready(function() {
@@ -154,7 +154,7 @@ if (isset($_SESSION['login'])) {
 
             $.ajax({
                 type: "POST",
-                url: 'http://bikeifs.com/app/src/controller/editar/checkout-registro.php',
+                url: '<?= base_url() ?>/app/src/controller/editar/checkout-registro.php',
                 data: {
                     "id": id,
                     "obs": obs
@@ -178,7 +178,7 @@ if (isset($_SESSION['login'])) {
         function desfazerCheckout(regId) {
             $.ajax({
                 type: "POST",
-                url: "http://bikeifs.com/app/src/controller/editar/desfazer-checkout.php",
+                url: "<?= base_url() ?>/app/src/controller/editar/desfazer-checkout.php",
                 data: {
                     "id": regId
                 },
@@ -224,7 +224,7 @@ if (isset($_SESSION['login'])) {
         function inserirRegistro(id, obs, num_trava, userId) {
             $.ajax({
                 type: "POST",
-                url: 'http://bikeifs.com/app/src/controller/inserir/registro.php',
+                url: '<?= base_url() ?>/app/src/controller/inserir/registro.php',
                 data: {
                     "id_bicicleta": id,
                     "obs": obs,
@@ -279,7 +279,7 @@ if (isset($_SESSION['login'])) {
                             let modelo = row.bikes.modelo.toLowerCase()
                             let output = `<div onclick="abrirPainelLateralBike(` + row.bikes.id + `)" 
                                 class="bike-color" style="background: ` + cssBackground + `;">`
-                            output += '<img src="http://bikeifs.com/public/img/icons/bike-' + modelo + '.png" title="Bike" alt=""></div>'
+                            output += '<img src="<?= base_url() ?>/public/img/icons/bike-' + modelo + '.png" title="Bike" alt=""></div>'
                             return output
                         },
                         "targets": 5 // Coluna referente à cor.
@@ -332,11 +332,11 @@ if (isset($_SESSION['login'])) {
                     }, // Garante que a coluna da cor terá um tamanho adequado
                 ],
                 "language": {
-                    "url": "http://bikeifs.com/public/lib/scripts/Portuguese.json"
+                    "url": "<?= base_url() ?>/public/js/Portuguese.json"
                 },
                 ajax: {
                     type: "POST",
-                    url: "http://bikeifs.com/app/src/controller/carregar/registrosPorDia.php",
+                    url: "<?= base_url() ?>/app/src/controller/carregar/registrosPorDia.php",
                     data: {
                         dia
                     }

@@ -21,7 +21,7 @@
                 <div class="form-group">
                     <label for="infoBicicleta">Bicicleta</label>
                     <div id="divBicicleta" class="bike-color text-light">
-                        <img src="http://bikeifs.com/public/img/icons/bycicle.png" title="Bike" alt="">
+                        <img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Bike" alt="">
                     </div>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                         <label for="selectUsuario">Usuário <span class="text-danger"><b>*</b></span></label>
                         <button type="button" class="btn btn-info form-control" data-toggle="modal"
                             data-target="#modalPesquisarUsuario" onclick="esconderModalRegistro();">
-                            <img src="http://bikeifs.com/public/img/icons/search.png" title="Pesquisar usuário"
+                            <img src="<?= base_url() ?>/public/img/icons/search.png" title="Pesquisar usuário"
                                 alt="Pesquisar">
                         </button>
                         <select id="selectUsuario" class="form-control mt-1" required>
@@ -162,7 +162,7 @@
                     <div class="form-group">
                         <label for="selectedBikeColor">Cor da bicicleta selecionada</label>
                         <div id="selectedBikeColor" class="form-control bike-color">
-                            <img src="http://bikeifs.com/public/img/icons/bycicle.png" title="Bike" alt="">
+                            <img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Bike" alt="">
                         </div>
                     </div>
                     <hr>
@@ -226,7 +226,7 @@
                 <div class="form-group">
                     <label for="divBicicleta">Bicicleta</label>
                     <div id="divBicicleta" class="form-control bike-color">
-                        <img src="http://bikeifs.com/public/img/icons/bycicle.png" title="Bike" alt="">
+                        <img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Bike" alt="">
                     </div>
                     <input type="hidden" id="bikeId" />
                 </div>

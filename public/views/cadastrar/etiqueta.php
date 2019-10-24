@@ -20,7 +20,7 @@ if (isset($_SESSION['login'])) {
                         <span class="form-control col-12 col-md-6 mb-1" id="inputUID">UID da bicicleta</span>
                         <div class="col-12 col-md-2">
                             <button type="button" class="btn btn-warning py-0" data-toggle="modal" data-target="#modalLerTag" style="width: 100%;">
-                                <img src="http://bikeifs.com/public/img/icons/rfid.png" class="img-responsive" title="Ler Tag RFID" alt="Ler Tag Rfid">
+                                <img src="<?= base_url() ?>/public/img/icons/rfid.png" class="img-responsive" title="Ler Tag RFID" alt="Ler Tag Rfid">
                             </button>
                         </div>
                         <div class="invalid-feedback">
@@ -34,7 +34,7 @@ if (isset($_SESSION['login'])) {
                         </select>
                         <div class="col-3 col-md-2">
                             <button type="button" class="btn btn-info py-1" data-toggle="modal" data-target="#modalPesquisarUsuario" style="width: 100%;">
-                                <img src="http://bikeifs.com/public/img/icons/search.png" title="Pesquisar usuário" alt="Pesquisar">
+                                <img src="<?= base_url() ?>/public/img/icons/search.png" title="Pesquisar usuário" alt="Pesquisar">
                             </button>
                         </div>
                         <div class="invalid-feedback">
@@ -53,7 +53,7 @@ if (isset($_SESSION['login'])) {
                     <div class="form-group row">
                         <label for="selectedBikeColor" class="col-md-4 col-form-label">Cor da bicicleta selecionada</label>
                         <div id="selectedBikeColor" class="form-control bike-color col-md-8">
-                            <img src="http://bikeifs.com/public/img/icons/bycicle.png" title="Bike" alt="">
+                            <img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Bike" alt="">
                         </div>
                     </div>
 
@@ -80,8 +80,8 @@ include_once('../modals/modalCodigoJaCadastrado.html');
 include_once('../modals/modalLerTag.html');
 include_once('../modals/modalErroCadastro.html');
 ?>
-<script language="javascript" src="http://bikeifs.com/public/lib/scripts/pesquisar.usuario.js"></script>
-<script language="JavaScript" src="http://bikeifs.com/public/lib/scripts/escolher.cores.slim.js"></script>
+<script language="javascript" src="<?= base_url() ?>/public/js/pesquisar.usuario.js"></script>
+<script language="JavaScript" src="<?= base_url() ?>/public/js/escolher.cores.slim.js"></script>
 <script type="text/javascript">
     var tabelaUsuarios;
     $(document).ready(function() {
@@ -127,7 +127,7 @@ include_once('../modals/modalErroCadastro.html');
         if (!this.checkValidity())
             return;
 
-        var url = "http://bikeifs.com/app/src/controller/inserir/etiqueta.php";
+        var url = "<?= base_url() ?>/app/src/controller/inserir/etiqueta.php";
 
         var uid = $("#inputUID").html();
         var id_bicicleta = $("#selectBike").val();

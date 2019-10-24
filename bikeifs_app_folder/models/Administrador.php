@@ -23,11 +23,13 @@ class Administrador extends CI_Model
     public function verificarLogin($login, $senha)
     {
         $cpf = Tools::formatCnpjCpf($login);
-        $this->db->where("(email='$login' OR documento='$cpf')");
-        $this->db->where("senha", md5($senha));
-
+        $this->db->where("(email='$login' OR cpf='$cpf')");
         $result = $this->db->get('ADMINISTRADOR');
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+
+        if ($result->num_rows() > 0)
+            return  password_verify($senha, $result->row()->senha);
+
+        return false;
     }
 
 
@@ -61,6 +63,7 @@ class Administrador extends CI_Model
     public function inserir($valores)
     {
         $this->db->insert('ADMINISTRADOR', $valores);
+        return $this->db->insert_id();
     }
 
     /**
@@ -84,7 +87,17 @@ class Administrador extends CI_Model
     public function listarTodos()
     {
         $result = $this->db->get('ADMINISTRADOR');
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
+    }
+
+    /**
+     * Verifica se existe um registro com um atributo igual ao enviado por parâmetro
+     * Usado para evitar duplicidade em campos UNIQUE (cpf, email, matrícula)
+     */
+    public function estaCadastrado($campo, $valor)
+    {
+        $this->db->from('ADMINISTRADOR')->where($campo, $valor);
+        return $this->db->get()->num_rows() > 0;
     }
 
     /**
@@ -97,7 +110,7 @@ class Administrador extends CI_Model
      */
     public  function listarPorCampos($camposValores)
     {
-        $result = $this->db->get_where('ADMINISTRADOR', $camposValores);
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        $result = $this->db->where($camposValores)->get('ADMINISTRADOR');
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 }

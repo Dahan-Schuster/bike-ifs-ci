@@ -22,7 +22,7 @@
                                 <div class="input-group col mb-3">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
-                                            <img src="<?=base_url()?>/public/img/icons/arroba.png" title="Email" alt="">
+                                            <img src="<?= base_url() ?>/public/img/icons/arroba.png" title="Email" alt="">
                                         </div>
                                     </div>
                                     <input id="inpEmail" class="form-control" type="text" name="email" placeholder="exemplo@email.com" autofocus>
@@ -54,7 +54,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input id="btnSubmit" type="submit" value="Enviar" class="btn btn-success" style="width: 100%;">
+                            <button id="btnSubmit" type="submit" class="btn btn-success" style="width: 100%;">Enviar</button>
                         </form>
                     </div>
                 </div>
@@ -62,10 +62,6 @@
         </div>
     </div>
 </div>
-<?php
-include_once('<?=base_url()?>/public/view/modals/modalSucessoEsqueciSenha.html');
-include_once('<?=base_url()?>/public/view/modals/modalEmailInexistente.html');
-?>
 <script language="javascript">
     $("#formEsqueciSenha").submit(function(form) {
         form.preventDefault();
@@ -73,27 +69,53 @@ include_once('<?=base_url()?>/public/view/modals/modalEmailInexistente.html');
         let email = $("#inpEmail").val();
         let tipoAcesso = $("input[name=tipoAcesso]:checked").val();
 
-        $("#btnSubmit").attr('disabled', 'true')
-        $("#btnSubmit").css('cursor', 'not-allowed')
-
         $.ajax({
             type: 'post',
-            url: '<?=base_url()?>/app/src/controller/phpmailer/esqueci-senha.php',
-            data: {
-                email,
-                tipoAcesso
+            url: BASE_URL + 'email/ajaxEnviarNovaSenha',
+            dataType: 'json',
+            data: $(this).serialize(),
+            beforeSend: function() {
+                $("#btnSubmit").attr('disabled', 'true')
+                $("#btnSubmit").css('cursor', 'not-allowed')
+                $("#btnSubmit").html(loadingImg('Enviando...'))
             },
-            success: function(resultado) {
-                console.log(resultado)
-                if (resultado === 'error_1')
-                    $("#modalEmailInexistente").modal('show');
-                else if (resultado === 'success') {
-                    $("#modalSucessoEsqueciSenha").modal('show');
-                }
+            success: function(response) {
+                console.log(response)
+                if (response['status'] == 1)
+                    swal.fire({
+                        title: "Sucesso!",
+                        text: "Senha alterada e enviada para o seu email com sucesso.",
+                        type: "success",
+                        confirmButtonText: "Ok",
+                    })
+                    .then(() => {
+                        swal.fire({
+                            type: 'info',
+                            title: 'Login',
+                            text: 'Voltar para a tela de login?',
+                            showCancelButton: true,
+                            focusConfirm: true,
+                            confirmButtonText: 'Voltar',
+                            cancelButtonText: 'Não'
+                        }).then((voltar) => {
+                            if (voltar)
+                                window.location = BASE_URL + '/home/view/login'
+                        })
+                    });
+                else
+                    swal.fire({
+                        type: "error",
+                        title: "ERRO",
+                        text: response['error_message'],
+                    })
+            },
+            error: function(response) {
+                console.log(response)
             },
             complete: function() {
                 $("#btnSubmit").removeAttr('disabled')
                 $("#btnSubmit").css('cursor', 'pointer')
+                $("#btnSubmit").html('Enviar')
             }
         })
     })

@@ -48,7 +48,7 @@ if (isset($_SESSION['login'])) {
         É necessário fazer login para acessar esta página.
     </div>
 <?php } ?>
-<script language="JavaScript" src="http://bikeifs.com/public/lib/scripts/escolher.cores.slim.js"></script>
+<script language="JavaScript" src="<?= base_url() ?>/public/js/escolher.cores.slim.js"></script>
 <script type="text/javascript">
     var tabela;
 
@@ -70,7 +70,7 @@ if (isset($_SESSION['login'])) {
     function ativar(bike) {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/ativar/bicicleta.php',
+            url: '<?= base_url() ?>/app/src/controller/ativar/bicicleta.php',
             data: {
                 bike
             },
@@ -85,7 +85,7 @@ if (isset($_SESSION['login'])) {
     function desativar(bike) {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/desativar/bicicleta.php',
+            url: '<?= base_url() ?>/app/src/controller/desativar/bicicleta.php',
             data: {
                 bike
             },
@@ -116,7 +116,7 @@ if (isset($_SESSION['login'])) {
                     "render": function(cores) {
                         atualizarArrayCores(cores);
                         cssBackground = criarCssBackground();
-                        return '<div class="bike-color" style="background: ' + cssBackground + ';"><img src="http://bikeifs.com/public/img/icons/bycicle.png" title="Bike" alt=""></div>';
+                        return '<div class="bike-color" style="background: ' + cssBackground + ';"><img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Bike" alt=""></div>';
                     },
                     "targets": 1 // Coluna referente à cor.
                 },
@@ -148,11 +148,11 @@ if (isset($_SESSION['login'])) {
                 }, // Garante que a coluna da cor terá um tamanho adequado
             ],
             "language": {
-                "url": "http://bikeifs.com/public/lib/scripts/Portuguese.json"
+                "url": "<?= base_url() ?>/public/js/Portuguese.json"
             },
             ajax: {
                 type: "POST",
-                url: "http://bikeifs.com/app/src/controller/carregar/bicicletas-usuario.php",
+                url: "<?= base_url() ?>/app/src/controller/carregar/bicicletas-usuario.php",
                 data: {
                     id: "<?php echo $_SESSION['id'] ?>"
                 }

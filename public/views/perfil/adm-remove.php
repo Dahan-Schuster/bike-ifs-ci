@@ -15,16 +15,7 @@
             </div>
             <form id="desativarConta">
                 <div class="modal-body">
-                    <h4 class="mt-0">Está certo de que deseja destivar sua conta?</h4>
-                    <hr>
-                    <p class="lead">Ela não será removida, apenas desativada, estando impedida de realizar registros de entrada e saída e de fazer login no sistema.</p>
-                    <p class="lead">Algums de seus dados serão privados e impossibilitados de serem consultados por administradores, funcionários e outros usuários.</p>
-                    <p class="lead">Os dados escondidos são:</p>
-                    <ul>
-                        <li>CPF</li>
-                        <li>Telefone</li>
-                    </ul>                 
-                    <p>Para reativar, contate um funcionário.</p>
+                    <h4 class="mt-0">Está certo de que deseja excluir sua conta?</h4>
                 </div>
                 <hr>
                 <div class="form-group row px-3">
@@ -64,8 +55,8 @@
         var senhaInserida = $("#modalDesativar").find('#inputSenha').val();
         $.ajax({
                 type: "POST",
-                url: 'http://bikeifs.com/app/src/controller/verificar/senha-usuario.php',
-                data: {"user": "<?php echo $_SESSION['id'] ?>", "senha": senhaInserida},
+                url: '<?= base_url() ?>/app/src/controller/verificar/senha-admin.php',
+                data: {"adm": "<?php echo $_SESSION['id'] ?>", "senha": senhaInserida},
                 
                 // Após o término da função assíncrona, as funções necessárias são chamadas
                 success: function(resultado) 
@@ -83,17 +74,15 @@
 
     function enviarFormulario(senha){
 
-        var url = 'http://bikeifs.com/app/src/controller/editar/usuario.php';
-        var inativo = '1';
-        var privado = 'n'; // 'y' e 'n' são caracteres aceitos pelo PostgreSQL para representar true e false
+        var url = '<?= base_url() ?>/app/src/controller/excluir/admin.php';
 
         $.ajax({
             type: "POST",
-            url: url,
-            data: {"user": "<?php echo $_SESSION['id'] ?>", "situacao":inativo, "perfil_privado":privado},
+            url,
+            data: {"id": "<?php echo $_SESSION['id'] ?>"},
             success: function() { 
                 alert('Sua conta foi desativada com sucesso! Você será redirecionado para a página de login.');
-                window.location.replace('http://bikeifs.com/app/src/controller/logout.php');
+                window.location.replace('<?= base_url() ?>/app/src/controller/logout.php');
             }
         });
     }

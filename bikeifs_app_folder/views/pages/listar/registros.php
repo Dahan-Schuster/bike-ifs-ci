@@ -67,7 +67,7 @@ if (isset($_SESSION['login'])) {
         </div>
     <?php } ?>
 
-    <script language="JavaScript" src="http://bikeifs.com/public/lib/scripts/escolher.cores.slim.js"></script>
+    <script language="JavaScript" src="<?= base_url() ?>/public/js/escolher.cores.slim.js"></script>
     <script type="text/javascript">
         var tabelaRegistros;
 
@@ -116,7 +116,7 @@ if (isset($_SESSION['login'])) {
                             let modelo = row.bikes.modelo.toLowerCase()
                             let output = `<div onclick="abrirPainelLateralBike(` + row.bikes.id + `)" 
                                 class="bike-color" style="background: ` + cssBackground + `;">`
-                            output += '<img src="http://bikeifs.com/public/img/icons/bike-' + modelo + '.png" title="Bike" alt=""></div>'
+                            output += '<img src="<?= base_url() ?>/public/img/icons/bike-' + modelo + '.png" title="Bike" alt=""></div>'
                             return output
                         },
                         "targets": 5 // Coluna referente à cor.
@@ -165,11 +165,11 @@ if (isset($_SESSION['login'])) {
                     }, // Garante que a coluna da cor terá um tamanho adequado
                 ],
                 "language": {
-                    "url": "http://bikeifs.com/public/lib/scripts/Portuguese.json"
+                    "url": "<?= base_url() ?>/public/js/Portuguese.json"
                 },
                 ajax: {
                     type: "POST",
-                    url: "http://bikeifs.com/app/src/controller/carregar/registros.php"
+                    url: "<?= base_url() ?>/app/src/controller/carregar/registros.php"
                 },
                 'processing': true,
                 "columns": [{

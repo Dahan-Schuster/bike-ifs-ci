@@ -74,7 +74,7 @@ if (isset($_SESSION['login'])) {
                             <div class="form-control bike-color" id="inputCor"></div>
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEscolherCor" style="outline: none; box-shadow: none; padding: 0 .75rem;">
-                                    <img src="http://bikeifs.com/public/img/icons/color.png" title="Escolher cor" alt="Escolher cor">
+                                    <img src="<?= base_url() ?>/public/img/icons/color.png" title="Escolher cor" alt="Escolher cor">
                                 </button>
                             </div>
                         </div>
@@ -111,11 +111,11 @@ if (isset($_SESSION['login'])) {
 include_once('../modals/modalEscolherCor.html');
 include_once('../modals/modalBikeJaCadastrada.html');
 ?>
-<script language="JavaScript" src="http://bikeifs.com/public/lib/scripts/escolher.cores.js"></script>
+<script language="JavaScript" src="<?= base_url() ?>/public/js/escolher.cores.js"></script>
 <script type="text/javascript">
     var tabela;
     var botaoEditar = `<a onclick="editar(this);" class="btn btn-info">
-                            <img src="http://bikeifs.com/public/img/icons/edit.png" title="Editar bicicleta" alt="Editar">
+                            <img src="<?= base_url() ?>/public/img/icons/edit.png" title="Editar bicicleta" alt="Editar">
                         </a>`;
 
 
@@ -142,7 +142,7 @@ include_once('../modals/modalBikeJaCadastrada.html');
         if (!this.checkValidity())
             return; // impede que o formulário utilize o botão submit para enviar informações
 
-        var url = 'http://bikeifs.com/app/src/controller/editar/bicicleta.php';
+        var url = '<?= base_url() ?>/app/src/controller/editar/bicicleta.php';
 
         var dados = recuperarInformacoesDoModalEditar();
 
@@ -176,7 +176,7 @@ include_once('../modals/modalBikeJaCadastrada.html');
     function ativar(bike) {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/ativar/bicicleta.php',
+            url: '<?= base_url() ?>/app/src/controller/ativar/bicicleta.php',
             data: {
                 bike
             },
@@ -191,7 +191,7 @@ include_once('../modals/modalBikeJaCadastrada.html');
     function desativar(bike) {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/desativar/bicicleta.php',
+            url: '<?= base_url() ?>/app/src/controller/desativar/bicicleta.php',
             data: {
                 bike
             },
@@ -233,7 +233,7 @@ include_once('../modals/modalBikeJaCadastrada.html');
                         let modelo = row.bikes.modelo.toLowerCase()
                         let output = `<div onclick="abrirPainelLateralBike(`+ row.bikes.id +`)" 
                                 class="bike-color" style="background: ` + cssBackground + `;">`
-                        output += '<img src="http://bikeifs.com/public/img/icons/bike-' + modelo + '.png" title="Bike" alt=""></div>'
+                        output += '<img src="<?= base_url() ?>/public/img/icons/bike-' + modelo + '.png" title="Bike" alt=""></div>'
                         return output
                     },
                     "targets": 1 // Coluna referente à cor.
@@ -295,11 +295,11 @@ include_once('../modals/modalBikeJaCadastrada.html');
                 },
             ],
             "language": {
-                "url": "http://bikeifs.com/public/lib/scripts/Portuguese.json"
+                "url": "<?= base_url() ?>/public/js/Portuguese.json"
             },
             ajax: {
                 type: "POST",
-                url: "http://bikeifs.com/app/src/controller/carregar/bicicletas.php"
+                url: "<?= base_url() ?>/app/src/controller/carregar/bicicletas.php"
             },
             "processing": true,
             "columns": [{

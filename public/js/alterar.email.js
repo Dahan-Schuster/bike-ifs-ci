@@ -19,7 +19,7 @@ function enviarCodigoPorEmail(button) {
     salvarEmailDigitado(email);
     $.ajax({
         type: "POST",
-        url: 'http://bikeifs.com/app/src/controller/phpmailer/enviar-codigo-por-email.php',
+        url: '<?= base_url() ?>/app/src/controller/phpmailer/enviar-codigo-por-email.php',
         data: { "email": email, "codigo": codigo },
         complete: function() {
             $(button).removeAttr('disabled')

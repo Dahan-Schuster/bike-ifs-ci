@@ -7,7 +7,7 @@ if (isset($_SESSION['login'])) :
                 <h1>
                     Relatórios
                     <button data-toggle="modal" data-target="#modalImprimirPDF" class="btn btn-outline-secondary">
-                        <img src="http://bikeifs.com/public/img/icons/printer.png">
+                        <img src="<?= base_url() ?>/public/img/icons/printer.png">
                     </button>
                 </h1>
             </span>
@@ -116,11 +116,11 @@ if (isset($_SESSION['login'])) :
         É necessário fazer login para acessar esta página.
     </div>
 <?php endif; ?>
-<link rel="stylesheet" type="text/css" href="http://bikeifs.com/public/lib/css/chart.min.css">
-<script language="javascript" src="http://bikeifs.com/public/lib/scripts/chart.min.js"></script>
-<script language="javascript" src="http://bikeifs.com/public/lib/scripts/chartjs-plugin-datalabels.min.js"></script>
-<script language="javascript" src="http://bikeifs.com/public/lib/scripts/jspdf.min.js"></script>
-<script language="javascript" src="http://bikeifs.com/public/lib/scripts/desenhar.graficos.js"></script>
+<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/chart.min.css">
+<script language="javascript" src="<?= base_url() ?>/public/js/chart.min.js"></script>
+<script language="javascript" src="<?= base_url() ?>/public/js/chartjs-plugin-datalabels.min.js"></script>
+<script language="javascript" src="<?= base_url() ?>/public/js/jspdf.min.js"></script>
+<script language="javascript" src="<?= base_url() ?>/public/js/desenhar.graficos.js"></script>
 <script type="text/javascript">
     let canvasModal = document.getElementById('graficoModal')
 

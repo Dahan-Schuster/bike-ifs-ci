@@ -45,7 +45,7 @@ if (isset($_SESSION['login'])) {
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPesquisarUsuario" style="outline: none; box-shadow: none; padding: 0 .75rem;">
-                                        <img src="http://bikeifs.com/public/img/icons/ativar.png" title="Pesquisar usuário" alt="Pesquisar">
+                                        <img src="<?= base_url() ?>/public/img/icons/ativar.png" title="Pesquisar usuário" alt="Pesquisar">
                                     </button>
                                 </div>
                                 <div class="form-control div-destinatarios" id="destinatarios">
@@ -83,7 +83,7 @@ if (isset($_SESSION['login'])) {
 <?php
 include_once('../modals/modalPesquisarUsuarioEmail.html');
 ?>
-<script language="JavaScript" src="http://bikeifs.com/public/lib/scripts/select.usuario.email.js"></script>
+<script language="JavaScript" src="<?= base_url() ?>/public/js/select.usuario.email.js"></script>
 <script type="text/javascript">
     var tabelaUsuarios;
 
@@ -122,7 +122,7 @@ include_once('../modals/modalPesquisarUsuarioEmail.html');
         $("#btnEnviar").css('cursor', 'not-allowed')
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/phpmailer/contatar-usuario.php',
+            url: '<?= base_url() ?>/app/src/controller/phpmailer/contatar-usuario.php',
             data: {
                 remetente,
                 destinatarios,
@@ -152,7 +152,7 @@ include_once('../modals/modalPesquisarUsuarioEmail.html');
         let usuarios = recuperarIdsUsuarios()
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/inserir/email.php',
+            url: '<?= base_url() ?>/app/src/controller/inserir/email.php',
             data: {
                 remetente,
                 assunto,

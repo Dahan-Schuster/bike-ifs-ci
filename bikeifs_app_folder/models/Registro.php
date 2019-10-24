@@ -42,6 +42,7 @@ class Registro extends CI_Model
     public function inserir($valores)
     {
         $this->db->insert('REGISTRO', $valores);
+        return $this->db->insert_id();
     }
 
     /**
@@ -65,7 +66,7 @@ class Registro extends CI_Model
     public function listarTodos()
     {
         $result = $this->db->get('REGISTRO');
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
@@ -79,7 +80,7 @@ class Registro extends CI_Model
     public function listarPorCampos($camposValores)
     {
         $result = $this->db->get_where('REGISTRO', $camposValores);
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
@@ -92,7 +93,7 @@ class Registro extends CI_Model
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
         $result = $this->db->get_where('REGISTRO', array($foreignKey => $valor));
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
@@ -119,7 +120,7 @@ class Registro extends CI_Model
     {
         $dia = date('Y-m-d', strtotime($dia));
         $result = $this->db->where("hora::date =", $dia)->get('REGISTRO');
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
@@ -137,7 +138,7 @@ class Registro extends CI_Model
                  ->where('"BICICLETA".id_usuario', $idUsuario)
                  ->order_by('"REGISTRO".hora', 'DESC');
         $result = $this->db->get();
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
@@ -200,6 +201,6 @@ class Registro extends CI_Model
         $this->db->where("id_bicicleta", $idBicicleta);
         $this->db->where("id_saida IS NULL");
         $result = $this->db->from('REGISTRO')->get();
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 }

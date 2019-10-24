@@ -1,5 +1,5 @@
 <?php @session_start(); ?>
-<form id="informacoes-usuario">
+<form id="informacoes-funcionario">
     <div class="form-group row">
         <label for="nome" class="col-md-4 col-form-label">Nome</label>
         <div class="col-md-8">
@@ -18,21 +18,6 @@
             <input id="email" class="form-control" type="text" readonly>
         </div>
     </div>
-    <hr class="my-4">
-    <div class="form-group row">
-        <label for="tipo" class="col-md-4 col-form-label">Tipo de usuário</label>
-        <div class="col-md-8">
-            <input id="tipo" class="form-control" type="text" readonly>
-
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="situacao" class="col-md-4 col-form-label">Situação</label>
-        <div class="col-md-8">
-            <input id="situacao" class="form-control" type="text" readonly>
-
-        </div>
-    </div>
     <div class="form-group row">
         <label for="cpf" class="col-md-4 col-form-label">
             CPF
@@ -41,19 +26,11 @@
             <input id="cpf" class="form-control" type="text" readonly>
         </div>
     </div>
-    <div class="form-group row">
-        <label for="matricula" class="col-md-4 col-form-label">
-            Matricula
-        </label>
-        <div class="col-md-8">
-            <input id="matricula" class="form-control" type="text" readonly>
-        </div>
-    </div>
     <hr>
     <button type="submit" class="btn btn-primary">Atualizar</button>
 </form>
 <?php
-include_once('../modals/modalUsuarioJaCadastrado.html');
+include_once('../modals/modalFuncionarioJaCadastrado.html');
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -62,29 +39,26 @@ include_once('../modals/modalUsuarioJaCadastrado.html');
 
     $.ajax({
         type: "POST",
-        url: 'http://bikeifs.com/app/src/controller/carregar/usuario-por-id.php',
+        url: '<?= base_url() ?>/app/src/controller/carregar/funcionario-por-id.php',
         data: {
-            user: "<?php echo $_SESSION['id'] ?>"
+            funcionario: "<?php echo $_SESSION['id'] ?>"
         },
-        success: function(user) {
-            $("#nome").val(user.nome);
-            $("#telefone").val(user.telefone);
-            $("#email").val(user.email);
-            $("#tipo").val(user.tipo);
-            $("#situacao").val(user.situacao);
-            $("#cpf").val(user.cpf);
-            $("#matricula").val(user.matricula);
+        success: function(funcionario) {
+            $("#nome").val(funcionario.nome);
+            $("#telefone").val(funcionario.telefone);
+            $("#email").val(funcionario.email);
+            $("#cpf").val(funcionario.cpf);
         }
     });
 
-    $("#informacoes-usuario").submit(function(form) {
+    $("#informacoes-funcionario").submit(function(form) {
 
         form.preventDefault();
 
         if (!this.checkValidity())
             return; // impede que o formulário utilize o botão submit para enviar informações
 
-        var url = 'http://bikeifs.com/app/src/controller/editar/usuario.php';
+        var url = '<?= base_url() ?>/app/src/controller/editar/funcionario.php';
         var nome = $("#nome").val();
         var telefone = $("#telefone").val();
 
@@ -92,16 +66,15 @@ include_once('../modals/modalUsuarioJaCadastrado.html');
             type: "POST",
             url: url,
             data: {
-                "user": "<?php echo $_SESSION['id'] ?>",
+                "id": "<?php echo $_SESSION['id'] ?>",
                 "nome": nome,
                 "telefone": telefone
             },
             success: function(resultado) {
                 if (resultado === 'error_1')
-                    $("#modalUsuarioJaCadastrado").modal('show');
+                    $("#modalFuncionarioJaCadastrado").modal('show');
                 else if (resultado === 'success')
                     alertSnackBar($("#alertaSucesso"), 'Operação realizada com sucesso!')
-
             }
         });
     });

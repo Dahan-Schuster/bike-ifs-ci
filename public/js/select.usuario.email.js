@@ -11,11 +11,11 @@ function popularTabelaPesquisarUsuario() {
             [1, "asc"]
         ],
         "language": {
-            "url": "http://bikeifs.com/public/lib/scripts/Portuguese.json"
+            "url": "<?= base_url() ?>/public/js/Portuguese.json"
         },
         ajax: {
             type: "POST",
-            url: "http://bikeifs.com/app/src/controller/carregar/usuarios.php"
+            url: "<?= base_url() ?>/app/src/controller/carregar/usuarios.php"
         },
         "processing": true,
         "columns": [

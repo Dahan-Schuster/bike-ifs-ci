@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="http://bikeifs.com/public/lib/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="http://bikeifs.com/public/lib/css/estilo.css">
-    <link rel="stylesheet" type="text/css" href="http://bikeifs.com/public/lib/css/perfil.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/estilo.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/perfil.css">
 </head>
 
 <body id="body-perfil-sidepanel">
@@ -14,7 +14,7 @@
         <div class="perfil">
             <div class="perfil-sidebar pb-3">
                 <div class="perfil-foto">
-                    <img src="http://bikeifs.com/public/img/icons/manager.png" title="Funcionário" class="img-responsive" alt="Funcionário">
+                    <img src="<?= base_url() ?>/public/img/icons/manager.png" title="Funcionário" class="img-responsive" alt="Funcionário">
                 </div>
                 <div class="perfil-titulo">
                     <div id="perfil-nome" class="perfil-titulo-nome">
@@ -73,12 +73,12 @@
     <!-- Fim SnackBars -->
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script language="javascript" src="http://bikeifs.com/public/lib/scripts/ferramentas.js"></script>
+<script language="javascript" src="<?= base_url() ?>/public/js/ferramentas.js"></script>
 <script>
     $(document).ready(function() {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/carregar/funcionario-por-id.php',
+            url: '<?= base_url() ?>/app/src/controller/carregar/funcionario-por-id.php',
             data: {
                 funcionario: "<?php echo $_GET['fun'] ?>"
             },
@@ -102,7 +102,7 @@
     function ativar() {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/ativar/funcionario.php',
+            url: '<?= base_url() ?>/app/src/controller/ativar/funcionario.php',
             data: {
                 "fun": "<?php echo $_GET['fun'] ?>"
             },
@@ -116,7 +116,7 @@
     function desativar() {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/desativar/funcionario.php',
+            url: '<?= base_url() ?>/app/src/controller/desativar/funcionario.php',
             data: {
                 "fun": "<?php echo $_GET['fun'] ?>"
             },
@@ -129,11 +129,11 @@
 
     function atualizarCamposComDadosDoFuncionario(funcionario) {
         $("#perfil-nome").html(funcionario.nome.split(" ")[0]);
-        $("#perfil-tipo").html(funcionario.documento);
+        $("#perfil-tipo").html(funcionario.cpf);
         $("#nome").html(funcionario.nome);
         $("#telefone").html(funcionario.telefone);
         $("#email").html(funcionario.email);
-        $("#cpf").html(funcionario.documento);
+        $("#cpf").html(funcionario.cpf);
         $("#situacao").html(funcionario.situacao)
         if (funcionario.situacao == 'Ativo')
             $("#switchSituacao").attr('checked', 'true')

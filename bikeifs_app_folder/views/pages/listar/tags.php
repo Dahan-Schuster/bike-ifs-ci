@@ -79,11 +79,11 @@ if (isset($_SESSION['login'])) {
 </div>
 <!-- Fim modal excluir -->
 <!---------------------------->
-<script language="JavaScript" src="http://bikeifs.com/public/lib/scripts/escolher.cores.slim.js"></script>
+<script language="JavaScript" src="<?= base_url() ?>/public/js/escolher.cores.slim.js"></script>
 <script type="text/javascript">
     var tabela;
     var botaoExcluir = `<a onclick="excluir(this);" class="link btn btn-danger excluir">
-                            <img src="http://bikeifs.com/public/img/icons/delete.png" title="Excluir bicicleta" alt="Excluir">
+                            <img src="<?= base_url() ?>/public/img/icons/delete.png" title="Excluir bicicleta" alt="Excluir">
                         </a>`;
 
     $(document).ready(function() {
@@ -108,7 +108,7 @@ if (isset($_SESSION['login'])) {
         var id = button.value;
         $.ajax({
             type: "POST",
-            url: "http://bikeifs.com/app/src/controller/excluir/etiqueta.php",
+            url: "<?= base_url() ?>/app/src/controller/excluir/etiqueta.php",
             data: {
                 "id": id
             },
@@ -149,7 +149,7 @@ if (isset($_SESSION['login'])) {
                         let modelo = row.bikes.modelo.toLowerCase()
                         let output = `<div onclick="abrirPainelLateralBike(`+ row.bikes.id +`)" 
                                 class="bike-color" style="background: ` + cssBackground + `;">`
-                        output += '<img src="http://bikeifs.com/public/img/icons/bike-' + modelo + '.png" title="Bike" alt=""></div>'
+                        output += '<img src="<?= base_url() ?>/public/img/icons/bike-' + modelo + '.png" title="Bike" alt=""></div>'
                         return output
                     },
                     "targets": 2 // Coluna referente à cor.
@@ -196,12 +196,12 @@ if (isset($_SESSION['login'])) {
                 },
             ],
             "language": {
-                "url": "http://bikeifs.com/public/lib/scripts/Portuguese.json"
+                "url": "<?= base_url() ?>/public/js/Portuguese.json"
             },
             'processing': true,
             ajax: {
                 type: "POST",
-                url: "http://bikeifs.com/app/src/controller/carregar/etiquetas.php"
+                url: "<?= base_url() ?>/app/src/controller/carregar/etiquetas.php"
             },
             "columns": [{
                     data: "tags.id"

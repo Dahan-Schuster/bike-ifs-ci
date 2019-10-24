@@ -18,12 +18,12 @@ function closeNavPerfil() {
 
 /* Método chamado ao clicar no nome de um usuário nas tabelas */
 function abrirPerfilLateralUsuario(id) {
-    document.getElementById("iframePerfilLateral").src = "http://bikeifs.com/public/view/usuario/perfil_lateral.php?user=" + id
+    document.getElementById("iframePerfilLateral").src = "<?= base_url() ?>/public/view/usuario/perfil_lateral.php?user=" + id
     openNavPerfil()
 }
 
 /* Método chamado ao clicar no nome de um funcionário nas tabelas */
 function abrirPerfilLateralFuncionario(id) {
-    document.getElementById("iframePerfilLateral").src = "http://bikeifs.com/public/view/funcionario/perfil_lateral.php?fun=" + id
+    document.getElementById("iframePerfilLateral").src = "<?= base_url() ?>/public/view/funcionario/perfil_lateral.php?fun=" + id
     openNavPerfil()
 }

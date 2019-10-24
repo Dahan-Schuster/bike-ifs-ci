@@ -11,7 +11,6 @@
     <link rel="icon" type="image/x-icon" href="<?= base_url('favicon.ico'); ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('public/css/bootstrap.min.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('public/css/estilo.css'); ?>">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 
@@ -39,7 +38,7 @@ endif;
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <h3>
-                                <a class="nav-link badge badge-success text-light mr-3 px-2" href="<?= base_url('home/login') ?>">
+                                <a class="nav-link badge badge-success text-light mr-3 px-2" href="<?= base_url('home/view/login') ?>">
                                     Fazer login
                                 </a>
                             </h3>

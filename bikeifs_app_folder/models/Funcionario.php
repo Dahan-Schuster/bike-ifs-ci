@@ -1,6 +1,7 @@
 <?php
 
 require_once('Tools.php');
+require_once('../models/SituacaoFuncionario.php');
 
 class Funcionario extends CI_Model
 {
@@ -24,10 +25,12 @@ class Funcionario extends CI_Model
     {
         $cpf = Tools::formatCnpjCpf($login);
         $this->db->where("(email='$login' OR cpf='$cpf')");
-        $this->db->where("senha", md5($senha));
-
         $result = $this->db->get('FUNCIONARIO');
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+
+        if ($result->num_rows() > 0)
+            return  password_verify($senha, $result->row()->senha);
+
+        return false;
     }
 
     /**
@@ -60,6 +63,7 @@ class Funcionario extends CI_Model
     public function inserir($valores)
     {
         $this->db->insert('FUNCIONARIO', $valores);
+        return $this->db->insert_id();
     }
 
     /**
@@ -83,7 +87,7 @@ class Funcionario extends CI_Model
     public function listarTodos()
     {
         $result = $this->db->get('FUNCIONARIO');
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
 
@@ -98,27 +102,43 @@ class Funcionario extends CI_Model
     public function listarPorCampos($camposValores)
     {
         $result = $this->db->get_where('FUNCIONARIO', $camposValores);
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**
-     * Ativa a Funcionario encontrado com o id enviado
+     * Ativa os Funcionarios encontrados com os ids enviados
      * 
-     * @param $id - o id do funcionário a ser ativado
+     * @param array $ids - os ids dos funcionários a serem ativados
      */
-    public function ativar($id)
+    public function ativar($ids)
     {
-        $this->db->where('id', $id)->update('FUNCIONARIO', array('situacao', SituacaoFuncionario::ATIVO));
+        foreach ($ids as $id) {
+            $this->db->or_where('id', $id);
+        }
+        $this->db->update('FUNCIONARIO', array('situacao', SituacaoFuncionario::ATIVO));
     }
 
     /**
-     * Desativa a Funcionario encontrado com o id enviado
+     * Desativa os Funcionarios encontrados com os ids enviados
      * 
-     * @param $id - o id do funcionário a ser desativado
+     * @param array $ids - os ids dos funcionários a serem desativados
      */
-    public function desativar($id)
+    public function desativar($ids)
     {
-        $this->db->where('id', $id)->update('FUNCIONARIO', array('situacao', SituacaoFuncionario::INATIVO));
+        foreach ($ids as $id) {
+            $this->db->or_where('id', $id);
+        }
+        $this->db->update('FUNCIONARIO', array('situacao', SituacaoFuncionario::INATIVO));
+    }
+
+    /**
+     * Verifica se existe um registro com um atributo igual ao enviado por parâmetro
+     * Usado para evitar duplicidade em campos UNIQUE (cpf, email, matrícula)
+     */
+    public function estaCadastrado($campo, $valor)
+    {
+        $this->db->from('FUNCIONARIO')->where($campo, $valor);
+        return $this->db->get()->num_rows() > 0;
     }
 
 
@@ -132,7 +152,7 @@ class Funcionario extends CI_Model
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
         $result = $this->db->get_where('FUNCIONARIO', array($foreignKey => $valor));
-        return ($result->num_rows() > 0) ? $result->row() : NULL;
+        return ($result->num_rows() > 0) ? $result : NULL;
     }
 
     /**

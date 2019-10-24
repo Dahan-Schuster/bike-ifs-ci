@@ -19,11 +19,11 @@ if (isset($_SESSION['login'])) {
                             <label for="inputCor">Cor <span class="text-danger"><b>*</b></span></label>
                             <div class="input-group">
                                 <div class="form-control bike-color" id="inputCor" style="background: repeating-linear-gradient(45deg, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%);">
-                                    <img src="http://bikeifs.com/public/img/icons/bycicle.png" alt="" title="Escolher cor da bike">
+                                    <img src="<?= base_url() ?>/public/img/icons/bycicle.png" alt="" title="Escolher cor da bike">
                                 </div>
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEscolherCor" style="outline: none; box-shadow: none; padding: 0 .75rem;">
-                                        <img src="http://bikeifs.com/public/img/icons/color.png" title="Escolher cor" alt="Escolher cor">
+                                        <img src="<?= base_url() ?>/public/img/icons/color.png" title="Escolher cor" alt="Escolher cor">
                                     </button>
                                 </div>
                             </div>
@@ -61,7 +61,7 @@ if (isset($_SESSION['login'])) {
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPesquisarUsuario" style="outline: none; box-shadow: none; padding: 0 .75rem;">
-                                        <img src="http://bikeifs.com/public/img/icons/search.png" title="Pesquisar usuário" alt="Pesquisar">
+                                        <img src="<?= base_url() ?>/public/img/icons/search.png" title="Pesquisar usuário" alt="Pesquisar">
                                     </button>
                                 </div>
                                 <select id="selectUsuario" class="form-control" required>
@@ -99,8 +99,8 @@ include_once('../modals/modalBikeJaCadastrada.html');
 include_once('../modals/modalEscolherCor.html');
 include_once('../modals/modalErroCadastro.html');
 ?>
-<script language="javascript" src="http://bikeifs.com/public/lib/scripts/pesquisar.usuario.js"></script>
-<script language="JavaScript" src="http://bikeifs.com/public/lib/scripts/escolher.cores.js"></script>
+<script language="javascript" src="<?= base_url() ?>/public/js/pesquisar.usuario.js"></script>
+<script language="JavaScript" src="<?= base_url() ?>/public/js/escolher.cores.js"></script>
 <script type="text/javascript">
     var tabelaUsuarios;
 
@@ -116,7 +116,7 @@ include_once('../modals/modalErroCadastro.html');
         if (!this.checkValidity())
             return;
 
-        var url = "http://bikeifs.com/app/src/controller/inserir/bicicleta.php";
+        var url = "<?= base_url() ?>/app/src/controller/inserir/bicicleta.php";
 
         var cores = stringArrayCores();
         var modelo = $("#selectModelo").val();

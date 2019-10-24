@@ -119,7 +119,7 @@ include_once('../modals/modalErroCadastro.html');
         else if (!validarDados())
             return;
 
-        var url = "http://bikeifs.com/app/src/controller/inserir/usuario.php";
+        var url = "<?= base_url() ?>/app/src/controller/inserir/usuario.php";
 
         var nome = $("#inputNome").val();
         var telefone = $("#inputTel").val();
@@ -156,7 +156,7 @@ include_once('../modals/modalErroCadastro.html');
     });
 
     function pesquisarAlunosViaAjax() {
-        var url = "http://bikeifs.com/app/src/controller/carregar/alunos.php";
+        var url = "<?= base_url() ?>/app/src/controller/carregar/alunos.php";
         $.ajax({
             type: "POST",
             url,
@@ -204,7 +204,7 @@ include_once('../modals/modalErroCadastro.html');
         var telefone = $("#inputTel").val(usuario.Telefone.trim());
         var email = $("#inputEmail").val(usuario.Email.trim());
         var tipo = $("#selectTipo").val(usuario.Tipo.trim());
-        var documento = $("#inputDoc").val(usuario.CPF.trim());
+        var cpf = $("#inputDoc").val(usuario.CPF.trim());
     }
 
 

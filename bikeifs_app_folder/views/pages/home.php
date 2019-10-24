@@ -11,7 +11,7 @@
             <div style="text-align: center;">
                 <div class="heading-home">
                     <h1><span class="mu-0">
-                            <img class="icon-home" src="http://bikeifs.com/public/img/icon.svg" alt="icone bike ifs"> Bike IFS
+                            <img class="icon-home" src="<?= base_url() ?>/public/img/icon.svg" alt="icone bike ifs"> Bike IFS
                     </span></h1>
                 </div>
                 <p class="lead text-light" style="font-size: 2rem;">
@@ -20,14 +20,14 @@
                 </p>
             </div>
             <hr class="my-4 bg-light">
-            <img src="http://bikeifs.com/public/img/img-logo.svg" class="img-fluid figure-img img-home float-left" alt="Logo Bike-IFS">
+            <img src="<?= base_url() ?>/public/img/img-logo.svg" class="img-fluid figure-img img-home float-left" alt="Logo Bike-IFS">
             <br>
             <p class="p-home">
                 O Bike-IFS é um sistema feito como projeto de Trabalho de Conclusão de Curso (TCC) da disciplina de Informática do aluno
                 Dahan Poiel Lima Schuster, em conjunto coms os esforços da orientadora Leila Buarque Couto de Matos, do cooorientador
                 Fábio de Melo - ambos professores do IFS - e de outras pessoas que se dispuseram a ajudar o trabalho.
             </p>
-            <img src="http://bikeifs.com/public/img/ifs-logo.png" class="img-fluid figure-img img-thumbnail img-home float-right" alt="Logo IFS">
+            <img src="<?= base_url() ?>/public/img/ifs-logo.png" class="img-fluid figure-img img-thumbnail img-home float-right" alt="Logo IFS">
             <br>
             <p class="p-home">
                 O objetivo do sistema é garantir uma boa experiência aos usuários do bicicletário do Instituto, utilizando a Informática e a Eletrônica
@@ -57,7 +57,7 @@
                       </ol>
                       <div class="carousel-inner">
                         <div class="carousel-item active">
-                          <img src="http://bikeifs.com/public/img/urban-bike.jpg" class="d-block w-100" alt="Bicicleta Urbana">
+                          <img src="<?= base_url() ?>/public/img/urban-bike.jpg" class="d-block w-100" alt="Bicicleta Urbana">
                           <div class="carousel-caption d-none d-md-block">
                             <h3>Bicicleta Urbana</h3>
                             <p>Modelo mais comum nas cidades. Pode apresentar variações como cestinha, guidão estendido etc.</p>
@@ -65,49 +65,49 @@
                           </div>
                         </div>
                         <div class="carousel-item">
-                          <img src="http://bikeifs.com/public/img/folding-bike.jpg" class="d-block w-100" alt="...">
+                          <img src="<?= base_url() ?>/public/img/folding-bike.jpg" class="d-block w-100" alt="...">
                           <div class="carousel-caption d-none d-md-block">
                             <h3>Bicicleta dobrável</h3>
                             <p>Tipo de bicicleta que pode ser dobrada e guardada em locais pequenos. Geralmente são pequenas em altura.</p>
                           </div>
                         </div>
                         <div class="carousel-item">
-                          <img src="http://bikeifs.com/public/img/fixie-bike.jpg" class="d-block w-100" alt="...">
+                          <img src="<?= base_url() ?>/public/img/fixie-bike.jpg" class="d-block w-100" alt="...">
                           <div class="carousel-caption d-none d-md-block">
                             <h3>Bicicleta fixa</h3>
                             <p>Modelo de bicicleta sem freios. A tração e a frenagem são realizados ao pedalar para frente ou para trás.</p>
                           </div>
                         </div>
                         <div class="carousel-item">
-                          <img src="http://bikeifs.com/public/img/mountain-bike.jpg" class="d-block w-100" alt="...">
+                          <img src="<?= base_url() ?>/public/img/mountain-bike.jpg" class="d-block w-100" alt="...">
                           <div class="carousel-caption d-none d-md-block">
                             <h3><i>Mountain Bike</i></h3>
                             <p>Bicicleta de montanha, ótima para qualquer terreno. Possui guidão reto e visual semelhante às bicicletas <i>speed</i></p>
                           </div>
                         </div>
                         <div class="carousel-item">
-                          <img src="http://bikeifs.com/public/img/speed-bike.jpg" class="d-block w-100" alt="...">
+                          <img src="<?= base_url() ?>/public/img/speed-bike.jpg" class="d-block w-100" alt="...">
                           <div class="carousel-caption d-none d-md-block">
                             <h3>Bicicleta <i>Speed</i></h3>
                             <p>Bicicleta de corrida com visual leve e pneus finos.</p>
                           </div>
                         </div>
                         <div class="carousel-item">
-                          <img src="http://bikeifs.com/public/img/bmx-bike.jpg" class="d-block w-100" alt="...">
+                          <img src="<?= base_url() ?>/public/img/bmx-bike.jpg" class="d-block w-100" alt="...">
                           <div class="carousel-caption d-none d-md-block">
                             <h3>BMX</h3>
                             <p>Bicicletas pequenas indicadas para a prática do <i>bicicross</i>, mas também utilizadas como meio de transporte.</p>
                           </div>
                         </div>
                         <div class="carousel-item">
-                          <img src="http://bikeifs.com/public/img/downhill-bike.jpg" class="d-block w-100" alt="...">
+                          <img src="<?= base_url() ?>/public/img/downhill-bike.jpg" class="d-block w-100" alt="...">
                           <div class="carousel-caption d-none d-md-block">
                             <h3>Bicicleta de <i>Downhill</i></h3>
                             <p>Bicicletas utilizadas em descidas de colinas, ou <i>downhill</i>. São pesadas, cheias de suspensão e possuem design diferenciado.</p>
                           </div>
                         </div>
                         <div class="carousel-item">
-                          <img src="http://bikeifs.com/public/img/e-bike.jpg" class="d-block w-100" alt="...">
+                          <img src="<?= base_url() ?>/public/img/e-bike.jpg" class="d-block w-100" alt="...">
                           <div class="carousel-caption d-none d-md-block">
                             <h3>Bicicleta elétrica (<i>E-Bike</i>)</h3>
                             <p>Bicicletas com baterias elétricas recarregáveis. Podem ser conduzidas sem necessidade de pedalar. Existem diversos

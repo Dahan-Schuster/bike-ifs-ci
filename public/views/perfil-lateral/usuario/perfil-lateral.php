@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="http://bikeifs.com/public/lib/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="http://bikeifs.com/public/lib/css/datatables.min.css" />
-    <link rel="stylesheet" type="text/css" href="http://bikeifs.com/public/lib/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="http://bikeifs.com/public/lib/css/estilo.css">
-    <link rel="stylesheet" type="text/css" href="http://bikeifs.com/public/lib/css/perfil.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/estilo.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/perfil.css">
 </head>
 
 <body id="body-perfil-sidepanel">
@@ -16,7 +16,7 @@
         <div class="perfil">
             <div class="perfil-sidebar pb-3">
                 <div class="perfil-foto">
-                    <img src="http://bikeifs.com/public/img/icons/cyclist.png" title="Usuário" class="img-responsive" alt="Usuário">
+                    <img src="<?= base_url() ?>/public/img/icons/cyclist.png" title="Usuário" class="img-responsive" alt="Usuário">
                 </div>
                 <div class="perfil-titulo">
                     <div id="perfil-nome" class="perfil-titulo-nome">
@@ -29,13 +29,13 @@
                     <ul class="nav">
                         <li>
                             <button id="btn-info" type="button">
-                                <img src="http://bikeifs.com/public/img/icons/info.png" title="Bicicletas do usuário" alt="Bicicletas">
+                                <img src="<?= base_url() ?>/public/img/icons/info.png" title="Bicicletas do usuário" alt="Bicicletas">
                                 <span>Informações</span>
                             </button>
                         </li>
                         <li>
                             <button id="btn-bikes" type="button">
-                                <img src="http://bikeifs.com/public/img/icons/bikes.png" title="Bicicletas do usuário" alt="Bicicletas">
+                                <img src="<?= base_url() ?>/public/img/icons/bikes.png" title="Bicicletas do usuário" alt="Bicicletas">
                                 <span>Bicicletas</span>
                             </button>
                         </li>
@@ -54,8 +54,8 @@
     <!-- Fim SnackBars -->
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script language="javascript" src="http://bikeifs.com/public/lib/scripts/ferramentas.js"></script>
-<script language="JavaScript" src="http://bikeifs.com/public/lib/scripts/escolher.cores.slim.js"></script>
+<script language="javascript" src="<?= base_url() ?>/public/js/ferramentas.js"></script>
+<script language="JavaScript" src="<?= base_url() ?>/public/js/escolher.cores.slim.js"></script>
 <script>
     var usuarioCarregado;
 
@@ -85,7 +85,7 @@
     function pesquisarUsuario() {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/carregar/usuario-por-id.php',
+            url: '<?= base_url() ?>/app/src/controller/carregar/usuario-por-id.php',
             data: {
                 user: usuarioCarregado
             },
@@ -101,7 +101,7 @@
 
         $.ajax({
             type: "POST",
-            url: "http://bikeifs.com/app/src/controller/carregar/bicicletas-usuario.php",
+            url: "<?= base_url() ?>/app/src/controller/carregar/bicicletas-usuario.php",
             data: {
                 id: usuarioCarregado
             },
@@ -119,7 +119,7 @@
                     atualizarArrayCores(bike.cores); // Criando o css das cores
                     let cssBackground = criarCssBackground();
                     $(divCores).css('background', cssBackground) // Formatando o background da div
-                    $(divCores).html('<img src="http://bikeifs.com/public/img/icons/bike-' + bike.modelo.toLowerCase() + '.png">')
+                    $(divCores).html('<img src="<?= base_url() ?>/public/img/icons/bike-' + bike.modelo.toLowerCase() + '.png">')
                     $(colunaCores).html(divCores) // Colocando a div das cores na coluna
 
                     // Cria a coluna do modelo
@@ -166,7 +166,7 @@
     function ativarUsuario() {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/ativar/usuario.php',
+            url: '<?= base_url() ?>/app/src/controller/ativar/usuario.php',
             data: {
                 "user": usuarioCarregado
             },
@@ -180,7 +180,7 @@
     function desativarUsuario() {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/desativar/usuario.php',
+            url: '<?= base_url() ?>/app/src/controller/desativar/usuario.php',
             data: {
                 "user": usuarioCarregado
             },
@@ -201,7 +201,7 @@
     function ativarBike(bike) {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/ativar/bicicleta.php',
+            url: '<?= base_url() ?>/app/src/controller/ativar/bicicleta.php',
             data: {
                 bike
             },
@@ -216,7 +216,7 @@
     function desativarBike(bike) {
         $.ajax({
             type: "POST",
-            url: 'http://bikeifs.com/app/src/controller/desativar/bicicleta.php',
+            url: '<?= base_url() ?>/app/src/controller/desativar/bicicleta.php',
             data: {
                 bike
             },
