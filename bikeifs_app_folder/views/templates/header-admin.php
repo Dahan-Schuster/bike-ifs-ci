@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Sistema de controle e gerenciamento de entrada e saída de bicicletas do bicicletário do Instituto Federal de Sergipe.">
     <meta name="keywords" content="bicicletário, ifs, instituto federal de sergipe, bicicletas, controle de entrada, tecnologia, inovação">
-    <link rel="shortcut icon" type="image/x-icon" href="<?= base_url() ?>/favicon.ico">
-    <link rel="icon" type="image/x-icon" href="<?= base_url() ?>/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('favicon.ico') ?>">
+    <link rel="icon" type="image/x-icon" href="<?= base_url('favicon.ico') ?>">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/bootstrap-material-design.min.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/palette.css">

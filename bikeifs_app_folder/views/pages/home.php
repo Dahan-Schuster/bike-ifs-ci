@@ -1,5 +1,5 @@
 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb breadcrumb-home header-gradient">
+  <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#Introdução">Introdução</a></li>
     <li class="breadcrumb-item"><a href="#Informações">Informações Úteis</a></li>
   </ol>

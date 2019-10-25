@@ -1,19 +1,13 @@
-var inpSenha = document.getElementById("inpsenha")
-
 $("#botaoVisibilidade").on("mousedown mouseup", function() {
     alterarVisibilidadeSenha()
 })
 
 function alterarVisibilidadeSenha() {
-    let src = BASE_URL + "/public/img/icons/";
-    inpSenha.type = (inpSenha.type == "text" ? "password" : "text")
-    src += (inpSenha.type == "text" ? "hide.png" : "view.png")
-    $("#botaoVisibilidade img").attr("src", src);
+    var inputSenha = document.getElementById("inputSenha")
+    inputSenha.type = (inputSenha.type == "text" ? "password" : "text")
+    var visibilidade = (inputSenha.type == "text" ? "visibility_off" : "visibility")
+    $("#botaoVisibilidade i").html(visibilidade);
 }
-
-$("#botaoEsqueciSenha").click(function() {
-    location = BASE_URL + "home/view/esqueciSenha/"
-})
 
 $("#formLogin").submit(function(form) {
     form.preventDefault()

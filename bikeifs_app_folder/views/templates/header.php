@@ -9,7 +9,9 @@
     <meta name="keywords" content="bicicletário, ifs, instituto federal de sergipe, bicicletas, controle de entrada, tecnologia, inovação">
     <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('favicon.ico'); ?>">
     <link rel="icon" type="image/x-icon" href="<?= base_url('favicon.ico'); ?>">
-    <link rel="stylesheet" type="text/css" href="<?= base_url('public/css/bootstrap.min.css'); ?>">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/palette.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url('public/css/estilo.css'); ?>">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
@@ -26,23 +28,21 @@ endif;
 
 <body>
     <header>
-        <nav class="navbar sticky-top navbar-expand-xl navbar-light bg-dark header-gradient">
+        <nav class="navbar sticky-top navbar-expand-xl navbar-dark bg-dark-primary">
             <div class="container">
                 <a class="navbar-brand" href="<?= base_url() ?>">
-                    <img class='logo' src="<?= base_url('public/img/img-logo.svg'); ?>" title="Logo" alt="Logo">
-                    <img class='logo' src="<?= base_url('public/img/nome-logo.svg'); ?>" title="Bike IFS" alt="Bike IFS">
+                    <img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Logo" alt="Logo">
+                    <img class='logo' src="<?= base_url() ?>/public/img/nome-logo.svg" title="Bike IFS" alt="Bike IFS">
                 </a>
-                <button class="navbar-toggler bg-primary py-2" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler bg-default-primary" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="material-icons">menu</i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <h3>
-                                <a class="nav-link badge badge-success text-light mr-3 px-2" href="<?= base_url('home/view/login') ?>">
-                                    Fazer login
-                                </a>
-                            </h3>
+                        <li class="nav-item">
+                            <a id="navLinkLogin" class="nav-link" href="<?= base_url('home/view/login') ?>">
+                                Entrar no sistema
+                            </a>
                         </li>
                     </ul>
                 </div>

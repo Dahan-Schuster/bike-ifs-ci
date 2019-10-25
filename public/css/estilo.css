@@ -3,10 +3,14 @@
   left: 50% !important;
   right: 50% !important;
   text-align: left !important;
-  transform: translate(-50%, 0) scale(1.2) !important;
+  transform: translate(-50%, 0) !important;
   display: block;
   position: relative;
   margin: 40px auto;
+}
+
+.raised {
+  box-shadow: 0px 2px 6px gray !important;
 }
 
 .canvas-list div canvas {
@@ -154,24 +158,9 @@ table.dataTable tr.dtrg-group td {
   background-color: rgba(30, 30, 30, 8);
 }
 
-#botaoVisibilidade {
-  background: rgba(0, 186, 186, 0.596);
-}
-
-#botaoEsqueciSenha {
-  text-align: right;
-  background: transparent;
-  border: 0;
-  margin-top: 10px;
-  padding: 5px;
-  color: #35bfff;
-  outline: none;
-}
-
-#botaoEsqueciSenha:hover {
-  cursor: pointer;
-  text-decoration: underline;
-  color: white;
+#botaoVisibilidade:hover,
+#botaoVisibilidade:focus {
+  background: transparent !important;
 }
 
 .carousel-caption {
@@ -259,11 +248,6 @@ table.dataTable tr.dtrg-group td {
 .autocomplete {
   position: relative;
   display: inline-block;
-}
-
-.breadcrumb {
-  background-color: #fff;
-  box-shadow: 2px 2px 5px darkgrey;
 }
 
 .autocomplete-items {
@@ -356,10 +340,6 @@ table.dataTable tr.dtrg-group td {
   right: 1%;
 }
 
-.invert {
-  filter: invert(100%);
-}
-
 .text-sm {
   font-size: 10pt;
 }
@@ -421,181 +401,16 @@ table.dataTable tr.dtrg-group td {
   overflow-x: hidden !important;
 }
 
-.table-h,
-.table-f {
-  /* table head / foot */
-  background-color: rgb(60, 200, 100);
-}
-
 .table {
   z-index: 1039;
 }
 
-.text-center {
-  text-align: center;
-}
-
-th.dt-center,
-td.dt-center {
-  text-align: center;
-}
-
-.logo {
-  width: 100px;
+.dt-center, .text-center {
+  text-align: center !important;
 }
 
 .navbar {
   margin-bottom: 30px;
-}
-
-body {
-  font-family: helvetica, arial;
-  font-size: 16px;
-  color: #333;
-  background-color: #f0f0f0;
-}
-
-.container {
-  width: 100%;
-}
-
-.bg-darksecondary {
-  background-color: #0c5460;
-}
-
-.jumbotron-cadastro {
-  background-color: rgb(240, 240, 240);
-}
-
-.card {
-  transition: all .2s ease-in-out;
-  border-radius: 15px;
-}
-
-.card-header {
-  background: #27ecaaa1;
-}
-
-.card-danger a {
-  color: #fff !important;
-  background: #dc3545 !important;
-  border-color: #dc3545 !important;
-}
-
-.card-danger a:hover {
-  color: #fff !important;
-  background: #bd2130 !important;
-  border-color: #b21f2d !important;
-}
-
-.card-danger .card-header {
-  color: white !important;
-  background: #b40d2f !important;
-}
-
-.card-header:first-child {
-  border-radius: 15px 15px 0 0;
-}
-
-.card-body a,
-.btn-card {
-  background: linear-gradient(to right, rgba(100, 255, 200, 0.5), rgba(100, 175, 255, 0.5));
-  border: 1px solid black;
-}
-
-.card-body a:hover,
-.btn-card:hover {
-  background: linear-gradient(to right, rgba(0, 155, 100, 0.5), rgba(0, 75, 155, 0.5));
-}
-
-.card:hover {
-  box-shadow: 5px 5px 15px gray;
-  transform: scale(1.05);
-}
-
-.card-inativo {
-  filter: grayscale(1);
-  transition: all 0.2s linear;
-}
-
-.card-inativo:hover {
-  filter: grayscale(1) blur(5px);
-  transform: none !important;
-  box-shadow: none !important;
-}
-
-.card-inativo-aviso {
-  visibility: hidden;
-  position: relative;
-  top: -55%;
-  left: 15%;
-  filter: blur(0) !important;
-  transition: visibility 0.2s linear;
-}
-
-.card-inativo-col:hover .card-inativo-aviso {
-  visibility: visible;
-}
-
-
-/* The snackbar - position it at the bottom and in the middle of the screen */
-
-.snackbar {
-  visibility: hidden;
-  min-width: 250px;
-  margin-left: -125px;
-  text-align: center;
-  border-radius: 5px;
-  box-shadow: 0 5px 15px gray;
-  padding: 16px;
-  position: fixed;
-  left: 50%;
-  bottom: 30px;
-}
-
-
-/* Show the snackbar when clicking on a button (class added with JavaScript) */
-
-.snackbar.show {
-  z-index: 2000;
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 4.5s;
-  animation: fadein 0.5s, fadeout 0.5s 4.5s;
-}
-
-.snackbar-invalido {
-  background-color: rgb(195, 46, 46);
-  color: #fff;
-}
-
-.snackbar-sucesso {
-  background-color: rgb(46, 195, 121);
-  color: rgb(0, 0, 0);
-}
-
-
-/* Animations to fade the snackbar in and out */
-
-@-webkit-keyframes fadein {
-  from {
-    bottom: 0;
-    opacity: 0;
-  }
-  to {
-    bottom: 30px;
-    opacity: 1;
-  }
-}
-
-@keyframes fadein {
-  from {
-    bottom: 0;
-    opacity: 0;
-  }
-  to {
-    bottom: 30px;
-    opacity: 1;
-  }
 }
 
 @-webkit-keyframes fadeout {
@@ -620,22 +435,6 @@ body {
   }
 }
 
-.header-gradient {
-  background: -moz-linear-gradient(140deg, #15A334 0%, #12A242 8%, #10A14B 13%, #009BBA 73%);
-  /* ff3.6+ */
-  background: -webkit-gradient(linear, left top, right bottom, color-stop(27%, #009BBA), color-stop(87%, #10A14B), color-stop(92%, #12A242), color-stop(100%, #15A334));
-  /* safari4+,chrome */
-  background: -webkit-linear-gradient(140deg, #15A334 0%, #12A242 8%, #10A14B 13%, #009BBA 73%);
-  /* safari5.1+,chrome10+ */
-  background: -o-linear-gradient(140deg, #15A334 0%, #12A242 8%, #10A14B 13%, #009BBA 73%);
-  /* opera 11.10+ */
-  background: -ms-linear-gradient(140deg, #15A334 0%, #12A242 8%, #10A14B 13%, #009BBA 73%);
-  /* ie10+ */
-  background: linear-gradient(310deg, #15A334 0%, #12A242 8%, #10A14B 13%, #009BBA 73%);
-  /* w3c */
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#009BBA', endColorstr='#15A334', GradientType=1);
-}
-
 .form-control:focus {
   color: #495057;
   background-color: #fff;
@@ -652,7 +451,22 @@ body {
 }
 
 html {
-  overflow: hidden;
+  overflow-x: hidden;
+}
+
+img.logo {
+  width: 100px;
+}
+
+body {
+  font-family: helvetica, arial;
+  font-size: 16px;
+  color: #333;
+  background-color: #f0f0f0;
+}
+
+.container {
+  width: 100%;
 }
 
 #pagina {
