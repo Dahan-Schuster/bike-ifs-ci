@@ -1,5 +1,10 @@
-$("#botaoVisibilidade").on("mousedown mouseup", function() {
-    alterarVisibilidadeSenha()
+$(document).ready(function() {
+    $("#botaoVisibilidade").on("mousedown mouseup", function() {
+        alterarVisibilidadeSenha()
+    })
+
+    $(".nav-link").removeClass('active')
+    $("#navLinkLogin").addClass('active')
 })
 
 function alterarVisibilidadeSenha() {
