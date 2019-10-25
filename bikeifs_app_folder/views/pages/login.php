@@ -1,7 +1,7 @@
 <?php @session_destroy(); ?>
-<div class="dropdown-menu dropdown-menu-center show pt-0">
+<div class="dropdown-menu dropdown-menu-center show py-0">
     <div class="alert raised bg-default-primary text-light">
-        <h4 id="aviso-login">Login</h4>
+        <h4>Login</h4>
     </div>
     <form id="formLogin" autocomplete="off" class="px-4 pb-5">
         <div class="form-group">
@@ -45,9 +45,11 @@
                 </div>
             </div>
         </div>
-        <button style="display: flex; float: right;" id="btnEntrar" type="submit" class="btn btn-raised accent-color">Entrar</button>
+        <button style="display: flex; float: right;" id="btnEntrar" type="submit" class="btn btn-raised accent-color text-primary-color">Entrar</button>
     </form>
 
     <div class="dropdown-divider"></div>
     <a class="dropdown-item text-muted pl-2" href="<?= base_url('home/view/esqueciSenha') ?>">Esqueci a senha</a>
+    <div id="aviso-login" style="display: none" class="alert bg-success text-light mb-0">
+    </div>
 </div>

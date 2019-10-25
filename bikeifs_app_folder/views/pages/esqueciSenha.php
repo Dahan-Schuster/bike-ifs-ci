@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <button id="btnEnviar" type="submit" class="btn btn-raised accent-color" style="display: flex; float: right;">Enviar</button>
+        <button id="btnEnviar" type="submit" class="btn btn-raised accent-color text-primary-color" style="display: flex; float: right;">Enviar</button>
     </form>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item text-muted pl-2" href="<?= base_url('home/view/login') ?>">Voltar para a página de Login</a>
