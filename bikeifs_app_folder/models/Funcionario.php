@@ -1,7 +1,7 @@
 <?php
 
 require_once('Tools.php');
-require_once('../models/SituacaoFuncionario.php');
+require_once(APPPATH . 'models/SituacaoFuncionario.php');
 
 class Funcionario extends CI_Model
 {

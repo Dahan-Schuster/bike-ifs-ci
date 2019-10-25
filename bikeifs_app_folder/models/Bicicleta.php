@@ -1,6 +1,6 @@
 <?php
 
-require_once('../models/SituacaoBicicleta.php');
+require_once(APPPATH . 'models/SituacaoBicicleta.php');
 
 class Bicicleta extends CI_Model
 {

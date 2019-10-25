@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('Não é permitido acesso direto aos scripts.');
 
-require_once(APPPATH . '/models/SituacaoUsuario.php');
+require_once(APPPATH . 'models/SituacaoUsuario.php');
 
 class Relatorios extends CI_Controller
 {

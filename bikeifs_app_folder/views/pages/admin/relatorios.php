@@ -140,6 +140,8 @@ if (isset($_SESSION['login'])) :
 
         configurarCanvas();
 
+		$(".nav-link").removeClass('active')
+		$("#navLinkRelatorios").addClass('active')
     })
 
     function configurarCanvas() {

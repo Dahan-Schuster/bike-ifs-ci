@@ -1,7 +1,7 @@
 <?php
 
 require_once('Tools.php');
-require_once('../models/SituacaoUsuario.php');
+require_once(APPPATH . 'models/SituacaoUsuario.php');
 
 class Usuario extends CI_Model
 {

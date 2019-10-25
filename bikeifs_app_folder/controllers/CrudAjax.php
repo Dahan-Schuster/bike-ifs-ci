@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') or exit('Não é permitido acesso direto aos scripts.');
 
-require_once(APPPATH . '/models/Tools.php');
-require_once(APPPATH . '/models/ModeloBike.php');
-require_once(APPPATH . '/models/TipoUsuario.php');
-require_once(APPPATH . '/models/SituacaoUsuario.php');
-require_once(APPPATH . '/models/SituacaoBicicleta.php');
-require_once(APPPATH . '/models/SituacaoFuncionario.php');
+require_once(APPPATH . 'models/Tools.php');
+require_once(APPPATH . 'models/ModeloBike.php');
+require_once(APPPATH . 'models/TipoUsuario.php');
+require_once(APPPATH . 'models/SituacaoUsuario.php');
+require_once(APPPATH . 'models/SituacaoBicicleta.php');
+require_once(APPPATH . 'models/SituacaoFuncionario.php');
 
 class CrudAjax extends CI_Controller
 {
@@ -68,10 +68,10 @@ class CrudAjax extends CI_Controller
         endif;
 
         if (empty($data['senha'])) :
-            $json['error_list']['#divInputSenha'] = 'A senha é obrigatória.';
+            $response['error_list']['#divInputSenha'] = 'A senha é obrigatória.';
         else :
             if (strval($data['senha']) != strval($data['confirmar_senha'])) :
-                $json['error_list']['#divInputConfirmarSenha'] = 'As senhas não coincidem.';
+                $response['error_list']['#divInputConfirmarSenha'] = 'As senhas não coincidem.';
             else :
                 $data['senha'] = password_hash($data['senha'], PASSWORD_DEFAULT);
                 unset($data['confirmar_senha']);
@@ -143,10 +143,10 @@ class CrudAjax extends CI_Controller
         endif;
 
         if (empty($data['senha'])) :
-            $json['error_list']['#divInputSenha'] = 'A senha é obrigatória.';
+            $response['error_list']['#divInputSenha'] = 'A senha é obrigatória.';
         else :
             if (strval($data['senha']) != strval($data['confirmar_senha'])) :
-                $json['error_list']['#divInputConfirmarSenha'] = 'As senhas não coincidem.';
+                $response['error_list']['#divInputConfirmarSenha'] = 'As senhas não coincidem.';
             else :
                 $data['senha'] = password_hash($data['senha'], PASSWORD_DEFAULT);
                 unset($data['confirmar_senha']);
@@ -234,10 +234,10 @@ class CrudAjax extends CI_Controller
         endif;
 
         if (empty($data['senha'])) :
-            $json['error_list']['#divInputSenha'] = 'A senha é obrigatória.';
+            $response['error_list']['#divInputSenha'] = 'A senha é obrigatória.';
         else :
             if (strval($data['senha']) != strval($data['confirmar_senha'])) :
-                $json['error_list']['#divInputConfirmarSenha'] = 'As senhas não coincidem.';
+                $response['error_list']['#divInputConfirmarSenha'] = 'As senhas não coincidem.';
             else :
                 $data['senha'] = password_hash($data['senha'], PASSWORD_DEFAULT);
                 unset($data['confirmar_senha']);
@@ -643,7 +643,7 @@ class CrudAjax extends CI_Controller
     /**
      * Função acessada via requisições AJAX para deleção de Administradores
      */
-    public function ajaxDeletarAdmin()
+    public function ajaxDeletarAdmins()
     {
         if (!$this->input->is_ajax_request())
             exit("Não é permitido aceso direto aos scripts.");
@@ -665,7 +665,7 @@ class CrudAjax extends CI_Controller
     /**
      * Função acessada via requisições AJAX para deleção de Tags RFID
      */
-    public function ajaxDeletarTagRFID()
+    public function ajaxDeletarTagsRFID()
     {
         if (!$this->input->is_ajax_request())
             exit("Não é permitido aceso direto aos scripts.");

@@ -1,16 +1,16 @@
 const BASE_URL = "http://localhost/bike-ifs-ci/"
 
 function clearErrors() {
-    $(".has-error").removeClass('has-error')
-    $(".help-block").html("")
+    $(".is-invalid").removeClass('is-invalid')
+    $(".invalid-feedback").html("")
 }
 
 function showErrors(error_list) {
     clearErrors()
 
     $.each(error_list, function(error_container, message) {
-        $(error_container).addClass('has-error')
-        $(error_container).find('.help-block').html(message)
+        $(error_container).find('.form-control').addClass('is-invalid')
+        $(error_container).find('.invalid-feedback').html(message)
     })
 }
 
@@ -56,8 +56,10 @@ function alertSnackBar(snackbar, mensagem) {
         .html(mensagem);
 
     // Remove a classe 'show' após 5 segundos
-    setTimeout(function() { $(snackbar)
-            .removeClass('show') }, 5000);
+    setTimeout(function() {
+        $(snackbar)
+            .removeClass('show')
+    }, 5000);
 }
 
 function getDataUri(url, callback) {
@@ -76,3 +78,22 @@ function getDataUri(url, callback) {
 
     image.src = url;
 }
+
+
+/** Método usado em conjunto com o framework DataTables
+ *  
+ * Recupera os dados da linha em que está o botão enviado por parâmetro
+ *  
+ */
+function recuperarInformacoesDaLinha(button) {
+    var linha = $(button).parents('tr');
+    if (linha.hasClass('child')) { // Verifica se o botão está dentro de uma div expansível (para telas pequenas)
+        linha = linha.prev(); // Caso esteja, aponta para a linha anterior (a linha mãe)
+    }
+    var data = tabela.row(linha).data();
+    return data;
+}
+
+$('[data-toggle="modal"]').click(function(e) {
+    $(e.delegateTarget.dataset.target).trigger('show.bs.modal')
+})

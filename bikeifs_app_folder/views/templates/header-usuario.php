@@ -79,8 +79,8 @@
         </nav>
     </header>
     <div class="topo">
-        <button id="voltar_ao_topo" class="header-gradient" onclick="voltarAoTopo()" title="Voltar ao topo">
-            <img src="<?= base_url() ?>/public/img/icons/topo.png" alt="topo" class="invert">
+        <button id="voltar_ao_topo" class="btn bmd-btn-fab accent-color" onclick="voltarAoTopo()" title="Voltar ao topo">
+            <i class="material-icons material-icons" style="font-size: 36px">keyboard_arrow_up</i>
         </button>
     </div>
     <div class="container my-2">

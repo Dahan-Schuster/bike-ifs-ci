@@ -33,7 +33,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/footer-admin', $data);
     }
 
-    public function view($page = 'restrita')
+    public function view($page = 'home')
     {
         $page_dir = 'pages' . ($page == 'home' ? '' : '/admin');
 
@@ -47,8 +47,7 @@ class Admin extends CI_Controller
 
         $data = array(
             'scripts' => array(
-                'util.js',
-                'sweetalert2.all.min.js'
+                'util.js'
             )
         );
 
@@ -67,7 +66,15 @@ class Admin extends CI_Controller
 
         $data = array(
             'scripts' => array(
-                'util.js'
+                'datatables.min.js',
+                'dataTables.responsive.min.js',
+                'jquery.mask.min.js',
+                'util.js',
+                "$page.js"
+            ),
+            'styles' => array(
+                'datatables.min.css',
+                'responsive.dataTables.min.css'
             )
         );
 

@@ -1,169 +1,77 @@
-<?php
-@session_start();
-if (isset($_SESSION['login'])) {
-    if ($_SESSION['tipoAcesso'] == 'admin') { ?>
-        <div class="row">
-            <span class="col-12 col-md-6">
-                <h1>Lista de administradores</h1>
-            </span>
-            <div class="col-md-3"></div>
-            <a class="col-11 col-md-3 btn btn-success mu-0 mb-3 mx-auto" href="?pagina=listagem" role="button">
-                Voltar para o menu de listagem
-            </a>
-        </div>
-        <hr class="my-3">
-        <div class="table-responsive">
-            <table class="table table-sm responsive bg-light table-bordered table-striped table-hover" id="tableAdmins" style="width: 100%;">
-                <caption>
-                    Lista de administradores
-                </caption>
-                <thead class="table-h">
-                    <tr>
-                        <th>&#9432;</th>
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                        <th>CPF</th>
-                        <th>Excluir</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot class="table-f">
-                    <tr>
-                        <th>&#9432;</th>
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                        <th>CPF</th>
-                        <th>Excluir</th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        <br>
-    <?php } else { ?>
-        <div class="alert alert-danger" role="alert">
-            Você não tem permissão para acessar esta página.
-        </div>
-    <?php }
-    } else { ?>
-    <div class="alert alert-warning" role="alert">
-        É necessário fazer login para acessar esta página.
-    </div>
-<?php } ?>
-<!-- Modal excluir -->
-<div id="modalExcluir" class="modal fade" role="dialog">
+<div class="row">
+    <span class="col-12">
+        <h3>Lista de administradores</h3>
+    </span>
+</div>
+<hr class="my-3">
+<div class="table-responsive">
+    <table class="table table-striped responsive table-hover" id="tableAdmins" style="width: 100%;">
+        <caption>
+            &nbsp;
+            <button data-toggle="modal" data-target="#modalCadastroAdmin" title="Cadastrar novo" type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
+                <i class="material-icons">person_add</i>
+            </button>
+            <button onclick="excluirAdminsSelecionados()" title="Excluir selecionados" type="button" class="btn btn-danger bmd-btn-fab bmd-btn-fab-sm">
+                <i class="material-icons">delete</i>
+            </button>
+        </caption>
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">CPF</th>
+                <th scope="col">Excluir</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<br>
+<!-- Modal Cadastrar Admin-->
+<div id="modalCadastroAdmin" class="modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header alert alert-danger">
-                <h3 class="modal-title">Remover administrador</h3>
+            <div class="modal-header">
+                <h3 class="modal-title">Cadastrar novo administrador</h3>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body">
-                <h4 class="mt-0">Está certo de que deseja excluir este administrador?</h4>
-                <hr>
-                <p class="lead">Note que um email será enviado para o email do administrador excluído, notificando sua exclusão.</p>
-            </div>
-            <hr>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-warning" id="adm" onclick="excluir(this);">Sim</button>
-            </div>
+            <form id="formCadastroAdmin" autocomplete="off">
+                <div class="modal-body">
+                    <div id="divInputNome" class="form-group">
+                        <label for="inputNome" class="bmd-label-floating">Nome</label>
+                        <input name="nome" type="text" placeholder="Nome Completo" class="form-control" id="inputNome">
+                        <span class="invalid-feedback"></span>
+                    </div>
+                    <div id="divInputEmail" class="form-group">
+                        <label for="inputEmail" class="bmd-label-floating">Endereço de e-mail</label>
+                        <input name="email" type="email" placeholder="exemplo@email.com" class="form-control" id="inputEmail">
+                        <span class="invalid-feedback"></span>
+                    </div>
+                    <div id="divInputCpf" class="form-group">
+                        <label for="inputCpf" class="bmd-label-floating">CPF</label>
+                        <input name="cpf" type="text" placeholder="000.000.000-00" class="form-control" id="inputCpf">
+                        <span class="invalid-feedback"></span>
+                    </div>
+                    <div id="divInputSenha" class="form-group">
+                        <label for="inputSenha" class="bmd-label-floating">Senha</label>
+                        <input name="senha" type="password" class="form-control" id="inputSenha">
+                        <span class="invalid-feedback"></span>
+                    </div>
+                    <div id="divInputConfirmarSenha" class="form-group">
+                        <label for="inputConfirmSenha" class="bmd-label-floating">Repita a senha</label>
+                        <input name="confirmar_senha"type="password" class="form-control" id="inputConfirmSenha">
+                        <span class="invalid-feedback"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cancelar</button>
+                    <button id="btnEnviarCadastro" type="submit" class="btn btn-primary">Cadastrar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-<!-- Fim modal excluir -->
-<!---------------------------->
-<script type="text/javascript">
-    var tabela;
-    var botaoExcluir = `<a onclick="confirmarExclusao(this);" class="link btn btn-danger excluir">
-                                <img src="<?= base_url() ?>/public/img/icons/delete-person-24.png" title="Excluir Conta" alt="Excluir">
-                            </a>`;
-
-    $(document).ready(function() {
-        popularTabela();
-        setInterval(function() {
-            tabela.ajax.reload();
-        }, 120000); // atualiza a tabela a cada 2 minutos
-
-        
-    });
-
-    function confirmarExclusao(button) {
-        var data = recuperarInformacoesDaLinha(button);
-        var id = data.id;
-
-        $('#modalExcluir').find('.modal-footer').find('#adm').val(id);;
-        $('#modalExcluir').modal('show');
-    }
-
-    function excluir(button) {
-        $('#modalExcluir').modal('hide');
-
-        var id = button.value;
-        ajaxExclusao(id);
-    }
-
-
-    function popularTabela() {
-        tabela = $('#tableAdmins').DataTable({
-            "fixedHeader": {
-                footer: true
-            },
-            "order": [
-                [1, "asc"]
-            ],
-            "columnDefs": [{
-                    "className": "dt-center",
-                    "targets": '_all'
-                },
-                {
-                    "orderable": false,
-                    "targets": -1
-                },
-                // Define a ordem de prioridade de visibilidade de cada coluna
-                // A coluna de email será a primeira a ser escondida caso o
-                // tamanho da tela não seja suficiente
-                {
-                    responsivePriority: 10001,
-                    targets: 2
-                },
-            ],
-            "language": {
-                "url": "<?= base_url() ?>/public/js/Portuguese.json"
-            },
-            ajax: {
-                type: "POST",
-                url: "<?= base_url() ?>/app/src/controller/carregar/admins.php"
-            },
-            "processing": true,
-            "columns": [{
-                    data: "id"
-                },
-                {
-                    data: "nome"
-                },
-                {
-                    data: "email"
-                },
-                {
-                    data: "cpf"
-                },
-                {
-                    "render": function() {
-                        return botaoExcluir;
-                    }
-                }
-            ]
-        });
-    }
-
-    function recuperarInformacoesDaLinha(button) {
-        var linha = $(button).parents('tr');
-        if (linha.hasClass('child')) { // Verifica se o botão está dentro de uma div expansível (para telas pequenas)
-            linha = linha.prev(); // Caso esteja, aponta para a linha anterior (a linha mãe)
-        }
-        var data = tabela.row(linha).data();
-        return data;
-    }
-</script>
+<!-- Fim Modal Cadastrar Admin -->

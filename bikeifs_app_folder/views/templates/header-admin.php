@@ -9,7 +9,9 @@
     <meta name="keywords" content="bicicletário, ifs, instituto federal de sergipe, bicicletas, controle de entrada, tecnologia, inovação">
     <link rel="shortcut icon" type="image/x-icon" href="<?= base_url() ?>/favicon.ico">
     <link rel="icon" type="image/x-icon" href="<?= base_url() ?>/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/palette.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/estilo.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/sidepanel.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -26,42 +28,60 @@
 
 <body>
     <header>
-        <nav class="navbar sticky-top navbar-expand-xl navbar-light bg-dark header-gradient">
+        <nav class="navbar sticky-top navbar-expand-xl navbar-dark bg-dark-primary">
             <div class="container">
                 <a class="navbar-brand" href="<?= base_url('admin/view/home') ?>">
-                    <img class='logo' src="<?= base_url() ?>/public/img/img-logo.svg" title="Logo" alt="Logo">
+                    <img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Logo" alt="Logo">
                     <img class='logo' src="<?= base_url() ?>/public/img/nome-logo.svg" title="Bike IFS" alt="Bike IFS">
                 </a>
-                <button class="navbar-toggler bg-primary py-2" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler bg-default-primary" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="material-icons">menu</i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <h3>
-                                <a class="nav-link badge badge-danger text-light mr-3 px-2" href="<?= base_url('admin/view/restrita') ?>">
-                                    Área restrita
-                                </a>
-                            </h3>
+                        <li class="nav-item">
+                            <a id="navLinkRelatorios" class="nav-link" href="<?= base_url('admin/view/relatorios') ?>">
+                                Relatórios
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navLinkListagem" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Listar
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="<?= base_url('admin/listar/admins') ?>">Administradores</a>
+                                <a class="dropdown-item" href="<?= base_url('admin/listar/funcionarios') ?>">Funcionários</a>
+                                <a class="dropdown-item" href="<?= base_url('admin/listar/') ?>">Bicicletas</a>
+                                <a class="dropdown-item" href="<?= base_url('admin/listar/') ?>">Tags RFID</a>
+                                <a class="dropdown-item" href="<?= base_url('admin/listar/') ?>">Usuários</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="<?= base_url('admin/listar/') ?>">Registros do dia</a>
+                                <a class="dropdown-item" href="javasctip:void(0)" onclick="avisoPerformance()">Todos os egistros</a>
+                                <a class="dropdown-item" href="<?= base_url('admin/listar/') ?>">E-mails</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="navLinkExclusao" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Excluir
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="<?= base_url('admin/view/menuExclusao') ?>">Registros</a>
+                            </div>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link active dropdown-toggle text-light" id="dropdownMenu" style="cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <strong>Opções</strong>
+                            <a class="btn bmd-btn-icon dropdown-toggl text-light" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_horiz</i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                <a class="dropdown-item" href="<?= base_url('admin/view/perfil') ?>">
-                                    <span class=" py-2 my-2">
-                                        <span>Perfil</span>
-                                        <img class="ml-3" src="<?= base_url() ?>/public/img/icons/profile.png" title="Perfil" alt="Perfil">
-                                    </span>
+                                <a class="dropdown-item" href="<?= base_url('admin/perfil') ?>">
+                                    Perfil&nbsp;
+                                    <i class="material-icons">person</i>
                                 </a>
-                                <a class="dropdown-item text-danger" style="font-size: 18px;" href="<?= base_url('admin/sair') ?>">
-                                    <span>
-                                        <span>Sair</span>
-                                        <img style="width: 20px; margin-left: 1.35rem!important;" src="<?= base_url() ?>/public/img/icons/logout.png" title="Sair" alt="Sair">
-                                    </span>
+                                <a class="dropdown-item text-danger" href="<?= base_url('admin/sair') ?>">
+                                    Sair&nbsp;
+                                    <i class="material-icons">exit_to_app</i>
                                 </a>
                             </div>
                         </li>
@@ -72,8 +92,8 @@
     </header>
 
     <div class="topo">
-        <button id="voltar_ao_topo" class="header-gradient" onclick="voltarAoTopo()" title="Voltar ao topo">
-            <img src="<?= base_url() ?>/public/img/icons/topo.png" alt="topo" class="invert">
+        <button id="voltar_ao_topo" class="btn bmd-btn-fab accent-color" onclick="voltarAoTopo()" title="Voltar ao topo">
+            <i class="material-icons material-icons" style="font-size: 36px">keyboard_arrow_up</i>
         </button>
     </div>
 
