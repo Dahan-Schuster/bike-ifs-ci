@@ -29,7 +29,7 @@ class Admin extends CI_Controller
         );
 
         $this->load->view('templates/header-admin', $data);
-        $this->load->view("pages/admin/restrita", $data);
+        $this->load->view("pages/home", $data);
         $this->load->view('templates/footer-admin', $data);
     }
 
