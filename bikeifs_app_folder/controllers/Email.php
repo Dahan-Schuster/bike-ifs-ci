@@ -67,6 +67,9 @@ class Email extends CI_Controller
         # Armazena uma nova senha gerada
         $novaSenha = $this->gerarSenha();
 
+        # Criptografa a nova senha para inserção no banco de dados
+        $novaSenhaHash = password_hash($novaSenha, PASSWORD_DEFAULT);
+
         # Pesquisa o registro que possui o endereço de email enviado
         # Após pesquisar, edita a senha
         switch ($tipoAcesso):
@@ -76,7 +79,7 @@ class Email extends CI_Controller
                 if ($result) :       # Se a pesquisa retorna um registro
                     $result = $result[0];   # Move o resultado para a primeira linha (deve haver apenas um, visto que o campo email no bd possui o index UNIQUE)
                     if ($this->enviarEmailRecuperacaoSenha($email, $result['nome'], $novaSenha))  # Tenta enviar a nova senha via email
-                        $this->funcionario->editar($result['id'], array('senha' => $novaSenha));  # Se enviar, altera a senha
+                        $this->funcionario->editar($result['id'], array('senha' => $novaSenhaHash));  # Se enviar, altera a senha
                     else                                                                        # Se não, não edita a senha
                         $json['status'] = 2;    # status == 2: erro no envio do email
                 else :
@@ -89,7 +92,7 @@ class Email extends CI_Controller
                 if ($result) :
                     $result = $result[0];
                     if ($this->enviarEmailRecuperacaoSenha($email, $result['nome'], $novaSenha))
-                        $this->usuario->editar($result['id'], array('senha' => $novaSenha));
+                        $this->usuario->editar($result['id'], array('senha' => $novaSenhaHash));
                     else
                         $json['status'] = 2;
                 else :
@@ -102,7 +105,7 @@ class Email extends CI_Controller
                 if ($result) :
                     $result = $result[0];
                     if ($this->enviarEmailRecuperacaoSenha($email, $result['nome'], $novaSenha))
-                        $this->administrador->editar($result['id'], array('senha' => $novaSenha));
+                        $this->administrador->editar($result['id'], array('senha' => $novaSenhaHash));
                     else
                         $json['status'] = 2;
                 else :
