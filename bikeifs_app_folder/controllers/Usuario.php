@@ -20,7 +20,7 @@ class Usuario extends CI_Controller
     {
         if (!isset($this->session->userdata['permissions_level'])) show_404();
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
-            show_error("<h2><b>Acesso negado.</b></h2>");
+            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
 
         $data = array(
             'scripts' => array(
@@ -39,7 +39,7 @@ class Usuario extends CI_Controller
 
         if (!isset($this->session->userdata['permissions_level'])) show_404();
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
-            show_error("<h2><b>Acesso negado.</b></h2>");
+            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
         elseif (!$page || !file_exists(APPPATH . "views/$page_dir/$page.php"))
             show_404();
 

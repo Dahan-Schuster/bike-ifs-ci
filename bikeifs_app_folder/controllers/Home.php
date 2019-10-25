@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('Não é permitido acesso direto aos scripts.');
 
-require_once('../models/SituacaoUsuario.php');
+require_once(APPPATH . '/models/SituacaoUsuario.php');
 
 class Home extends CI_Controller
 {
@@ -44,7 +44,7 @@ class Home extends CI_Controller
             )
         );
 
-        if ($page == 'login') array_push($data['scripts'], 'login.js');;
+        if ($page == 'login') array_push($data['scripts'], 'login.js');
 
         $this->load->view('templates/header', $data);
         $this->load->view("pages/$page", $data);

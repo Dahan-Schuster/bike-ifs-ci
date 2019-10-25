@@ -1,7 +1,3 @@
-<!-- SnackBars -->
-<div class="snackbar snackbar-invalido" id="alertaInvalido"></div>
-<div class="snackbar snackbar-sucesso" id="alertaSucesso"></div>
-<!-- Fim SnackBars -->
 </div> <!-- fechamento da div "conteudo" -->
 
 <footer>

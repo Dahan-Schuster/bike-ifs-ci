@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/estilo.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/sidepanel.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
     <?php

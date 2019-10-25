@@ -12,7 +12,8 @@
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/estilo.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/sidepanel.css">
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <?php
     if (isset($styles)) :
         foreach ($styles as $style) :
@@ -51,9 +52,9 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                                 <a class="dropdown-item" href="<?= base_url('admin/view/perfil') ?>">
-                                        <span class=" py-2 my-2">
-                                    <span>Perfil</span>
-                                    <img class="ml-3" src="<?= base_url() ?>/public/img/icons/profile.png" title="Perfil" alt="Perfil">
+                                    <span class=" py-2 my-2">
+                                        <span>Perfil</span>
+                                        <img class="ml-3" src="<?= base_url() ?>/public/img/icons/profile.png" title="Perfil" alt="Perfil">
                                     </span>
                                 </a>
                                 <a class="dropdown-item text-danger" style="font-size: 18px;" href="<?= base_url('admin/sair') ?>">

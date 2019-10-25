@@ -11,15 +11,18 @@ class Saida extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-
+    
     /**
-     * Exclui um registro da tabela Saida.
+     * Exclui registros da tabela Saida.
      * 
-     * @param $id -  O id do registro a ser excluído
+     * @param array $id - Os ids dos registros a serem excluídos
      */
-    public function excluir($id)
+    public function excluir($ids)
     {
-        $this->db->where('id', $id)->delete('SAIDA');
+        foreach ($ids as $id) {
+            $this->db->or_where('id', $id);
+        }
+        $this->db->delete('SAIDA');
     }
 
     /**
@@ -66,7 +69,7 @@ class Saida extends CI_Model
     public function listarTodos()
     {
         $result = $this->db->get('SAIDA');
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**
@@ -80,7 +83,7 @@ class Saida extends CI_Model
     public function listarPorCampos($camposValores)
     {
         $result = $this->db->get_where('SAIDA', $camposValores);
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**
@@ -93,7 +96,7 @@ class Saida extends CI_Model
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
         $result = $this->db->get_where('SAIDA', array($foreignKey => $valor));
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**

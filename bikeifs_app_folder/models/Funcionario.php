@@ -27,22 +27,25 @@ class Funcionario extends CI_Model
         $this->db->where("(email='$login' OR cpf='$cpf')");
         $result = $this->db->get('FUNCIONARIO');
 
-        if ($result->num_rows() > 0)
-            return  password_verify($senha, $result->row()->senha);
+        if ($result->num_rows() > 0 && password_verify($senha, $result->row()->senha))
+            return  $result->row();
 
         return false;
     }
-
+    
     /**
-     * Exclui um registro da tabela Funcionario.
+     * Exclui registros da tabela Funcionario.
      * 
-     * @param $id -  O id do registro a ser excluído
+     * @param array $id - Os ids dos registros a serem excluídos
      */
-    public function excluir($id)
+    public function excluir($ids)
     {
-        $this->db->where('id', $id)->delete('FUNCIONARIO');
+        foreach ($ids as $id) {
+            $this->db->or_where('id', $id);
+        }
+        $this->db->delete('FUNCIONARIO');
     }
-
+    
     /**
      * Edita os valores do registro na tabela Funcionario.
      * 
@@ -87,7 +90,7 @@ class Funcionario extends CI_Model
     public function listarTodos()
     {
         $result = $this->db->get('FUNCIONARIO');
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
 
@@ -102,7 +105,7 @@ class Funcionario extends CI_Model
     public function listarPorCampos($camposValores)
     {
         $result = $this->db->get_where('FUNCIONARIO', $camposValores);
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**
@@ -141,7 +144,6 @@ class Funcionario extends CI_Model
         return $this->db->get()->num_rows() > 0;
     }
 
-
     /**
      * Lista todos os registros da tabela Funcionario associados à chave estrangeira enviada por parâmetro
      * 
@@ -152,7 +154,7 @@ class Funcionario extends CI_Model
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
         $result = $this->db->get_where('FUNCIONARIO', array($foreignKey => $valor));
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**

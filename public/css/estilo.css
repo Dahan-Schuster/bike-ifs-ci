@@ -147,7 +147,7 @@ table.dataTable tr.dtrg-group td {
 
 .jumbotron-main {
   box-shadow: 5px 5px 20px gray;
-  background: linear-gradient(rgba(30, 30, 50, 0.9), rgba(30, 30, 50, 0.9)), url('<?= base_url() ?>/public/img/jumbotrom-bg.jpg');
+  background: linear-gradient(rgba(30, 30, 50, 0.9), rgba(30, 30, 50, 0.9)), url('../img/jumbotrom-bg.jpg');
 }
 
 .jumbotron-main .dropdown-menu {

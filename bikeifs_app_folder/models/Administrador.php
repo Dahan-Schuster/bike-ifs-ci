@@ -26,21 +26,23 @@ class Administrador extends CI_Model
         $this->db->where("(email='$login' OR cpf='$cpf')");
         $result = $this->db->get('ADMINISTRADOR');
 
-        if ($result->num_rows() > 0)
-            return  password_verify($senha, $result->row()->senha);
+        if ($result->num_rows() > 0 && password_verify($senha, $result->row()->senha))
+            return  $result->row();
 
         return false;
     }
-
-
+    
     /**
-     * Exclui um registro da tabela Administrador.
+     * Exclui registros da tabela Administrador.
      * 
-     * @param $id -  O id do registro a ser excluído
+     * @param array $id - Os ids dos registros a serem excluídos
      */
-    public function excluir($id)
+    public function excluir($ids)
     {
-        $this->db->where('id', $id)->delete('ADMINISTRADOR');
+        foreach ($ids as $id) {
+            $this->db->or_where('id', $id);
+        }
+        $this->db->delete('ADMINISTRADOR');
     }
 
     /**
@@ -87,7 +89,7 @@ class Administrador extends CI_Model
     public function listarTodos()
     {
         $result = $this->db->get('ADMINISTRADOR');
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**
@@ -111,6 +113,6 @@ class Administrador extends CI_Model
     public  function listarPorCampos($camposValores)
     {
         $result = $this->db->where($camposValores)->get('ADMINISTRADOR');
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 }

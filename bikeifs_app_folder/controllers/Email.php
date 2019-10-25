@@ -74,9 +74,9 @@ class Email extends CI_Controller
                 $this->load->model('funcionario'); # Carrega o modal correspondente ao tipo de acesso escolhido
                 $result = $this->funcionario->listarPorCampos(array('email' => $email)); # Pesquisa o registro por endereço de email
                 if ($result) :       # Se a pesquisa retorna um registro
-                    $result = $result->row();   # Move o resultado para a primeira linha (deve haver apenas um, visto que o campo email no bd possui o index UNIQUE)
-                    if ($this->enviarEmailRecuperacaoSenha($email, $result->nome, $novaSenha))  # Tenta enviar a nova senha via email
-                        $this->funcionario->editar($result->id, array('senha' => $novaSenha));  # Se enviar, altera a senha
+                    $result = $result[0];   # Move o resultado para a primeira linha (deve haver apenas um, visto que o campo email no bd possui o index UNIQUE)
+                    if ($this->enviarEmailRecuperacaoSenha($email, $result['nome'], $novaSenha))  # Tenta enviar a nova senha via email
+                        $this->funcionario->editar($result['id'], array('senha' => $novaSenha));  # Se enviar, altera a senha
                     else                                                                        # Se não, não edita a senha
                         $json['status'] = 2;    # status == 2: erro no envio do email
                 else :
@@ -87,8 +87,9 @@ class Email extends CI_Controller
                 $this->load->model('usuario');
                 $result = $this->usuario->listarPorCampos(array('email' => $email));
                 if ($result) :
-                    if ($this->enviarEmailRecuperacaoSenha($email, $result->nome, $novaSenha))
-                        $this->usuario->editar($result->id, array('senha' => $novaSenha));
+                    $result = $result[0];
+                    if ($this->enviarEmailRecuperacaoSenha($email, $result['nome'], $novaSenha))
+                        $this->usuario->editar($result['id'], array('senha' => $novaSenha));
                     else
                         $json['status'] = 2;
                 else :
@@ -99,9 +100,9 @@ class Email extends CI_Controller
                 $this->load->model('administrador');
                 $result = $this->administrador->listarPorCampos(array('email' => $email));
                 if ($result) :
-                    $result = $result->row();
-                    if ($this->enviarEmailRecuperacaoSenha($email, $result->nome, $novaSenha))
-                        $this->administrador->editar($result->id, array('senha' => $novaSenha));
+                    $result = $result[0];
+                    if ($this->enviarEmailRecuperacaoSenha($email, $result['nome'], $novaSenha))
+                        $this->administrador->editar($result['id'], array('senha' => $novaSenha));
                     else
                         $json['status'] = 2;
                 else :

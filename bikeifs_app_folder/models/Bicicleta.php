@@ -12,15 +12,18 @@ class Bicicleta extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-
+    
     /**
-     * Exclui um registro da tabela Bicicleta.
+     * Exclui registros da tabela Bicicleta.
      * 
-     * @param $id -  O id do registro a ser excluído
+     * @param array $id - Os ids dos registros a serem excluídos
      */
-    public function excluir($id)
+    public function excluir($ids)
     {
-        $this->db->where('id', $id)->delete('BICICLETA');
+        foreach ($ids as $id) {
+            $this->db->or_where('id', $id);
+        }
+        $this->db->delete('BICICLETA');
     }
 
     /**
@@ -67,7 +70,7 @@ class Bicicleta extends CI_Model
     public function listarTodos()
     {
         $result = $this->db->get('BICICLETA');
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**
@@ -81,7 +84,7 @@ class Bicicleta extends CI_Model
     public function listarPorCampos($camposValores)
     {
         $result = $this->db->get_where('BICICLETA', $camposValores);
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**
@@ -123,7 +126,7 @@ class Bicicleta extends CI_Model
     public function listarModelos()
     {
         $result = $this->db->select('modelo')->get('BICICLETA');
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**
@@ -136,7 +139,7 @@ class Bicicleta extends CI_Model
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
         $result = $this->db->get_where('BICICLETA', array($foreignKey => $valor));
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**

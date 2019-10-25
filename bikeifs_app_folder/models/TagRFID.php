@@ -11,15 +11,18 @@ class TagRFID extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-
+    
     /**
-     * Exclui um registro da tabela TagRFID.
+     * Exclui registros da tabela TagRFID.
      * 
-     * @param $id -  O id do registro a ser excluído
+     * @param array $id - Os ids dos registros a serem excluídos
      */
-    public function excluir($id)
+    public function excluir($ids)
     {
-        $this->db->where('id', $id)->delete('TagRFID');
+        foreach ($ids as $id) {
+            $this->db->or_where('id', $id);
+        }
+        $this->db->delete('TagRFID');
     }
 
     /**
@@ -66,7 +69,7 @@ class TagRFID extends CI_Model
     public function listarTodos()
     {
         $result = $this->db->get('TagRFID');
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**
@@ -80,7 +83,7 @@ class TagRFID extends CI_Model
     public function listarPorCampos($camposValores)
     {
         $result = $this->db->get_where('TagRFID', $camposValores);
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**
@@ -93,7 +96,7 @@ class TagRFID extends CI_Model
     public function listarPorChaveEstrangeira($foreignKey, $valor)
     {
         $result = $this->db->get_where('TagRFID', array($foreignKey => $valor));
-        return ($result->num_rows() > 0) ? $result : NULL;
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
     /**
