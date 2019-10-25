@@ -117,7 +117,7 @@ class Usuario extends CI_Model
         foreach ($ids as $id) {
             $this->db->or_where('id', $id);
         }
-        $this->db->update('USUARIO', array('situacao', SituacaoUsuario::ATIVO));
+        $this->db->update('USUARIO', array('situacao' => SituacaoUsuario::ATIVO));
     }
 
     /**
@@ -130,7 +130,7 @@ class Usuario extends CI_Model
         foreach ($ids as $id) {
             $this->db->or_where('id', $id);
         }
-        $this->db->update('USUARIO', array('situacao', SituacaoUsuario::INATIVO));
+        $this->db->update('USUARIO', array('situacao' => SituacaoUsuario::INATIVO));
     }
 
 

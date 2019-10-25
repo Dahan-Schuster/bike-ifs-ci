@@ -97,8 +97,8 @@ table.dataTable tr.dtrg-group td {
   margin-right: 0 !important
 }
 
-.modal-header.header-gradient {
-  filter: brightness(1.2)
+.modal-header {
+  border-top: #009688 5px solid;
 }
 
 .tooltip-w3 {

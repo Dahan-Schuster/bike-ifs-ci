@@ -97,7 +97,7 @@ class Bicicleta extends CI_Model
         foreach ($ids as $id) {
             $this->db->or_where('id', $id);
         }
-        $this->db->update('BICICLETA', array('situacao', SituacaoBicicleta::ATIVA));
+        $this->db->update('BICICLETA', array('situacao' => SituacaoBicicleta::ATIVA));
     }
 
     /**
@@ -110,7 +110,7 @@ class Bicicleta extends CI_Model
         foreach ($ids as $id) {
             $this->db->or_where('id', $id);
         }
-        $this->db->update('BICICLETA', array('situacao', SituacaoBicicleta::INATIVA));
+        $this->db->update('BICICLETA', array('situacao' => SituacaoBicicleta::INATIVA));
     }
 
 

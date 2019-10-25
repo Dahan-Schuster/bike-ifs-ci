@@ -124,7 +124,7 @@ class CrudAjax extends CI_Controller
             $response['error_list']['#divInputNome'] = 'O nome não pode estar vazio.';
         endif;
 
-        if (isset($data['telefone']) && $this->funcionario->estaCadastrado('telefone', $data['telefone'])) :
+        if (!empty($data['telefone']) && $this->funcionario->estaCadastrado('telefone', $data['telefone'])) :
             $response['error_list']['#divInputTelefone'] = 'Este telefone já está cadastrado.';
         endif;
 

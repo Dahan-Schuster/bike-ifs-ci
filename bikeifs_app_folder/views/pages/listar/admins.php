@@ -5,14 +5,17 @@
 </div>
 <hr class="my-3">
 <div class="table-responsive">
-    <table class="table table-striped responsive table-hover" id="tableAdmins" style="width: 100%;">
+    <table class="table table-sm table-striped responsive table-hover" id="tableAdmins" style="width: 100%;">
         <caption>
             &nbsp;
             <button data-toggle="modal" data-target="#modalCadastroAdmin" title="Cadastrar novo" type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
                 <i class="material-icons">person_add</i>
             </button>
-            <button onclick="excluirAdminsSelecionados()" title="Excluir selecionados" type="button" class="btn btn-danger bmd-btn-fab bmd-btn-fab-sm">
+            <button id="btnExcluirSelecionados" onclick="excluirAdminsSelecionados()" title="Excluir selecionados" type="button" class="btn btn-danger bmd-btn-fab bmd-btn-fab-sm">
                 <i class="material-icons">delete</i>
+            </button>
+            <button id="btnSelecionarLinhas" title="Selecionar todos" type="button" class="btn accent-color bmd-btn-fab bmd-btn-fab-sm text-light">
+                <i class="material-icons">check_box_outline_blank</i>
             </button>
         </caption>
         <thead class="thead-dark">
@@ -34,7 +37,7 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header raised pb-3">
                 <h3 class="modal-title">Cadastrar novo administrador</h3>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
@@ -62,7 +65,7 @@
                     </div>
                     <div id="divInputConfirmarSenha" class="form-group">
                         <label for="inputConfirmSenha" class="bmd-label-floating">Repita a senha</label>
-                        <input name="confirmar_senha"type="password" class="form-control" id="inputConfirmSenha">
+                        <input name="confirmar_senha" type="password" class="form-control" id="inputConfirmSenha">
                         <span class="invalid-feedback"></span>
                     </div>
                 </div>

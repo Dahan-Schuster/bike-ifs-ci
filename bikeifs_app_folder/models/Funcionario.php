@@ -118,7 +118,7 @@ class Funcionario extends CI_Model
         foreach ($ids as $id) {
             $this->db->or_where('id', $id);
         }
-        $this->db->update('FUNCIONARIO', array('situacao', SituacaoFuncionario::ATIVO));
+        $this->db->update('FUNCIONARIO', array('situacao' => SituacaoFuncionario::ATIVO));
     }
 
     /**
@@ -131,7 +131,7 @@ class Funcionario extends CI_Model
         foreach ($ids as $id) {
             $this->db->or_where('id', $id);
         }
-        $this->db->update('FUNCIONARIO', array('situacao', SituacaoFuncionario::INATIVO));
+        $this->db->update('FUNCIONARIO', array('situacao' => SituacaoFuncionario::INATIVO));
     }
 
     /**

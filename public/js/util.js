@@ -1,16 +1,22 @@
 const BASE_URL = "http://localhost/bike-ifs-ci/"
 
 function clearErrors() {
-    $(".is-invalid").removeClass('is-invalid')
-    $(".invalid-feedback").html("")
+    $(".is-invalid")
+        .removeClass('is-invalid')
+    $(".invalid-feedback")
+        .html("")
 }
 
 function showErrors(error_list) {
     clearErrors()
 
     $.each(error_list, function(error_container, message) {
-        $(error_container).find('.form-control').addClass('is-invalid')
-        $(error_container).find('.invalid-feedback').html(message)
+        $(error_container)
+            .find('.form-control')
+            .addClass('is-invalid')
+        $(error_container)
+            .find('.invalid-feedback')
+            .html(message)
     })
 }
 
@@ -79,21 +85,57 @@ function getDataUri(url, callback) {
     image.src = url;
 }
 
+$('[data-toggle="modal"]')
+    .click(function(e) {
+        $(e.delegateTarget.dataset.target)
+            .trigger('show.bs.modal')
+    })
 
-/** Método usado em conjunto com o framework DataTables
+
+// #####################################################
+// Métodos usados em conjunto com o framework DataTables
+
+
+/**
  *  
  * Recupera os dados da linha em que está o botão enviado por parâmetro
  *  
  */
 function recuperarInformacoesDaLinha(button) {
-    var linha = $(button).parents('tr');
+    var linha = $(button)
+        .parents('tr');
     if (linha.hasClass('child')) { // Verifica se o botão está dentro de uma div expansível (para telas pequenas)
         linha = linha.prev(); // Caso esteja, aponta para a linha anterior (a linha mãe)
     }
-    var data = tabela.row(linha).data();
+    var data = tabela.row(linha)
+        .data();
     return data;
 }
 
-$('[data-toggle="modal"]').click(function(e) {
-    $(e.delegateTarget.dataset.target).trigger('show.bs.modal')
-})
+function selecionarTodos(button, tabela) {
+    $(button)
+        .find('i')
+        .html('check_box');
+        $(button)
+            .attr('title', 'Selecionar todos')
+    $(button)
+        .off('click')
+    $(button)
+        .on('click', function() { desselecionarTodos(button, tabela) })
+    tabela.rows()
+        .select()
+}
+
+function desselecionarTodos(button, tabela) {
+    $(button)
+        .find('i')
+        .html('check_box_outline_blank');
+    $(button)
+        .attr('title', 'Desselecionar todos')
+    $(button)
+        .off('click')
+    $(button)
+        .on('click', function() { selecionarTodos(button, tabela) })
+    tabela.rows()
+        .deselect()
+}
