@@ -1,9 +1,7 @@
 <?php @session_destroy(); ?>
-<div id="aviso-login" class="alert alert-danger raised" style="display: none" role="alert">
-</div>
 <div class="dropdown-menu dropdown-menu-center show pt-0">
     <div class="alert raised bg-default-primary text-light">
-        <h4>Login</h4>
+        <h4 id="aviso-login">Login</h4>
     </div>
     <form id="formLogin" autocomplete="off" class="px-4 pb-5">
         <div class="form-group">
@@ -22,7 +20,7 @@
             </div>
         </div>
         <div class="form-row mb-3">
-            <div class="col">
+            <div class="col-12 col-sm-4">
                 <div class="custom-control custom-radio form-check-inline ">
                     <input tabindex="3" class="custom-control-input" type="radio" name="tipoAcesso" id="radioFuncionario" value="funcionario" checked>
                     <label class="custom-control-label" for="radioFuncionario">
@@ -30,7 +28,7 @@
                     </label>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-12 col-sm-4">
                 <div class="custom-control custom-radio form-check-inline ">
                     <input tabindex="4" class="custom-control-input" type="radio" name="tipoAcesso" id="radioUsuario" value="usuario">
                     <label class="custom-control-label" for="radioUsuario">
@@ -38,7 +36,7 @@
                     </label>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-12 col-sm-4">
                 <div class="custom-control custom-radio form-check-inline ">
                     <input tabindex="5" class="custom-control-input" type="radio" name="tipoAcesso" id="radioAdmin" value="admin">
                     <label class="custom-control-label" for="radioAdmin">

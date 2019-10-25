@@ -8,7 +8,7 @@
             <input tabindex="1" id="inputEmail" class="form-control" type="email" name="email" placeholder="Informe seu e-mail" autofocus>
         </div>
         <div class="form-row mb-3">
-            <div class="col">
+            <div class="col-12 col-sm-4">
                 <div class="custom-control custom-radio form-check-inline ">
                     <input class="custom-control-input" type="radio" name="tipoAcesso" id="radioFuncionario" value="funcionario" checked>
                     <label class="custom-control-label" for="radioFuncionario">
@@ -16,7 +16,7 @@
                     </label>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-12 col-sm-4">
                 <div class="custom-control custom-radio form-check-inline ">
                     <input class="custom-control-input" type="radio" name="tipoAcesso" id="radioUsuario" value="usuario">
                     <label class="custom-control-label" for="radioUsuario">
@@ -24,7 +24,7 @@
                     </label>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-12 col-sm-4">
                 <div class="custom-control custom-radio form-check-inline ">
                     <input class="custom-control-input" type="radio" name="tipoAcesso" id="radioAdmin" value="admin">
                     <label class="custom-control-label" for="radioAdmin">
