@@ -27,7 +27,8 @@
   box-shadow: 2px 2px 3px rgb(130, 130, 130);
 }
 
-.dropdown-filtro-item:active, .dropdown-filtro-item:hover {
+.dropdown-filtro-item:active,
+.dropdown-filtro-item:hover {
   /* Suprime o estilo padrão da classe dropdown-item */
   color: initial !important;
   text-decoration: initial !important;
@@ -405,7 +406,8 @@ table.dataTable tr.dtrg-group td {
   z-index: 1039;
 }
 
-.dt-center, .text-center {
+.dt-center,
+.text-center {
   text-align: center !important;
 }
 
@@ -472,6 +474,18 @@ body {
 #pagina {
   position: relative;
   min-height: 85.5vh;
+}
+
+/* Para telas grandes, define o tamanho da página um pouco maior. Assim o footer não fica flutuando */
+@media screen and (min-height: 665px) {
+  #pagina {
+    min-height: 87.5vh;
+  }
+}
+@media screen and (min-height: 900px) {
+  #pagina {
+    min-height: 90vh;
+  }
 }
 
 #conteudo {
