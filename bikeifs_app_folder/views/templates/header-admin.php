@@ -51,13 +51,13 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="<?= base_url('admin/listar/admins') ?>">Administradores</a>
                                 <a class="dropdown-item" href="<?= base_url('admin/listar/funcionarios') ?>">Funcionários</a>
-                                <a class="dropdown-item" href="<?= base_url('admin/listar/') ?>">Bicicletas</a>
-                                <a class="dropdown-item" href="<?= base_url('admin/listar/') ?>">Tags RFID</a>
-                                <a class="dropdown-item" href="<?= base_url('admin/listar/') ?>">Usuários</a>
+                                <a class="dropdown-item" href="<?= base_url('admin/listar/bicicletas') ?>">Bicicletas</a>
+                                <a class="dropdown-item" href="<?= base_url('admin/listar/tags') ?>">Tags RFID</a>
+                                <a class="dropdown-item" href="<?= base_url('admin/listar/usuarios') ?>">Usuários</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="<?= base_url('admin/listar/') ?>">Registros do dia</a>
+                                <a class="dropdown-item" href="<?= base_url('admin/listar/registros-do-dia') ?>">Registros do dia</a>
                                 <a class="dropdown-item" href="javasctip:void(0)" onclick="avisoPerformance()">Todos os registros</a>
-                                <a class="dropdown-item" href="<?= base_url('admin/listar/') ?>">E-mails</a>
+                                <a class="dropdown-item" href="<?= base_url('admin/listar/emails') ?>">E-mails</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
