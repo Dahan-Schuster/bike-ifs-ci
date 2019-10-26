@@ -37,9 +37,6 @@ function loadingImg(message = '') {
     return "<div class='spinner-border spinner-border-sm'></div>" + message
 }
 
-
- 
-
 /**
  * Formata uma enviada no formato USA (YYYY-MM-DD) para o formato padrão BR (DD/MM/AAAA)
  * @param {string} data_usa 
@@ -98,55 +95,122 @@ $('[data-toggle="modal"]')
 /**
  * Recupera os dados da linha em que está o botão enviado por parâmetro
  * 
- * @param {element} button 
+ * @param {element} botao 
  */
-function recuperarInformacoesDaLinha(button) {
-    var linha = $(button)
+function recuperarInformacoesDaLinha(botao) {
+    var linha = $(botao)
         .parents('tr');
     if (linha.hasClass('child')) { // Verifica se o botão está dentro de uma div expansível (para telas pequenas)
         linha = linha.prev(); // Caso esteja, aponta para a linha anterior (a linha mãe)
     }
-    var data = tabela.row(linha)
+    var data = datatable.row(linha)
         .data();
     return data;
 }
 
 /**
- * Seleciona todas a linhas da tabela e altera o evento onclick do botão
+ * Configura o comportamento do botão Selecionar/Desselecionar todos
  * 
- * @param {element} button 
- * @param {object} tabela 
+ * @param {element} botao o botão responsável por selecionar/desselecionar todas as linhas
+ * @param {string} idTabela o id da tabela com um # no incio (#tabela)
+ * @param {object} datatable o objeto retornado após usar o método .DataTable()
  */
-function selecionarTodos(button, tabela) {
-    $(button)
-        .find('i')
-        .html('check_box');
-    $(button)
-        .attr('title', 'Selecionar todos')
-    $(button)
-        .off('click')
-    $(button)
-        .on('click', function() { desselecionarTodos(button, tabela) })
-    tabela.rows()
-        .select()
+function configurarBotaoSelecionarLinhas(botao, idTabela, datatable) {
+    $(botao)
+        .on('click', () => { selecionarTodos(botao, datatable) })
+    $(idTabela + ' tbody').on('click', 'tr', function () {
+        // Verifica se o usuário selecionou ou desselecionou uma linha
+        let selecionou = !$($(this).find('.selected').prevObject[0]).hasClass('selected')
+
+        // Configura o somador
+        // Indica se deve adicionar ou reduzir em 1 a quantidade de linhas selecionadas
+        let somador = (selecionou) ? 1 : -1
+
+        // Conta a quantidade de linhas selecionadas
+        // Irá retornar a quantidade ANTES do usuário clicar em uma linha
+        // Por isso é necessário adicionar o somador
+        let linhasSelecionadas = datatable.rows({ selected: true }).count() + somador
+
+        // A depender da quantidade de linhas selecionadas, altera o ícone e o comportamento do botão
+        if (linhasSelecionadas == 0) {
+            alterarBotaoParaBlank(botao, datatable)
+        } else if (linhasSelecionadas == datatable.rows().count()) {
+            alterarBotaoParaChecked(botao, datatable)
+        } else {
+            alterarBotaoParaIndeterminate(botao, datatable)
+        }
+    })
 }
 
 /**
- * Desseleciona todas a linhas da tabela e altera o evento onclick do botão
+ * Seleciona todas a linhas da datatable e altera o evento onclick do botão
  * 
- * @param {element} button 
- * @param {object} tabela 
+ * @param {element} botao 
+ * @param {object} datatable 
  */
-function desselecionarTodos(button, tabela) {
-    $(button)
+function selecionarTodos(botao, datatable) {
+    datatable.rows()
+        .select()
+    alterarBotaoParaChecked(botao, datatable)
+}
+
+/**
+ * Desseleciona todas a linhas da datatable e altera o evento onclick do botão
+ * 
+ * @param {element} botao 
+ * @param {object} datatable 
+ */
+function desselecionarTodos(botao, datatable) {
+    datatable.rows()
+        .deselect()
+    alterarBotaoParaBlank(botao, datatable)
+}
+
+/**
+ * Altera o ícone o comportamento do botão para quando todas as linhas estiverem selecionadas
+ * 
+ * @param {element} botao o botão responsável por selecionar/desselecionar todas as linhas
+ * @param {object} datatable o objeto retornado após usar o método .DataTable()
+ */
+function alterarBotaoParaChecked(botao, datatable) {
+    $(botao)
+        .find('i')
+        .html('check_box');
+    $(botao)
+        .attr('title', 'Desselecionar todos')
+    $(botao)
+        .off('click')
+    $(botao)
+        .on('click', function() { desselecionarTodos(botao, datatable) })
+}
+
+/**
+ * Altera o ícone o comportamento do botão para quando todas as linhas estiverem desselecionadas
+ * 
+ * @param {element} botao o botão responsável por selecionar/desselecionar todas as linhas
+ * @param {object} datatable o objeto retornado após usar o método .DataTable()
+ */
+function alterarBotaoParaBlank(botao, datatable) {
+    $(botao)
         .find('i')
         .html('check_box_outline_blank');
-    $(button)
-        .attr('title', 'Desselecionar todos')
-    $(button)
+    $(botao)
+        .attr('title', 'Selecionar todos')
+    $(botao)
         .off('click')
-    $(button)
-        .on('click', function() { selecionarTodos(button, tabela) })
-    tabela.rows()
-        .deselect()
+    $(botao)
+        .on('click', function() { selecionarTodos(botao, datatable) })
+}
+
+/**
+ * Altera o ícone o comportamento do botão para quando 
+ * uma quantidade de linhas entre 0 e todas estiverem selecionadas
+ * 
+ * @param {element} botao o botão responsável por selecionar/desselecionar todas as linhas
+ * @param {object} datatable o objeto retornado após usar o método .DataTable()
+ */
+function alterarBotaoParaIndeterminate(botao) {
+    $(botao)
+        .find('i')
+        .html('indeterminate_check_box');
 }
