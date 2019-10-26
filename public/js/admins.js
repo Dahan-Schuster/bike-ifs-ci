@@ -1,4 +1,4 @@
-var tabela;
+var datatable;
 var botaoExcluir = `<button type="button" onclick="excluirAdmin(this)" class="btn btn-danger bmd-btn-icon">
                         <i class="material-icons">delete</i>
                     </button>`;
@@ -7,9 +7,10 @@ $(document)
     .ready(function() {
         popularTabela();
         setInterval(function() {
-            tabela.ajax.reload();
+            datatable.ajax.reload();
         }, 120000); // atualiza a tabela a cada 2 minutos
 
+        // Máscara de CPF no formulário de cadastro
         $("#inputCpf")
             .mask('000.000.000-00', { reverse: true });
 
@@ -20,15 +21,24 @@ $(document)
             .addClass('active')
 
         // Configura o botão selecionar todos (o resto da configuração encontra-se no util.js de forma genérica)
-        $("#btnSelecionarLinhas")
-            .on('click', function() { selecionarTodos(this, tabela) })
+        configurarBotaoSelecionarLinhas(
+            document.getElementById('btnSelecionarLinhas'),
+            '#tableAdmins',
+            datatable)
 
+        // Reseta o formulário e os erros do modal de cadastro ao abrir
         $('#modalCadastroAdmin')
             .on('show.bs.modal', function() {
                 clearErrors();
                 $('#formCadastroAdmin')
                     .trigger('reset')
             })
+
+        $("#tableAdmins tr").click(function(e) {
+            if (datatable.rows({ selected: true }).count() == 0) {
+
+            }
+        })
     });
 
 function excluirAdmin(button) {
@@ -67,7 +77,7 @@ $("#formCadastroAdmin")
             },
             success: function(response) {
                 if (response['status'] == 1) {
-                    tabela.ajax.reload()
+                    datatable.ajax.reload()
                     swal.fire('Sucesso!', 'Administrador cadastrado com sucesso. Aguarde a atualização da tabela.', 'success')
                 } else {
                     showErrors(response['error_list'])
@@ -82,7 +92,7 @@ $("#formCadastroAdmin")
 
 function excluirAdminsSelecionados() {
     var ids_admins = []
-    tabela.rows({ selected: true })
+    datatable.rows({ selected: true })
         .data()
         .toArray()
         .forEach((row) => {
@@ -124,7 +134,7 @@ function enviarAjaxExclusao(ids_admins) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            tabela.ajax.reload()
+            datatable.ajax.reload()
         },
         error: function(response) {
             console.log(response)
@@ -137,7 +147,7 @@ function enviarAjaxExclusao(ids_admins) {
 }
 
 function popularTabela() {
-    tabela = $('#tableAdmins')
+    datatable = $('#tableAdmins')
         .DataTable({
             "fixedHeader": {
                 footer: true

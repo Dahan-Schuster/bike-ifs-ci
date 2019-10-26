@@ -1,10 +1,10 @@
-var tabela;
+var datatable;
 
 $(document)
     .ready(function() {
         popularTabela();
         setInterval(function() {
-            tabela.ajax.reload();
+            datatable.ajax.reload();
         }, 120000); // atualiza a tabela a cada 2 minutos
 
         // Adiciona as máscasras de CPF e Telefone
@@ -14,8 +14,10 @@ $(document)
             .mask('(00) 00000-0000');
 
         // Configura o botão selecionar todos (o resto da configuração encontra-se no util.js de forma genérica)
-        $("#btnSelecionarLinhas")
-            .on('click', function() { selecionarTodos(this, tabela) })
+        configurarBotaoSelecionarLinhas(
+            document.getElementById('btnSelecionarLinhas'),
+            '#tableFuncionarios',
+            datatable)
 
         // Ativa o menu 'Listar' na navbar
         $(".nav-link")
@@ -41,7 +43,7 @@ $("#formCadastroFuncionario")
             success: function(response) {
                 console.log(response)
                 if (response['status'] == 1) {
-                    tabela.ajax.reload()
+                    datatable.ajax.reload()
                     swal.fire('Sucesso!', 'Funcionário cadastrado com sucesso. Aguarde a atualização da tabela.', 'success')
                 } else {
                     showErrors(response['error_list'])
@@ -64,7 +66,7 @@ function alterarSituacaoFuncionario(fun, situacao) {
 
 function ativarFuncionariosSelecionados() {
     var ids_funcionarios = []
-    tabela.rows({ selected: true })
+    datatable.rows({ selected: true })
         .data()
         .toArray()
         .forEach((row) => {
@@ -92,7 +94,7 @@ function ativarFuncionariosSelecionados() {
 
 function desativarFuncionariosSelecionados() {
     var ids_funcionarios = []
-    tabela.rows({ selected: true })
+    datatable.rows({ selected: true })
         .data()
         .toArray()
         .forEach((row) => {
@@ -134,7 +136,7 @@ function enviarAjaxAtivar(ids_funcionarios) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            tabela.ajax.reload()
+            datatable.ajax.reload()
         },
         error: function(response) {
             console.log(response)
@@ -162,7 +164,7 @@ function enviarAjaxDesativar(ids_funcionarios) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            tabela.ajax.reload()
+            datatable.ajax.reload()
         },
         error: function(response) {
             console.log(response)
@@ -175,7 +177,7 @@ function enviarAjaxDesativar(ids_funcionarios) {
 }
 
 function popularTabela() {
-    tabela = $('#tableFuncionarios')
+    datatable = $('#tableFuncionarios')
         .DataTable({
             "fixedHeader": {
                 footer: true
