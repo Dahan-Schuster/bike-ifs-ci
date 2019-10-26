@@ -44,8 +44,8 @@ class Home extends CI_Controller
             )
         );
 
-        if ($page == 'login') array_push($data['scripts'], 'login.js');
-        elseif ($page == 'esqueciSenha') array_push($data['scripts'], 'esqueciSenha.js');
+        if ($page == 'login') array_push($data['scripts'], 'pages/login.js');
+        elseif ($page == 'esqueciSenha') array_push($data['scripts'], 'pages/esqueciSenha.js');
 
         $this->load->view('templates/header', $data);
         $this->load->view("pages/$page", $data);

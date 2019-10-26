@@ -70,7 +70,7 @@ class Admin extends CI_Controller
                 'dataTables.responsive.min.js',
                 'jquery.mask.min.js',
                 'util.js',
-                "$page.js"
+                "pages/$page.js"
             ),
             'styles' => array(
                 'datatables.min.css',
