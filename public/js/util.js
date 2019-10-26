@@ -1,5 +1,8 @@
 const BASE_URL = "http://localhost/bike-ifs-ci/"
 
+/**
+ * Limpa os erros mostrados em um formulário
+ */
 function clearErrors() {
     $(".is-invalid")
         .removeClass('is-invalid')
@@ -7,6 +10,11 @@ function clearErrors() {
         .html("")
 }
 
+/**
+ * Mostra em um formulário mensagens de uma lista de erros
+ * 
+ * @param {array} error_list lista de erros no formato [{'#containerOndeMostrarOErro' = 'Mensagem do erro'}, ...]
+ */
 function showErrors(error_list) {
     clearErrors()
 
@@ -20,20 +28,22 @@ function showErrors(error_list) {
     })
 }
 
-function loadingImg(message = "") {
-    return "<div class='spinner-border spinner-border-sm'></div>&nbsp;&nbsp;&nbsp;" + message
+/**
+ * Retorna um bootstrap spinner + uma mensagem
+ * @param {*} message 
+ */
+function loadingImg(message = '') {
+    if (message.trim()) message = '&nbsp;&nbsp;&nbsp;' + message
+    return "<div class='spinner-border spinner-border-sm'></div>" + message
 }
 
-function alterarMascaraDoc(tipo) {
-    if (tipo == 'cpf') {
-        $("#inputDoc")
-            .mask("000.000.000-00");
-    } else if (tipo == 'mat') {
-        $("#inputDoc")
-            .unmask();
-    }
-}
 
+ 
+
+/**
+ * Formata uma enviada no formato USA (YYYY-MM-DD) para o formato padrão BR (DD/MM/AAAA)
+ * @param {string} data_usa 
+ */
 function formatarDataUSA_BR(data_usa) {
     var ano = data_usa.substring(0, 4);
     var mes = data_usa.substring(5, 7);
@@ -43,31 +53,16 @@ function formatarDataUSA_BR(data_usa) {
     return data_br;
 }
 
+// Faz o javascrip esperar por uma certa quantidade de milisegundos
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function alertSnackBar(snackbar, mensagem) {
-
-    // Esconde outros snackbars que possam estar na tela
-    $('.snackbar')
-        .removeClass('show')
-
-    // Adiciona a classe 'show' ao snackBar
-    $(snackbar)
-        .addClass("show");
-
-    // Adiciona a mensagem desejada
-    $(snackbar)
-        .html(mensagem);
-
-    // Remove a classe 'show' após 5 segundos
-    setTimeout(function() {
-        $(snackbar)
-            .removeClass('show')
-    }, 5000);
-}
-
+/**
+ * Retorna uma imagem em seu formato string
+ * @param {string} url caminho para a imagem
+ * @param {function} callback função de manipulação da string retornada
+ */
 function getDataUri(url, callback) {
     var image = new Image();
 
@@ -85,6 +80,10 @@ function getDataUri(url, callback) {
     image.src = url;
 }
 
+/**
+ *   Dispara o evento 'show.bs.modal' ao abrir modais
+ *   Existe nativamente no bootstrap, mas não no material bootstrap
+ * */
 $('[data-toggle="modal"]')
     .click(function(e) {
         $(e.delegateTarget.dataset.target)
@@ -97,9 +96,9 @@ $('[data-toggle="modal"]')
 
 
 /**
- *  
  * Recupera os dados da linha em que está o botão enviado por parâmetro
- *  
+ * 
+ * @param {element} button 
  */
 function recuperarInformacoesDaLinha(button) {
     var linha = $(button)
@@ -112,12 +111,18 @@ function recuperarInformacoesDaLinha(button) {
     return data;
 }
 
+/**
+ * Seleciona todas a linhas da tabela e altera o evento onclick do botão
+ * 
+ * @param {element} button 
+ * @param {object} tabela 
+ */
 function selecionarTodos(button, tabela) {
     $(button)
         .find('i')
         .html('check_box');
-        $(button)
-            .attr('title', 'Selecionar todos')
+    $(button)
+        .attr('title', 'Selecionar todos')
     $(button)
         .off('click')
     $(button)
@@ -126,6 +131,12 @@ function selecionarTodos(button, tabela) {
         .select()
 }
 
+/**
+ * Desseleciona todas a linhas da tabela e altera o evento onclick do botão
+ * 
+ * @param {element} button 
+ * @param {object} tabela 
+ */
 function desselecionarTodos(button, tabela) {
     $(button)
         .find('i')
