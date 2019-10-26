@@ -9,6 +9,22 @@
     margin: 40px auto;
 }
 
+.header-gradient {
+    background: -moz-linear-gradient(140deg, #379944 0%, #3a9d47 8%, #3da94b 13%, #009BBA 73%);
+    /* ff3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(27%, #009BBA), color-stop(87%, #3da94b), color-stop(92%, #3a9d47), color-stop(100%, #379944));
+    /* safari4+,chrome */
+    background: -webkit-linear-gradient(140deg, #379944 0%, #3a9d47 8%, #3da94b 13%, #009BBA 73%);
+    /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(140deg, #379944 0%, #3a9d47 8%, #3da94b 13%, #009BBA 73%);
+    /* opera 11.10+ */
+    background: -ms-linear-gradient(140deg, #379944 0%, #3a9d47 8%, #3da94b 13%, #009BBA 73%);
+    /* ie10+ */
+    background: linear-gradient(310deg, #379944 0%, #3a9d47 8%, #3da94b 13%, #009BBA 73%);
+    /* w3c */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#009BBA', endColorstr='#379944', GradientType=1);
+}
+
 .raised {
     box-shadow: 0px 2px 6px gray !important;
 }
@@ -150,15 +166,6 @@ table.dataTable tr.dtrg-group td {
     border-color: #888 transparent transparent transparent;
 }
 
-.jumbotron-main {
-    box-shadow: 5px 5px 20px gray;
-    background: linear-gradient(rgba(30, 30, 50, 0.9), rgba(30, 30, 50, 0.9)), url('../img/jumbotrom-bg.jpg');
-}
-
-.jumbotron-main .dropdown-menu {
-    background-color: rgba(30, 30, 30, 8);
-}
-
 .input-group-append button {
     outline: none;
     box-shadow: none;
@@ -202,7 +209,7 @@ table.dataTable tr.dtrg-group td {
 }
 
 .heading-home {
-    background-color: #10A14B;
+    background-color: #3da94b;
     color: white;
     display: inline-block;
     padding: .25em 1em;

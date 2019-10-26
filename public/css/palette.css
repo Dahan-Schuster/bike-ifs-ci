@@ -2,18 +2,21 @@
 
 
 /* Para containers */
-.bg-dark-primary { background: #1fa265 !important; }
-.bg-default-primary { background: #27b0b0 !important; }
-.bg-light-primary { background: #a2f0d8 !important; }
+.bg-dark-primary { background: #044D29 !important; }
+.bg-default-primary { background: #147333 !important; }
+.bg-light-primary { background: #379944 !important; }
 .bg-accent          { background: #0362bb !important; }
 
 /* Para elementos clicáveis */
-.dark-primary-color    { background: #1fa265 !important; }
+.dark-primary-color    { background: #044D29 !important; }
 .dark-primary-color:hover { background: #198351 !important;}
-.default-primary-color { background: #27b0b0 !important; }
+
+.default-primary-color { background: #044D29 !important; }
 .default-primary-color:hover { background: #218d8d !important; }
-.light-primary-color   { background: #a2f0d8 !important; }
+
+.light-primary-color   { background: #379944 !important; }
 .light-primary-color:hover   { background: #80cfb8 !important; }
+
 .accent-color          { background: #0362bb !important; }
 .accent-color:hover          { background: #024c91 !important; }
 

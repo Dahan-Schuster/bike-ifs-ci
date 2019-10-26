@@ -28,7 +28,7 @@ endif;
 
 <body>
     <header>
-        <nav class="navbar sticky-top navbar-expand-xl navbar-dark bg-dark-primary">
+        <nav class="navbar sticky-top navbar-expand-xl navbar-dark header-gradient">
             <div class="container">
                 <a class="navbar-brand" href="<?= base_url() ?>">
                     <img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Logo" alt="Logo">
@@ -57,17 +57,12 @@ endif;
     </div>
 
 
-    <div class="container my-2">
-        <div class="row">
-            <noscript class="alert alert-danger col-12">
-                <strong>É necessário estar com o JavaScript habilitado para aproveitar todos os recursos do site.
-                    <br>Por favor, habilite o JavaScript em seu navegador.</strong>
-            </noscript>
-        </div>
-    </div>
-
-
-
     <!-- divs que serão fechadas no arquivo footer -->
     <div id="pagina">
-        <div id="conteudo" class="container">
+        <div id="conteudo" class="container-fluid">
+            <div class="row">
+                <noscript class="alert alert-danger col-12">
+                    <strong>É necessário estar com o JavaScript habilitado para aproveitar todos os recursos do site.
+                        <br>Por favor, habilite o JavaScript em seu navegador.</strong>
+                </noscript>
+            </div>
