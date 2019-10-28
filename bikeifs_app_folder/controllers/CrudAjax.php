@@ -325,6 +325,7 @@ class CrudAjax extends CI_Controller
         else :
             # Verifica se um ID foi passado por parâmetro (em caso de edição)
             if (empty($data['id'])) :   # Se não, insere um novo registro
+                unset($data['id']);
                 $this->bicicleta->inserir($data);
             else :                      # Se sim, edita o registro referente ao ID
                 $id = $data['id'];      # Armazena o ID em uma variável ...
@@ -906,7 +907,7 @@ class CrudAjax extends CI_Controller
             # Formata as informações da bicicleta
             $bike['marca'] = (!trim($bike['marca']) ? 'Não informado' : $bike['marca']);
             $bike['obs'] = (!trim($bike['obs']) ? 'Nenhuma observação' : $bike['obs']);
-            $bike['modelo'] = ModeloBike::getNomeModelo($bike['modelo']);
+            $bike['nome_modelo'] = ModeloBike::getNomeModelo($bike['modelo']);
             $bike['situacao'] = SituacaoBicicleta::getTipoSituacao($bike['situacao']);
 
             $bikeAndUser['bikes'] = $bike;      # salva as informações da bike no objeto que contém a bicicleta e seu usuário
