@@ -8,7 +8,9 @@
     <table class="table table-sm table-striped responsive table-hover" id="tableAdmins" style="width: 100%;">
         <caption>
             &nbsp;
-            <button data-toggle="modal" data-target="#modalCadastroAdmin" title="Cadastrar novo" type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
+            <button
+             data-toggle="modal" data-target="#modalCadastroAdmin" data-backdrop="static" data-keyboard="false"
+             title="Cadastrar novo" type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
                 <i class="material-icons">person_add</i>
             </button>
             <button id="btnExcluirSelecionados" onclick="excluirAdminsSelecionados()" title="Excluir selecionados" type="button" class="btn btn-danger bmd-btn-fab bmd-btn-fab-sm">
