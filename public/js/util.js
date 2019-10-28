@@ -97,7 +97,7 @@ $('[data-toggle="modal"]')
  * 
  * @param {element} botao 
  */
-function recuperarInformacoesDaLinha(botao) {
+function recuperarInformacoesDaLinhaDatatable(botao, datatable) {
     var linha = $(botao)
         .parents('tr');
     if (linha.hasClass('child')) { // Verifica se o botão está dentro de uma div expansível (para telas pequenas)
@@ -118,6 +118,7 @@ function recuperarInformacoesDaLinha(botao) {
 function configurarBotaoSelecionarLinhas(botao, idTabela, datatable) {
     $(botao)
         .on('click', () => { selecionarTodos(botao, datatable) })
+    
     $(idTabela + ' tbody').on('click', 'tr', function () {
         // Verifica se o usuário selecionou ou desselecionou uma linha
         let selecionou = !$($(this).find('.selected').prevObject[0]).hasClass('selected')
@@ -125,6 +126,7 @@ function configurarBotaoSelecionarLinhas(botao, idTabela, datatable) {
         // Configura o somador
         // Indica se deve adicionar ou reduzir em 1 a quantidade de linhas selecionadas
         let somador = (selecionou) ? 1 : -1
+        
 
         // Conta a quantidade de linhas selecionadas
         // Irá retornar a quantidade ANTES do usuário clicar em uma linha
