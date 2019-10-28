@@ -6,33 +6,33 @@ class ModeloBike
 
     const __default = self::URBANA;
 
-    const URBANA = 0;
-    const DOBRAVEL = 1;
-    const FIXA = 2;
-    const MOUNTAIN = 3;
-    const SPEED = 4;
-    const BMX = 5;
-    const DOWNHILL = 6;
-    const ELETRICA = 7;
+    const URBANA = 1;
+    const DOBRAVEL = 2;
+    const FIXA = 3;
+    const MOUNTAIN = 4;
+    const SPEED = 5;
+    const BMX = 6;
+    const DOWNHILL = 7;
+    const ELETRICA = 8;
 
     public static function getNomeModelo($modelo)
     {
     	switch ($modelo) {
-    		case 0:
-    			return 'Urbana';
     		case 1:
-    			return 'Dobrável';
+    			return 'Urbana';
     		case 2:
-    			return 'Fixa';
+    			return 'Dobrável';
     		case 3:
-    			return 'Mountain';
+    			return 'Fixa';
     		case 4:
-    			return 'Speed';
+    			return 'Mountain';
     		case 5:
-    			return 'BMX';
+    			return 'Speed';
     		case 6:
-    			return 'Downhill';
+    			return 'BMX';
     		case 7:
+    			return 'Downhill';
+    		case 8:
     			return 'Elétrica';
     		default:
     			return 'Modelo não reconhecido';
