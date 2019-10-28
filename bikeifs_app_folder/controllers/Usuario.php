@@ -18,7 +18,7 @@ class Usuario extends CI_Controller
      */
     public function index()
     {
-        if (!isset($this->session->userdata['permissions_level'])) show_404();
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
 
@@ -37,7 +37,7 @@ class Usuario extends CI_Controller
     {
         $page_dir = 'pages' . ($page == 'home' ? '' : '/usuario');
 
-        if (!isset($this->session->userdata['permissions_level'])) show_404();
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
         elseif (!$page || !file_exists(APPPATH . "views/$page_dir/$page.php"))

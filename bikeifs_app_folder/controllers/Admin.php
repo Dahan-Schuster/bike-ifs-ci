@@ -37,13 +37,13 @@ class Admin extends CI_Controller
     {
         $page_dir = 'pages' . ($page == 'home' ? '' : '/admin');
 
-        if (!isset($this->session->userdata['permissions_level'])) show_404();
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'admin')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
         elseif (!$page || !file_exists(APPPATH . "views/$page_dir/$page.php"))
             show_404();
         elseif ($page == 'perfil')
-            header('location: ' . base_url('admin/perfil/') . $this->session->userdata['user_id']);
+            header('location: ' . base_url('admin/perfil/'));
 
         $data = array(
             'scripts' => array(
@@ -58,7 +58,7 @@ class Admin extends CI_Controller
 
     public function listar($page = NULL)
     {
-        if (!isset($this->session->userdata['permissions_level'])) show_404();
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'admin')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
         elseif (!$page || !file_exists(APPPATH . "views/pages/listar/$page.php"))
@@ -78,6 +78,12 @@ class Admin extends CI_Controller
             )
         );
 
+        if ($page == 'bicicletas') {
+            array_push($data['scripts'], 'escolher.cores.js');
+            array_push($data['scripts'], 'pesquisar.usuario.js');
+
+        }
+
         $this->load->view('templates/header-admin', $data);
         $this->load->view("pages/listar/$page", $data);
         $this->load->view('templates/footer-admin', $data);
@@ -85,7 +91,7 @@ class Admin extends CI_Controller
 
     public function excluir($page = NULL)
     {
-        if (!isset($this->session->userdata['permissions_level'])) show_404();
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'admin')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
         elseif (!$page || !file_exists(APPPATH . "views/pages/excluir/$page.php"))
@@ -100,12 +106,11 @@ class Admin extends CI_Controller
         $this->load->view('templates/header-admin', $data);
         $this->load->view("pages/excluir/$page", $data);
         $this->load->view('templates/footer-admin', $data);
-
     }
 
     public function perfil()
     {
-        if (!isset($this->session->userdata['permissions_level'])) show_404();
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'admin')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
 
