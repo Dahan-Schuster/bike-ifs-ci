@@ -19,6 +19,14 @@ $(document)
             '#tableFuncionarios',
             datatable)
 
+        // Reseta o formulário e os erros do modal de cadastro ao abrir
+        $('#modalCadastroFuncionario')
+            .on('show.bs.modal', function() {
+                clearErrors();
+                $('#formCadastroFuncionario')
+                    .trigger('reset')
+            })
+
         // Ativa o menu 'Listar' na navbar
         $(".nav-link")
             .removeClass('active')
@@ -54,6 +62,8 @@ $("#formCadastroFuncionario")
                     .html('Cadastrar')
             }
         })
+
+        return false;
     })
 
 function alterarSituacaoFuncionario(fun, situacao) {
