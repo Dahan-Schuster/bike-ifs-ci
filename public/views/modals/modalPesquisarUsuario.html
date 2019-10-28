@@ -5,22 +5,21 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header alert alert-primary" >
-                <h3 class="modal-title">Pesquisar usuário</i></h3>
+            <div class="modal-header raised pb-3">
+                <h3 class="modal-title">Pesquisar usuário</h3>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
             <p class="lead">Clique em um usuário para selecioná-lo.</p>
             <hr>
                 <div class="table-responsive">
-                <table class="table table-sm responsive bg-light table-bordered table-striped table-hover"
+                <table class="table table-sm responsive table-striped table-hover"
                         id="tableUsuarios" style="width: 100%;">
                     <caption>Lista de usuários</caption>
-                    <thead class="table-h">
+                    <thead class="bg-default-primary">
                         <tr>
                             <th>&#9432;</th>
                             <th>Nome</th>
-                            <th class="none">Telefone</th>
                             <th class="none">Email</th>
                             <th class="none">Tipo</th>
                             <th>CPF</th>
@@ -29,23 +28,12 @@
                     </thead>
                     <tbody>
                     </tbody>
-                    <tfoot class="table-f">
-                        <tr>
-                            <th>&#9432;</th>
-                            <th>Nome</th>
-                            <th>Telefone</th>
-                            <th>Email</th>
-                            <th>Tipo</th>
-                            <th>CPF</th>
-                            <th>Matrícula</th>
-                        </tr>
-                    </tfoot>
                 </table>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" onclick="recuperarUsuarioSelecionado(tabelaUsuarios);">Selecionar</button>
+                <button type="button" class="btn btn-primary btn-raised" data-dismiss="modal" onclick="recuperarUsuarioSelecionado();">Selecionar</button>
             </div>
         </div>
     </div>
