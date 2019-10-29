@@ -2,6 +2,45 @@ const BASE_URL = "http://localhost/bike-ifs-ci/"
 const IP_IFRAME_RFID = "http://127.0.0.1"
 
 /**
+ * Chama algumas funções de configuração padrão
+ * 
+ */
+$(function() {
+
+    /**
+     *   Dispara o evento 'show.bs.modal' ao abrir modais
+     *   Existe nativamente no bootstrap, mas não no material bootstrap
+     * */
+    $('[data-toggle="modal"]')
+        .click(function(e) {
+            $(e.delegateTarget.dataset.target)
+                .trigger('show.bs.modal')
+        })
+
+    $('.modal').draggable({
+        handle: $('.modal-header')
+    })
+    $('[data-type="draggable"]')
+        .find('.modal-header')
+        .css('cursor', 'move')
+    $('[data-type="draggable"]')
+        .find('.modal-content')
+        .on('selectstart', function() {
+            return false
+        })
+});
+
+/** 
+ * Ativa o menu 'Listar' na navbar
+ */
+function ativarMenuListar() {
+    $(".nav-link")
+        .removeClass('active')
+    $("#navLinkListagem")
+        .addClass('active')
+}
+
+/**
  * Limpa os erros mostrados em um formulário
  */
 function clearErrors() {
@@ -79,14 +118,12 @@ function getDataUri(url, callback) {
 }
 
 /**
- *   Dispara o evento 'show.bs.modal' ao abrir modais
- *   Existe nativamente no bootstrap, mas não no material bootstrap
- * */
-$('[data-toggle="modal"]')
-    .click(function(e) {
-        $(e.delegateTarget.dataset.target)
-            .trigger('show.bs.modal')
-    })
+ * Retorna a data atual
+ */
+function getTimeStampAtual() {
+    return new Date().getTime()
+}
+
 
 
 // #####################################################
@@ -131,15 +168,15 @@ function recuperarInformacoesDaLinhaDatatable(botao, datatable) {
 function configurarBotaoSelecionarLinhas(botao, idTabela, datatable) {
     $(botao)
         .on('click', () => { selecionarTodos(botao, datatable) })
-    
-    $(idTabela + ' tbody').on('click', 'tr', function () {
+
+    $(idTabela + ' tbody').on('click', 'tr', function() {
         // Verifica se o usuário selecionou ou desselecionou uma linha
         let selecionou = !$($(this).find('.selected').prevObject[0]).hasClass('selected')
 
         // Configura o somador
         // Indica se deve adicionar ou reduzir em 1 a quantidade de linhas selecionadas
         let somador = (selecionou) ? 1 : -1
-        
+
 
         // Conta a quantidade de linhas selecionadas
         // Irá retornar a quantidade ANTES do usuário clicar em uma linha
@@ -228,4 +265,40 @@ function alterarBotaoParaIndeterminate(botao) {
     $(botao)
         .find('i')
         .html('indeterminate_check_box');
+}
+
+/**
+ * Cria um input, instancia-o com o método datepicker() (Framework Gijgo.js),
+ * e configura para destruir e repopopular a datatable com o método popularTabela,
+ * ambos enviados por parâmetro
+ * 
+ * Utilizado nas tabelas com listagem por dia (registros, registros-do-dia, emails)
+ * 
+ * @param {object} datatable o objeto retornado apóis usar o método .DataTable()
+ * @param {function} callback função responsável por popular a datatable
+ */
+function criarEConfigurarSelectData(datatable, popularTabela) {
+    var selectData = document.createElement('input')
+    selectData.id = "selectData"
+    selectData.width = "312"
+    selectData.autocomplete = "off"
+    $(selectData).addClass('form-control')
+
+    var labelSelectData = document.createElement('label')
+    labelSelectData.for = "selectData"
+    labelSelectData.innerHTML = "Pesquisar por data:"
+
+    $(".div-datepicker").append(labelSelectData).append(selectData)
+    $(selectData).datepicker({
+        modal: true,
+        header: true,
+        footer: true,
+        format: 'dd/mm/yyyy',
+        uiLibrary: 'materialdesign',
+        iconsLibrary: 'materialicons',
+        change: function(e) {
+            datatable.destroy()
+            popularTabela(e.timeStamp)
+        }
+    })
 }
