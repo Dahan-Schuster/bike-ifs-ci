@@ -1,5 +1,5 @@
 const BASE_URL = "http://localhost/bike-ifs-ci/"
-const IP_IFRAME_RFID = "http://127.0.0.1"
+const IP_IFRAME_RFID = "http://192.168.15.151"
 
 /**
  * Chama algumas funções de configuração padrão

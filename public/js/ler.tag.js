@@ -25,7 +25,8 @@ function esperarResposta() {
 }
 
 function preencherInputUID(uid) {
-    $('#inputUid').html(uid);
+    $('#inputUid').val(uid);
+    $('#inputUid').trigger('keyup')
     $('#inputUid').change();
     $('#inputUid').trigger('UidDetectado');
 }
