@@ -23,7 +23,7 @@
                 <i class="material-icons">check_box_outline_blank</i>
             </button>
         </caption>
-        <thead class="thead-dark">
+        <thead class="bg-default-primary">
             <tr>
                 <th>#</th>
                 <th>Nome</th>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cancelar</button>
-                    <button id="btnEnviarCadastro" type="submit" class="btn btn-primary">Cadastrar</button>
+                    <button id="btnEnviarCadastro" type="submit" class="btn btn-primary btn-raised">Cadastrar</button>
                 </div>
             </form>
         </div>
