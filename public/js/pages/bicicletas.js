@@ -42,11 +42,7 @@ $(document)
             })
 
 
-        // Ativa o menu 'Listar' na navbar
-        $(".nav-link")
-            .removeClass('active')
-        $("#navLinkListagem")
-            .addClass('active')
+        ativarMenuListar()
 
     });
 

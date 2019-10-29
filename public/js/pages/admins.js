@@ -14,11 +14,7 @@ $(document)
         $("#inputCpf")
             .mask('000.000.000-00', { reverse: true });
 
-        // Ativa o menu 'Listar' na navbar
-        $(".nav-link")
-            .removeClass('active')
-        $("#navLinkListagem")
-            .addClass('active')
+        ativarMenuListar()
 
         // Configura o botão selecionar todos (o resto da configuração encontra-se no util.js de forma genérica)
         configurarBotaoSelecionarLinhas(

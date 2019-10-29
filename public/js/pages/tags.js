@@ -1,47 +1,44 @@
 var datatable;
 
-$(document).ready(function() {
-    popularTabela();
-    popularTabelaPesquisarUsuario();
-    configurarModalLerTag();
-    configurarSelectBicicleta();
+$(document)
+    .ready(function() {
+        popularTabela();
+        popularTabelaPesquisarUsuario();
+        configurarModalLerTag();
+        configurarSelectBicicleta();
 
-    setInterval(function() {
-        atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable);
-    }, 120000); // atualiza a tabela a cada 2 minutos
+        setInterval(function() {
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable);
+        }, 120000); // atualiza a tabela a cada 2 minutos
 
-    // Máscara do UID da tag RFID no formulário de cadastro
-    $("#inputUid")
-        .mask('ZZ ZZ ZZ ZZ', {
-            translation: {
-                'Z': {
-                    pattern: /[0-9A-F]/,
-                    optional: false
+        // Máscara do UID da tag RFID no formulário de cadastro
+        $("#inputUid")
+            .mask('ZZ ZZ ZZ ZZ', {
+                translation: {
+                    'Z': {
+                        pattern: /[0-9A-F]/,
+                        optional: false
+                    }
                 }
-            }
-        });
+            });
 
-    // Ativa o menu 'Listar' na navbar
-    $(".nav-link")
-        .removeClass('active')
-    $("#navLinkListagem")
-        .addClass('active')
+        ativarMenuListar()
 
-    // Configura o botão selecionar todos (o resto da configuração encontra-se no util.js de forma genérica)
-    configurarBotaoSelecionarLinhas(
-        document.getElementById('btnSelecionarLinhas'),
-        '#tableTags',
-        datatable)
+        // Configura o botão selecionar todos (o resto da configuração encontra-se no util.js de forma genérica)
+        configurarBotaoSelecionarLinhas(
+            document.getElementById('btnSelecionarLinhas'),
+            '#tableTags',
+            datatable)
 
-    // Reseta o formulário e os erros do modal de cadastro ao abrir
-    $('#modalCadastroTag')
-        .on('show.bs.modal', function() {
-            clearErrors();
-            $('#formCadastroTag')
-                .trigger('reset')
-        })
+        // Reseta o formulário e os erros do modal de cadastro ao abrir
+        $('#modalCadastroTag')
+            .on('show.bs.modal', function() {
+                clearErrors();
+                $('#formCadastroTag')
+                    .trigger('reset')
+            })
 
-});
+    });
 
 $("#formCadastroTag")
     .submit(function(form) {
