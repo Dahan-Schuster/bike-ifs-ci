@@ -33,33 +33,7 @@ $(document)
                 $('#formCadastroAdmin')
                     .trigger('reset')
             })
-
-        $("#tableAdmins tr").click(function(e) {
-            if (datatable.rows({ selected: true }).count() == 0) {
-
-            }
-        })
     });
-
-function excluirAdmin(button) {
-    let id = recuperarInformacoesDaLinha(button)
-        .id
-    let ids_admins = [id]
-
-    swal.fire({
-            type: 'warning',
-            title: 'Excluir Administrador',
-            text: 'Deseja realmente excluir o administrador selecionado?',
-            showCancelButton: true,
-            cancelButtonText: 'Não',
-            confirmButtonText: 'Sim, excluir',
-            confirmButtonColor: 'crimson'
-        })
-        .then((querExcluir) => {
-            if (querExcluir.value)
-                enviarAjaxExclusao(ids_admins)
-        })
-}
 
 $("#formCadastroAdmin")
     .submit(function(form) {
@@ -89,6 +63,25 @@ $("#formCadastroAdmin")
             }
         })
     })
+
+function excluirAdmin(botao) {
+    let id = recuperarInformacoesDaLinhaDatatable(botao, datatable).id
+    let ids_admins = [id]
+
+    swal.fire({
+            type: 'warning',
+            title: 'Excluir Administrador',
+            text: 'Deseja realmente excluir o administrador selecionado?',
+            showCancelButton: true,
+            cancelButtonText: 'Não',
+            confirmButtonText: 'Sim, excluir',
+            confirmButtonColor: 'crimson'
+        })
+        .then((querExcluir) => {
+            if (querExcluir.value)
+                enviarAjaxExclusao(ids_admins)
+        })
+}
 
 function excluirAdminsSelecionados() {
     var ids_admins = []
