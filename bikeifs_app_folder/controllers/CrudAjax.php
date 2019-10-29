@@ -349,6 +349,8 @@ class CrudAjax extends CI_Controller
 
         # Carrega o model TagRFID
         $this->load->model("tagrfid");
+        # Carrega o model Bicicleta
+        $this->load->model('bicicleta');
 
         # Array de resposta
         $response = array();
@@ -362,14 +364,24 @@ class CrudAjax extends CI_Controller
 
         ## Validação dos dados enviados
 
-        if (empty(trim($data['UID']))) :
+        $data['codigo'] = strtoupper($data['codigo']);
+
+        if (empty(trim($data['codigo']))) :
             $response['error_list']['#divInputUid'] = 'O código UID não pode estar vazio.';
+        else :
+            $uidJaCadastrado = $this->tagrfid->listarPorCampos(array('codigo' => $data['codigo']));
+            if ($uidJaCadastrado) :
+                $response['error_list']['#divInputUid'] = 'Código UID já cadastrado.';
+            else :
+                $tagsDaBike = $this->tagrfid->listarPorChaveEstrangeira('id_bicicleta', $data['id_bicicleta']);
+                if ($tagsDaBike)
+                    $response['error_list']['#divSelectBicicleta'] = 'Já existe um código RFID cadastrado para esta bicicleta.';
+            endif;
         endif;
 
         if (empty($data['id_bicicleta'])) :
             $response['error_list']['#divSelectBicicleta'] = 'Por favor, seleciona a bike que irá receber a Tag.';
         else :
-            $this->load->model('bicicleta');
             $bikeExiste = $this->bicicleta->carregarPorId($data['id_bicicleta']);
             if (!$bikeExiste)
                 $response['error_list']['#divSelectBicicleta'] = 'Bike não cadastrada. Selecione um usuário da lista e então escolha uma entre suas bicicletas.';
@@ -379,14 +391,7 @@ class CrudAjax extends CI_Controller
         if (!empty($response['error_list'])) :
             $response['status'] = 0;
         else :
-            # Verifica se um ID foi passado por parâmetro (em caso de edição)
-            if (empty($data['id'])) :   # Se não, insere um novo registro
-                $this->tagrfid->inserir($data);
-            else :                      # Se sim, edita o registro referente ao ID
-                $id = $data['id'];      # Armazena o ID em uma variável ...
-                unset($data['id']);     # ... e remove o ID da lista de campos para editar
-                $this->tagrfid->editar($id, $data);
-            endif;
+            $this->tagrfid->inserir($data);
         endif;
 
         # Retorna o array de resposta à requisição AJAX
@@ -679,7 +684,7 @@ class CrudAjax extends CI_Controller
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
 
-        $ids = $this->input->post('ids_tagrfid');
+        $ids = $this->input->post('ids_tags');
         $this->tagrfid->excluir($ids);
 
         echo json_encode($response);
@@ -758,8 +763,12 @@ class CrudAjax extends CI_Controller
         $response = array();
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
+        $admins = $this->administrador->listarTodos();
 
-        $response['data'] = $this->administrador->listarTodos();
+        $admins = !$admins ? array() : $admins;
+
+        $response['data'] = $admins;
+
 
         echo json_encode($response);
     }
@@ -866,6 +875,7 @@ class CrudAjax extends CI_Controller
 
         $id_usuario = $this->input->post('id_usuario');
         $registros = $this->registro->listarHistoricoUsuario($id_usuario);
+        $registros = !$registros ? array() : $registros;
         $registrosFormatados = $this->formatarRegistros($registros);
 
         $response['data'] = $registrosFormatados;
@@ -893,6 +903,7 @@ class CrudAjax extends CI_Controller
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
         $bicicletas = $this->bicicleta->listarTodos();
+        $bicicletas = !$bicicletas ? array() : $bicicletas;
         $bicicletasFormatadas = array();
 
         foreach ($bicicletas as $bike) :
@@ -942,6 +953,7 @@ class CrudAjax extends CI_Controller
 
         $id_usuario = $this->input->post('id_usuario');
         $bicicletas = $this->bicicleta->listarPorChaveEstrangeira('id_usuario', $id_usuario);
+        $bicicletas = !$bicicletas ? array() : $bicicletas;
         $bicicletasFormatadas = array();
 
         foreach ($bicicletas as $bike) :
@@ -1044,6 +1056,8 @@ class CrudAjax extends CI_Controller
         $emails = $this->email->listarTodos();
         $emailsFormatados = array();
 
+        $emails = !$emails ? array() : $emails;
+
         foreach ($emails as $email) {
 
             # Formata a hora e a data do envio do email
@@ -1085,8 +1099,8 @@ class CrudAjax extends CI_Controller
      */
     public function ajaxListarTagsRFID()
     {
-        if (!$this->input->is_ajax_request())
-            exit("Não é permitido aceso direto aos scripts.");
+        //if (!$this->input->is_ajax_request())
+        //    exit("Não é permitido aceso direto aos scripts.");
 
         # Carrega o model Tag RFID
         $this->load->model('tagrfid');
@@ -1102,6 +1116,8 @@ class CrudAjax extends CI_Controller
         $tags = $this->tagrfid->listarTodos();
         $tagsFormatadas = array();
 
+        $tags = !$tags ? array() : $tags;
+
         foreach ($tags as $tag) :
 
             ## Salva as informações interessantes sobre a bike associada à Tag RFID
@@ -1110,7 +1126,7 @@ class CrudAjax extends CI_Controller
             $bikeInfo = array(
                 'id' => $bike->id,
                 'cores' => $bike->cores,
-                'modelo' => ModeloBike::getNomeModelo($bike->modelo),
+                'nome_modelo' => ModeloBike::getNomeModelo($bike->modelo),
                 'marca' => (!trim($bike->marca) ? 'Não informado' : $bike->marca),
                 'aro' => $bike->aro,
                 'situacao' => SituacaoBicicleta::getTipoSituacao($bike->situacao)
@@ -1156,6 +1172,7 @@ class CrudAjax extends CI_Controller
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
         $usuarios = $this->usuario->listarTodos();
+        $usuarios = !$usuarios ? array() : $usuarios;
 
         foreach ($usuarios as $key => $user) :
 
@@ -1195,6 +1212,7 @@ class CrudAjax extends CI_Controller
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
         $funcionarios = $this->funcionario->listarTodos();
+        $funcionarios = !$funcionarios ? array() : $funcionarios;
 
         foreach ($funcionarios as $key => $fun) {
 
@@ -1208,6 +1226,33 @@ class CrudAjax extends CI_Controller
         $response['data'] = $funcionarios;
 
         echo json_encode($response);
+    }
+
+    public function gerarOpcoesDeBikesPorUsuario()
+    {
+        $id_usuario = $this->input->post('id_usuario');
+
+        # Carrega o model Bicicleta
+        $this->load->model('bicicleta');
+
+        if (!empty($id_usuario)) {
+            // Carregar os dados referentes ao usuário selecionado
+            $foreingKey = 'id_usuario';
+            $bicicletas = $this->bicicleta->listarPorChaveEstrangeira($foreingKey, $id_usuario);
+
+            // Gera um HTML de acordo com o resultado da query
+            if (sizeof($bicicletas) > 0) {
+                echo '<option value="">Selecione uma bicicleta</option>';
+                foreach ($bicicletas as $bike) {
+                    $bike['marca'] = (!trim($bike['marca']) ? "Marca não informada" : $bike['marca']);
+                    echo '<option value="' . $bike['id'] . '" data-color="' . $bike['cores'] . '">' .
+                        ModeloBike::getNomeModelo($bike['modelo']) . ', ' .
+                        $bike['marca'] . ', ' . $bike['aro'] .
+                        '</option>';
+                }
+            } else
+                echo '<option value="">Nenhuma bicicleta cadastrada.</option>';
+        }
     }
 
 
@@ -1228,6 +1273,8 @@ class CrudAjax extends CI_Controller
         $this->load->model('funcionario');
 
         $registrosFormatados = array();
+
+        if (!$registros) $registros = array();
 
         foreach ($registros as $reg) :
 
