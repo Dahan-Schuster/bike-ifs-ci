@@ -4,7 +4,7 @@ $(document)
     .ready(function() {
         popularTabela();
         setInterval(function() {
-            datatable.ajax.reload();
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable);
         }, 120000); // atualiza a tabela a cada 2 minutos
 
         // Adiciona as máscasras de CPF e Telefone
@@ -51,7 +51,7 @@ $("#formCadastroFuncionario")
             success: function(response) {
                 console.log(response)
                 if (response['status'] == 1) {
-                    datatable.ajax.reload()
+                    atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
                     swal.fire('Sucesso!', 'Funcionário cadastrado com sucesso. Aguarde a atualização da tabela.', 'success')
                 } else {
                     showErrors(response['error_list'])
@@ -146,7 +146,7 @@ function enviarAjaxAtivar(ids_funcionarios) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            datatable.ajax.reload()
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
         },
         error: function(response) {
             console.log(response)
@@ -174,7 +174,7 @@ function enviarAjaxDesativar(ids_funcionarios) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            datatable.ajax.reload()
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
         },
         error: function(response) {
             console.log(response)

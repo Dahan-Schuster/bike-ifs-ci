@@ -6,7 +6,7 @@ $(document)
         popularTabela();
         popularTabelaPesquisarUsuario();
         setInterval(function() {
-            datatable.ajax.reload();
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable);
         }, 120000); // atualiza a tabela a cada 2 minutos
 
         // Configura o botão selecionar todos (o resto da configuração encontra-se no util.js de forma genérica)
@@ -67,7 +67,7 @@ $("#formSalvarBike")
             },
             success: function(response) {
                 if (response['status'] == 1) {
-                    datatable.ajax.reload()
+                    atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
                     swal.fire('Sucesso!', 'Bicicleta cadastrada com sucesso. Aguarde a atualização da tabela.', 'success')
                 } else {
                     showErrors(response['error_list'])
@@ -164,7 +164,7 @@ function enviarAjaxAtivar(ids_bicicletas) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            datatable.ajax.reload()
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
         },
         error: function(response) {
             console.log(response)
@@ -192,7 +192,7 @@ function enviarAjaxDesativar(ids_bicicletas) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            datatable.ajax.reload()
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
         },
         error: function(response) {
             console.log(response)

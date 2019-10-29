@@ -94,6 +94,18 @@ $('[data-toggle="modal"]')
 
 
 /**
+ * Recarrega o AJAX de uma DataTable com uma cofiguração padrão:
+ * Chama o método responsável por desselecionar todas as linhas da tabela;
+ * Mantém a paginação no estado em que se encontrava antes de atualizar
+ * 
+ * @param {element} botao o botão responsável por selecionar/desselecionar todas as linhas
+ * @param {object} datatable o objeto retornado após usar o método .DataTable()
+ */
+function atualizarDataTable(botao, datatable) {
+    datatable.ajax.reload(desselecionarTodos(botao, datatable), false)
+}
+
+/**
  * Recupera os dados da linha em que está o botão enviado por parâmetro
  * 
  * @param {element} botao 

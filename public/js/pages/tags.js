@@ -7,7 +7,7 @@ $(document).ready(function() {
     configurarSelectBicicleta();
 
     setInterval(function() {
-        datatable.ajax.reload();
+        atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable);
     }, 120000); // atualiza a tabela a cada 2 minutos
 
     // Máscara do UID da tag RFID no formulário de cadastro
@@ -59,7 +59,7 @@ $("#formCadastroTag")
             },
             success: function(response) {
                 if (response['status'] == 1) {
-                    datatable.ajax.reload()
+                    atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
                     swal.fire('Sucesso!', 'Tag cadastrada com sucesso. Aguarde a atualização da tabela.', 'success')
                 } else {
                     showErrors(response['error_list'])
@@ -136,7 +136,7 @@ function enviarAjaxExclusao(ids_tags) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            datatable.ajax.reload()
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
         },
         error: function(response) {
             console.log(response)

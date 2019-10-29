@@ -7,7 +7,7 @@ $(document)
     .ready(function() {
         popularTabela();
         setInterval(function() {
-            datatable.ajax.reload();
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable);
         }, 120000); // atualiza a tabela a cada 2 minutos
 
         // Máscara de CPF no formulário de cadastro
@@ -51,7 +51,7 @@ $("#formCadastroAdmin")
             },
             success: function(response) {
                 if (response['status'] == 1) {
-                    datatable.ajax.reload()
+                    atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
                     swal.fire('Sucesso!', 'Administrador cadastrado com sucesso. Aguarde a atualização da tabela.', 'success')
                 } else {
                     showErrors(response['error_list'])
@@ -127,7 +127,7 @@ function enviarAjaxExclusao(ids_admins) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            datatable.ajax.reload()
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
         },
         error: function(response) {
             console.log(response)
