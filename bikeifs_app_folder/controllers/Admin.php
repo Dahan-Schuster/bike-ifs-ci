@@ -70,14 +70,15 @@ class Admin extends CI_Controller
                 'dataTables.responsive.min.js',
                 'jquery.mask.min.js',
                 'util.js',
+                'gijgo.min.js',
                 "pages/$page.js"
             ),
             'styles' => array(
                 'datatables.min.css',
-                'responsive.dataTables.min.css'
+                'responsive.dataTables.min.css',
+                'gijgo.min.css'
             )
         );
-
         if ($page == 'bicicletas') {
             array_push($data['scripts'], 'escolher.cores.js');
             array_push($data['scripts'], 'pesquisar.usuario.js');
