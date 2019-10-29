@@ -795,9 +795,9 @@ class CrudAjax extends CI_Controller
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
 
-        $dia = $this->input->post('dia');
+        $timestamp = $this->input->post('$timestamp');
 
-        $registros = $this->registro->listarRegistrosPorDia($dia);
+        $registros = $this->registro->listarRegistrosPorDia($timestamp);
         $registrosFormatados = $this->formatarRegistros($registros);
 
         $response['data'] = $registrosFormatados;
@@ -1040,7 +1040,7 @@ class CrudAjax extends CI_Controller
      * 
      * Retorna um JSON de objetos
      */
-    public function ajaxListarEmails()
+    public function ajaxListarEmailsDoDia()
     {
         if (!$this->input->is_ajax_request())
             exit("Não é permitido aceso direto aos scripts.");
@@ -1056,7 +1056,10 @@ class CrudAjax extends CI_Controller
         $response = array();
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
-        $emails = $this->email->listarTodos();
+
+        $timestamp = $this->input->post('timestamp');
+
+        $emails = $this->email->listarEmailsPorDia($timestamp);
         $emailsFormatados = array();
 
         $emails = !$emails ? array() : $emails;

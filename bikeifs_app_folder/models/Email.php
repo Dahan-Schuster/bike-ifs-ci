@@ -118,10 +118,11 @@ class Email extends CI_Model
      * @return array - Array associativo com os registros encontrados.
      * 
      */
-    public function listarEmailsPorDia($dia)
+    public function listarEmailsPorDia($timestamp)
     {
-        $dia = date('Y-m-d', strtotime($dia));
-        $result = $this->db->where("'hora'::date", $dia, false)->get('EMAIL');
+        $timestamp = intval($timestamp);
+        $dia = "'".date('Y-m-d', $timestamp)."'";
+        $result = $this->db->where("hora::date", $dia, false)->get('EMAIL');
         return ($result->num_rows() > 0) ? $result->result_array() : NULL;
 
     }

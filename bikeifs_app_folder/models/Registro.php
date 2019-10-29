@@ -121,10 +121,11 @@ class Registro extends CI_Model
      * @return array - Array associativo com os registros encontrados.
      * 
      */
-    public function listarRegistrosPorDia($dia)
+    public function listarRegistrosPorDia($timestamp)
     {
-        $dia = date('Y-m-d', strtotime($dia));
-        $result = $this->db->where("'data_hora'::date =", $dia, false)->get('REGISTRO');
+        $timestamp = intval($timestamp);
+        $dia = "'".date('Y-m-d', $timestamp)."'";
+        $result = $this->db->where("data_hora::date =", $dia, false)->get('REGISTRO');
         return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
@@ -155,8 +156,10 @@ class Registro extends CI_Model
      * @return array - Array associativo com quantidade de registros encontrados.
      * 
      */
-    public  function contarRegistrosDoDia($dia)
+    public  function contarRegistrosDoDia($timestamp)
     {
+        $timestamp = intval($timestamp);
+        $dia = "'".date('Y-m-d', $timestamp)."'";
         $result = $this->db->where("'data_hora'::date", $dia, false)->from('REGISTRO')->count_all_results();
     }
 
@@ -172,6 +175,8 @@ class Registro extends CI_Model
      */
     public function contarRegistrosDaSemana($semana, $ano)
     {
+        $semana = "'".$semana."'";
+        $ano = "'".$ano."'";
         $this->db->where("date_part('year', 'data_hora'::date)", $ano, false);
         $this->db->where("date_part('week', 'data_hora'::date)", $semana, false);
         return $this->db->from('REGISTRO')->count_all_results();
@@ -189,6 +194,8 @@ class Registro extends CI_Model
      */
     public function contarRegistrosDoMes($mes, $ano)
     {
+        $mes = "'".$mes."'";
+        $ano = "'".$ano."'";
         $this->db->where("date_part('year', 'data_hora'::date)", $ano, false);
         $this->db->where("date_part('month', 'data_hora'::date)", $mes, false);
         return $this->db->from('REGISTRO')->count_all_results();
