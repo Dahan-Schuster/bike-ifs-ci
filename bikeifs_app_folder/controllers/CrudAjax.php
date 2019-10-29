@@ -84,6 +84,7 @@ class CrudAjax extends CI_Controller
         else :
             # Verifica se um ID foi passado por parâmetro (em caso de edição)
             if (empty($data['id'])) :   # Se não, insere um novo registro
+                unset($data['id']);
                 $this->administrador->inserir($data);
             else :                      # Se sim, edita o registro referente ao ID
                 $id = $data['id'];      # Armazena o ID em uma variável ...
@@ -159,6 +160,7 @@ class CrudAjax extends CI_Controller
         else :
             # Verifica se um ID foi passado por parâmetro (em caso de edição)
             if (empty($data['id'])) :   # Se não, insere um novo registro
+                unset($data['id']);
                 $this->funcionario->inserir($data);
             else :                      # Se sim, edita o registro referente ao ID
                 $id = $data['id'];      # Armazena o ID em uma variável ...
@@ -250,6 +252,7 @@ class CrudAjax extends CI_Controller
         else :
             # Verifica se um ID foi passado por parâmetro (em caso de edição)
             if (empty($data['id'])) :   # Se não, insere um novo registro
+                unset($data['id']);
                 $this->usuario->inserir($data);
             else :                      # Se sim, edita o registro referente ao ID
                 $id = $data['id'];      # Armazena o ID em uma variável ...
@@ -1185,7 +1188,7 @@ class CrudAjax extends CI_Controller
             $user['cpf'] = ($user['perfil_privado'] ? "Privado" : $user['cpf']);
             $user['matricula'] = (!trim($user['matricula']) ? "Não informado" : $user['matricula']);
 
-            $users[$key] = $user;
+            $usuarios[$key] = $user;
 
         endforeach;
 
