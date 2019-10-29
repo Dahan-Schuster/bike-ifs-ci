@@ -46,7 +46,6 @@
                 <h3 class="modal-title">Cadastrar novo usuário</h3>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <!-- TODO: tipo, matricula -->
             <form id="formCadastroUsuario" autocomplete="off">
                 <div class="modal-body">
                     <div id="divInputNome" class="form-group">

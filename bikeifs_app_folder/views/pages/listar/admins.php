@@ -8,9 +8,7 @@
     <table class="table table-sm table-striped responsive table-hover" id="tableAdmins" style="width: 100%;">
         <caption>
             &nbsp;
-            <button
-             data-toggle="modal" data-target="#modalCadastroAdmin" data-backdrop="static" data-keyboard="false"
-             title="Cadastrar novo" type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
+            <button data-toggle="modal" data-target="#modalCadastroAdmin" data-backdrop="static" data-keyboard="false" title="Cadastrar novo" type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
                 <i class="material-icons">person_add</i>
             </button>
             <button id="btnExcluirSelecionados" onclick="excluirAdminsSelecionados()" title="Excluir selecionados" type="button" class="btn btn-danger bmd-btn-fab bmd-btn-fab-sm">
@@ -60,15 +58,17 @@
                         <input name="cpf" type="text" placeholder="000.000.000-00" class="form-control" id="inputCpf">
                         <span class="invalid-feedback"></span>
                     </div>
-                    <div id="divInputSenha" class="form-group">
-                        <label for="inputSenha" class="bmd-label-floating">Senha</label>
-                        <input name="senha" type="password" class="form-control" id="inputSenha">
-                        <span class="invalid-feedback"></span>
-                    </div>
-                    <div id="divInputConfirmarSenha" class="form-group">
-                        <label for="inputConfirmSenha" class="bmd-label-floating">Repita a senha</label>
-                        <input name="confirmar_senha" type="password" class="form-control" id="inputConfirmSenha">
-                        <span class="invalid-feedback"></span>
+                    <div class="form-row">
+                        <div id="divInputSenha" class="form-group col-12 col-sm-6">
+                            <label for="inputSenha" class="bmd-label-floating">Senha</label>
+                            <input name="senha" type="password" class="form-control" id="inputSenha">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                        <div id="divInputConfirmarSenha" class="form-group col-12 col-sm-6">
+                            <label for="inputConfirmSenha" class="bmd-label-floating">Repita a senha</label>
+                            <input name="confirmar_senha" type="password" class="form-control" id="inputConfirmSenha">
+                            <span class="invalid-feedback"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -8,9 +8,7 @@
     <table class="table table-sm responsive table-striped table-hover" id="tableFuncionarios" style="width: 100%;">
         <caption>
             &nbsp;
-            <button
-             data-toggle="modal" data-target="#modalCadastroFuncionario" data-backdrop="static" data-keyboard="false"
-             title="Cadastrar novo" type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
+            <button data-toggle="modal" data-target="#modalCadastroFuncionario" data-backdrop="static" data-keyboard="false" title="Cadastrar novo" type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
                 <i class="material-icons">person_add</i>
             </button>
             <button id="btnAtivarSelecionados" onclick="ativarFuncionariosSelecionados()" title="Ativar selecionados" type="button" class="btn btn-info bmd-btn-fab bmd-btn-fab-sm">
@@ -59,25 +57,29 @@
                         <input name="email" type="email" placeholder="exemplo@email.com" class="form-control" id="inputEmail">
                         <span class="invalid-feedback"></span>
                     </div>
-                    <div id="divinputTelefone" class="form-group">
-                        <label for="inputTelefone" class="bmd-label-floating">Telefone para contato</label>
-                        <input name="telefone" type="text" placeholder="(00) 00000-0000" class="form-control" id="inputTelefone">
-                        <span class="invalid-feedback"></span>
+                    <div class="form-row">
+                        <div id="divinputTelefone" class="form-group col-12 col-sm-6">
+                            <label for="inputTelefone" class="bmd-label-floating">Telefone para contato</label>
+                            <input name="telefone" type="text" placeholder="(00) 00000-0000" class="form-control" id="inputTelefone">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                        <div id="divInputCpf" class="form-group col-12 col-sm-6">
+                            <label for="inputCpf" class="bmd-label-floating">CPF</label>
+                            <input name="cpf" type="text" placeholder="000.000.000-00" class="form-control" id="inputCpf">
+                            <span class="invalid-feedback"></span>
+                        </div>
                     </div>
-                    <div id="divInputCpf" class="form-group">
-                        <label for="inputCpf" class="bmd-label-floating">CPF</label>
-                        <input name="cpf" type="text" placeholder="000.000.000-00" class="form-control" id="inputCpf">
-                        <span class="invalid-feedback"></span>
-                    </div>
-                    <div id="divInputSenha" class="form-group">
-                        <label for="inputSenha" class="bmd-label-floating">Senha</label>
-                        <input name="senha" type="password" class="form-control" id="inputSenha">
-                        <span class="invalid-feedback"></span>
-                    </div>
-                    <div id="divInputConfirmarSenha" class="form-group">
-                        <label for="inputConfirmSenha" class="bmd-label-floating">Repita a senha</label>
-                        <input name="confirmar_senha" type="password" class="form-control" id="inputConfirmSenha">
-                        <span class="invalid-feedback"></span>
+                    <div class="form-row">
+                        <div id="divInputSenha" class="form-group col-12 col-sm-6">
+                            <label for="inputSenha" class="bmd-label-floating">Senha</label>
+                            <input name="senha" type="password" class="form-control" id="inputSenha">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                        <div id="divInputConfirmarSenha" class="form-group col-12 col-sm-6">
+                            <label for="inputConfirmSenha" class="bmd-label-floating">Repita a senha</label>
+                            <input name="confirmar_senha" type="password" class="form-control" id="inputConfirmSenha">
+                            <span class="invalid-feedback"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
