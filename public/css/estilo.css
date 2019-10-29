@@ -9,6 +9,36 @@
     margin: 40px auto;
 }
 
+.div-datepicker {
+    display: inline-flex;
+    float: left
+}
+
+.div-datepicker label {
+    margin: 8px 5px 0 !important;
+    min-width: fit-content;
+}
+
+.table-datepicker {
+    margin-top: -45px !important;
+}
+
+@media screen and (max-width: 767px) {
+    .table-datepicker {
+        margin-top: 6px !important;
+    }
+    .dataTables_filter label,
+    .dataTables_filter label input,
+    .div-datepicker,
+    .div-datepicker div {
+        width: 100% !important;
+    }
+
+    .pagination {
+        justify-content: center !important;
+    }
+}
+
 .header-gradient {
     background: -moz-linear-gradient(140deg, #379944 0%, #3a9d47 8%, #3da94b 13%, #009BBA 73%);
     /* ff3.6+ */
