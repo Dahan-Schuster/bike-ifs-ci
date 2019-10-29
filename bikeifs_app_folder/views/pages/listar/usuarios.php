@@ -1,224 +1,112 @@
-<?php
-@session_start();
-if (isset($_SESSION['login'])) {
-    if ($_SESSION['tipoAcesso'] == 'admin' || $_SESSION['tipoAcesso'] == 'funcionario') { ?>
-        <div class="row">
-            <span class="col-12 col-md-6">
-                <h1>Lista de usuários</h1>
-            </span>
-            <div class="col-md-3"></div>
-            <a class="col-11 col-md-3 btn btn-success mu-0 mb-3 mx-auto" href="?pagina=listagem" role="button">
-                Voltar para o menu de listagem
-            </a>
-        </div>
-        <hr class="my-3">
-        <div class="table-responsive">
-            <table class="table table-sm responsive bg-light table-bordered table-striped table-hover display" id="tableUsuarios" style="width: 100%;">
-                <caption>Lista de usuários</caption>
-                <thead class="table-h">
-                    <tr>
-                        <th>&#9432;</th>
-                        <th>Nome</th>
-                        <th class="none">Telefone</th>
-                        <th class="none">Email</th>
-                        <th>Tipo</th>
-                        <th>CPF</th>
-                        <th>Matrícula</th>
-                        <th>Situação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-                <tfoot class="table-f">
-                    <tr>
-                        <th>&#9432;</th>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Email</th>
-                        <th>Tipo</th>
-                        <th>CPF</th>
-                        <th>Matrícula</th>
-                        <th>Situação</th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        <br>
-    <?php } else { ?>
-        <div class="alert alert-danger" role="alert">
-            Você não tem permissão para acessar esta página.
-        </div>
-    <?php }
-    } else { ?>
-    <div class="alert alert-danger" role="alert">
-        É necessário fazer login para acessar esta página.
-    </div>
-<?php } ?>
+<?php require_once(APPPATH . 'models/TipoUsuario.php'); ?>
+<div class="row">
+    <span class="col-12 col-md-6">
+        <h3>Lista de usuários</h3>
+    </span>
+</div>
+<hr class="my-3">
+<div class="table-responsive">
+    <table class="table table-sm responsive table-striped table-hover" id="tableUsuarios" style="width: 100%;">
+        <caption>
+            &nbsp;
+            <button data-toggle="modal" data-target="#modalCadastroUsuario" data-backdrop="static" data-keyboard="false" title="Cadastrar novo" type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
+                <i class="material-icons">person_add</i>
+            </button>
+            <button id="btnAtivarSelecionados" onclick="ativarUsuariosSelecionados()" title="Ativar selecionados" type="button" class="btn btn-info bmd-btn-fab bmd-btn-fab-sm">
+                <i class="material-icons">thumb_up</i>
+            </button>
+            <button id="btnDestivarSelecionados" onclick="desativarUsuariosSelecionados()" title="Desativar selecionados" type="button" class="btn btn-danger bmd-btn-fab bmd-btn-fab-sm">
+                <i class="material-icons">thumb_down</i>
+            </button>
+            <button id="btnSelecionarLinhas" title="Selecionar todos" type="button" class="btn accent-color bmd-btn-fab bmd-btn-fab-sm text-light">
+                <i class="material-icons">check_box_outline_blank</i>
+            </button>
+        </caption>
+        <thead class="bg-default-primary">
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th>CPF</th>
+                <th>Situacao</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 <br>
-<?php
-include_once('../modals/modalTipoVisitante.html');
-?>
-<script type="text/javascript">
-    var tabela;
+<!-- Modal Cadastrar Usuario-->
+<div id="modalCadastroUsuario" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
 
-    $(document).ready(function() {
-        popularTabela();
-        setInterval(function() {
-            tabela.ajax.reload();
-        }, 120000); // atualiza a tabela a cada 2 minutos
-
-
-    });
-
-    function alterarSituacao(user, situacao) {
-        if (situacao == 'Ativo')
-            desativar(user)
-        else if (situacao == 'Inativo')
-            ativar(user)
-    }
-
-    function ativar(user) {
-        $.ajax({
-            type: "POST",
-            url: '<?= base_url() ?>/app/src/controller/ativar/usuario.php',
-            data: {
-                user
-            },
-            success: function(user) {
-                alertSnackBar($("#alertaSucesso"), 'Alterado com sucesso!<br>Aguarde a atualização da tabela.')
-                tabela.ajax.reload();
-            }
-        });
-    }
-
-    function desativar(user) {
-        $.ajax({
-            type: "POST",
-            url: '<?= base_url() ?>/app/src/controller/desativar/usuario.php',
-            data: {
-                user
-            },
-            success: function(user) {
-                alertSnackBar($("#alertaSucesso"), 'Alterado com sucesso!<br>Aguarde a atualização da tabela.')
-                tabela.ajax.reload();
-            }
-        });
-    }
-
-
-    function popularTabela() {
-        tabela = $('#tableUsuarios').DataTable({
-            "fixedHeader": {
-                footer: true
-            },
-            "order": [
-                1, "asc"
-            ],
-            "orderFixed": [4, "asc"],
-            rowGroup: {
-                startRender: null,
-                endRender: function(rows, group) {
-                    return group;
-                },
-                dataSrc: 'tipo'
-            },
-            "columnDefs": [{
-                    // Centraliza o conteúdo das colunas referentes aos botões
-                    "className": "dt-center",
-                    "targets": '_all'
-                },
-                {
-                    // Remove a opção 'ordenar' das colunas referentes aos botões
-                    "orderable": false,
-                    "targets": -1
-                },
-                {
-                    // Define um switch para a situação do usuário
-                    "render": function(situacao, type, row) {
-                        var checked = ''
-
-                        if (situacao == 'Visitante')
-                            return situacao;
-                        else if (situacao == 'Ativo')
-                            checked = 'checked'
-
-                        return `<div class="custom-control custom-switch">
-                                    <input onchange="alterarSituacao('` + row.id + `', '` + situacao + `')" 
-                                        type="checkbox" class="custom-control-input" id="switchSituacao` + row.id + `" ` + checked + `>
-                                    
-                                    <label class="custom-control-label" for="switchSituacao` + row.id + `">` + situacao + `</label>
-                                </div>`;
-                    },
-                    "targets": -1 // Coluna referente à situação.
-                },
-                {
-                    // Adiciona um link para o perfil de cada usuário
-                    "render": function(nome, type, row) {
-                        let output = '<div class="tooltip-w3 tooltip-w3-dotted">'
-                        output += '<span onclick="abrirPerfilLateralUsuario(' + row.id + ')">' + nome.split(" ")[0] + '</span>'
-                        output += '<span class="tooltiptext-w3">'
-                        output += 'Clique para ver mais'
-                        output += '</span>'
-                        return output
-                    },
-                    "targets": 1 // Coluna referente ao nome.
-                },
-                // Define a ordem de prioridade de visibilidade de cada coluna
-                {
-                    responsivePriority: 10001,
-                    targets: 6
-                },
-                {
-                    responsivePriority: 10002,
-                    targets: 4
-                },
-                {
-                    responsivePriority: 1,
-                    targets: 1
-                }
-            ],
-            "language": {
-                "url": "<?= base_url() ?>/public/js/Portuguese.json"
-            },
-            ajax: {
-                type: "POST",
-                url: "<?= base_url() ?>/app/src/controller/carregar/usuarios.php"
-            },
-            "processing": true,
-            "columns": [{
-                    data: "id"
-                },
-                {
-                    data: "nome"
-                },
-                {
-                    data: "telefone"
-                },
-                {
-                    data: "email"
-                },
-                {
-                    data: "tipo"
-                },
-                {
-                    data: "cpf"
-                },
-                {
-                    data: "matricula"
-                },
-                {
-                    data: "situacao"
-                }
-            ]
-        });
-    }
-
-    function recuperarInformacoesDaLinha(button) {
-        var linha = $(button).parents('tr');
-        if (linha.hasClass('child')) { // Verifica se o botão está dentro de uma div expansível (para telas pequenas)
-            linha = linha.prev(); // Caso esteja, aponta para a linha anterior (a linha mãe)
-        }
-        var data = tabela.row(linha).data();
-        return data;
-    }
-</script>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header raised pb-3">
+                <h3 class="modal-title">Cadastrar novo usuário</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- TODO: tipo, matricula -->
+            <form id="formCadastroUsuario" autocomplete="off">
+                <div class="modal-body">
+                    <div id="divInputNome" class="form-group">
+                        <label for="inputNome" class="bmd-label-floating">Nome</label>
+                        <input name="nome" type="text" placeholder="Nome Completo" class="form-control" id="inputNome">
+                        <span class="invalid-feedback"></span>
+                    </div>
+                    <div id="divInputEmail" class="form-group">
+                        <label for="inputEmail" class="bmd-label-floating">Endereço de e-mail</label>
+                        <input name="email" type="email" placeholder="exemplo@email.com" class="form-control" id="inputEmail">
+                        <span class="invalid-feedback"></span>
+                    </div>
+                    <div class="form-row">
+                        <div id="divSelectTipo" class="form-group col-12 col-sm-6">
+                            <label for="selectTipo" class="bmd-label-floating">Tipo de usuário</label>
+                            <select name="tipo" class="form-control" id="selectTipo">
+                                <option value="">Selecione um tipo</option>
+                                <option value="<?= TipoUsuario::ALUNO ?>">Aluno</option>
+                                <option value="<?= TipoUsuario::SERVIDOR ?>">Servidor</option>
+                                <option value="<?= TipoUsuario::VISITANTE ?>">Visitante</option>
+                            </select>
+                            <span class="invalid-feedback"></span>
+                        </div>
+                        <div id="divInputMatricula" class="form-group col-12 col-sm-6">
+                            <label for="inputMatricula" class="bmd-label-floating mb-3">Matrícula</label>
+                            <input name="matricula" type="text" class="form-control" id="inputMatricula">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div id="divinputTelefone" class="form-group col-12 col-sm-6">
+                            <label for="inputTelefone" class="bmd-label-floating">Telefone para contato</label>
+                            <input name="telefone" type="text" placeholder="(00) 00000-0000" class="form-control" id="inputTelefone">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                        <div id="divInputCpf" class="form-group col-12 col-sm-6">
+                            <label for="inputCpf" class="bmd-label-floating">CPF</label>
+                            <input name="cpf" type="text" placeholder="000.000.000-00" class="form-control" id="inputCpf">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div id="divInputSenha" class="form-group col-12 col-sm-6">
+                            <label for="inputSenha" class="bmd-label-floating">Senha</label>
+                            <input name="senha" type="password" class="form-control" id="inputSenha">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                        <div id="divInputConfirmarSenha" class="form-group col-12 col-sm-6">
+                            <label for="inputConfirmSenha" class="bmd-label-floating">Repita a senha</label>
+                            <input name="confirmar_senha" type="password" class="form-control" id="inputConfirmSenha">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cancelar</button>
+                    <button id="btnEnviarCadastro" type="submit" class="btn btn-primary btn-raised">Cadastrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Fim Modal Cadastrar Usuario -->
