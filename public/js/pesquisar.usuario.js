@@ -1,37 +1,38 @@
 var datatableUsuarios;
 
 function popularTabelaPesquisarUsuario() {
-    datatableUsuarios = $('#tableUsuarios').DataTable({
-        "fixedHeader": {
-            header: true,
-            footer: true
-        },
-        "select": {
-            style: 'single'
-        },
-        "order": [
-            [1, "asc"]
-        ],
-        "language": {
-            "url": BASE_URL + "public/js/Portuguese.json"
-        },
-        ajax: {
-            type: "POST",
-            url: BASE_URL + "crudAjax/ajaxListarUsuarios",
-            success: function(response) {
-                preencherSelectUsuario(response.data)
-            }
-        },
-        "processing": true,
-        "columns": [
-            { data: "id" },
-            { data: "nome" },
-            { data: "email" },
-            { data: "tipo" },
-            { data: "cpf" },
-            { data: "matricula" }
-        ]
-    });
+    datatableUsuarios = $('#tableUsuarios')
+        .on('xhr.dt', function(e, settings, response, xhr) {
+            preencherSelectUsuario(response.data)
+        })
+        .DataTable({
+            "fixedHeader": {
+                header: true,
+                footer: true
+            },
+            "select": {
+                style: 'single'
+            },
+            "order": [
+                [1, "asc"]
+            ],
+            "language": {
+                "url": BASE_URL + "public/js/Portuguese.json"
+            },
+            ajax: {
+                type: "POST",
+                url: BASE_URL + "crudAjax/ajaxListarUsuarios"
+            },
+            "processing": true,
+            "columns": [
+                { data: "id" },
+                { data: "nome" },
+                { data: "email" },
+                { data: "tipo" },
+                { data: "cpf" },
+                { data: "matricula" }
+            ]
+        });
 }
 
 function preencherSelectUsuario(usuarios) {
@@ -55,6 +56,7 @@ function recuperarUsuarioSelecionado() {
 function atualizarSelectUsuario(id) {
     // salva o id do usuário para enviar no formulário
     $('#selectUsuario').val(id); // seleciona o usuário no selectUsuario
+    $('#selectUsuario').change(); // dispara o evento de mudança para ativar certos handles
 }
 
 function configurarModalPesquisarUsuarios() {
