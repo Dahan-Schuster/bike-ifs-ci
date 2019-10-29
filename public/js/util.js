@@ -1,4 +1,5 @@
 const BASE_URL = "http://localhost/bike-ifs-ci/"
+const IP_IFRAME_RFID = "http://127.0.0.1"
 
 /**
  * Limpa os erros mostrados em um formulário
