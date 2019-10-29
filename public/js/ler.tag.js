@@ -1,5 +1,5 @@
 function recuperarTagLida() {
-   requisitarUidDoIframe();
+    requisitarUidDoIframe();
 }
 
 function requisitarUidDoIframe() {
@@ -7,8 +7,8 @@ function requisitarUidDoIframe() {
     const iframeUrl = $('#iframeRFID').attr('src');
 
     iframeWindow.postMessage({
-        acao : 'get',
-        chave : 'uid',
+        acao: 'get',
+        chave: 'uid',
     }, iframeUrl)
 
     esperarResposta();
@@ -25,38 +25,34 @@ function esperarResposta() {
 }
 
 function preencherInputUID(uid) {
-    $('#inputUID').html(uid);
-    $('#inputUID').change();
-    $('#inputUID').trigger('UidDetectado');
+    $('#inputUid').html(uid);
+    $('#inputUid').change();
+    $('#inputUid').trigger('UidDetectado');
 }
 
 function limparModalLerTag() {
-    $('#iframeRFID').attr("src", function(index, pagina){ 
+    $('#iframeRFID').attr("src", function(index, pagina) {
         return pagina;
     });
-    $('#modalLerTag').modal('hide');
+    $('#modalLerTag').find('#btnClose').click();
 }
 
 function configurarModalLerTag() {
-    $('#modalLerTag').on('shown.bs.modal', async function() { 
-        $('#iframeRFID').attr("src", "http://192.168.25.12/");
+    $('#modalLerTag').on('show.bs.modal', async function() {
+        $('#iframeRFID').attr("src", IP_IFRAME_RFID);
     })
 }
 
 function pesquisarBikePorUID(uid) {
     $.ajax({
-        type:'POST',
-        url: '<?= base_url() ?>/app/src/controller/carregar/bike-por-uid.php',
-        data: {uid},
-        success:function(data){
-            if (data == 'error_1')
-                $("#modalTagNaoEncontrada").modal('show')
-            else {
-                preencherModalRegistroAutomatico(data);
-                $("#modalRegistroAutomatico").modal('show');
-            }
+        type: 'POST',
+        url: BASE_URL + 'crudAjax/ajaxBuscarBicicletaPorUID',
+        data: { uid },
+        success: function(response) {
+            console.log(response)
+            // TODO: registro automático
         }
-    }); 
+    });
 }
 
 function preencherModalRegistroAutomatico(data) {
@@ -75,38 +71,10 @@ function preencherModalRegistroAutomatico(data) {
     $('#modalRegistroAutomatico').find('.modal-body').find("#spanUsuario").html(user + ' - ' + userDoc);
 
     let coresBackground = criarArrayCores(coresBike)
-    background = criarCssBackgroundTagRfid(coresBackground)   
+    background = criarCssBackgroundTagRfid(coresBackground)
     $('#modalRegistroAutomatico').find('.modal-body').find("#divBicicleta").css('background', background);
     $('#modalRegistroAutomatico').find('.modal-body').find("#divBicicleta").prev().html(
         'Bicicleta: <ul><li><b>Nome:</b> ' + nome + '</li><li><b>Modelo:</b> ' + modelo + '</li><li><b>Marca:</b> ' + marca + '</li><li><b>Aro:</b> ' + aro + '</li>');
 
     $('#modalRegistroAutomatico').find('.modal-body').find("#bikeId").val(bikeId);
-}
-
-
-function criarArrayCores(novasCores) {
-    let novasCoresArray = novasCores.split(";")
-
-    // Remove a última posição caso seja vazia
-    // (Ocorre quando a string novasCores termina com ';')
-    if (novasCoresArray[novasCoresArray.length-1].length === 0 )
-        novasCoresArray.splice(novasCoresArray.length-1, 1)
-    return novasCoresArray;
-}
-/**
- * Cria um linear-gradient com as cores selecionadas no modal de escolha de cor
- * var cores: Array definido como global neste script
- */
-function criarCssBackgroundTagRfid(cores) {
-    let background = 'repeating-linear-gradient(45deg, '
-    let quebraDeCor = 10 / cores.length * 10
-    let comprimento = 0
-    cores.forEach(cor => {
-        background += cor +' ' + comprimento +'% '  // #FFFFFF 0%
-        comprimento += quebraDeCor;                 // 0% += 50% = 50% 
-        background += comprimento +'%, '            // #FFFFFF 0% 50%, 
-    });
-    
-    background = background.substring(0, background.length - 2) + ')'
-    return background
 }
