@@ -81,7 +81,9 @@ class Admin extends CI_Controller
         if ($page == 'bicicletas') {
             array_push($data['scripts'], 'escolher.cores.js');
             array_push($data['scripts'], 'pesquisar.usuario.js');
-
+        } elseif ($page == 'tags') {
+            array_push($data['scripts'], 'pesquisar.usuario.js');
+            array_push($data['scripts'], 'ler.tag.js');
         }
 
         $this->load->view('templates/header-admin', $data);
