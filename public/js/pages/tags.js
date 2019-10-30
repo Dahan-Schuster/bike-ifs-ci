@@ -67,6 +67,8 @@ $("#formCadastroTag")
                     .html('Cadastrar')
             }
         })
+
+        return false;
     })
 
 
@@ -295,7 +297,7 @@ function configurarSelectBicicleta() {
         }
     });
 
-    // Atualizar o a div cores ao escolher uma bicicleta
+    // Atualizar a div cores ao escolher uma bicicleta
     $('#selectBicicleta').change(function() {
         var cores = $('#selectBicicleta option:selected').data('color');
         if (!cores) cores = '#fff'

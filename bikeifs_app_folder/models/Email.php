@@ -120,7 +120,7 @@ class Email extends CI_Model
      */
     public function listarEmailsPorDia($timestamp)
     {
-        $timestamp = intval($timestamp);
+        $timestamp = intval(substr($timestamp, 0, 10));
         $dia = "'".date('Y-m-d', $timestamp)."'";
         $result = $this->db->where("hora::date", $dia, false)->get('EMAIL');
         return ($result->num_rows() > 0) ? $result->result_array() : NULL;

@@ -123,9 +123,9 @@ class Registro extends CI_Model
      */
     public function listarRegistrosPorDia($timestamp)
     {
-        $timestamp = intval($timestamp);
+        $timestamp = intval(substr($timestamp, 0, 10));
         $dia = "'".date('Y-m-d', $timestamp)."'";
-        $result = $this->db->where("data_hora::date =", $dia, false)->get('REGISTRO');
+        $result = $this->db->where("data_hora::date", $dia, false)->get('REGISTRO');
         return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 
@@ -158,7 +158,7 @@ class Registro extends CI_Model
      */
     public  function contarRegistrosDoDia($timestamp)
     {
-        $timestamp = intval($timestamp);
+        $timestamp = intval(substr($timestamp, 0, 10));
         $dia = "'".date('Y-m-d', $timestamp)."'";
         $result = $this->db->where("'data_hora'::date", $dia, false)->from('REGISTRO')->count_all_results();
     }

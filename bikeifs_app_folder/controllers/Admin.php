@@ -79,12 +79,21 @@ class Admin extends CI_Controller
                 'gijgo.min.css'
             )
         );
-        if ($page == 'bicicletas') {
-            array_push($data['scripts'], 'escolher.cores.js');
+        if ($page == 'bicicletas' || $page == 'tags' || $page == 'registros-do-dia') {
             array_push($data['scripts'], 'pesquisar.usuario.js');
-        } elseif ($page == 'tags') {
-            array_push($data['scripts'], 'pesquisar.usuario.js');
-            array_push($data['scripts'], 'ler.tag.js');
+
+            if ($page == 'bicicletas') :
+                array_push($data['scripts'], 'escolher.cores.js');
+
+            elseif ($page == 'tags' || $page == 'registros-do-dia') :
+                array_push($data['scripts'], 'ler.tag.js');
+
+                if ($page == 'registros-do-dia') :
+                    array_push($data['scripts'], 'snackbar.min.js');
+                    array_push($data['styles'], 'snackbar.min.css');
+                    $data['pode_registrar'] = TRUE;  // TODO: consertar permissão de checkin
+                endif;
+            endif;
         }
 
         $this->load->view('templates/header-admin', $data);

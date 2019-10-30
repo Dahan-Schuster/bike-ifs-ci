@@ -30,6 +30,16 @@ $(function() {
         })
 });
 
+function snackBarSucesso() {
+    var options = {
+        content: "<i class='material-icons'>check_circle_outline</i> <span class='mb-5'>Operação realizada com sucesso</span>", // text of the snackbar
+        style: "snackbar snackbar-sucesso", // add a custom class to your snackbar
+        timeout: 5000 // time in milliseconds after the snackbar autohides, 0 is disabled
+    }
+
+    $.snackbar(options);
+}
+
 /** 
  * Ativa o menu 'Listar' na navbar
  */
@@ -139,7 +149,8 @@ function getTimeStampAtual() {
  * @param {object} datatable o objeto retornado após usar o método .DataTable()
  */
 function atualizarDataTable(botao, datatable) {
-    datatable.ajax.reload(desselecionarTodos(botao, datatable), false)
+    var callback = (botao) ? desselecionarTodos(botao, datatable) : () => {};
+    datatable.ajax.reload(callback, false)
 }
 
 /**
@@ -265,40 +276,4 @@ function alterarBotaoParaIndeterminate(botao) {
     $(botao)
         .find('i')
         .html('indeterminate_check_box');
-}
-
-/**
- * Cria um input, instancia-o com o método datepicker() (Framework Gijgo.js),
- * e configura para destruir e repopopular a datatable com o método popularTabela,
- * ambos enviados por parâmetro
- * 
- * Utilizado nas tabelas com listagem por dia (registros, registros-do-dia, emails)
- * 
- * @param {object} datatable o objeto retornado apóis usar o método .DataTable()
- * @param {function} callback função responsável por popular a datatable
- */
-function criarEConfigurarSelectData(datatable, popularTabela) {
-    var selectData = document.createElement('input')
-    selectData.id = "selectData"
-    selectData.width = "312"
-    selectData.autocomplete = "off"
-    $(selectData).addClass('form-control')
-
-    var labelSelectData = document.createElement('label')
-    labelSelectData.for = "selectData"
-    labelSelectData.innerHTML = "Pesquisar por data:"
-
-    $(".div-datepicker").append(labelSelectData).append(selectData)
-    $(selectData).datepicker({
-        modal: true,
-        header: true,
-        footer: true,
-        format: 'dd/mm/yyyy',
-        uiLibrary: 'materialdesign',
-        iconsLibrary: 'materialicons',
-        change: function(e) {
-            datatable.destroy()
-            popularTabela(e.timeStamp)
-        }
-    })
 }

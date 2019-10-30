@@ -60,28 +60,7 @@
     </div>
 </div>
 <!-- Fim modal checkOut -->
-<!-------------------------->
-<!-- Modal aviso checkout -->
-<div id="modalAvisoCheckOut" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header alert alert-warning">
-                <h3 class="modal-title">Aviso</i></h3>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <h4>Um registro de saída já foi realizado para esta entrada!</h4>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- fim modal aviso checkout -->
-<!-------------------------->
+<!--------------------------------->
 <!-- Modal checkout bem sucedido -->
 <div id="modalCheckOutSucesso" class="modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
@@ -130,47 +109,50 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header raised pb-3">
                 <h3 class="modal-title">Registrar entrada</h3>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <form id="formRegistrarEntrada">
+            <form id="formRegistrarEntradaManual">
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="selectUsuario">Usuário <span class="text-danger"><b>*</b></span></label>
-                        <button type="button" class="btn btn-info form-control" data-toggle="modal"
-                            data-target="#modalPesquisarUsuario" onclick="esconderModalRegistro();">
-                            <img src="<?= base_url() ?>/public/img/icons/search.png" title="Pesquisar usuário"
-                                alt="Pesquisar">
-                        </button>
-                        <select id="selectUsuario" class="form-control mt-1" required>
-                            <option value="">Selecione um usuário</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Por favor, selecione o usuário dono da bicicleta.
+                    <div id="divSelectUsuario" class="form-group">
+                        <label for="selectUsuario" class="bmd-label-floating">
+                            Pesquise um usuário clicando no botão ao lado
+                        </label>
+                        <div class="input-group">
+                            <select class="form-control" id="selectUsuario">
+                                <option value="">Selecione o dono da bicicleta</option>
+                            </select>
+                            <div class="input-group-append">
+                                <button type="button" class="btn" data-toggle="modal" data-target="#modalPesquisarUsuario">
+                                    <i class="material-icons">search</i>
+                                </button>
+                            </div>
                         </div>
+                        <span class="invalid-feedback"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="selectBike">Bicicleta <span class="text-danger"><b>*</b></span></label>
-                        <select id="selectBike" name='bicicleta' class="form-control select-bike" required>
+                    <div class="form-row">
+                    <div id="divSelectBicicleta" class="form-group col-12 col-sm-6">
+                        <label for="selectBicicleta" class="bmd-label-floating">
+                            Selecione a bicicleta
+                        </label>
+                        <select class="form-control" id="selectBicicleta" name="id_bicicleta">
                             <option value="">Primeiramente, selecione um usuário.</option>
                         </select>
-                        <div class="invalid-feedback">
-                            Por favor, selecione a bicicleta.
-                        </div>
+                        <span class="invalid-feedback"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="selectedBikeColor">Cor da bicicleta selecionada</label>
+                    <div class="form-group col-12 col-sm-6">
+                        <label for="selectedBikeColor" class="bmd-label-floating">Cor da bicicleta selecionada</label>
                         <div id="selectedBikeColor" class="form-control bike-color">
-                            <img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Bike" alt="">
+                            <i class="material-icons">directions_bike</i>
                         </div>
                     </div>
-                    <hr>
+                    </div>
                     <div class="form-group">
                         <label for="inputObs">Observações sobre a entrada</label>
                         <textarea class="form-control" id="inputObs" name="obs" maxlength="255"></textarea>
                     </div>
-                    <div class="form-group">
+                    <div id="divInputNumTrava" class="form-group">
                         <label for="inputNumTrava">Número do cadeado utilizado (0 para nenhum)</label>
                         <input type="number" class="form-control" id="inputNumTrava" name="num_trava" min="0" max="15"
                             value="0">
@@ -178,36 +160,14 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary"><i>Check-in</i></button>
+                    <button id="btnCheckinManual" type="submit" class="btn btn-primary btn-raised"><i>Check-in</i></button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <!-- Fim modal registrar entrada -->
-<!------------------------------->
-<!-- Modal registros em aberto -->
-<div id="modalRegistrosEmAberto" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header alert alert-danger">
-                <h3 class="modal-title">Registros em aberto.</i></h3>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <h4>Um registro de entrada já foi realizado por este usuário com a bicicleta selecionada.</h4>
-                <p>Realize o <i>check-out</i> antes de continuar.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Fim Modal registros em aberto -->
-<!------------------------------->
+<!--------------------------------->
 <!-- Modal registro automático -->
 <div id="modalRegistroAutomatico" class="modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered">

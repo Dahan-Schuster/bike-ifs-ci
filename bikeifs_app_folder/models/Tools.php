@@ -13,7 +13,7 @@ class Tools
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         # Define o fuso horário
         date_default_timezone_set('America/Maceio');
-        return ucfirst(strftime('%A, %d/%m/%Y', $timestamp)) . ' - ' . date('H:i', $timestamp);
+        return utf8_encode(ucfirst(strftime('%A, %d/%m/%Y', $timestamp))) . ' - ' . date('H:i', $timestamp);
     }
 
     /**

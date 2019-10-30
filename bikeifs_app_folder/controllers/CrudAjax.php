@@ -409,10 +409,12 @@ class CrudAjax extends CI_Controller
         # Verifica se o método está sendo acessado por uma requisição AJAX
         if (!$this->input->is_ajax_request()) :
             exit("Não é permitido acesso direto aos scripts.");
-        elseif ($this->session->userdata['permissions_level'] != 'funcionario') :
-            echo array(
-                'status' => -1,
-                'error_message' => 'Apenas funcionários possuem permissão para realizar checkins.'
+        elseif ($this->session->userdata['permissions_level'] != 'admin') : // TODO: consertar permissão de checkin
+            echo json_encode(
+                array(
+                    'status' => -1,
+                    'error_message' => 'Apenas funcionários possuem permissão para realizar checkins.'
+                )
             );
             exit();
         endif;
@@ -434,6 +436,9 @@ class CrudAjax extends CI_Controller
 
         if (empty($data['num_trava'])) :
             $data['num_trava'] = 0;
+        elseif ($data['num_trava'] != 0) :
+            if ($this->registro->listarPorCampos(array('id_saida' => 'IS NULL', 'num_trava', $data['num_trava'])))
+                $response['error_list']['#divInputNumTrava'] = 'Um usuário está utilizando esta trava no momento. Tente utilizar outra.';
         endif;
 
         if (empty($data['id_bicicleta'])) :
@@ -443,6 +448,7 @@ class CrudAjax extends CI_Controller
             $bikeExiste = $this->bicicleta->carregarPorId($data['id_bicicleta']);
             if (!$bikeExiste)
                 $response['error_list']['#divSelectBicicleta'] = 'Bike não cadastrada. Selecione um usuário da lista e então escolha uma entre suas bicicletas.';
+        
         endif;
 
         ## Fim validação
@@ -795,7 +801,7 @@ class CrudAjax extends CI_Controller
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
 
-        $timestamp = $this->input->post('$timestamp');
+        $timestamp = $this->input->post('timestamp');
 
         $registros = $this->registro->listarRegistrosPorDia($timestamp);
         $registrosFormatados = $this->formatarRegistros($registros);
@@ -1350,7 +1356,7 @@ class CrudAjax extends CI_Controller
             else :
                 $saidaInfo = array(
                     'id' => null,
-                    'hora' => 'Pendente',
+                    'data_hora' => 'Pendente',
                     'obs' => 'Pendente'
                 );
 
