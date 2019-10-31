@@ -4,7 +4,7 @@ $(document)
     .ready(function() {
         let timestamp = getTimeStampAtual()
         popularTabela(timestamp);
-        criarEConfigurarSelectData(datatable, popularTabela)
+        criarEConfigurarSelectData()
 
         ativarMenuListar()
     });
@@ -103,4 +103,40 @@ function popularTabela(timestamp) {
                 }
             ]
         });
+}
+
+/**
+ * Cria um input, instancia-o com o método datepicker() (Framework Gijgo.js),
+ * e configura para destruir e repopopular a datatable com o método popularTabela
+ * 
+ * Utilizado nas tabelas com listagem por dia (registros, registros-do-dia, emails)
+ * 
+ * @param {object} datatable o objeto retornado apóis usar o método .DataTable()
+ * @param {function} callback função responsável por popular a datatable
+ */
+function criarEConfigurarSelectData() {
+    var selectData = document.createElement('input')
+    selectData.id = "selectData"
+    selectData.width = "312"
+    selectData.autocomplete = "off"
+    $(selectData).addClass('form-control')
+
+    var labelSelectData = document.createElement('label')
+    labelSelectData.for = "selectData"
+    labelSelectData.innerHTML = "Pesquisar por data:"
+
+    $(".div-datepicker").append(labelSelectData).append(selectData)
+    $(selectData).datepicker({
+        modal: true,
+        header: true,
+        footer: true,
+        format: 'dd/mm/yyyy',
+        uiLibrary: 'materialdesign',
+        iconsLibrary: 'materialicons',
+        change: function(e) {
+            datatable.destroy()
+            let data = $(selectData).val().substring(6) + '-' + $(selectData).val().substring(3, 5) + '-' + $(selectData).val().substring(0, 2)
+            popularTabela(Date.parse(data))
+        }
+    })
 }
