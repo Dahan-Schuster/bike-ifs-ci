@@ -25,10 +25,10 @@ function esperarResposta() {
 }
 
 function preencherInputUID(uid) {
-    $('#inputUid').val(uid);
-    $('#inputUid').trigger('keyup')
-    $('#inputUid').change();
-    $('#inputUid').trigger('UidDetectado');
+    $('#inputUid').val(uid);                // Preenche o input de texto
+    $('#inputUid').trigger('keyup')         // Dispara um evento de teclado para ativar máscara (jquery mask)
+    $('#inputUid').change();                // Dispara um evento de mudança para alguns handlers fazerem seu trabalho
+    $('#inputUid').trigger('UidDetectado'); // Dispara o evento que será escutado pelo input UID do modal de registros automáticos
 }
 
 function limparModalLerTag() {
