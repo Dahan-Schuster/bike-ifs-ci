@@ -421,10 +421,17 @@ class CrudAjax extends CI_Controller
 
         # Carrega o model Registro
         $this->load->model("registro");
+        # Carrega o model Bicicleta
+        $this->load->model('bicicleta');
+        # Carrega o model Usuário
+        $this->load->model('usuario');
 
         # Array de resposta
         $response = array();
-        # status == 0: algo deu errado | status == 1: tudo certo
+        # status == -2: bike/dono inativos (retorna objetos para edição rápida)
+        # status == -1: mensagem de erro
+        # status == 1: tudo certo
+        # status == 0: lista de erros
         $response['status'] = 1;
         # Array de listagem dos erros
         $response['error_list'] = array();
@@ -437,24 +444,37 @@ class CrudAjax extends CI_Controller
         if (empty($data['num_trava'])) :
             $data['num_trava'] = 0;
         elseif ($data['num_trava'] != 0) :
-            if ($this->registro->listarPorCampos(array('id_saida' => 'IS NULL', 'num_trava', $data['num_trava'])))
+            if ($this->registro->verificarSeCadeadoEstaEmUso($data['num_trava']))
                 $response['error_list']['#divInputNumTrava'] = 'Um usuário está utilizando esta trava no momento. Tente utilizar outra.';
         endif;
 
         if (empty($data['id_bicicleta'])) :
             $response['error_list']['#divSelectBicicleta'] = 'Por favor, seleciona a bike que irá receber a Tag.';
         else :
-            $this->load->model('bicicleta');
-            $bikeExiste = $this->bicicleta->carregarPorId($data['id_bicicleta']);
-            if (!$bikeExiste)
+            $bike = $this->bicicleta->carregarPorId($data['id_bicicleta']);
+            $user = $this->usuario->carregarPorId($bike->id_usuario);
+            if (!$bike) :
                 $response['error_list']['#divSelectBicicleta'] = 'Bike não cadastrada. Selecione um usuário da lista e então escolha uma entre suas bicicletas.';
-        
+            elseif ($bike->situacao == SituacaoBicicleta::INATIVA || $user->situacao == SituacaoUsuario::INATIVO) : // TODO: Bike verificada/não verificada
+                $response['objetos']['bicicleta'] = $bike;
+                $response['objetos']['usuario'] = $user;
+            elseif ($this->registro->listarRegistrosEmAberto($data['id_bicicleta'])) :
+                $response['status'] = -1;
+                $response['error_message'] =
+                    'Existem registros de entrada em aberto para esta bicicleta. ' .
+                    'Confira se selecionou a bicicleta correta e, caso positivo, ' .
+                    'se foi realizado o registro de saída da mesma.';
+            endif;
         endif;
+
+
 
         ## Fim validação
         if (!empty($response['error_list'])) :
             $response['status'] = 0;
-        else :
+        elseif (!empty($response['objetos'])) :
+            $response['status'] = -2;
+        elseif ($response['status'] != -1) :
             $data['data_hora'] = date('Y-m-d H:i:s');
             $data['id_funcionario'] = $this->session->userdata['logged_user_id'];
             $this->registro->inserir($data);
@@ -472,31 +492,37 @@ class CrudAjax extends CI_Controller
         # Verifica se o método está sendo acessado por uma requisição AJAX
         if (!$this->input->is_ajax_request()) :
             exit("Não é permitido acesso direto aos scripts.");
-        elseif ($this->session->userdata['permissions_level'] != 'funcionario') :
+        elseif ($this->session->userdata['permissions_level'] != 'admin') :
             echo array(
                 'status' => -1,
                 'error_message' => 'Apenas funcionários possuem permissão para realizar checkouts.'
             );
             exit();
         endif;
+        
+        $response = array();
+        $response['status'] = 1;
 
         # Carrega o model Saida
         $this->load->model("saida");
         # Carrega o model Registro
-        $this->load->model("Registro");
+        $this->load->model("registro");
 
         # Dados enviados via POST
         $data = $this->input->post();
+        $response['id_registro'] = $data['id_registro'];
 
         # Recupera a hora atual
-        $data['data_hora'] = date('Y-m-d H:i:s');
+        $checkoutData['data_hora'] = date('Y-m-d H:i:s');
         # Recupera o ID do funcionário logado
-        $data['id_funcionario'] = $this->session->userdata['logged_user_id'];
+        $checkoutData['id_funcionario'] = $this->session->userdata['logged_user_id'];
+        # Recupera as observações enviadas via POST
+        $checkoutData['obs'] = $data['obs'];
 
         # Registra uma saída...
-        $response['id_saida'] = $this->saida->inserir($data);
+        $response['id_saida'] = $this->saida->inserir($checkoutData);
         # ... e a associa ao registro de entrada que possui o ID recebido via POST 
-        $response['id_registro'] = $this->registro->editar($data['id_registro'], array('id_saida' => $response['id_saida']));
+        $this->registro->editar($data['id_registro'], array('id_saida' => $response['id_saida']));
 
         # Retorna o array de resposta à requisição AJAX
         echo json_encode($response);
