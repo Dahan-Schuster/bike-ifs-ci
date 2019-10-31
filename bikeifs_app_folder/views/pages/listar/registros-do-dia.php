@@ -3,14 +3,18 @@
         <h3>Registros do dia</h3>
     </span>
     <?php if ($pode_registrar) : ?>
-        <button data-backdrop="static" class="btn col-12 col-md-3" type="button" data-toggle="modal" data-target="#modalRegistroManual">
-            <span class="mr-3">Registrar entrada</span>
-            <i class="material-icons">add</i>
-        </button>
-        <button class="btn col-12 col-md-3" type="button" data-toggle="modal" data-target="#modalLerTag">
-            <span class="mr-3">Ler Tag Rfid</span>
-            <img src="<?= base_url() ?>/public/img/icons/rfid.png" class="img-responsive ml-3" title="Ler Tag RFID" alt="Ler Tag Rfid">
-        </button>
+        <div class="col-12 col-md-3">
+            <button data-backdrop="static" class="btn btn-raised bg-accent text-light" type="button" data-toggle="modal" data-target="#modalRegistroManual">
+                <span class="mr-3">Registrar entrada</span>
+                <img src="<?= base_url() ?>/public/img/icons/registrar.png" class="img-responsive ml-3" title="Registrar entrada" alt="Registrar entrada">
+            </button>
+        </div>
+        <div class="col-12 col-md-3">
+            <button class="btn btn-raised py-1" style="background: lightgray;" type="button" data-toggle="modal" data-target="#modalLerTag">
+                <span class="mr-3">Ler Tag Rfid</span>
+                <img src="<?= base_url() ?>/public/img/icons/rfid.png" class="img-responsive ml-3" title="Ler Tag RFID" alt="Ler Tag Rfid">
+            </button>
+        </div>
     <?php endif; ?>
 </div>
 <hr class="my-3">

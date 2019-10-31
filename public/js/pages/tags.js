@@ -182,14 +182,7 @@ function popularTabela() {
             {
                 // Estiliza a coluna referente à situação da bicicleta
                 "render": function(situacao) {
-                    var badge_class = 'd-none'; // por padrão, esconde a identificação de tipo antes de verificar se é válido
-
-                    if (situacao === 'Ativa')
-                        badge_class = 'badge-success';
-                    else if (situacao === 'Inativa')
-                        badge_class = 'badge-danger';
-
-                    return '<span class="badge ' + badge_class + '"><h6><b>' + situacao + '</b></h6></span>';
+                    return `<i class="material-icons ${situacao == 'Ativa' ? 'text-success"> thumb_up' : 'text-danger"> thumb_down'}</i>`;
                 },
                 "targets": 6
             },
