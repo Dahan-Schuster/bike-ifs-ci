@@ -30,11 +30,23 @@ $(function() {
         })
 });
 
+/**
+ * Fecha o modal enviado por parâmetro
+ * 
+ * @param {object} modal objeto retornado pelo JQuery ao referenciar o modal
+ */
+function fecharModal(modal) {
+    modal.find('.close').click()
+}
+
+/**
+ * Mostra um snackbar estilizado como sucesso
+ */
 function snackBarSucesso() {
     var options = {
         content: "<i class='material-icons'>check_circle_outline</i> <span class='mb-5'>Operação realizada com sucesso</span>", // text of the snackbar
-        style: "snackbar snackbar-sucesso", // add a custom class to your snackbar
-        timeout: 5000 // time in milliseconds after the snackbar autohides, 0 is disabled
+        style: "snackbar snackbar-sucesso",
+        timeout: 5000
     }
 
     $.snackbar(options);
@@ -130,10 +142,132 @@ function getDataUri(url, callback) {
 /**
  * Retorna a data atual
  */
-function getTimeStampAtual() {
-    return new Date().getTime()
+function getTimeStampAtual(data = null) {
+    if (data) {
+        var date = new Date(data)
+        date.setTime( date.getTime() + 1 * 86400000 )
+    } else var date = new Date()
+    var horaUTC = date.getTime()
+    var fusoHorarioLocal = (-1) * date.getTimezoneOffset() * 60000
+    return Math.round(new Date(horaUTC + fusoHorarioLocal).getTime() / 1000)
 }
 
+
+// #####################################################
+// Métodos AJAX utilizados em mais de uma página
+
+
+function enviarAjaxAtivarBicicletas(ids_bicicletas) {
+    $.ajax({
+        type: 'POST',
+        url: BASE_URL + 'crudAjax/ajaxAtivarBicicletas',
+        dataType: 'json',
+        data: { ids_bicicletas },
+        beforeSend: function() {
+            $("#btnAtivarSelecionados")
+                .html(loadingImg())
+        },
+        success: function(response) {
+            if (response['status'] == 1) {
+                swal.fire("Sucesso!", "Bicicleta(s) ativada(s) com sucesso.", "success")
+            } else {
+                swal.fire("Erro", response['error_message'], "error")
+            }
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+        },
+        error: function(response) {
+            console.log(response)
+        },
+        complete: function() {
+            $("#btnAtivarSelecionados")
+                .html('<i class="material-icons">thumb_up</i>')
+        }
+    })
+}
+
+function enviarAjaxDesativarBicicletas(ids_bicicletas) {
+    $.ajax({
+        type: 'POST',
+        url: BASE_URL + 'crudAjax/ajaxDesativarBicicletas',
+        dataType: 'json',
+        data: { ids_bicicletas },
+        beforeSend: function() {
+            $("#btnDestivarSelecionados")
+                .html(loadingImg())
+        },
+        success: function(response) {
+            if (response['status'] == 1) {
+                swal.fire("Sucesso!", "Bicicleta(s) desativada(s) com sucesso.", "success")
+            } else {
+                swal.fire("Erro", response['error_message'], "error")
+            }
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+        },
+        error: function(response) {
+            console.log(response)
+        },
+        complete: function() {
+            $("#btnDestivarSelecionados")
+                .html(' <i class="material-icons">thumb_down</i>')
+        }
+    })
+}
+
+function enviarAjaxAtivarUsuarios(ids_usuarios) {
+    $.ajax({
+        type: 'POST',
+        url: BASE_URL + 'crudAjax/ajaxAtivarUsuarios',
+        dataType: 'json',
+        data: { ids_usuarios },
+        beforeSend: function() {
+            $("#btnAtivarSelecionados")
+                .html(loadingImg())
+        },
+        success: function(response) {
+            if (response['status'] == 1) {
+                swal.fire("Sucesso!", "Usuário(s) ativado(s) com sucesso.", "success")
+            } else {
+                swal.fire("Erro", response['error_message'], "error")
+            }
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+        },
+        error: function(response) {
+            console.log(response)
+        },
+        complete: function() {
+            $("#btnAtivarSelecionados")
+                .html('<i class="material-icons">thumb_up</i>')
+        }
+    })
+}
+
+function enviarAjaxDesativarUsuarios(ids_usuarios) {
+    $.ajax({
+        type: 'POST',
+        url: BASE_URL + 'crudAjax/ajaxDesativarUsuarios',
+        dataType: 'json',
+        data: { ids_usuarios },
+        beforeSend: function() {
+            $("#btnDestivarSelecionados")
+                .html(loadingImg())
+        },
+        success: function(response) {
+            if (response['status'] == 1) {
+                swal.fire("Sucesso!", "Usuário(s) desativado(s) com sucesso.", "success")
+            } else {
+                swal.fire("Erro", response['error_message'], "error")
+            }
+            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+        },
+        error: function(response) {
+            console.log(response)
+        },
+        complete: function() {
+            $("#btnDestivarSelecionados")
+                .html(' <i class="material-icons">thumb_down</i>')
+        }
+    })
+}
 
 
 // #####################################################
