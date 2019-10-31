@@ -1,13 +1,15 @@
 <div class="row">
-    <span class="col-6">
+    <span class="col-12 col-md-6">
         <h3>Registros do dia</h3>
     </span>
     <?php if ($pode_registrar) : ?>
-        <button data-backdrop="static" class="btn btn-danger col-3" type="button" data-toggle="modal" data-target="#modalRegistroManual">
-            <img src="<?= base_url() ?>/public/img/icons/rfid.png" class="img-responsive" title="Ler Tag RFID" alt="Ler Tag Rfid">
+        <button data-backdrop="static" class="btn col-12 col-md-3" type="button" data-toggle="modal" data-target="#modalRegistroManual">
+            <span class="mr-3">Registrar entrada</span>
+            <i class="material-icons">add</i>
         </button>
-        <button class="btn btn-danger col-3" type="button" data-toggle="modal" data-target="#modalLerTag">
-            <img src="<?= base_url() ?>/public/img/icons/rfid.png" class="img-responsive" title="Ler Tag RFID" alt="Ler Tag Rfid">
+        <button class="btn col-12 col-md-3" type="button" data-toggle="modal" data-target="#modalLerTag">
+            <span class="mr-3">Ler Tag Rfid</span>
+            <img src="<?= base_url() ?>/public/img/icons/rfid.png" class="img-responsive ml-3" title="Ler Tag RFID" alt="Ler Tag Rfid">
         </button>
     <?php endif; ?>
 </div>
@@ -36,9 +38,118 @@
         </tbody>
     </table>
 </div>
+<!-- Modal registrar entrada -->
+<div id="modalRegistroManual" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header raised pb-3">
+                <h3 class="modal-title">Registrar entrada</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form id="formRegistrarEntradaManual">
+                <div class="modal-body">
+                    <div id="divSelectUsuario" class="form-group">
+                        <label for="selectUsuario" class="bmd-label-floating">
+                            Pesquise um usuário clicando no botão ao lado
+                        </label>
+                        <div class="input-group">
+                            <select class="form-control" id="selectUsuario">
+                                <option value="">Selecione o dono da bicicleta</option>
+                            </select>
+                            <div class="input-group-append">
+                                <button type="button" class="btn" data-toggle="modal" data-target="#modalPesquisarUsuario">
+                                    <i class="material-icons">search</i>
+                                </button>
+                            </div>
+                        </div>
+                        <span class="invalid-feedback"></span>
+                    </div>
+                    <div class="form-row">
+                        <div id="divSelectBicicleta" class="form-group col-12 col-sm-6">
+                            <label for="selectBicicleta" class="bmd-label-floating">
+                                Selecione a bicicleta
+                            </label>
+                            <select class="form-control" id="selectBicicleta" name="id_bicicleta">
+                                <option value="">Primeiramente, selecione um usuário.</option>
+                            </select>
+                            <span class="invalid-feedback"></span>
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="selectedBikeColor" class="bmd-label-floating">Cor da bicicleta selecionada</label>
+                            <div id="selectedBikeColor" class="form-control bike-color">
+                                <i class="material-icons">directions_bike</i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputObs">Observações sobre a entrada</label>
+                        <textarea class="form-control" id="inputObs" name="obs" maxlength="255"></textarea>
+                    </div>
+                    <div id="divInputNumTrava" class="form-group">
+                        <label for="inputNumTrava">Número do cadeado utilizado (0 para nenhum)</label>
+                        <input type="number" class="form-control" id="inputNumTrava" name="num_trava" min="0" max="15" value="0">
+                        <span class="invalid-feedback"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cancelar</button>
+                    <button id="btnCheckinManual" type="submit" class="btn btn-primary btn-raised"><i>Check-in</i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Fim modal registrar entrada -->
+<!--------------------------------->
+<!-- Modal registro automático -->
+<div id="modalRegistroAutomatico" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert alert-info">
+                <h3 class="modal-title">Confirme as informações</i></h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="inputUID">UID</label>
+                    <span id="inputUID" class="form-control mt-1"></span>
+                </div>
+                <div class="form-group">
+                    <label for="divBicicleta">Bicicleta</label>
+                    <div id="divBicicleta" class="form-control bike-color">
+                        <img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Bike" alt="">
+                    </div>
+                    <input type="hidden" id="bikeId" />
+                </div>
+                <div class="form-group">
+                    <label for="spanUsuario">Usuário - Matrícula</label>
+                    <span id="spanUsuario" class="form-control mt-1"></span>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="inputObs">Observações sobre a entrada</label>
+                    <textarea class="form-control" id="inputObs" name="obs" maxlength="255"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="inputNumTrava">Número do cadeado utilizado (0 para nenhum)</label>
+                    <input type="number" class="form-control" id="inputNumTrava" name="num_trava" min="0" max="15" value="0">
+                </div>
+            </div>
+            <input type="hidden" id="idUsuario">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cancelar</button>
+                <button type="button" onclick="realizarRegistroAutomatico()" class="btn btn-primary"><i>Check-in</i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fim Modal registro automático -->
 
 <?php
-include_once('public/views/modals/modalsRegistro.php');
 include_once('public/views/modals/modalPesquisarUsuario.html');
 include_once('public/views/modals/modalLerTag.html');
 ?>
