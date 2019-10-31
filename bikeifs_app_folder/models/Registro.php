@@ -89,6 +89,21 @@ class Registro extends CI_Model
     }
 
     /**
+     * Verifica se existe um registro de entrada em aberto utilizando o cadedao enviado
+     * por parâmetro. O cadeado é especificado na tabela na coluna num_trava
+     * 
+     * @param $cadeado - número do cadeado a ser verificado
+     * @return bool - true se o cadeado estiver sendo utilizado, false se não
+     */
+    public function verificarSeCadeadoEstaEmUso($cadeado)
+    {
+        $this->db->where('"id_saida" IS NULL', NULL, FALSE);
+        $this->db->where('num_trava', $cadeado);
+        $result = $this->db->get('REGISTRO');
+        return ($result->num_rows() > 0) ? true : false;
+    }
+
+    /**
      * Lista todos os registros da tabela Registro associados à chave estrangeira enviada por parâmetro
      * 
      * @param $foreignKey - a coluna referente à chave estrangeira
@@ -124,7 +139,7 @@ class Registro extends CI_Model
     public function listarRegistrosPorDia($timestamp)
     {
         $timestamp = intval(substr($timestamp, 0, 10));
-        $dia = "'".date('Y-m-d', $timestamp)."'";
+        $dia = "'" . date('Y-m-d', $timestamp) . "'";
         $result = $this->db->where("data_hora::date", $dia, false)->get('REGISTRO');
         return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
@@ -159,7 +174,7 @@ class Registro extends CI_Model
     public  function contarRegistrosDoDia($timestamp)
     {
         $timestamp = intval(substr($timestamp, 0, 10));
-        $dia = "'".date('Y-m-d', $timestamp)."'";
+        $dia = "'" . date('Y-m-d', $timestamp) . "'";
         $result = $this->db->where("'data_hora'::date", $dia, false)->from('REGISTRO')->count_all_results();
     }
 
@@ -175,8 +190,8 @@ class Registro extends CI_Model
      */
     public function contarRegistrosDaSemana($semana, $ano)
     {
-        $semana = "'".$semana."'";
-        $ano = "'".$ano."'";
+        $semana = "'" . $semana . "'";
+        $ano = "'" . $ano . "'";
         $this->db->where("date_part('year', 'data_hora'::date)", $ano, false);
         $this->db->where("date_part('week', 'data_hora'::date)", $semana, false);
         return $this->db->from('REGISTRO')->count_all_results();
@@ -194,8 +209,8 @@ class Registro extends CI_Model
      */
     public function contarRegistrosDoMes($mes, $ano)
     {
-        $mes = "'".$mes."'";
-        $ano = "'".$ano."'";
+        $mes = "'" . $mes . "'";
+        $ano = "'" . $ano . "'";
         $this->db->where("date_part('year', 'data_hora'::date)", $ano, false);
         $this->db->where("date_part('month', 'data_hora'::date)", $mes, false);
         return $this->db->from('REGISTRO')->count_all_results();
@@ -213,7 +228,7 @@ class Registro extends CI_Model
     {
         if ($id_bicicleta)
             $this->db->where("id_bicicleta", $id_bicicleta);
-        $this->db->where("id_saida IS NULL");
+        $this->db->where('"id_saida" IS NULL', NULL, FALSE);
         $result = $this->db->from('REGISTRO')->get();
         return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
@@ -247,17 +262,17 @@ class Registro extends CI_Model
             ## Adicionando as cláusulas WHERE ##
 
             // Formatando o valor da data inicial para incluir na query sql
-            $dataInicial = "'".date('Y-m-d', strtotime($filtro['dataInicial']))."'";
+            $dataInicial = "'" . date('Y-m-d', strtotime($filtro['dataInicial'])) . "'";
             $this->db->where('"REGISTRO"."data_hora"::date >=', $dataInicial, false);
 
             // Conferindo se o intervalo de datas é diferente de 'todos'
             if ($filtro['intervalo'] != 'todos') {
                 // O intervalo é escolhido em um <select> no formulário de filtragem, e cada <option>
                 // possui seu valor correspondente no formato usado pelo PHP para somar datas (+1 months, +3 years, etc)
-                $intervalo = "'".date('Y-m-d', strtotime($filtro['intervalo'], strtotime($filtro['dataInicial'])))."'";
+                $intervalo = "'" . date('Y-m-d', strtotime($filtro['intervalo'], strtotime($filtro['dataInicial']))) . "'";
                 $this->db->where('"REGISTRO"."data_hora"::date <=', $intervalo, false);
             }
-            
+
 
             // Verifica se foi especificado um funcionário que realizou o checkin.
             // Se não, irá adicionar o ID do funcionario à query
@@ -302,7 +317,7 @@ class Registro extends CI_Model
                     $this->db->where('("USUARIO".tipo = 1 OR "USUARIO".tipo = 2)');
                     break;
             }
-            
+
             // Verifica se deve listar apenas registros com checking feito por funcionários ainda ativos
             if ($filtro['apenasUsuariosAtivos']) {
                 $this->db->where('"USUARIO".situacao', SituacaoUsuario::ATIVO);
