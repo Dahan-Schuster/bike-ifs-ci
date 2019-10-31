@@ -83,9 +83,9 @@ $("#formSalvarBike")
 function alterarSituacaoBicicleta(bike, situacao) {
     var ids_bicicletas = [bike];
     if (situacao == 'Ativa')
-        enviarAjaxDesativar(ids_bicicletas)
+        enviarAjaxDesativarBicicletas(ids_bicicletas)
     else if (situacao == 'Inativa')
-        enviarAjaxAtivar(ids_bicicletas)
+        enviarAjaxAtivarBicicletas(ids_bicicletas)
 }
 
 function ativarBicicletasSelecionadas() {
@@ -111,7 +111,7 @@ function ativarBicicletasSelecionadas() {
             })
             .then((querAtivar) => {
                 if (querAtivar.value)
-                    enviarAjaxAtivar(ids_bicicletas)
+                    enviarAjaxAtivarBicicletas(ids_bicicletas)
             })
     }
 }
@@ -139,65 +139,9 @@ function desativarBicicletasSelecionadas() {
             })
             .then((querDesativar) => {
                 if (querDesativar.value)
-                    enviarAjaxDesativar(ids_bicicletas)
+                    enviarAjaxDesativarBicicletas(ids_bicicletas)
             })
     }
-}
-
-function enviarAjaxAtivar(ids_bicicletas) {
-    $.ajax({
-        type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxAtivarBicicletas',
-        dataType: 'json',
-        data: { ids_bicicletas },
-        beforeSend: function() {
-            $("#btnAtivarSelecionados")
-                .html(loadingImg())
-        },
-        success: function(response) {
-            if (response['status'] == 1) {
-                swal.fire("Sucesso!", "Bicicleta(s) ativada(s) com sucesso.", "success")
-            } else {
-                swal.fire("Erro", response['error_message'], "error")
-            }
-            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
-        },
-        error: function(response) {
-            console.log(response)
-        },
-        complete: function() {
-            $("#btnAtivarSelecionados")
-                .html('<i class="material-icons">thumb_up</i>')
-        }
-    })
-}
-
-function enviarAjaxDesativar(ids_bicicletas) {
-    $.ajax({
-        type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxDesativarBicicletas',
-        dataType: 'json',
-        data: { ids_bicicletas },
-        beforeSend: function() {
-            $("#btnDestivarSelecionados")
-                .html(loadingImg())
-        },
-        success: function(response) {
-            if (response['status'] == 1) {
-                swal.fire("Sucesso!", "Bicicleta(s) desativada(s) com sucesso.", "success")
-            } else {
-                swal.fire("Erro", response['error_message'], "error")
-            }
-            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
-        },
-        error: function(response) {
-            console.log(response)
-        },
-        complete: function() {
-            $("#btnDestivarSelecionados")
-                .html(' <i class="material-icons">thumb_down</i>')
-        }
-    })
 }
 
 // Listagem de bicicletas

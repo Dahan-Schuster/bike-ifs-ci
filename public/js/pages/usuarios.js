@@ -75,9 +75,9 @@ $("#formCadastroUsuario")
 function alterarSituacaoUsuario(user, situacao) {
     ids_usuarios = [user];
     if (situacao == 'Ativo')
-        enviarAjaxDesativar(ids_usuarios)
+        enviarAjaxDesativarUsuarios(ids_usuarios)
     else if (situacao == 'Inativo')
-        enviarAjaxAtivar(ids_usuarios)
+        enviarAjaxAtivarUsuarios(ids_usuarios)
 }
 
 function ativarUsuariosSelecionados() {
@@ -103,7 +103,7 @@ function ativarUsuariosSelecionados() {
             })
             .then((querAtivar) => {
                 if (querAtivar.value)
-                    enviarAjaxAtivar(ids_usuarios)
+                    enviarAjaxAtivarUsuarios(ids_usuarios)
             })
     }
 }
@@ -131,65 +131,9 @@ function desativarUsuariosSelecionados() {
             })
             .then((querDesativar) => {
                 if (querDesativar.value)
-                    enviarAjaxDesativar(ids_usuarios)
+                    enviarAjaxDesativarUsuarios(ids_usuarios)
             })
     }
-}
-
-function enviarAjaxAtivar(ids_usuarios) {
-    $.ajax({
-        type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxAtivarUsuarios',
-        dataType: 'json',
-        data: { ids_usuarios },
-        beforeSend: function() {
-            $("#btnAtivarSelecionados")
-                .html(loadingImg())
-        },
-        success: function(response) {
-            if (response['status'] == 1) {
-                swal.fire("Sucesso!", "Usuário(s) ativado(s) com sucesso.", "success")
-            } else {
-                swal.fire("Erro", response['error_message'], "error")
-            }
-            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
-        },
-        error: function(response) {
-            console.log(response)
-        },
-        complete: function() {
-            $("#btnAtivarSelecionados")
-                .html('<i class="material-icons">thumb_up</i>')
-        }
-    })
-}
-
-function enviarAjaxDesativar(ids_usuarios) {
-    $.ajax({
-        type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxDesativarUsuarios',
-        dataType: 'json',
-        data: { ids_usuarios },
-        beforeSend: function() {
-            $("#btnDestivarSelecionados")
-                .html(loadingImg())
-        },
-        success: function(response) {
-            if (response['status'] == 1) {
-                swal.fire("Sucesso!", "Usuário(s) desativado(s) com sucesso.", "success")
-            } else {
-                swal.fire("Erro", response['error_message'], "error")
-            }
-            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
-        },
-        error: function(response) {
-            console.log(response)
-        },
-        complete: function() {
-            $("#btnDestivarSelecionados")
-                .html(' <i class="material-icons">thumb_down</i>')
-        }
-    })
 }
 
 function popularTabela() {
