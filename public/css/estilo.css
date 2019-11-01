@@ -480,8 +480,12 @@ html {
     overflow-x: hidden;
 }
 
-img.logo {
-    width: 100px;
+.icon-logo {
+    width: 60px;
+}
+
+.logo {
+    width: 150px;
 }
 
 body {

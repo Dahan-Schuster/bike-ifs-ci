@@ -1,5 +1,5 @@
 <div class="row">
-    <span class="col-12 col-md-6">
+    <span class="col-12 col-md-5">
         <h3>Registros do dia</h3>
     </span>
     <?php if ($pode_registrar) : ?>
@@ -9,7 +9,7 @@
                 <img src="<?= base_url() ?>/public/img/icons/registrar.png" class="img-responsive ml-3" title="Registrar entrada" alt="Registrar entrada">
             </button>
         </div>
-        <div class="col-12 col-md-3">
+        <div class="col-12 offset-md-1 col-md-3">
             <button class="btn btn-raised py-1" style="background: lightgray;" type="button" data-toggle="modal" data-target="#modalLerTag">
                 <span class="mr-3">Ler Tag Rfid</span>
                 <img src="<?= base_url() ?>/public/img/icons/rfid.png" class="img-responsive ml-3" title="Ler Tag RFID" alt="Ler Tag Rfid">
@@ -105,6 +105,7 @@
         </div>
     </div>
 </div>
+<br>
 <!-- Fim modal registrar entrada -->
 <!--------------------------------->
 <!-- Modal registro automático -->

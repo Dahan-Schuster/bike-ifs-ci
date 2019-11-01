@@ -30,9 +30,9 @@
     <header>
         <nav class="navbar sticky-top navbar-expand-xl navbar-dark bg-dark-primary">
             <div class="container">
-                <a class="navbar-brand" href="<?= base_url('admin/view/home') ?>">
-                    <img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Logo" alt="Logo">
-                    <img class='logo' src="<?= base_url() ?>/public/img/nome-logo.svg" title="Bike IFS" alt="Bike IFS">
+                <a class="navbar-brand mr-5" href="<?= base_url('admin/view/home') ?>">
+                    <img class="icon-logo" src="<?= base_url() ?>/public/img/icon.svg" title="Logo" alt="Logo">
+                    <img class='logo' src="<?= base_url() ?>/public/img/nome-logo.png" title="Bike IFS" alt="Bike IFS">
                 </a>
                 <button class="navbar-toggler bg-default-primary" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="material-icons">menu</i>
@@ -44,7 +44,7 @@
                                 Relatórios
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown mx-3">
                             <a class="nav-link dropdown-toggle" href="#" id="navLinkListagem" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Listar
                             </a>

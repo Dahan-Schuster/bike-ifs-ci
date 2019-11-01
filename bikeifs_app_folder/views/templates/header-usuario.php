@@ -30,8 +30,8 @@
         <nav class="navbar sticky-top navbar-expand-xl navbar-light bg-dark header-gradient">
             <div class="container">
                 <a class="navbar-brand" href="?pagina=home">
-                    <img class='logo' src="<?= base_url() ?>/public/img/img-logo.svg" title="Logo" alt="Logo">
-                    <img class='logo' src="<?= base_url() ?>/public/img/nome-logo.svg" title="Bike IFS" alt="Bike IFS">
+                    <img class="icon-logo" src="<?= base_url() ?>/public/img/icon.svg" title="Logo" alt="Logo">
+                    <img class='logo' src="<?= base_url() ?>/public/img/nome-logo.png" title="Bike IFS" alt="Bike IFS">
                 </a>
                 <button class="navbar-toggler bg-primary py-2" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

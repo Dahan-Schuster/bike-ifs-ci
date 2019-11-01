@@ -195,7 +195,7 @@ function popularTabelaRegistros(timestamp) {
                     let modelo = row.bikes.modelo.toLowerCase()
                     let output = `<div onclick="abrirPainelLateralBike(${row.bikes.id})" 
                                 class="bike-color" style="background: ${cores};">`
-                    output += `<img src=${BASE_URL}"public/img/icons/bike-${modelo}.png" title="Bike" alt=""></div>`
+                    output += `<img src="${BASE_URL}public/img/icons/bike-${modelo}.png" title="Bike" alt=""></div>`
                     return output
                 },
                 "targets": 5 // Coluna referente à cor.
