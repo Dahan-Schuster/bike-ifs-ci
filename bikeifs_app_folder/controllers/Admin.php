@@ -69,6 +69,7 @@ class Admin extends CI_Controller
                 'datatables.min.js',
                 'dataTables.responsive.min.js',
                 'jquery.mask.min.js',
+                'snackbar.min.js',
                 'util.js',
                 'gijgo.min.js',
                 "pages/$page.js"
@@ -76,7 +77,8 @@ class Admin extends CI_Controller
             'styles' => array(
                 'datatables.min.css',
                 'responsive.dataTables.min.css',
-                'gijgo.min.css'
+                'gijgo.min.css',
+                'snackbar.min.css'
             )
         );
         if ($page == 'bicicletas' || $page == 'tags' || $page == 'registros-do-dia') {
@@ -89,9 +91,7 @@ class Admin extends CI_Controller
                 array_push($data['scripts'], 'ler.tag.js');
 
                 if ($page == 'registros-do-dia') :
-                    array_push($data['scripts'], 'snackbar.min.js');
-                    array_push($data['styles'], 'snackbar.min.css');
-                    $data['pode_registrar'] = TRUE;  // TODO: consertar permissão de checkin
+                    $data['pode_registrar'] = FALSE;
                 endif;
             endif;
         }

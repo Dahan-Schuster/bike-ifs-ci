@@ -417,7 +417,7 @@ class CrudAjax extends CI_Controller
         # Verifica se o método está sendo acessado por uma requisição AJAX
         if (!$this->input->is_ajax_request()) :
             exit("Não é permitido acesso direto aos scripts.");
-        elseif ($this->session->userdata['permissions_level'] != 'admin') : // TODO: consertar permissão de checkin
+        elseif ($this->session->userdata['permissions_level'] != 'funcionário') :
             echo json_encode(
                 array(
                     'status' => -1,
@@ -500,10 +500,12 @@ class CrudAjax extends CI_Controller
         # Verifica se o método está sendo acessado por uma requisição AJAX
         if (!$this->input->is_ajax_request()) :
             exit("Não é permitido acesso direto aos scripts.");
-        elseif ($this->session->userdata['permissions_level'] != 'admin') :
-            echo array(
-                'status' => -1,
-                'error_message' => 'Apenas funcionários possuem permissão para realizar checkouts.'
+        elseif ($this->session->userdata['permissions_level'] != 'funcionario') :
+            echo json_encode(
+                array(
+                    'status' => -1,
+                    'error_message' => 'Apenas funcionários possuem permissão para realizar checkouts.'
+                )
             );
             exit();
         endif;

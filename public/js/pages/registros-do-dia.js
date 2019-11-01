@@ -141,10 +141,11 @@ function enviarAjaxCheckout(obs, id_registro) {
             id_registro
         },
         success: function(response) {
-            console.log(response)
             if (response['status'] == 1) {
                 atualizarDataTable(null, datatable)
                 snackBarSucessoCheckout(response['id_registro'], response['id_saida'])
+            } else {
+                swal.fire('Permissão negada', response['error_message'], 'error')
             }
         }
     })

@@ -138,7 +138,7 @@ function enviarAjaxAtivar(ids_funcionarios) {
         },
         success: function(response) {
             if (response['status'] == 1) {
-                swal.fire("Sucesso!", "Funcionário(s) ativado(s) com sucesso.", "success")
+                snackBarSucesso('Funcionário(s) ativado(s) com sucesso.')
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
@@ -166,7 +166,7 @@ function enviarAjaxDesativar(ids_funcionarios) {
         },
         success: function(response) {
             if (response['status'] == 1) {
-                swal.fire("Sucesso!", "Funcionário(s) desativado(s) com sucesso.", "success")
+                snackBarSucesso('Funcionário(s) desativado(s) com sucesso.')
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }

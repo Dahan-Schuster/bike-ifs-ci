@@ -20,7 +20,7 @@ $(function() {
         $('.modal').draggable({
             handle: $('.modal-header')
         })
-    } catch(e) {}
+    } catch (e) {}
     $('[data-type="draggable"]')
         .find('.modal-header')
         .css('cursor', 'move')
@@ -43,9 +43,9 @@ function fecharModal(modal) {
 /**
  * Mostra um snackbar estilizado como sucesso
  */
-function snackBarSucesso() {
+function snackBarSucesso(mensagem = 'Operação realizada com sucesso') {
     var options = {
-        content: "<i class='material-icons'>check_circle_outline</i> <span class='mb-5'>Operação realizada com sucesso</span>", // text of the snackbar
+        content: `<i class='material-icons'>check_circle_outline</i> <span class='mb-5'>${mensagem}</span>`, // text of the snackbar
         style: "snackbar snackbar-sucesso",
         timeout: 5000
     }
@@ -170,7 +170,7 @@ function enviarAjaxAtivarBicicletas(ids_bicicletas) {
         },
         success: function(response) {
             if (response['status'] == 1) {
-                swal.fire("Sucesso!", "Bicicleta(s) ativada(s) com sucesso.", "success")
+                snackBarSucesso('Bicicleta(s) ativada(s) com sucesso.')
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
@@ -198,7 +198,7 @@ function enviarAjaxDesativarBicicletas(ids_bicicletas) {
         },
         success: function(response) {
             if (response['status'] == 1) {
-                swal.fire("Sucesso!", "Bicicleta(s) desativada(s) com sucesso.", "success")
+                snackBarSucesso('Bicicleta(s) desativada(s) com sucesso.')
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
@@ -226,7 +226,7 @@ function enviarAjaxAtivarUsuarios(ids_usuarios) {
         },
         success: function(response) {
             if (response['status'] == 1) {
-                swal.fire("Sucesso!", "Usuário(s) ativado(s) com sucesso.", "success")
+                snackBarSucesso('Usuário(s) ativado(s) com sucesso.')
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
@@ -254,7 +254,7 @@ function enviarAjaxDesativarUsuarios(ids_usuarios) {
         },
         success: function(response) {
             if (response['status'] == 1) {
-                swal.fire("Sucesso!", "Usuário(s) desativado(s) com sucesso.", "success")
+                snackBarSucesso('Usuário(s) desativado(s) com sucesso.')
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
