@@ -49,34 +49,42 @@ class CrudAjax extends CI_Controller
 
         ## Validação dos dados enviados
 
-        if (empty(trim($data['nome']))) :
-            $response['error_list']['#divInputNome'] = 'O nome não pode estar vazio.';
-        endif;
-
-        if (empty($data['email'])) :
-            $response['error_list']['#divInputEmail'] = 'O email não pode estar vazio.';
-        elseif ($this->administrador->estaCadastrado('email', $data['email'])) :
-            $response['error_list']['#divInputEmail'] = 'O email informado já foi cadastrado.';
-        endif;
-
-        if (empty($data['cpf'])) :
-            $response['error_list']['#divInputCpf'] = 'O CPF não pode estar vazio.';
-        elseif (!Tools::isCpfValido($data['cpf'])) :
-            $response['error_list']['#divInputCpf'] = 'O CPF informado não é válido.';
-        elseif ($this->administrador->estaCadastrado('cpf', Tools::formatCnpjCpf($data['cpf']))) :
-            $response['error_list']['#divInputCpf'] = 'O CPF informado já foi cadastrado.';
-        endif;
-
-        if (empty($data['senha'])) :
-            $response['error_list']['#divInputSenha'] = 'A senha é obrigatória.';
-        else :
-            if (strval($data['senha']) != strval($data['confirmar_senha'])) :
-                $response['error_list']['#divInputConfirmarSenha'] = 'As senhas não coincidem.';
-            else :
-                $data['senha'] = password_hash($data['senha'], PASSWORD_DEFAULT);
-                unset($data['confirmar_senha']);
+        if (isset($data['nome'])) {
+            if (empty(trim($data['nome']))) :
+                $response['error_list']['#divInputNome'] = 'O nome não pode estar vazio.';
             endif;
-        endif;
+        }
+
+        if (isset($data['email'])) {
+            if (empty($data['email'])) :
+                $response['error_list']['#divInputEmail'] = 'O email não pode estar vazio.';
+            elseif ($this->administrador->estaCadastrado('email', $data['email'])) :
+                $response['error_list']['#divInputEmail'] = 'O email informado já foi cadastrado.';
+            endif;
+        }
+
+        if (isset($data['cpf'])) {
+            if (empty($data['cpf'])) :
+                $response['error_list']['#divInputCpf'] = 'O CPF não pode estar vazio.';
+            elseif (!Tools::isCpfValido($data['cpf'])) :
+                $response['error_list']['#divInputCpf'] = 'O CPF informado não é válido.';
+            elseif ($this->administrador->estaCadastrado('cpf', Tools::formatCnpjCpf($data['cpf']))) :
+                $response['error_list']['#divInputCpf'] = 'O CPF informado já foi cadastrado.';
+            endif;
+        }
+
+        if (isset($data['senha'])) {
+            if (empty($data['senha'])) :
+                $response['error_list']['#divInputSenha'] = 'A senha é obrigatória.';
+            else :
+                if (strval($data['senha']) != strval($data['confirmar_senha'])) :
+                    $response['error_list']['#divInputConfirmarSenha'] = 'As senhas não coincidem.';
+                else :
+                    $data['senha'] = password_hash($data['senha'], PASSWORD_DEFAULT);
+                    unset($data['confirmar_senha']);
+                endif;
+            endif;
+        }
 
         ## Fim validação
         if (!empty($response['error_list'])) :
@@ -499,7 +507,7 @@ class CrudAjax extends CI_Controller
             );
             exit();
         endif;
-        
+
         $response = array();
         $response['status'] = 1;
 

@@ -53,6 +53,17 @@
   width: 100%;
 }
 
+.perfil-menu ul li:hover,
+.perfil-menu ul li.active:hover {
+  cursor: pointer;
+  background-color: #5be76e3d;
+}
+
+.perfil-menu ul li.active {
+  border-bottom: 4px solid #044D29;
+  background-color: #45b65497;
+}
+
 .perfil-menu ul li button {
   font-size: 14px;
   padding: 10px;
@@ -64,36 +75,15 @@
   display: flex;
 }
 
-.perfil-menu ul li button img {
-  margin-right: 8px;
+.perfil-menu ul li button:hover {
+  cursor: pointer;
 }
 
 .perfil-menu ul li button span {
   margin-top: 0.45rem;
 }
 
-.perfil-menu ul li:hover {
-  cursor: pointer;
-  background-color: #6c757d38;
-}
-
-.perfil-menu ul li button:hover {
-  cursor: pointer;
-}
-.remover a {
-  color: #ce0000;
-}
-
 .conteudo-perfil {
   padding: 20px;
   background: #fff;
-  min-height: 460px;
-}
-
-#conteudo-perfil-sidepanel {
-  background: rgb(240, 240, 240);
-}
-
-#body-perfil-sidepanel {
-  background: rgb(240, 240, 240);
 }

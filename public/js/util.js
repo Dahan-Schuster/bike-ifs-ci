@@ -16,10 +16,11 @@ $(function() {
             $(e.delegateTarget.dataset.target)
                 .trigger('show.bs.modal')
         })
-
-    $('.modal').draggable({
-        handle: $('.modal-header')
-    })
+    try {
+        $('.modal').draggable({
+            handle: $('.modal-header')
+        })
+    } catch(e) {}
     $('[data-type="draggable"]')
         .find('.modal-header')
         .css('cursor', 'move')
@@ -145,7 +146,7 @@ function getDataUri(url, callback) {
 function getTimeStampAtual(data = null) {
     if (data) {
         var date = new Date(data)
-        date.setTime( date.getTime() + 1 * 86400000 )
+        date.setTime(date.getTime() + 1 * 86400000)
     } else var date = new Date()
     var horaUTC = date.getTime()
     var fusoHorarioLocal = (-1) * date.getTimezoneOffset() * 60000

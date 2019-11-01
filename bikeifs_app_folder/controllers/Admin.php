@@ -128,13 +128,16 @@ class Admin extends CI_Controller
 
         $this->load->model('administrador');
         $admin = $this->administrador->carregarPorId($this->session->userdata['logged_user_id']);
+        unset($admin->senha);
 
         $data = array(
             'styles' => array(
-                'perfil.css'
+                'perfil.css',
+                'snackbar.min.css'
             ),
             'scripts' => array(
-                'perfil-adm.js',
+                'pages/perfil-adm.js',
+                'snackbar.min.js',
                 'util.js'
             ),
             'admin' => $admin
