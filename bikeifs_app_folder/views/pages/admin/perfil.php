@@ -42,7 +42,7 @@
                             <span id="spanEmail" class="form-control"><?= $admin->email ?></span>
                         </div>
                         <div class="col-6 col-md-2">
-                            <button onclick="atualizarEmail('<?= $admin->id ?>', $('#spanEmail').html())" class="btn btn-primary" type="button">Editar</button>
+                            <button onclick="atualizarEmail($('#spanEmail').html())" class="btn btn-primary" type="button">Editar</button>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -54,10 +54,10 @@
                     <hr>
                     <div class="row">
                         <div class="col-12 col-sm-2 ml-auto mr-5">
-                            <button onclick="alterarSenha('<?= $admin->id ?>')" class="btn btn-warning" type="button">Alterar Senha</button>
+                            <button onclick="alterarSenha()" class="btn btn-warning" type="button">Alterar Senha</button>
                         </div>
                         <div class="col-12 col-sm-2 mr-5">
-                            <button onclick="removerConta('<?= $admin->id ?>')" class="btn btn-danger" type="button">Remover Conta</button>
+                            <button onclick="removerConta()" class="btn btn-danger" type="button">Remover Conta</button>
                         </div>
                     </div>
                 </div>

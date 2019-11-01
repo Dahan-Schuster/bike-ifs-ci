@@ -53,8 +53,8 @@ class Email extends CI_Controller
     public function ajaxEnviarNovaSenha()
     {
         # Verifica se o método está sendo acessado por uma requisição AJAX
-        //if (!$this->input->is_ajax_request())
-        //    exit("Não é permitido acesso direto aos scripts.");
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido acesso direto aos scripts.");
 
         # Array de resposta à requisição AJAX
         $json = array();
@@ -65,7 +65,7 @@ class Email extends CI_Controller
         $tipoAcesso = $this->input->post('tipoAcesso');
 
         # Armazena uma nova senha gerada
-        $novaSenha = $this->gerarSenha();
+        $novaSenha = $this->gerarCodigo();
 
         # Criptografa a nova senha para inserção no banco de dados
         $novaSenhaHash = password_hash($novaSenha, PASSWORD_DEFAULT);
@@ -130,10 +130,40 @@ class Email extends CI_Controller
         echo json_encode($json);
     }
 
+    public function ajaxEnviarCodigo()
+    {
+        # Verifica se o método está sendo acessado por uma requisição AJAX
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido acesso direto aos scripts.");
+
+        # Array de resposta à requisição AJAX
+        $response = array();
+        # status != 1: algo deu errado | status == 1: tudo certo
+
+
+        $email = $this->input->post('email');
+
+        # Gera um código de confirmação
+        $codigo = $this->gerarCodigo();
+
+        if ($this->enviarCodigoDeConfirmacao($email, $codigo)) {
+            $response['status'] = 1;
+            $this->load->library('session');
+            // Salva o código e o novo email temprariamente na sessão, definindo o tempo de expiração para 30 minutos
+            $this->session->set_tempdata('codigo_confirmacao_email', $codigo, 1800);
+            $this->session->set_tempdata('novo_email', $email, 1800);
+        } else {
+            $response['status'] = 0;
+            $response['error_message'] = 'Não foi possível enviar o email. Certifique-se de estar devidamente conectado à Internet e de ter inserido um email válido.';
+        }
+
+        echo json_encode($response);
+    }
+
     /**
      *  Gera uma sequencia de oito caracteres aletaórios   
      */
-    private function gerarSenha()
+    private function gerarCodigo()
     {
         # Gera um número aleatório de oito dígitos
         $codigo_numerico = Rand(10000000, 99999999);
@@ -173,5 +203,30 @@ class Email extends CI_Controller
         $this->mail->ClearAllRecipients();
 
         return $result;
+    }
+
+    /**
+     * Envia um email ao usuário que teve sua senha alterada.
+     */
+    private function enviarCodigoDeConfirmacao($emailDestinatario, $codigo)
+    {
+        # Limpa os destinatários
+        $this->mail->ClearAllRecipients();
+
+        $this->mail->addAddress($emailDestinatario); // email do destinatario.
+
+        $this->mail->Subject = "Confirmação de email - Bike IFS";
+
+        # Recupera o arquivo html salvo no arquivo pagina-email.html
+        $rawBody = file_get_contents(APPPATH . 'views/phpmailer-html/pagina-verificar-email.html');
+
+        # Substitui a palavra 'codigo', previamente posicionada no arquivo,
+        # pelo código gerado
+        $body = preg_replace('/\bcodigo\b/', $codigo, $rawBody);
+
+        $this->mail->Body = $body;
+
+        # Envia o e-mail
+        return $this->mail->send();
     }
 }

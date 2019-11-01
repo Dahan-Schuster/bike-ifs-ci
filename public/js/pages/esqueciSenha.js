@@ -1,7 +1,7 @@
 $("#formEsqueciSenha").submit(function(form) {
     form.preventDefault();
 
-    if (!$("#inputEmail").html()) {
+    if (!$("#inputEmail").val()) {
         swal.fire('', 'Insira um endereço de email', 'warning')
         return false;
     }

@@ -118,8 +118,13 @@ class Home extends CI_Controller
                 # Se não estiver...
                 else :
                     # ... salva o ID do usuário e o tipo de acesso (nível de permissão) no array de sessão
-                    $this->session->set_userdata("logged_user_id", $result->id);
-                    $this->session->set_userdata("permissions_level", strtolower($tipoAcesso));
+                    $this->session->set_userdata(
+                        array(
+                            "logged_user_id" => $result->id,
+                            "nome" => $result->nome,
+                            "permissions_level" => strtolower($tipoAcesso) // TODO: foto do usuário
+                        )
+                    );
                 endif;
             else :
                 $json['status'] = 0;

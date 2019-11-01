@@ -25,6 +25,57 @@ class CrudAjax extends CI_Controller
     |* MÉTODOS DE CADASTRO/EDIÇÃO *|
     \******************************/
 
+
+    /**
+     * Função acessada via requisições AJAX para verificar o código de confirmação
+     * (salvo temporariamente na sessão após chamar o controlador de Emails) e editar
+     * o atributo Email na tabela referente ao tipo de acesso do usuário logado (admin, funcionário, usuário)
+     */
+    public function ajaxVerificarCodigoEditarEmail()
+    {
+        # Verifica se o método está sendo acessado por uma requisição AJAX
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido acesso direto aos scripts.");
+
+        $this->load->library('session');
+        $tipoAcesso = $this->session->userdata('permissions_level');
+        $id =  $this->session->userdata('logged_user_id');
+        $codigo = $this->session->tempdata('codigo_confirmacao_email');
+        $email = $this->session->tempdata('novo_email');
+
+        $response = array();
+        $response['status'] = 1;
+
+        $data = $this->input->post();
+
+        if ($data['codigo'] == $codigo) {
+
+            $this->session->unset_tempdata('codigo_confirmacao_email');
+            $this->session->unset_tempdata('novo_email');
+
+            $response['novo_email'] = $email;
+
+            if ($tipoAcesso == 'admin') {
+                # Carrega o model Administrador
+                $this->load->model("administrador");
+                $this->administrador->editar($id, array('email' => $email));
+            } elseif ($tipoAcesso == 'funcionario') {
+                # Carrega o model Funcionario
+                $this->load->model("funcionario");
+                $this->funcionario->editar($id, array('email' => $email));
+            } elseif ($tipoAcesso == 'usuario') {
+                # Carrega o model Usuario
+                $this->load->model("usuario");
+                $this->usuario->editar($id, array('email' => $email));
+            }
+        } else {
+            $response['status'] = 0;
+            $response['error_message'] = 'Código incorreto ou expirado. Se enviou mais de uma vez, utilize o último código e tente novamente.';
+        }
+
+        echo json_encode($response);
+    }
+
     /**
      * Função acessada via requisições AJAX para salvar Administradores
      */

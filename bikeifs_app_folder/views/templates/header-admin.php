@@ -70,6 +70,11 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <span class="text-light">
+                                Logado como <strong><?= preg_split("/\s/", $nome)[0] ?></strong>
+                            </span>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="btn bmd-btn-icon dropdown-toggl text-light" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">more_horiz</i>

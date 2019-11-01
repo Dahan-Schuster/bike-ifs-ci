@@ -25,7 +25,8 @@ class Admin extends CI_Controller
         $data = array(
             'scripts' => array(
                 'util.js'
-            )
+            ),
+            'nome' => $this->session->userdata('nome')
         );
 
         $this->load->view('templates/header-admin', $data);
@@ -48,7 +49,8 @@ class Admin extends CI_Controller
         $data = array(
             'scripts' => array(
                 'util.js'
-            )
+            ),
+            'nome' => $this->session->userdata('nome')
         );
 
         $this->load->view('templates/header-admin', $data);
@@ -79,7 +81,8 @@ class Admin extends CI_Controller
                 'responsive.dataTables.min.css',
                 'gijgo.min.css',
                 'snackbar.min.css'
-            )
+            ),
+            'nome' => $this->session->userdata('nome')
         );
         if ($page == 'bicicletas' || $page == 'tags' || $page == 'registros-do-dia') {
             array_push($data['scripts'], 'pesquisar.usuario.js');
@@ -112,7 +115,8 @@ class Admin extends CI_Controller
         $data = array(
             'scripts' => array(
                 'util.js'
-            )
+            ),
+            'nome' => $this->session->userdata('nome')
         );
 
         $this->load->view('templates/header-admin', $data);
@@ -140,6 +144,7 @@ class Admin extends CI_Controller
                 'snackbar.min.js',
                 'util.js'
             ),
+            'nome' => $this->session->userdata('nome'),
             'admin' => $admin
         );
 
