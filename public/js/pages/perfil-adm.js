@@ -101,7 +101,7 @@ function enviarAjaxEditarSenha(senhaAtual, novaSenha, confirmarNovaSenha) {
                 swal.close()
                 snackBarSucesso()
             } else {
-                showErrors(response['error_list'])
+                showErrors(response['error_list']) // TODO: alteração de senha
             }
         }
     })
