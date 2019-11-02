@@ -77,6 +77,74 @@ class CrudAjax extends CI_Controller
     }
 
     /**
+     * Função acessada via requisições AJAX para editar senhas de usuários
+     */
+    public function ajaxEditarSenha()
+    {
+        # Verifica se o método está sendo acessado por uma requisição AJAX
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido acesso direto aos scripts.");
+
+        $this->load->library('session');
+        $tipoAcesso = $this->session->userdata('permissions_level');
+        $id =  $this->session->userdata('logged_user_id');
+
+        # Array de resposta à requisição ajax
+        $response = array();
+        $response['status'] = 1;
+
+        # Dados recebidos via POST
+        $data = $this->input->post();
+
+        # Verifica se a nova senha não é vazia
+        if (!empty($data['novaSenha'])) :
+            # Verifica se o usuário confirmou a nova senha
+            if ($data['novaSenha'] == $data['confirmarNovaSenha']) {
+
+                # Cria o HASH da nova senha
+                $novaSenhaHash = password_hash($data['novaSenha'], PASSWORD_DEFAULT);
+
+                if ($tipoAcesso == 'admin') {
+                    # Carrega o model Administrador
+                    $this->load->model("administrador");
+                    $admin = $this->administrador->carregarPorId($id);
+                    # Verifica se a senha atual inserida está correta
+                    if (password_verify($data['senhaAtual'], $admin->senha))
+                        # Se estiver, edita a senha
+                        $this->administrador->editar($id, array('senha' => $novaSenhaHash));
+                    else    # Se não, informa o erro
+                        $response['error_list']['#divInputSenhaAtual'] = 'Senha incorreta.';
+                } elseif ($tipoAcesso == 'funcionario') {
+                    # Carrega o model Funcionario
+                    $this->load->model("funcionario");
+                    $fun = $this->funcionario->carregarPorId($id);
+                    if (password_verify($data['senhaAtual'], $fun->senha))
+                        $this->funcionario->editar($id, array('senha' => $novaSenhaHash));
+                    else
+                        $response['error_list']['#divInputSenhaAtual'] = 'Senha incorreta.';
+                } elseif ($tipoAcesso == 'usuario') {
+                    # Carrega o model Usuario
+                    $this->load->model("usuario");
+                    $user = $this->usuario->carregarPorId($id);
+                    if (password_verify($data['senhaAtual'], $user->senha))
+                        $this->usuario->editar($id, array('senha' => $novaSenhaHash));
+                    else
+                        $response['error_list']['#divInputSenhaAtual'] = 'Senha incorreta.';
+                }
+            } else
+                $response['error_list']['#divInputConfirmarNovaSenha'] = 'As senhas não coincidem.';
+        else :
+            $response['error_list']['#divInputNovaSenha'] = 'A senha não pode ser vazia.';
+        endif;
+
+        # Se houverem erros na lista, altera o status da resposta para 0 (algo deu errado)
+        if (!empty($response['error_list']))
+            $response['status'] = 0;
+
+        echo json_encode($response);
+    }
+
+    /**
      * Função acessada via requisições AJAX para salvar Administradores
      */
     public function ajaxSalvarAdmin()
@@ -753,13 +821,27 @@ class CrudAjax extends CI_Controller
         # Carrega o model Administrador
         $this->load->model('administrador');
 
+        # Carrega a biblioteca de sessão
+        $this->load->library('session');
+
         # Array de resposta
         $response = array();
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
 
-        $ids = $this->input->post('ids_admins');
-        $this->administrador->excluir($ids);
+        $senha = $this->input->post('senha');
+        $admin = $this->administrador->carregarPorId($this->session->userdata('logged_user_id'));
+        $ids = null !== $this->input->post('ids_admins') ? $this->input->post('ids_admins') : array($admin->id);
+
+        if (password_verify($senha, $admin->senha)) {
+            $this->administrador->excluir($ids);
+            foreach ($ids as $id) 
+                if ($id == $admin->id) 
+                    $response['status'] = -1;
+        } else {
+            $response['status'] = 0;
+            $response['error_list']['#divInputSenhaExcluir'] = 'Senha incorreta.';
+        }
 
         echo json_encode($response);
     }

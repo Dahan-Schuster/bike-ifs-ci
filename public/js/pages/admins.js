@@ -63,20 +63,31 @@ $("#formCadastroAdmin")
 function excluirAdmin(botao) {
     let id = recuperarInformacoesDaLinhaDatatable(botao, datatable).id
     let ids_admins = [id]
-
     swal.fire({
-            type: 'warning',
-            title: 'Excluir Administrador',
-            text: 'Deseja realmente excluir o administrador selecionado?',
-            showCancelButton: true,
-            cancelButtonText: 'Não',
-            confirmButtonText: 'Sim, excluir',
-            confirmButtonColor: 'crimson'
-        })
-        .then((querExcluir) => {
-            if (querExcluir.value)
-                enviarAjaxExclusao(ids_admins)
-        })
+        type: 'warning',
+        title: 'Excluir Administrador',
+        html: `<div id="divInputSenhaExcluir" class="form-group">
+                    <label for="inputSenhaExcluir" class="bmd-label-placeholder">Informe sua senha</label>
+                    <input id="inputSenhaExcluir" type="password" class="form-control">
+                    <span class="invalid-feedback"></span>
+                </div>`,
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Excluir',
+        confirmButtonColor: 'crimson',
+        onOpen: function(el) {
+            var container = $(el);
+            var originalConfirmButton = container.find('.swal2-confirm');
+            var clonedConfirmButton = originalConfirmButton.clone();
+
+            originalConfirmButton.hide();
+            clonedConfirmButton.insertAfter(originalConfirmButton);
+
+            clonedConfirmButton.on('click', function() {
+                enviarAjaxExclusao($("#inputSenhaExcluir").val(), ids_admins)
+            });
+        }
+    })
 }
 
 function excluirAdminsSelecionados() {
@@ -92,27 +103,39 @@ function excluirAdminsSelecionados() {
         swal.fire("Excluir selecionados", "Nenhuma linha selecionada. Selecione um administrador clicando em sua linha na tabela.", "error")
     } else {
         swal.fire({
-                type: 'warning',
-                title: "Excluir " + ids_admins.length + " administrador(es) ",
-                text: 'Deseja realmente excluir os administradores selecionados?',
-                showCancelButton: true,
-                cancelButtonText: 'Não',
-                confirmButtonText: 'Sim, excluir',
-                confirmButtonColor: 'crimson'
-            })
-            .then((querExcluir) => {
-                if (querExcluir.value)
-                    enviarAjaxExclusao(ids_admins)
-            })
+            type: 'warning',
+            title: "Excluir " + ids_admins.length + " administrador(es) ",
+            html: `<div id="divInputSenhaExcluir" class="form-group">
+                            <label for="inputSenhaExcluir" class="bmd-label-placeholder">Informe sua senha</label>
+                            <input id="inputSenhaExcluir" type="password" class="form-control">
+                            <span class="invalid-feedback"></span>
+                        </div>`,
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Excluir',
+            confirmButtonColor: 'crimson',
+            onOpen: function(el) {
+                var container = $(el);
+                var originalConfirmButton = container.find('.swal2-confirm');
+                var clonedConfirmButton = originalConfirmButton.clone();
+
+                originalConfirmButton.hide();
+                clonedConfirmButton.insertAfter(originalConfirmButton);
+
+                clonedConfirmButton.on('click', function() {
+                    enviarAjaxExclusao($("#inputSenhaExcluir").val(), ids_admins)
+                });
+            }
+        })
     }
 }
 
-function enviarAjaxExclusao(ids_admins) {
+function enviarAjaxExclusao(senha, ids_admins) {
     $.ajax({
         type: 'POST',
         url: BASE_URL + 'crudAjax/ajaxDeletarAdmins',
         dataType: 'json',
-        data: { ids_admins },
+        data: { senha, ids_admins },
         beforeSend: function() {
             $("#btnExcluirSelecionados")
                 .html(loadingImg())
@@ -120,10 +143,12 @@ function enviarAjaxExclusao(ids_admins) {
         success: function(response) {
             if (response['status'] == 1) {
                 swal.fire("Sucesso!", "Administradores excluídos com sucesso. Um e-mail foi enviado para cada um informando a exclusão.", "success")
-            } else {
-                swal.fire("Erro", response['error_message'], "error")
+                atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+            } else if (response['status'] == 0) {
+                showErrors(response['error_list'])
+            } else if (response['status'] == -1) {
+                location.replace(BASE_URL + 'admin/sair')
             }
-            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
         },
         error: function(response) {
             console.log(response)

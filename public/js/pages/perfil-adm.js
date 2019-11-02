@@ -64,10 +64,12 @@ function alterarSenha() {
                     <div id="divInputNovaSenha" class="form-group col-6">
                         <label for="inputNovaSenha" class="bmd-label-placeholder">Nova senha</label>
                         <input id="inputNovaSenha" type="password" class="form-control">
+                        <span id="aviso" class="invalid-feedback"></span>
                     </div>
                     <div id="divInputConfirmarNovaSenha" class="form-group col-6">
                         <label for="inputConfirmarNovaSenha" class="bmd-label-placeholder">Confirme a nova senha</label>
                         <input id="inputConfirmarNovaSenha" type="password" class="form-control">
+                        <span id="aviso" class="invalid-feedback"></span>
                     </div>
                 </div>
                 <hr>`,
@@ -82,6 +84,48 @@ function alterarSenha() {
             clonedConfirmButton.on('click', function() {
                 enviarAjaxEditarSenha($("#inputSenhaAtual").val(), $("#inputNovaSenha").val(), $("#inputConfirmarNovaSenha").val())
             });
+        }
+    })
+}
+
+function removerConta() {
+    swal.fire({
+        type: 'warning',
+        title: 'Deseja realmente remover sua conta do sistema?',
+        html: `<div id="divInputSenhaExcluir" class="form-group">
+                    <label for="inputSenhaExcluir" class="bmd-label-placeholder">Informe sua senha</label>
+                    <input id="inputSenhaExcluir" type="password" class="form-control">
+                    <span class="invalid-feedback"></span>
+                </div>`,
+        onOpen: function(el) {
+            var container = $(el);
+            var originalConfirmButton = container.find('.swal2-confirm');
+            var clonedConfirmButton = originalConfirmButton.clone();
+
+            originalConfirmButton.hide();
+            clonedConfirmButton.insertAfter(originalConfirmButton);
+
+            clonedConfirmButton.on('click', function() {
+                enviarAjaxRemoverConta($("#inputSenhaExcluir").val())
+            });
+        }
+    })
+}
+
+function enviarAjaxRemoverConta(senha) {
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: BASE_URL + 'crudAjax/ajaxDeletarAdmins',
+        data: {
+            senha
+        },
+        success: function(response) {
+            if (response['status'] == -1) {
+                location.replace(BASE_URL + 'admin/sair')
+            } else {
+                showErrors(response['error_list'])
+            }
         }
     })
 }
@@ -101,7 +145,7 @@ function enviarAjaxEditarSenha(senhaAtual, novaSenha, confirmarNovaSenha) {
                 swal.close()
                 snackBarSucesso()
             } else {
-                showErrors(response['error_list']) // TODO: alteração de senha
+                showErrors(response['error_list'])
             }
         }
     })
