@@ -61,12 +61,12 @@ class CrudAjax extends CI_Controller
                 $this->administrador->editar($id, array('email' => $email));
             } elseif ($tipoAcesso == 'funcionario') {
                 # Carrega o model Funcionario
-                $this->load->model("funcionario");
-                $this->funcionario->editar($id, array('email' => $email));
+                $this->load->model('funcionario_model');
+                $this->funcionario_model->editar($id, array('email' => $email));
             } elseif ($tipoAcesso == 'usuario') {
                 # Carrega o model Usuario
-                $this->load->model("usuario");
-                $this->usuario->editar($id, array('email' => $email));
+                $this->load->model('usuario_model');
+                $this->usuario_model->editar($id, array('email' => $email));
             }
         } else {
             $response['status'] = 0;
@@ -116,18 +116,18 @@ class CrudAjax extends CI_Controller
                         $response['error_list']['#divInputSenhaAtual'] = 'Senha incorreta.';
                 } elseif ($tipoAcesso == 'funcionario') {
                     # Carrega o model Funcionario
-                    $this->load->model("funcionario");
-                    $fun = $this->funcionario->carregarPorId($id);
+                    $this->load->model('funcionario_model');
+                    $fun = $this->funcionario_model->carregarPorId($id);
                     if (password_verify($data['senhaAtual'], $fun->senha))
-                        $this->funcionario->editar($id, array('senha' => $novaSenhaHash));
+                        $this->funcionario_model->editar($id, array('senha' => $novaSenhaHash));
                     else
                         $response['error_list']['#divInputSenhaAtual'] = 'Senha incorreta.';
                 } elseif ($tipoAcesso == 'usuario') {
                     # Carrega o model Usuario
-                    $this->load->model("usuario");
-                    $user = $this->usuario->carregarPorId($id);
+                    $this->load->model('usuario_model');
+                    $user = $this->usuario_model->carregarPorId($id);
                     if (password_verify($data['senhaAtual'], $user->senha))
-                        $this->usuario->editar($id, array('senha' => $novaSenhaHash));
+                        $this->usuario_model->editar($id, array('senha' => $novaSenhaHash));
                     else
                         $response['error_list']['#divInputSenhaAtual'] = 'Senha incorreta.';
                 }
@@ -234,7 +234,7 @@ class CrudAjax extends CI_Controller
             exit("Não é permitido acesso direto aos scripts.");
 
         # Carrega o model Funcionário
-        $this->load->model("funcionario");
+        $this->load->model('funcionario_model');
 
         # Array de resposta
         $response = array();
@@ -248,39 +248,48 @@ class CrudAjax extends CI_Controller
 
         ## Validação dos dados enviados
 
-        if (empty(trim($data['nome']))) :
-            $response['error_list']['#divInputNome'] = 'O nome não pode estar vazio.';
-        endif;
-
-        if (!empty($data['telefone']) && $this->funcionario->estaCadastrado('telefone', $data['telefone'])) :
-            $response['error_list']['#divInputTelefone'] = 'Este telefone já está cadastrado.';
-        endif;
-
-        if (empty($data['email'])) :
-            $response['error_list']['#divInputEmail'] = 'O email não pode estar vazio.';
-        elseif ($this->funcionario->estaCadastrado('email', $data['email'])) :
-            $response['error_list']['#divInputEmail'] = 'O email informado já foi cadastrado.';
-        endif;
-
-        if (empty($data['cpf'])) :
-            $response['error_list']['#divInputCpf'] = 'O CPF não pode estar vazio.';
-        elseif (!Tools::isCpfValido($data['cpf'])) :
-            $response['error_list']['#divInputCpf'] = 'O CPF informado não é válido.';
-        elseif ($this->funcionario->estaCadastrado('cpf', Tools::formatCnpjCpf($data['cpf']))) :
-            $response['error_list']['#divInputCpf'] = 'O CPF informado já foi cadastrado.';
-        endif;
-
-        if (empty($data['senha'])) :
-            $response['error_list']['#divInputSenha'] = 'A senha é obrigatória.';
-        else :
-            if (strval($data['senha']) != strval($data['confirmar_senha'])) :
-                $response['error_list']['#divInputConfirmarSenha'] = 'As senhas não coincidem.';
-            else :
-                $data['senha'] = password_hash($data['senha'], PASSWORD_DEFAULT);
-                unset($data['confirmar_senha']);
+        if (isset($data['nome'])) {
+            if (empty(trim($data['nome']))) :
+                $response['error_list']['#divInputNome'] = 'O nome não pode estar vazio.';
             endif;
-        endif;
+        }
 
+        if (isset($data['telefone'])) {
+            if (!empty($data['telefone']) && $this->funcionario_model->estaCadastrado('telefone', $data['telefone'])) :
+                $response['error_list']['#divInputTelefone'] = 'Este telefone já está cadastrado.';
+            endif;
+        }
+
+        if (isset($data['email'])) {
+            if (empty($data['email'])) :
+                $response['error_list']['#divInputEmail'] = 'O email não pode estar vazio.';
+            elseif ($this->funcionario_model->estaCadastrado('email', $data['email'])) :
+                $response['error_list']['#divInputEmail'] = 'O email informado já foi cadastrado.';
+            endif;
+        }
+
+        if (isset($data['cpf'])) {
+            if (empty($data['cpf'])) :
+                $response['error_list']['#divInputCpf'] = 'O CPF não pode estar vazio.';
+            elseif (!Tools::isCpfValido($data['cpf'])) :
+                $response['error_list']['#divInputCpf'] = 'O CPF informado não é válido.';
+            elseif ($this->funcionario_model->estaCadastrado('cpf', Tools::formatCnpjCpf($data['cpf']))) :
+                $response['error_list']['#divInputCpf'] = 'O CPF informado já foi cadastrado.';
+            endif;
+        }
+
+        if (isset($data['senha'])) {
+            if (empty($data['senha'])) :
+                $response['error_list']['#divInputSenha'] = 'A senha é obrigatória.';
+            else :
+                if (strval($data['senha']) != strval($data['confirmar_senha'])) :
+                    $response['error_list']['#divInputConfirmarSenha'] = 'As senhas não coincidem.';
+                else :
+                    $data['senha'] = password_hash($data['senha'], PASSWORD_DEFAULT);
+                    unset($data['confirmar_senha']);
+                endif;
+            endif;
+        }
         ## Fim validação
         if (!empty($response['error_list'])) :
             $response['status'] = 0;
@@ -288,11 +297,11 @@ class CrudAjax extends CI_Controller
             # Verifica se um ID foi passado por parâmetro (em caso de edição)
             if (empty($data['id'])) :   # Se não, insere um novo registro
                 unset($data['id']);
-                $this->funcionario->inserir($data);
+                $this->funcionario_model->inserir($data);
             else :                      # Se sim, edita o registro referente ao ID
                 $id = $data['id'];      # Armazena o ID em uma variável ...
                 unset($data['id']);     # ... e remove o ID da lista de campos para editar
-                $this->funcionario->editar($id, $data);
+                $this->funcionario_model->editar($id, $data);
             endif;
         endif;
 
@@ -310,7 +319,7 @@ class CrudAjax extends CI_Controller
             exit("Não é permitido acesso direto aos scripts.");
 
         # Carrega o model Usuário
-        $this->load->model("usuario");
+        $this->load->model('usuario_model');
 
         # Array de resposta
         $response = array();
@@ -324,54 +333,64 @@ class CrudAjax extends CI_Controller
 
         ## Validação dos dados enviados
 
-        if (empty(trim($data['nome']))) :
-            $response['error_list']['#divInputNome'] = 'O nome não pode estar vazio.';
-        endif;
-
-        if (isset($data['telefone']) && $this->usuario->estaCadastrado('telefone', $data['telefone'])) :
-            $response['error_list']['#divInputTelefone'] = 'Este telefone já está cadastrado.';
-        endif;
-
-        if (empty($data['email'])) :
-            $response['error_list']['#divInputEmail'] = 'O email não pode estar vazio.';
-        elseif ($this->usuario->estaCadastrado('email', $data['email'])) :
-            $response['error_list']['#divInputEmail'] = 'O email informado já foi cadastrado.';
-        endif;
-
-        if (empty($data['cpf'])) :
-            $response['error_list']['#divInputCpf'] = 'O CPF não pode estar vazio.';
-        elseif (!Tools::isCpfValido($data['cpf'])) :
-            $response['error_list']['#divInputCpf'] = 'O CPF informado não é válido.';
-        elseif ($this->usuario->estaCadastrado('cpf', Tools::formatCnpjCpf($data['cpf']))) :
-            $response['error_list']['#divInputCpf'] = 'O CPF informado já foi cadastrado.';
-        endif;
-
-        if (empty($data['tipo'])) :
-            $response['error_list']['#divSelectTipo'] = 'O tipo de usuário não pode estar vazio.';
-        elseif (
-            $data['tipo'] != TipoUsuario::ALUNO &&
-            $data['tipo'] != TipoUsuario::SERVIDOR &&
-            $data['tipo'] != TipoUsuario::VISITANTE
-        ) :
-            $response['error_list']['#divSelectTipo'] = 'Tipo de usuário não reconhecido.';
-        endif;
-
-        if (isset($data['tipo']) && $data['tipo'] != TipoUsuario::VISITANTE) :
-            if (empty($data['matricula'])) :
-                $response['error_list']['#divInputMatricula'] = 'Matrícula requerida para alunos e servidores';
+        if (isset($data['nome'])) {
+            if (empty(trim($data['nome']))) :
+                $response['error_list']['#divInputNome'] = 'O nome não pode estar vazio.';
             endif;
-        endif;
+        }
 
-        if (empty($data['senha'])) :
-            $response['error_list']['#divInputSenha'] = 'A senha é obrigatória.';
-        else :
-            if (strval($data['senha']) != strval($data['confirmar_senha'])) :
-                $response['error_list']['#divInputConfirmarSenha'] = 'As senhas não coincidem.';
+        if (isset($data['telefone'])) {
+            if (isset($data['telefone']) && $this->usuario_model->estaCadastrado('telefone', $data['telefone'])) :
+                $response['error_list']['#divInputTelefone'] = 'Este telefone já está cadastrado.';
+            endif;
+        }
+
+        if (isset($data['email'])) {
+            if (empty($data['email'])) :
+                $response['error_list']['#divInputEmail'] = 'O email não pode estar vazio.';
+            elseif ($this->usuario_model->estaCadastrado('email', $data['email'])) :
+                $response['error_list']['#divInputEmail'] = 'O email informado já foi cadastrado.';
+            endif;
+        }
+
+        if (isset($data['cpf'])) {
+            if (empty($data['cpf'])) :
+                $response['error_list']['#divInputCpf'] = 'O CPF não pode estar vazio.';
+            elseif (!Tools::isCpfValido($data['cpf'])) :
+                $response['error_list']['#divInputCpf'] = 'O CPF informado não é válido.';
+            elseif ($this->usuario_model->estaCadastrado('cpf', Tools::formatCnpjCpf($data['cpf']))) :
+                $response['error_list']['#divInputCpf'] = 'O CPF informado já foi cadastrado.';
+            endif;
+        }
+
+        if (isset($data['tipo'])) {
+            if (empty($data['tipo'])) :
+                $response['error_list']['#divSelectTipo'] = 'O tipo de usuário não pode estar vazio.';
+            elseif (
+                $data['tipo'] != TipoUsuario::ALUNO &&
+                $data['tipo'] != TipoUsuario::SERVIDOR &&
+                $data['tipo'] != TipoUsuario::VISITANTE
+            ) :
+                $response['error_list']['#divSelectTipo'] = 'Tipo de usuário não reconhecido.';
+            elseif ($data['tipo'] != TipoUsuario::VISITANTE) :
+                if (isset($data['matricula']) && empty($data['matricula'])) :
+                    $response['error_list']['#divInputMatricula'] = 'Matrícula requerida para alunos e servidores';
+                endif;
+            endif;
+        }
+
+        if (isset($data['senha'])) {
+            if (empty($data['senha'])) :
+                $response['error_list']['#divInputSenha'] = 'A senha é obrigatória.';
             else :
-                $data['senha'] = password_hash($data['senha'], PASSWORD_DEFAULT);
-                unset($data['confirmar_senha']);
+                if (strval($data['senha']) != strval($data['confirmar_senha'])) :
+                    $response['error_list']['#divInputConfirmarSenha'] = 'As senhas não coincidem.';
+                else :
+                    $data['senha'] = password_hash($data['senha'], PASSWORD_DEFAULT);
+                    unset($data['confirmar_senha']);
+                endif;
             endif;
-        endif;
+        }
 
         ## Fim validação
         if (!empty($response['error_list'])) :
@@ -380,11 +399,11 @@ class CrudAjax extends CI_Controller
             # Verifica se um ID foi passado por parâmetro (em caso de edição)
             if (empty($data['id'])) :   # Se não, insere um novo registro
                 unset($data['id']);
-                $this->usuario->inserir($data);
+                $this->usuario_model->inserir($data);
             else :                      # Se sim, edita o registro referente ao ID
                 $id = $data['id'];      # Armazena o ID em uma variável ...
                 unset($data['id']);     # ... e remove o ID da lista de campos para editar
-                $this->usuario->editar($id, $data);
+                $this->usuario_model->editar($id, $data);
             endif;
         endif;
 
@@ -443,8 +462,8 @@ class CrudAjax extends CI_Controller
         if (empty($data['id_usuario'])) :
             $response['error_list']['#divSelectUsuario'] = 'Por favor, informe o dono da bike.';
         else :
-            $this->load->model('usuario');
-            $usuarioExiste = $this->usuario->carregarPorId($data['id_usuario']);
+            $this->load->model('usuario_model');
+            $usuarioExiste = $this->usuario_model->carregarPorId($data['id_usuario']);
             if (!$usuarioExiste)
                 $response['error_list']['#divSelectUsuario'] = 'Usuário não cadastrado. Selecione um usuário da lista.';
         endif;
@@ -536,7 +555,7 @@ class CrudAjax extends CI_Controller
         # Verifica se o método está sendo acessado por uma requisição AJAX
         if (!$this->input->is_ajax_request()) :
             exit("Não é permitido acesso direto aos scripts.");
-        elseif ($this->session->userdata['permissions_level'] != 'funcionário') :
+        elseif ($this->session->userdata['permissions_level'] != 'funcionario') :
             echo json_encode(
                 array(
                     'status' => -1,
@@ -551,7 +570,7 @@ class CrudAjax extends CI_Controller
         # Carrega o model Bicicleta
         $this->load->model('bicicleta');
         # Carrega o model Usuário
-        $this->load->model('usuario');
+        $this->load->model('usuario_model');
 
         # Array de resposta
         $response = array();
@@ -579,7 +598,7 @@ class CrudAjax extends CI_Controller
             $response['error_list']['#divSelectBicicleta'] = 'Por favor, seleciona a bike que irá receber a Tag.';
         else :
             $bike = $this->bicicleta->carregarPorId($data['id_bicicleta']);
-            $user = $this->usuario->carregarPorId($bike->id_usuario);
+            $user = $this->usuario_model->carregarPorId($bike->id_usuario);
             if (!$bike) :
                 $response['error_list']['#divSelectBicicleta'] = 'Bike não cadastrada. Selecione um usuário da lista e então escolha uma entre suas bicicletas.';
             elseif ($bike->situacao == SituacaoBicicleta::INATIVA || $user->situacao == SituacaoUsuario::INATIVO) : // TODO: Bike verificada/não verificada
@@ -720,7 +739,7 @@ class CrudAjax extends CI_Controller
             exit("Não é permitido acesso direto aos scripts.");
 
         # Carrega o model Usuario
-        $this->load->model("usuario");
+        $this->load->model('usuario_model');
 
         # Array de resposta
         $response = array();
@@ -729,7 +748,7 @@ class CrudAjax extends CI_Controller
 
         # Dados enviados via POST
         $ids = $this->input->post('ids_usuarios');
-        $this->usuario->ativar($ids);
+        $this->usuario_model->ativar($ids);
 
         echo json_encode($response);
     }
@@ -744,7 +763,7 @@ class CrudAjax extends CI_Controller
             exit("Não é permitido acesso direto aos scripts.");
 
         # Carrega o model Usuario
-        $this->load->model("usuario");
+        $this->load->model('usuario_model');
 
         # Array de resposta
         $response = array();
@@ -753,7 +772,7 @@ class CrudAjax extends CI_Controller
 
         # Dados enviados via POST
         $ids = $this->input->post('ids_usuarios');
-        $this->usuario->desativar($ids);
+        $this->usuario_model->desativar($ids);
 
         echo json_encode($response);
     }
@@ -768,7 +787,7 @@ class CrudAjax extends CI_Controller
             exit("Não é permitido acesso direto aos scripts.");
 
         # Carrega o model Funcionário
-        $this->load->model("funcionario");
+        $this->load->model('funcionario_model');
 
         # Array de resposta
         $response = array();
@@ -777,7 +796,7 @@ class CrudAjax extends CI_Controller
 
         # Dados enviados via POST
         $ids = $this->input->post('ids_funcionarios');
-        $this->funcionario->ativar($ids);
+        $this->funcionario_model->ativar($ids);
 
         echo json_encode($response);
     }
@@ -792,7 +811,7 @@ class CrudAjax extends CI_Controller
             exit("Não é permitido acesso direto aos scripts.");
 
         # Carrega o model Funcionário
-        $this->load->model("funcionario");
+        $this->load->model('funcionario_model');
 
         # Array de resposta
         $response = array();
@@ -801,7 +820,7 @@ class CrudAjax extends CI_Controller
 
         # Dados enviados via POST
         $ids = $this->input->post('ids_funcionarios');
-        $this->funcionario->desativar($ids);
+        $this->funcionario_model->desativar($ids);
 
         echo json_encode($response);
     }
@@ -835,8 +854,8 @@ class CrudAjax extends CI_Controller
 
         if (password_verify($senha, $admin->senha)) {
             $this->administrador->excluir($ids);
-            foreach ($ids as $id) 
-                if ($id == $admin->id) 
+            foreach ($ids as $id)
+                if ($id == $admin->id)
                     $response['status'] = -1;
         } else {
             $response['status'] = 0;
@@ -970,35 +989,24 @@ class CrudAjax extends CI_Controller
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
 
-        $timestamp = $this->input->post('timestamp');
+        $data = $this->input->post();
+        $foreingKey = NULL;
+        $foreingKeyValue = NULL;
 
-        $registros = $this->registro->listarRegistrosPorDia($timestamp);
-        $registrosFormatados = $this->formatarRegistros($registros);
+        if (isset($data['from_logged_user']) && $data['from_logged_user']) {
+            if ($this->session->userdata('permissions_level') == 'funcionario') {
+                $foreingKey = 'id_funcionario';
+            } elseif ($this->session->userdata('permissions_level') == 'usuario') {
+                $foreingKey = 'id_usuario';
+            }
 
-        $response['data'] = $registrosFormatados;
+            $foreingKeyValue = $this->session->userdata('logged_user_id');
+        } elseif (isset($data['from_bike']) && $data['from_bike']) {
+            $foreingKey = 'id_bicicleta';
+            $foreingKeyValue = $data['id_bicicleta'];
+        }
 
-        echo json_encode($response);
-    }
-
-    /**
-     * Função acessada por requisições AJAX para listagem de registros de entrada/saída
-     * 
-     * Retorna um JSON de objetos
-     */
-    public function ajaxListarTodosRegistros()
-    {
-        if (!$this->input->is_ajax_request())
-            exit("Não é permitido aceso direto aos scripts.");
-
-        # Carrega o model Registro
-        $this->load->model('registro');
-
-        # Array de resposta
-        $response = array();
-        # status == 0: algo deu errado | status == 1: tudo certo
-        $response['status'] = 1;
-
-        $registros = $this->registro->listarTodos();
+        $registros = $this->registro->listarRegistrosPorDia($data['timestamp'], $foreingKey, $foreingKeyValue);
         $registrosFormatados = $this->formatarRegistros($registros);
 
         $response['data'] = $registrosFormatados;
@@ -1034,34 +1042,6 @@ class CrudAjax extends CI_Controller
     }
 
     /**
-     * Função acessada por requisições AJAX para listagem do histórico de um usuário
-     * 
-     * Retorna um JSON de objetos
-     */
-    public function ajaxListarRegistrosDoUsuario()
-    {
-        if (!$this->input->is_ajax_request())
-            exit("Não é permitido aceso direto aos scripts.");
-
-        # Carrega o model Registro
-        $this->load->model('registro');
-
-        # Array de resposta
-        $response = array();
-        # status == 0: algo deu errado | status == 1: tudo certo
-        $response['status'] = 1;
-
-        $id_usuario = $this->input->post('id_usuario');
-        $registros = $this->registro->listarHistoricoUsuario($id_usuario);
-        $registros = !$registros ? array() : $registros;
-        $registrosFormatados = $this->formatarRegistros($registros);
-
-        $response['data'] = $registrosFormatados;
-
-        echo json_encode($response);
-    }
-
-    /**
      * Função acessada por requisições AJAX para listagem de bikes
      * 
      * Retorna um JSON de objetos
@@ -1074,7 +1054,7 @@ class CrudAjax extends CI_Controller
         # Carrega o model Bicicleta
         $this->load->model('bicicleta');
         # Carrega o model Usuario
-        $this->load->model('usuario');
+        $this->load->model('usuario_model');
 
         # Array de resposta
         $response = array();
@@ -1087,7 +1067,7 @@ class CrudAjax extends CI_Controller
         foreach ($bicicletas as $bike) :
             ## Salva as informações interessantes sobre o usuário em um array
 
-            $user = $this->usuario->carregarPorId($bike["id_usuario"]);
+            $user = $this->usuario_model->carregarPorId($bike["id_usuario"]);
             $userInfo = array(
                 'id' => $user->id,
                 'nome' => $user->nome
@@ -1165,7 +1145,7 @@ class CrudAjax extends CI_Controller
         # Carrega o model Bicicleta
         $this->load->model('bicicleta');
         # Carrega o model Usuario
-        $this->load->model('usuario');
+        $this->load->model('usuario_model');
 
         # Array de resposta
         $response = array();
@@ -1179,7 +1159,7 @@ class CrudAjax extends CI_Controller
         if ($tags) :
             $tag = $tags[0];
             $bike = $this->bicicleta->carregarPorId($tag['id_bicicleta']);
-            $user = $this->usuario->carregarPorId($bike->id_usuario);
+            $user = $this->usuario_model->carregarPorId($bike->id_usuario);
 
             # salva as informações interessantes sobre a bike
             $bikeInfo = array(
@@ -1223,9 +1203,9 @@ class CrudAjax extends CI_Controller
         # Carrega o model Email
         $this->load->model('email');
         # Carrega o model Funcionario
-        $this->load->model('funcionario');
+        $this->load->model('funcionario_model');
         # Carrega o model Usuario
-        $this->load->model('usuario');
+        $this->load->model('usuario_model');
 
         # Array de resposta
         $response = array();
@@ -1246,7 +1226,7 @@ class CrudAjax extends CI_Controller
 
             ## Salva as informações interessantes sobre o funcionário que enviou o email
 
-            $fun = $this->funcionario->carregarPorId($email['id_funcionario']);
+            $fun = $this->funcionario_model->carregarPorId($email['id_funcionario']);
             $funcInfo = array(
                 'id' => $fun->id,
                 'nome' => $fun->nome
@@ -1254,7 +1234,7 @@ class CrudAjax extends CI_Controller
 
             ## Salva as informações interessantes sobre a o usuario
 
-            $user = $this->usuario->carregarPorId($email['id_usuario']);
+            $user = $this->usuario_model->carregarPorId($email['id_usuario']);
             $userInfo = array(
                 'id' => $user->id,
                 'nome' => $user->nome
@@ -1288,7 +1268,7 @@ class CrudAjax extends CI_Controller
         # Carrega o model Bicicleta
         $this->load->model('bicicleta');
         # Carrega o model Usuario
-        $this->load->model('usuario');
+        $this->load->model('usuario_model');
 
         # Array de resposta
         $response = array();
@@ -1315,7 +1295,7 @@ class CrudAjax extends CI_Controller
 
             ## Salva as informações importantes sobre o usuário (dono da bike)
 
-            $user = $this->usuario->carregarPorId($bike->id_usuario);
+            $user = $this->usuario_model->carregarPorId($bike->id_usuario);
             $userInfo = array(
                 'id' => $user->id,
                 'nome' => preg_split('/\s/', $user->nome)[0], // Retorna apenas o primeiro nome do usuário
@@ -1346,13 +1326,13 @@ class CrudAjax extends CI_Controller
             exit("Não é permitido aceso direto aos scripts.");
 
         # Carrega o model Usuario
-        $this->load->model('usuario');
+        $this->load->model('usuario_model');
 
         # Array de resposta
         $response = array();
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
-        $usuarios = $this->usuario->listarTodos();
+        $usuarios = $this->usuario_model->listarTodos();
         $usuarios = !$usuarios ? array() : $usuarios;
 
         foreach ($usuarios as $key => $user) :
@@ -1386,13 +1366,13 @@ class CrudAjax extends CI_Controller
             exit("Não é permitido aceso direto aos scripts.");
 
         # Carrega o model Funcionario
-        $this->load->model('funcionario');
+        $this->load->model('funcionario_model');
 
         # Array de resposta
         $response = array();
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
-        $funcionarios = $this->funcionario->listarTodos();
+        $funcionarios = $this->funcionario_model->listarTodos();
         $funcionarios = !$funcionarios ? array() : $funcionarios;
 
         foreach ($funcionarios as $key => $fun) {
@@ -1447,11 +1427,11 @@ class CrudAjax extends CI_Controller
         # Carrega o model Bicicleta
         $this->load->model('bicicleta');
         # Carrega o model Usuario
-        $this->load->model('usuario');
+        $this->load->model('usuario_model');
         # Carrega o model Saida
         $this->load->model('saida');
         # Carrega o model Funcionario
-        $this->load->model('funcionario');
+        $this->load->model('funcionario_model');
 
         $registrosFormatados = array();
 
@@ -1470,7 +1450,7 @@ class CrudAjax extends CI_Controller
 
             ## Formata as informações importantes sobre o funcionário que realizou o checkin
 
-            $fun_entrada = $this->funcionario->carregarPorId($reg['id_funcionario']);
+            $fun_entrada = $this->funcionario_model->carregarPorId($reg['id_funcionario']);
             $funcEntradaInfo = array(
                 'id' => $fun_entrada->id,
                 'nome' => $fun_entrada->nome,
@@ -1490,7 +1470,7 @@ class CrudAjax extends CI_Controller
 
             ## Formata as informações importantes sobre o usuário (dono da bike)
 
-            $user = $this->usuario->carregarPorId($bike->id_usuario);
+            $user = $this->usuario_model->carregarPorId($bike->id_usuario);
             $userInfo = array(
                 'id' => $user->id,
                 'nome' => $user->nome, // Retorna apenas o primeiro nome do usuário
@@ -1515,7 +1495,7 @@ class CrudAjax extends CI_Controller
 
                 ## Formata as informações importantes sobre o funcionário que realizou o checkin
 
-                $fun_saida = $this->funcionario->carregarPorId($saida->id_funcionario);
+                $fun_saida = $this->funcionario_model->carregarPorId($saida->id_funcionario);
                 $funcSaidaInfo = array(
                     'id' => $fun_saida->id,
                     'nome' => $fun_saida->nome,

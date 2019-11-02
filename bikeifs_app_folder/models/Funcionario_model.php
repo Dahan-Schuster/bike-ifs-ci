@@ -3,7 +3,7 @@
 require_once('Tools.php');
 require_once(APPPATH . 'models/SituacaoFuncionario.php');
 
-class Funcionario extends CI_Model
+class Funcionario_model extends CI_Model
 {
     /**
      * Funcionario constructor.

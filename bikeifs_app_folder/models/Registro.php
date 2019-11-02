@@ -129,36 +129,34 @@ class Registro extends CI_Model
 
     /**
      * Lista todos os registros de um dia específico enviado por parâmetro.
-     * A String $dia será convertida em um timestamp e depois formatada em uma 
-     * data no formado Y-m-d (padrão PostgreSQL)
+     * O timestamp enviado será formatado em uma data no formado Y-m-d (padrão PostgreSQL)
      * 
-     * @param $dia - o dia em questão
+     * Se uma chave estrangeira for especificada em $foreignKey, irá listar os registros
+     * associados ao objeto com o ID enviado como $foreignKeyValue.
+     * 
+     * Pode listar registros de um funcinário/bicicleta/usuário específico.
+     * 
+     * @param $timestamp - timestamp do dia em questão
      * @return array - Array associativo com os registros encontrados.
      * 
      */
-    public function listarRegistrosPorDia($timestamp)
+    public function listarRegistrosPorDia($timestamp, $foreignKey = NULL, $foreignKeyValue = NULL)
     {
         $timestamp = intval(substr($timestamp, 0, 10));
         $dia = "'" . date('Y-m-d', $timestamp) . "'";
-        $result = $this->db->where("data_hora::date", $dia, false)->get('REGISTRO');
-        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
-    }
 
-    /**
-     * Lista todos os registros em que a FK id_bicicleta estiver associada ao id_usuario enviado por parâmetro.
-     * 
-     * @param $idUsuario - o id do usuário em questão
-     * @return array - Array associativo com os registros encontrados.
-     * 
-     */
-    public  function listarHistoricoUsuario($idUsuario)
-    {
-        $this->db->select("REGISTRO.*")
-            ->from("REGISTRO")
-            ->join("BICICLETA", 'REGISTRO.id_bicicleta = "BICICLETA".id')
-            ->where('"BICICLETA".id_usuario', $idUsuario)
-            ->order_by('"REGISTRO".data_hora', 'DESC');
-        $result = $this->db->get();
+        if (NULL !== $foreignKey) {
+            if (strtoupper($foreignKey) == 'ID_FUNCIONARIO') {
+                $this->db->where('id_funcionario', $foreignKeyValue);
+            } elseif (strtoupper($foreignKey) == 'ID_BICICLETA') {
+                $this->db->where('id_bicicleta', $foreignKeyValue);
+            } elseif (strtoupper($foreignKey) == 'ID_USUARIO') {
+                $this->db->join("BICICLETA", 'REGISTRO.id_bicicleta = "BICICLETA".id')
+                    ->where('"BICICLETA".id_usuario', $foreignKeyValue);
+            }
+        }
+
+        $result = $this->db->where("data_hora::date", $dia, false)->get('REGISTRO');
         return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 

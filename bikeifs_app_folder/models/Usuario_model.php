@@ -3,7 +3,7 @@
 require_once('Tools.php');
 require_once(APPPATH . 'models/SituacaoUsuario.php');
 
-class Usuario extends CI_Model
+class Usuario_model extends CI_Model
 {
     /**
      * Usuario constructor.

@@ -56,7 +56,6 @@
                                 <a class="dropdown-item" href="<?= base_url('admin/listar/usuarios') ?>">Usuários</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?= base_url('admin/listar/registros-do-dia') ?>">Registros do dia</a>
-                                <a class="dropdown-item" href="javasctip:void(0)" onclick="avisoPerformance()">Todos os registros</a>
                                 <a class="dropdown-item" href="<?= base_url('admin/listar/emails') ?>">E-mails</a>
                             </div>
                         </li>

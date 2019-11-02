@@ -69,7 +69,7 @@ class Bicicleta extends CI_Model
      */
     public function listarTodos()
     {
-        $result = $this->db->get('BICICLETA');
+        $result = $this->db->order_by('id_usuario', 'ASC')->get('BICICLETA');
         return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 

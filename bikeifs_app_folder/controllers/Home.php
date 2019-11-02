@@ -88,13 +88,13 @@ class Home extends CI_Controller
             # Chama o método de verificação de dados correspondente para o tipo de acesso selecionado na tela de login
             switch ($tipoAcesso) {
                 case 'funcionario':
-                    $this->load->model("funcionario");
-                    $result = $this->funcionario->verificarLogin($login, $senha);
+                    $this->load->model('funcionario_model');
+                    $result = $this->funcionario_model->verificarLogin($login, $senha);
                     if ($result) $json['location'] = base_url('funcionario');    # Rota para redirecionamento após o login
                     break;
                 case 'usuario':
-                    $this->load->model("usuario");
-                    $result = $this->usuario->verificarLogin($login, $senha);
+                    $this->load->model('usuario_model');
+                    $result = $this->usuario_model->verificarLogin($login, $senha);
                     if ($result) $json['location'] = base_url('usuario');
                     break;
                 case 'admin':

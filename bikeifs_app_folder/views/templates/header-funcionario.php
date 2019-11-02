@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Sistema de controle e gerenciamento de entrada e saída de bicicletas do bicicletário do Instituto Federal de Sergipe.">
     <meta name="keywords" content="bicicletário, ifs, instituto federal de sergipe, bicicletas, controle de entrada, tecnologia, inovação">
-    <link rel="shortcut icon" type="image/x-icon" href="<?= base_url() ?>/favicon.ico">
-    <link rel="icon" type="image/x-icon" href="<?= base_url() ?>/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/bootstrap.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('favicon.ico') ?>">
+    <link rel="icon" type="image/x-icon" href="<?= base_url('favicon.ico') ?>">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/palette.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/estilo.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/css/sidepanel.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 
     <?php
     if (isset($styles)) :
@@ -27,49 +28,58 @@
 
 <body>
     <header>
-        <nav class="navbar sticky-top navbar-expand-xl navbar-light bg-dark header-gradient">
+        <nav class="navbar sticky-top navbar-expand-xl navbar-dark bg-dark-primary">
             <div class="container">
-                <a class="navbar-brand" href="?pagina=home">
+                <a class="navbar-brand mr-5" href="<?= base_url('funcionario/view/home') ?>">
                     <img class="icon-logo" src="<?= base_url() ?>/public/img/icon.svg" title="Logo" alt="Logo">
                     <img class='logo' src="<?= base_url() ?>/public/img/nome-logo.png" title="Bike IFS" alt="Bike IFS">
                 </a>
-                <button class="navbar-toggler bg-primary py-2" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler bg-default-primary" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="material-icons">menu</i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <h3>
-                                <a class="nav-link badge badge-light text-dark mr-3 px-2" href="?pagina=registrosDoDia">
-                                    Registros
-                                </a>
-                            </h3>
+                        <li class="nav-item">
+                            <a id="navLinkRegistros" class="nav-link" href="<?= base_url('funcionario') ?>">
+                                Registros
+                            </a>
                         </li>
-                        <li class="nav-item active">
-                            <h3>
-                                <a class="nav-link badge badge-danger text-light mr-3 px-2" href="?pagina=restrita">
-                                    Área restrita
-                                </a>
-                            </h3>
+                        <li class="nav-item dropdown mx-3">
+                            <a class="nav-link dropdown-toggle" href="#" id="navLinkListagem" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Listar
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="<?= base_url('funcionario/listar/bicicletas') ?>">Bicicletas</a>
+                                <a class="dropdown-item" href="<?= base_url('funcionario/listar/tags') ?>">Tags RFID</a>
+                                <a class="dropdown-item" href="<?= base_url('funcionario/listar/usuarios') ?>">Usuários</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="<?= base_url('funcionario/listar/registros-do-dia') ?>">Registros do dia</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a id="navLinkPendencias" class="nav-link" href="<?= base_url('funcionario') ?>">
+                                Pendências
+                            </a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <span class="text-light">
+                                Logado como <strong><?= preg_split("/\s/", $nome)[0] ?></strong>
+                            </span>
+                        </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link active dropdown-toggle text-light" id="dropdownMenu" style="cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <strong>Opções</strong>
+                            <a class="btn bmd-btn-icon dropdown-toggl text-light" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_horiz</i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                <a class="dropdown-item" href="?pagina=perfil">
-                                    <span class="py-2 my-2">
-                                        <span>Perfil</span>
-                                        <img class="ml-3" src="<?= base_url() ?>/public/img/icons/profile.png" title="Perfil" alt="Perfil">
-                                    </span>
+                                <a class="dropdown-item" href="<?= base_url('funcionario/perfil') ?>">
+                                    Perfil&nbsp;
+                                    <i class="material-icons">person</i>
                                 </a>
-                                <a class="dropdown-item text-danger" style="font-size: 18px;" href="<?= base_url() ?>/app/src/controller/logout.php">
-                                    <span>
-                                        <span>Sair</span>
-                                        <img style="width: 20px; margin-left: 1.35rem!important;" src="<?= base_url() ?>/public/img/icons/logout.png" title="Sair" alt="Sair">
-                                    </span>
+                                <a class="dropdown-item text-danger" href="<?= base_url('funcionario/sair') ?>">
+                                    Sair&nbsp;
+                                    <i class="material-icons">exit_to_app</i>
                                 </a>
                             </div>
                         </li>

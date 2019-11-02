@@ -74,12 +74,12 @@ class Email extends CI_Controller
         # Após pesquisar, edita a senha
         switch ($tipoAcesso):
             case 'funcionario':
-                $this->load->model('funcionario'); # Carrega o modal correspondente ao tipo de acesso escolhido
-                $result = $this->funcionario->listarPorCampos(array('email' => $email)); # Pesquisa o registro por endereço de email
+                $this->load->model('funcionario_model'); # Carrega o modal correspondente ao tipo de acesso escolhido
+                $result = $this->funcionario_model->listarPorCampos(array('email' => $email)); # Pesquisa o registro por endereço de email
                 if ($result) :       # Se a pesquisa retorna um registro
                     $result = $result[0];   # Move o resultado para a primeira linha (deve haver apenas um, visto que o campo email no bd possui o index UNIQUE)
                     if ($this->enviarEmailRecuperacaoSenha($email, $result['nome'], $novaSenha))  # Tenta enviar a nova senha via email
-                        $this->funcionario->editar($result['id'], array('senha' => $novaSenhaHash));  # Se enviar, altera a senha
+                        $this->funcionario_model->editar($result['id'], array('senha' => $novaSenhaHash));  # Se enviar, altera a senha
                     else                                                                        # Se não, não edita a senha
                         $json['status'] = 2;    # status == 2: erro no envio do email
                 else :
@@ -87,12 +87,12 @@ class Email extends CI_Controller
                 endif;
                 break;
             case 'usuario':
-                $this->load->model('usuario');
-                $result = $this->usuario->listarPorCampos(array('email' => $email));
+                $this->load->model('usuario_model');
+                $result = $this->usuario_model->listarPorCampos(array('email' => $email));
                 if ($result) :
                     $result = $result[0];
                     if ($this->enviarEmailRecuperacaoSenha($email, $result['nome'], $novaSenha))
-                        $this->usuario->editar($result['id'], array('senha' => $novaSenhaHash));
+                        $this->usuario_model->editar($result['id'], array('senha' => $novaSenhaHash));
                     else
                         $json['status'] = 2;
                 else :
