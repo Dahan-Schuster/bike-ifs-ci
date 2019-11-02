@@ -74,7 +74,7 @@ function confirmarCheckOut(botao) {
     Swal.mixin({
         confirmButtonText: 'Avançar &rarr;',
         cancelButtonText: 'Cancelar',
-        showCancelButton: 'Cancelar',
+        showCancelButton: true,
         progressSteps: ['1', '2']
     }).queue([{
             title: 'Check-Out',
