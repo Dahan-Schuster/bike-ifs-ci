@@ -411,6 +411,31 @@ class CrudAjax extends CI_Controller
         echo json_encode($response);
     }
 
+    public function ajaxAlterarPrivacidadeUsuario()
+    {
+        # Verifica se o método está sendo acessado por uma requisição AJAX
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido acesso direto aos scripts.");
+
+        # Carrega o model Usuário
+        $this->load->model('usuario_model');
+
+        # Array de resposta
+        $response = array();
+        # status == 0: algo deu errado | status == 1: tudo certo
+        $response['status'] = 1;
+
+        $usuario = $this->usuario_model->carregarPorId($this->session->logged_user_id);
+        $this->usuario_model->editar(
+            $usuario->id,
+            array(
+                'perfil_privado' => $usuario->perfil_privado == 'f' ? 't' : 'f' 
+            )
+        );
+
+        echo json_encode($response);
+    }
+
     /**
      * Função acessada via requisições AJAX para salvar Bicicletas
      */

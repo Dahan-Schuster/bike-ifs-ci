@@ -1,88 +1,98 @@
-<?php
- @session_start();
-    if (isset($_SESSION['login']) and $_SESSION['tipoAcesso'] == 'usuario') { ?>
-        <head>
-            <link rel="stylesheet" type="text/css" href="./../../css/perfil.css">
-        </head>
-        <h2>Perfil de usuário</h2>
-        <hr>
-        <div class="jumbotron jumbotron-cadastro pt-3 pl-2">
-            <div class="col-md-12 col-md-offset-2">
-                <div class="row perfil">
-                    <div class="col-lg-3 col-md-5">
-                        <div class="perfil-sidebar">
-                            <div class="perfil-foto">
-                            <img src="<?= base_url() ?>/public/img/icons/cyclist.png" title="Usuário" class="img-responsive" alt="Usuário">
-                            </div>
-                            <div class="perfil-titulo">
-                                <div id="perfil-nome" class="perfil-titulo-nome">
-                                </div>
-                                <div id="perfil-tipo" class="perfil-titulo-tipo">
-                                </div>
-                            </div>
-                            <div class="perfil-menu">
-                                <ul class="nav">
-                                    <li>
-                                        <button id="btn-info">
-                                            <img src="<?= base_url() ?>/public/img/icons/info.png" title="Informações da Conta" alt="Informações">
-                                            <span>Informações</span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button id="btn-config">
-                                            <img src="<?= base_url() ?>/public/img/icons/management.png" title="Configurações da Conta" alt="Configurações">
-                                            <span>Configurações da conta</span>
-                                        </button>
-                                    </li>
-                                    <li class="remover">
-                                        <button class="text-danger" id="btn-remove">
-                                            <img src="<?= base_url() ?>/public/img/icons/delete-account.png" title="Desativar Conta" alt="Desativar">
-                                            <span>Desativar conta</span>
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
+<?php require_once APPPATH . 'models/TipoUsuario.php'; ?>
+<h4>Perfil de usuário</h4>
+<hr class="bg-dark">
+<div class="jumbotron jumbotron-cadastro pt-3 pl-2">
+    <div class="col-md-12">
+        <div class="row perfil">
+            <div class="col-lg-3 col-md-5">
+                <div class="perfil-sidebar">
+                    <div class="perfil-foto">
+                        <img src="<?= base_url() ?>/public/img/icons/cyclist.png" title="Funcionário" class="img-responsive" alt="Funcionário">
+                    </div>
+                    <div class="perfil-titulo">
+                        <div id="perfil-nome" class="perfil-titulo-nome">
+                            <?= $usuario->nome ?>
+                        </div>
+                        <div class="perfil-titulo-tipo">
+                            <?= TipoUsuario::getNomeTipo($usuario->tipo) ?>
                         </div>
                     </div>
-                    
-                    <div class="col-lg-9 col-md-7 conteudo-perfil" id="conteudo-perfil">
+                    <div class="perfil-menu">
+                        <ul class="nav">
+                            <li class="active">
+                                <button id="btn-info">
+                                    <i class="material-icons mr-3">info</i>
+                                    <span>Informações</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="btn-medalhas">
+                                    <i class="material-icons mr-3">grade</i>
+                                    <span>Minhas medalhas</span>
+                                </button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
+            <div class="col-lg-9 col-md-7 conteudo-perfil" id="conteudo-perfil">
+                <div id="informacoes">
+                    <div class="form-group row">
+                        <label for="nome" class="col-md-4 col-form-label">Nome</label>
+                        <div class="col-6">
+                            <span id="spanNome" class="form-control"><?= $usuario->nome ?></span>
+                        </div>
+                        <div class="col-6 col-md-2">
+                            <button onclick="atualizarNome('<?= $usuario->id ?>', $('#spanNome').html())" class="btn btn-primary" type="button">Editar</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-md-4 col-form-label">Email</label>
+                        <div class="col-6">
+                            <span id="spanEmail" class="form-control"><?= $usuario->email ?></span>
+                        </div>
+                        <div class="col-6 col-md-2">
+                            <button onclick="atualizarEmail($('#spanEmail').html())" class="btn btn-primary" type="button">Editar</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-md-4 col-form-label">Telefone</label>
+                        <div class="col-6">
+                            <span id="spanTelefone" class="form-control"><?= (trim($usuario->telefone) ? $usuario->telefone : 'Não informado') ?></span>
+                        </div>
+                        <div class="col-6 col-md-2">
+                            <button onclick="atualizarTelefone('<?= $usuario->id ?>', $('#spanTelefone').html())" class="btn btn-primary" type="button">Editar</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cpf" class="col-md-4 col-form-label">CPF</label>
+                        <div class="col-md-8">
+                            <span class="form-control"><?= $usuario->cpf ?></span>
+                        </div>
+                    </div>
+                    <?php if ($usuario->tipo != TipoUsuario::VISITANTE) : ?>
+                        <div class="form-group row">
+                            <label for="matricula" class="col-md-4 col-form-label">Matrícula</label>
+                            <div class="col-md-8">
+                                <span class="form-control"><?= (trim($usuario->matricula) ? $usuario->matricula : 'Não informada') ?></span>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12 col-sm-2 ml-auto">
+                            <button onclick="alterarPrivacidade()" class="btn btn-primary" type="button">Privacidade</button>
+                        </div>
+                        <div class="col-12 col-sm-2 mr-5">
+                            <button onclick="alterarSenha()" class="btn btn-warning" type="button">Alterar Senha</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="medalhas" class="hidden">
+                    Minhas medalhas
+                </div>
+            </div>
         </div>
-    <?php } else { ?>
-        <div class="alert alert-danger" role="alert">
-            É necessário fazer login para acessar esta página.
-        </div>
-    <?php } ?>
+    </div>
+</div>
 <br>
-<script language="JavaScript" src="<?= base_url() ?>/public/js/escolher.cores.slim.js"></script>
-<script>
-    $(document).ready(function(){
-        
-        $('#conteudo-perfil').load('user-info.php');
-
-        $("#btn-info").click(function(){  
-           $('#conteudo-perfil').load('user-info.php');
-        });
-        
-        $("#btn-config").click(function(){  
-           $('#conteudo-perfil').load('user-config.php');
-        });
-
-        $("#btn-remove").click(function(){  
-           $('#conteudo-perfil').load('user-remove.php');
-        });
-
-       $.ajax({
-            type: "POST",
-            url: '<?= base_url() ?>/app/src/controller/carregar/usuario-por-id.php',
-            data: {user : "<?php echo $_SESSION['id'] ?>"},
-            success: function(user) 
-            {
-                $("#perfil-nome").html(user.nome.split(" ")[0]);
-                $("#perfil-tipo").html(user.tipo);
-            }
-        });
-    });
-</script>
