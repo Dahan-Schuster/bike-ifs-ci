@@ -4,7 +4,7 @@
     <li class="breadcrumb-item"><a href="#Informações">Informações Úteis</a></li>
   </ol>
 </nav>
-<div class="jumbotron jumbotron-fluid jumbotron-main" id="jumbotron-home">
+<div class="jumbotron jumbotron-fluid jumbotron-main">
   <div class="container">
     <div id="Introdução">
       <div style="text-align: center;">
@@ -19,7 +19,7 @@
         </p>
       </div>
       <hr class="my-4 bg-light">
-      <img src="<?= base_url() ?>/public/img/img-logo.svg" class="img-fluid figure-img img-home float-left" alt="Logo Bike-IFS">
+      <img src="<?= base_url() ?>/public/img/img-logo.png" class="img-fluid figure-img img-home float-left" alt="Logo Bike-IFS">
       <br>
       <p class="p-home">
         O Bike-IFS é um sistema feito como projeto de Trabalho de Conclusão de Curso (TCC) da disciplina de Informática do aluno

@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <button style="display: flex; float: right;" id="btnEntrar" type="submit" class="btn btn-raised accent-color text-primary-color">Entrar</button>
+        <button style="display: flex; float: right;" id="btnEntrar" type="submit" class="btn btn-raised accent-color text-light">Entrar</button>
     </form>
 
     <div class="dropdown-divider"></div>

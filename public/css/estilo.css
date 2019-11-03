@@ -9,6 +9,11 @@
     margin: 40px auto;
 }
 
+.jumbotron-main {
+    box-shadow: 5px 5px 20px gray;
+    background: linear-gradient(rgba(30, 30, 50, 0.9), rgba(30, 30, 50, 0.9)), url('http://bikeifs.com/public/img/jumbotrom-bg.jpg');
+  }
+
 .div-datepicker {
     display: inline-flex;
     float: left
