@@ -64,7 +64,7 @@
                                 Excluir
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="<?= base_url('admin/view/menuExclusao') ?>">Registros</a>
+                                <a class="dropdown-item" href="<?= base_url('admin/excluir/registros') ?>">Registros</a>
                             </div>
                         </li>
                     </ul>

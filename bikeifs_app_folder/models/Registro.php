@@ -274,10 +274,11 @@ class Registro extends CI_Model
      */
     public function filtrarRegistros($filtro = array())
     {
+
         # Caso o filtro esteja vazio, retorna uma lista vazia
         // Este comportamento foi escolhido no lugar de retornar
         // todos os registros por uma questão de performance
-        if (sizeof($filtro) == 0) :
+        if ($filtro == null || sizeof($filtro) == 0) :
             $this->db->where('id', 0)->from("REGISTRO");
 
         # Se houverem filtros de pesquisa, formata a query SQL 

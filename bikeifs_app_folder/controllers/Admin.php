@@ -140,7 +140,16 @@ class Admin extends CI_Controller
 
         $data = array(
             'scripts' => array(
+                'datatables.min.js',
+                'dataTables.responsive.min.js',
+                'jquery.mask.min.js',
+                'snackbar.min.js',
                 'util.js'
+            ),
+            'styles' => array(
+                'datatables.min.css',
+                'responsive.dataTables.min.css',
+                'snackbar.min.css'
             ),
             'nome' => $this->session->userdata('nome')
         );
