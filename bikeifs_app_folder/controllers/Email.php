@@ -26,6 +26,8 @@ class Email extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('email_model');
+        $this->load->library('session');
         $this->mail = new PHPMailer();
 
         # Configurações do gmail
@@ -47,6 +49,85 @@ class Email extends CI_Controller
         $this->mail->FromName = "Bike-Ifs";
     }
 
+
+    /**
+     * Envia emails para os usuários enviados via POST
+     * Registra o envio do do email após enviar
+     */
+    public function ajaxContatarUsuarios()
+    {
+        # Verifica se o método está sendo acessado por uma requisição AJAX
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido acesso direto aos scripts.");
+
+        # Array de resposta à requisição AJAX
+        $response = array();
+        # status != 1: algo deu errado | status == 1: tudo certo
+        $response['status'] = 1;
+
+        $data = $this->input->post();
+
+        $this->load->model('usuario_model');
+
+        ## Validação dos dados
+
+        if (empty(trim($data['remetente']))) :
+            $response['error_list']['#divInputNome'] = "O nome do remetente não pode estar vazio";
+        endif;
+
+        if (empty($data['assunto'])) :
+            $response['error_list']['#divInputAssunto'] = "O assunto não pode estar vazio";
+        endif;
+
+        if (empty($data['corpo'])) :
+            $response['error_list']['#divInputCorpo'] = "O corpo do e-mail não pode estar vazio";
+        endif;
+
+        if (empty($data['destinatarios'])) :
+            $response['error_list']['#divInputDestinatarios'] = "Escolha ao menos um destinatário";
+        endif;
+
+        ## Fim validação
+        if (!empty($response['error_list'])) :
+            $response['status'] = 0;
+        else :
+            foreach ($data['destinatarios'] as $destinatario) {
+                $usuario = $this->usuario_model->listarPorCampos(array('email' => $destinatario));
+                if ($usuario) :
+                    $usuario = $usuario[0];
+                    try {
+                        $this->mail->addAddress($destinatario);
+                        $this->email_model->inserir(
+                            array(
+                                'hora' => date('Y-m-d H:i:s'),
+                                'remetente' => $data['remetente'],
+                                'assunto' => $data['assunto'],
+                                'corpo' => $data['corpo'],
+                                'id_funcionario' => $this->session->logged_user_id,
+                                'id_usuario' => $usuario['id']
+
+                            )
+                        );
+                    } catch (\Throwable $e) {
+                        $response['status'] = -1;
+                    }
+                endif;
+            }
+
+            if (!$this->enviarEmailParaUsuarios($data['assunto'], $data['remetente'], $data['corpo'])) {
+                $response['status'] = -1;
+            }
+
+        endif;
+
+        if ($response['status'] == -1)
+            $response['error_message'] = 'Um ou mais destinatários não puderam ser contatados.';
+
+
+        # Retorna o array de resposta à requisição AJAX
+        echo json_encode($response);
+    }
+
     /**
      * Gera e envia uma nova senha para o usuário que requisitou
      */
@@ -57,9 +138,9 @@ class Email extends CI_Controller
             exit("Não é permitido acesso direto aos scripts.");
 
         # Array de resposta à requisição AJAX
-        $json = array();
+        $response = array();
         # status != 1: algo deu errado | status == 1: tudo certo
-        $json['status'] = 1;
+        $response['status'] = 1;
 
         $email = $this->input->post('email');
         $tipoAcesso = $this->input->post('tipoAcesso');
@@ -81,9 +162,9 @@ class Email extends CI_Controller
                     if ($this->enviarEmailRecuperacaoSenha($email, $result['nome'], $novaSenha))  # Tenta enviar a nova senha via email
                         $this->funcionario_model->editar($result['id'], array('senha' => $novaSenhaHash));  # Se enviar, altera a senha
                     else                                                                        # Se não, não edita a senha
-                        $json['status'] = 2;    # status == 2: erro no envio do email
+                        $response['status'] = 2;    # status == 2: erro no envio do email
                 else :
-                    $json['status'] = 0;        # status == 0: endereço de email não encontrado
+                    $response['status'] = 0;        # status == 0: endereço de email não encontrado
                 endif;
                 break;
             case 'usuario':
@@ -94,9 +175,9 @@ class Email extends CI_Controller
                     if ($this->enviarEmailRecuperacaoSenha($email, $result['nome'], $novaSenha))
                         $this->usuario_model->editar($result['id'], array('senha' => $novaSenhaHash));
                     else
-                        $json['status'] = 2;
+                        $response['status'] = 2;
                 else :
-                    $json['status'] = 0;
+                    $response['status'] = 0;
                 endif;
                 break;
             case 'admin':
@@ -107,27 +188,27 @@ class Email extends CI_Controller
                     if ($this->enviarEmailRecuperacaoSenha($email, $result['nome'], $novaSenha))
                         $this->administrador->editar($result['id'], array('senha' => $novaSenhaHash));
                     else
-                        $json['status'] = 2;
+                        $response['status'] = 2;
                 else :
-                    $json['status'] = 0;
+                    $response['status'] = 0;
                 endif;
                 break;
             default:
-                $json['status'] = -1;
-                $json['error_message'] = 'Tipo de usuário não reconhecido';
+                $response['status'] = -1;
+                $response['error_message'] = 'Tipo de usuário não reconhecido';
                 break;
         endswitch;
 
         # Mensagem de erro para endereço de email não encontrado
-        if ($json['status'] == 0) :
-            $json['error_message'] = 'Nenhum email encontrado na base de dados para este tipo de usuário';
+        if ($response['status'] == 0) :
+            $response['error_message'] = 'Nenhum email encontrado na base de dados para este tipo de usuário';
         # Mensagem de erro para email não enviada
-        elseif ($json['status'] == 2) :
-            $json['error_message'] = 'Não foi possível enviar sua senha por email e, portanto, ela não foi alterada. ' .
+        elseif ($response['status'] == 2) :
+            $response['error_message'] = 'Não foi possível enviar sua senha por email e, portanto, ela não foi alterada. ' .
                 'Certifique-se de estar devidamente conectado à Internet e possui um email válido cadastrado e tente novamente.';
         endif;
 
-        echo json_encode($json);
+        echo json_encode($response);
     }
 
     public function ajaxEnviarCodigo()
@@ -148,7 +229,6 @@ class Email extends CI_Controller
 
         if ($this->enviarCodigoDeConfirmacao($email, $codigo)) {
             $response['status'] = 1;
-            $this->load->library('session');
             // Salva o código e o novo email temprariamente na sessão, definindo o tempo de expiração para 30 minutos
             $this->session->set_tempdata('codigo_confirmacao_email', $codigo, 1800);
             $this->session->set_tempdata('novo_email', $email, 1800);
@@ -228,5 +308,28 @@ class Email extends CI_Controller
 
         # Envia o e-mail
         return $this->mail->send();
+    }
+
+    private function enviarEmailParaUsuarios($assunto, $remetente, $corpo)
+    {
+        $this->mail->Subject = $assunto;
+
+        # Recupera o arquivo html salvo no arquivo pagina-email.html
+        $rawBody = file_get_contents(APPPATH . 'views/phpmailer-html/pagina-contatar-usuario.html');
+
+        # Substitui as string de assunto, corpo e remetente, 
+        # previamente posicionada no arquivo,
+        # pelos valores recebidos via POST
+        $body = preg_replace('/\bstringToReplaceAssunto\b/', $assunto, $rawBody);
+        $body = preg_replace('/\bstringToReplaceCorpo\b/', $corpo, $body);
+        $body = preg_replace('/\bstringToReplaceRemetente\b/', $remetente, $body);
+
+        $this->mail->Body = $body;
+        # Envia o e-mail
+        $result = $this->mail->Send();
+
+        $this->mail->ClearAllRecipients();
+
+        return $result;
     }
 }

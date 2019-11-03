@@ -1,7 +1,7 @@
 <?php
 
 
-class Email extends CI_Model
+class Email_model extends CI_Model
 {
     /**
      * Email constructor.

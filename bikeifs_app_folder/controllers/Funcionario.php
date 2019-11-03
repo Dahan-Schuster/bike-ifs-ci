@@ -127,6 +127,37 @@ class Funcionario extends CI_Controller
         $this->load->view('templates/footer-funcionario', $data);
     }
 
+    public function contatar()
+    {
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
+        elseif ($this->session->userdata['permissions_level'] != 'funcionario')
+            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+
+
+        $data = array(
+            'scripts' => array(
+                'datatables.min.js',
+                'dataTables.responsive.min.js',
+                'snackbar.min.js',
+                'util.js',
+                'gijgo.min.js',
+                'pesquisar.usuario.email.js',
+                "pages/contatar.usuarios.js"
+            ),
+            'styles' => array(
+                'datatables.min.css',
+                'responsive.dataTables.min.css',
+                'gijgo.min.css',
+                'snackbar.min.css'
+            ),
+            'nome' => $this->session->userdata('nome')
+        );
+
+        $this->load->view('templates/header-funcionario', $data);
+        $this->load->view("pages/contatar/usuario", $data);
+        $this->load->view('templates/footer-funcionario', $data);
+    }
+
     public function perfil()
     {
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));

@@ -71,6 +71,7 @@ function clearErrors() {
         .removeClass('is-invalid')
     $(".invalid-feedback")
         .html("")
+        .css('display', 'none')
 }
 
 /**
@@ -88,6 +89,7 @@ function showErrors(error_list) {
         $(error_container)
             .find('.invalid-feedback')
             .html(message)
+            .css('display', 'block')
     })
 }
 

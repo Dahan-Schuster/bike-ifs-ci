@@ -1,5 +1,7 @@
+var datatable;
+
 function popularTabelaPesquisarUsuario() {
-    return $('#tableUsuarios').DataTable({
+    datatable = $('#tableUsuarios').DataTable({
         "fixedHeader": {
             header: true,
             footer: true
@@ -11,11 +13,11 @@ function popularTabelaPesquisarUsuario() {
             [1, "asc"]
         ],
         "language": {
-            "url": "<?= base_url() ?>/public/js/Portuguese.json"
+            "url": BASE_URL + "public/js/Portuguese.json"
         },
         ajax: {
             type: "POST",
-            url: "<?= base_url() ?>/app/src/controller/carregar/usuarios.php"
+            url: BASE_URL + "crudAjax/ajaxListarUsuarios"
         },
         "processing": true,
         "columns": [
@@ -31,16 +33,16 @@ function popularTabelaPesquisarUsuario() {
 /**
  * Função para criar o bloco do usuário na div destinatarios
  */
-function recuperarUsuarioSelecionado(tabelaUsuarios) {
+function recuperarUsuariosSelecionados() {
     // Limpando a lista de usuários selecionados
     $("#destinatarios").html("")
 
-    // recupera a linha selecionada na tabelaUsuarios
-    var usuarios = tabelaUsuarios.rows({ selected: true }).data().toArray();
+    // recupera a(s) linha(s) selecionada na datatable
+    var usuarios = datatable.rows({ selected: true }).data().toArray();
     usuarios.forEach(user => {
 
         let blocoDestinatario = document.createElement('div')
-        $(blocoDestinatario).addClass('bloco-destinatario')
+        $(blocoDestinatario).addClass('alert alert-destinatario')
         $(blocoDestinatario).attr('id', 'dest-' + user.id)
 
         let spanDestinatario = document.createElement('span')
@@ -51,13 +53,11 @@ function recuperarUsuarioSelecionado(tabelaUsuarios) {
             abrirPerfilLateralUsuario(user.id)
         })
 
-        let botaoRemover = document.createElement('a')
-        $(botaoRemover).addClass('span-destinatario remover-destinatario')
-        $(botaoRemover).attr('href', 'javascript:void(0)')
-        $(botaoRemover).click(function () {
-            removerDestinatario('dest-' + user.id)
-        })
-        $(botaoRemover).html('&times;')
+        let botaoRemover = document.createElement('button')
+        $(botaoRemover).addClass('close ml-3')
+        $(botaoRemover).attr('data-dismiss', 'alert')
+        $(botaoRemover).attr('aria-label', 'close')
+        $(botaoRemover).html('<span aria-hidden="true">&times;</span>')
 
         $(blocoDestinatario).append(spanDestinatario)
         $(blocoDestinatario).append(botaoRemover)
@@ -76,27 +76,4 @@ function recuperarUsuarioSelecionado(tabelaUsuarios) {
 
         $("#destinatarios").append(blocoDestinatario)
     });
-}
-
-function removerDestinatario(blocoDestinatarioId) {
-    $('#' + blocoDestinatarioId).remove();
-    closeNavPerfil();
-}
-
-function selecionarTodos(button, tabelaUsuarios) {
-    $(button).html('Desselecionar todos');
-    $(button).removeClass('btn-primary');
-    $(button).addClass('btn-secondary')
-    $(button).off('click')
-    $(button).on('click', function () { desselecionarTodos(button, tabelaUsuarios) })
-    tabelaUsuarios.rows().select()
-}
-
-function desselecionarTodos(button, tabelaUsuarios) {
-    $(button).html('Selecionar todos');
-    $(button).removeClass('btn-secondary');
-    $(button).addClass('btn-primary')
-    $(button).off('click')
-    $(button).on('click', function () { selecionarTodos(button, tabelaUsuarios) })
-    tabelaUsuarios.rows().deselect()
 }

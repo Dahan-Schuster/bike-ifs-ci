@@ -1232,7 +1232,7 @@ class CrudAjax extends CI_Controller
             exit("Não é permitido aceso direto aos scripts.");
 
         # Carrega o model Email
-        $this->load->model('email');
+        $this->load->model('email_model');
         # Carrega o model Funcionario
         $this->load->model('funcionario_model');
         # Carrega o model Usuario
@@ -1245,7 +1245,7 @@ class CrudAjax extends CI_Controller
 
         $timestamp = $this->input->post('timestamp');
 
-        $emails = $this->email->listarEmailsPorDia($timestamp);
+        $emails = $this->email_model->listarEmailsPorDia($timestamp);
         $emailsFormatados = array();
 
         $emails = !$emails ? array() : $emails;

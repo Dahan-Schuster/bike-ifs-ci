@@ -4,25 +4,22 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header alert alert-primary mb-1">
-                <h3 class="modal-title">Pesquisar usuário</i></h3>
+            <div class="modal-header alert raised mb-3 pb-3">
+                <h3 class="modal-title">Pesquisar usuário</i>
+                </h3>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body pt-0">
-                <p class="lead">Clique em um usuário para selecioná-lo.</p>
-                <div class="alert alert-info alert-dismissible p-1">Segure a tecla <b>ctrl</b> (Windows) ou
-                    <b>command</b> (Mac) para selecionar
-                    múltiplos usuários um por um, ou segure <b>shift</b> para clicar em dois usuários e selecionar todos
-                    entres eles. Clique em um usuário qualquer para desselecionar os outros.</div>
+                <p class="lead">Clique em um ou mais usuários para selecioná-los.</p>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table table-sm responsive bg-light table-bordered table-striped table-hover"
-                        id="tableUsuarios" style="width: 100%;">
+                    <table class="table table-sm responsive table-striped table-hover" id="tableUsuarios" style="width: 100%;">
                         <caption>
-                            <button id="btnSelecionar" class="btn btn-sm btn-primary">Selecionar
-                                todos</button>
+                            <button id="btnSelecionarLinhas" title="Selecionar todos" type="button" class="btn accent-color bmd-btn-fab bmd-btn-fab-sm text-light">
+                                <i class="material-icons">check_box_outline_blank</i>
+                            </button>
                         </caption>
-                        <thead class="table-h">
+                        <thead class="bg-default-primary">
                             <tr>
                                 <th>&#9432;</th>
                                 <th>Nome</th>
@@ -32,21 +29,12 @@
                         </thead>
                         <tbody>
                         </tbody>
-                        <tfoot class="table-f">
-                            <tr>
-                                <th>&#9432;</th>
-                                <th>Nome</th>
-                                <th>Email</th>
-                                <th>Tipo</th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" onclick="recuperarUsuarioSelecionado(tabelaUsuarios);"
-                    data-dismiss="modal">Selecionar</button>
+                <button type="button" class="btn btn-success" onclick="recuperarUsuariosSelecionados();" data-dismiss="modal">Selecionar</button>
             </div>
         </div>
     </div>

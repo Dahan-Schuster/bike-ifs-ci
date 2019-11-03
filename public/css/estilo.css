@@ -100,43 +100,28 @@ table.dataTable tr.dtrg-group td {
 }
 
 .div-destinatarios {
+    border: 1px solid rgb(160, 160, 160);
     padding: 10px;
     min-height: 70px;
     height: auto;
     max-height: 70px;
     overflow-y: hidden;
     overflow-x: scroll;
+    display: inline-flex;
 }
 
-.bloco-destinatario {
+.alert-destinatario {
     width: fit-content;
-    display: contents;
-}
-
-.span-destinatario {
+    height: fit-content;
     margin: 5px 0 5px 5px;
-    padding: 8px 5px;
     background: #15a334b3;
     color: #fff;
     cursor: pointer;
-    border-radius: 5px 0 0 5px;
     white-space: nowrap;
+    display: inline-flex;
 }
 
-.remover-destinatario {
-    margin-left: 0 !important;
-    border-radius: 0 5px 5px 0;
-    font-size: 14pt;
-    padding-top: .3rem!important;
-    padding-bottom: .5rem!important;
-    border-left: 1px solid #15a334;
-}
-
-.remover-destinatario:hover {
-    color: white;
-}
-
-.span-destinatario:hover {
+.alert-destinatario:hover {
     background: #15a334;
 }
 
@@ -336,7 +321,7 @@ table.dataTable tr.dtrg-group td {
     right: 10%;
     width: 55px;
     height: 100px;
-    z-index: 2000;
+    z-index: 1049;
     border: none;
 }
 

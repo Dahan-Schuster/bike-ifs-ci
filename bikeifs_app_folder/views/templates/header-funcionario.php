@@ -61,6 +61,11 @@
                                 Pendências
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a id="navLinkContatar" class="nav-link" href="<?= base_url('funcionario/contatar') ?>">
+                                Contatar usuários
+                            </a>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item">
