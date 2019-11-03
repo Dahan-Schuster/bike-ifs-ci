@@ -13,6 +13,11 @@ $(document)
     .ready(function() {
         let timestamp = getTimeStampAtual()
         popularTabelaRegistros(timestamp);
+        
+        setInterval(function() {
+            datatable.ajax.reload();
+        }, 1800000); // atualiza a tabela a cada 2 minutos
+
         criarEConfigurarSelectData()
 
         popularTabelaPesquisarUsuario();

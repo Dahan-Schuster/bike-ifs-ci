@@ -459,14 +459,18 @@ class CrudAjax extends CI_Controller
             $response['error_list']['#divInputAro'] = 'Por favor, informe o aro da bike.';
         endif;
 
-        if (empty($data['id_usuario'])) :
-            $response['error_list']['#divSelectUsuario'] = 'Por favor, informe o dono da bike.';
-        else :
-            $this->load->model('usuario_model');
-            $usuarioExiste = $this->usuario_model->carregarPorId($data['id_usuario']);
-            if (!$usuarioExiste)
-                $response['error_list']['#divSelectUsuario'] = 'Usuário não cadastrado. Selecione um usuário da lista.';
-        endif;
+        if (isset($data['id_usuario'])) {
+            if (empty($data['id_usuario'])) :
+                $response['error_list']['#divSelectUsuario'] = 'Por favor, informe o dono da bike.';
+            else :
+                $this->load->model('usuario_model');
+                $usuarioExiste = $this->usuario_model->carregarPorId($data['id_usuario']);
+                if (!$usuarioExiste)
+                    $response['error_list']['#divSelectUsuario'] = 'Usuário não cadastrado. Selecione um usuário da lista.';
+            endif;
+        } else {
+            $data['id_usuario'] = $this->session->logged_user_id;
+        }
 
         ## Fim validação
         if (!empty($response['error_list'])) :
@@ -1109,7 +1113,9 @@ class CrudAjax extends CI_Controller
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
 
-        $id_usuario = $this->input->post('id_usuario');
+        $id_usuario = (null !== $this->input->post('id_usuario') ?
+            $this->input->post('id_usuario') : $this->session->logged_user_id);
+
         $bicicletas = $this->bicicleta->listarPorChaveEstrangeira('id_usuario', $id_usuario);
         $bicicletas = !$bicicletas ? array() : $bicicletas;
         $bicicletasFormatadas = array();
@@ -1118,7 +1124,7 @@ class CrudAjax extends CI_Controller
             # Formata as informações da bicicleta
             $bike['marca'] = (!trim($bike['marca']) ? 'Não informado' : $bike['marca']);
             $bike['obs'] = (!trim($bike['obs']) ? 'Nenhuma observação' : $bike['obs']);
-            $bike['modelo'] = ModeloBike::getNomeModelo($bike['modelo']);
+            $bike['nome_modelo'] = ModeloBike::getNomeModelo($bike['modelo']);
             $bike['situacao'] = SituacaoBicicleta::getTipoSituacao($bike['situacao']);
 
             array_push($bicicletasFormatadas, $bike); # adiciona ao array resultado um novo array de objetos

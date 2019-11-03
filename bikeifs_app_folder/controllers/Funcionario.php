@@ -33,7 +33,6 @@ class Funcionario extends CI_Controller
                 'gijgo.min.js',
                 "pages/registros-do-dia.js",
                 'pesquisar.usuario.js',
-                'pesquisar.usuario.js'
             ),
             'styles' => array(
                 'datatables.min.css',
