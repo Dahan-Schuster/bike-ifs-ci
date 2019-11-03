@@ -40,7 +40,7 @@
                 <div class="collapse navbar-collapse" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a id="navLinkRelatorios" class="nav-link" href="<?= base_url('admin/view/relatorios') ?>">
+                            <a id="navLinkRelatorios" class="nav-link" href="<?= base_url('admin/relatorios') ?>">
                                 Relatórios
                             </a>
                         </li>

@@ -18,7 +18,7 @@ class Admin extends CI_Controller
      */
     public function index()
     {
-        if (!isset($this->session->userdata['permissions_level'])) header('location: '. base_url('home/view/login'));
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'admin')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
 
@@ -58,6 +58,31 @@ class Admin extends CI_Controller
         $this->load->view('templates/footer-admin', $data);
     }
 
+    public function relatorios()
+    {
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
+        elseif ($this->session->userdata['permissions_level'] != 'admin')
+            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+
+        $data = array(
+            'scripts' => array(
+                'chart.min.js',
+                'chartjs-plugin-datalabels.min.js',
+                'jspdf.min.js',
+                'pages/relatorios.js',
+                'util.js'
+            ),
+            'styles' => array(
+                'chart.min.css'
+            ),
+            'nome' => $this->session->userdata('nome')
+        );
+
+        $this->load->view('templates/header-admin', $data);
+        $this->load->view("pages/admin/relatorios", $data);
+        $this->load->view('templates/footer-admin', $data);
+    }
+
     public function listar($page = NULL)
     {
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
@@ -84,7 +109,7 @@ class Admin extends CI_Controller
             ),
             'nome' => $this->session->userdata('nome')
         );
-        
+
         if ($page == 'bicicletas' || $page == 'tags' || $page == 'registros-do-dia') {
             array_push($data['scripts'], 'pesquisar.usuario.js');
 

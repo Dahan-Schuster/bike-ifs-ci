@@ -161,57 +161,91 @@ class Registro extends CI_Model
     }
 
     /**
-     * Conta os registros de um dia específico enviado por parâmetro
-     * Este método poderá ser atualizado no futuro para recber duas datas e listar os registros entre elas
-     * Na versão atual, isto ainda não foi implementado
+     * Conta os registros de cada um dos 14 dias anteriores ao atual.
      * 
-     * @param $dia - o dia em questão
      * @return array - Array associativo com quantidade de registros encontrados.
      * 
      */
-    public  function contarRegistrosDoDia($timestamp)
+    public  function contarRegistrosDosUltimos14Dias()
     {
-        $timestamp = intval(substr($timestamp, 0, 10));
-        $dia = "'" . date('Y-m-d', $timestamp) . "'";
-        $result = $this->db->where("'data_hora'::date", $dia, false)->from('REGISTRO')->count_all_results();
+        $dados = array();
+
+        for ($i = 14; $i >= 0; $i--) {
+            $dia = date('Y-m-d', strtotime("-$i days"));
+        
+            array_push($dados, array(
+                'dia' => $dia,
+                'count' => $this->db->where('"data_hora"::date', "'" . $dia . "'", false)->from('REGISTRO')->count_all_results()
+            ));
+        }
+
+        return $dados;
     }
 
     /**
-     * Conta os registros de uma semana específica enviada por parâmetro
-     * Este método poderá ser atualizado no futuro para recber duas datas e listar os registros entre elas
-     * Na versão atual, isto ainda não foi implementado
+     * Conta os registros de cada uma das 8 semanas anteriores à atual.
      * 
-     * @param $semana - a semana em questão
-     * @param $ano - o ano da semana
      * @return array - Array associativo com quantidade de registros encontrados.
      * 
      */
-    public function contarRegistrosDaSemana($semana, $ano)
+    public function contarRegistrosDasUltimas8Semanas()
     {
-        $semana = "'" . $semana . "'";
-        $ano = "'" . $ano . "'";
-        $this->db->where("date_part('year', 'data_hora'::date)", $ano, false);
-        $this->db->where("date_part('week', 'data_hora'::date)", $semana, false);
-        return $this->db->from('REGISTRO')->count_all_results();
+        $dados = array();
+
+        for ($i = 8; $i >= 0; $i--) {
+            $ano = date('Y', strtotime("-$i weeks"));
+            $semana = date('W', strtotime("-$i weeks"));
+
+            $this->db->where("date_part('year', data_hora::date) = '" . $ano . "'");
+            $this->db->where("date_part('week', data_hora::date) = '" . $semana . "'");
+
+            array_push($dados, array(
+                'semana' => $semana . ' de ' . $ano,
+                'count' => $this->db->from('REGISTRO')->count_all_results()
+            ));
+        }
+
+        return $dados;
     }
 
     /**
-     * Conta os registros de um mês-ano específico enviado por parâmetro
-     * Este método poderá ser atualizado no futuro para recber mais de um mês listar os registros entre eles
-     * Na versão atual, isto ainda não foi implementado
+     * Conta os registros de cada uma dos últimos 12 meses.
      * 
-     * @param $mes - o mês em questão
-     * @param $ano - o ano do mês
      * @return array - Array associativo com quantidade de registros encontrados.
      * 
      */
-    public function contarRegistrosDoMes($mes, $ano)
+    public function contarRegistrosDosUltimos12Meses()
     {
-        $mes = "'" . $mes . "'";
-        $ano = "'" . $ano . "'";
-        $this->db->where("date_part('year', 'data_hora'::date)", $ano, false);
-        $this->db->where("date_part('month', 'data_hora'::date)", $mes, false);
-        return $this->db->from('REGISTRO')->count_all_results();
+        $dados = array();
+        $meses = array(
+            '01' => 'Janeiro', 
+            '02' => 'Fevereiro', 
+            '03' => 'Março', 
+            '04' => 'Abril',
+            '05' => 'Maio', 
+            '06' => 'Junho',
+            '07' => 'Julho', 
+            '08' => 'Agosto',
+            '09' => 'Setembro',
+            '10' => 'Outubro',
+            '11' => 'Novembro',
+            '12' => 'Dezembro'
+        );
+
+        for ($i = 12; $i >= 0; $i--) {
+            $ano = date('Y', strtotime("-$i month"));
+            $mes = date('m', strtotime("-$i month"));
+
+            $this->db->where("date_part('year', data_hora::date) = '" . $ano . "'");
+            $this->db->where("date_part('month', data_hora::date) = '" . $mes . "'");
+
+            array_push($dados, array(
+                'mes' => $meses[$mes],
+                'count' => $this->db->from('REGISTRO')->count_all_results()
+            ));
+        }
+
+        return $dados;
     }
 
     /**

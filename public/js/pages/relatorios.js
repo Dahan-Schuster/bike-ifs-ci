@@ -1,6 +1,130 @@
+let canvasModal = document.getElementById('graficoModal')
+
+$(document).ready(function() {
+    desenharGraficoTiposUsuarios(document.getElementById('graficoA'), $("#graficoA"))
+    desenharGraficoModelosBikes(document.getElementById('graficoB'), $("#graficoB"))
+    desenharGraficoBikesRfid(document.getElementById('graficoC'), $("#graficoC"))
+    desenharGraficoRegistrosPorDia(document.getElementById('graficoD'), $("#graficoD"))
+    desenharGraficoRegistrosPorSemana(document.getElementById('graficoE'), $("#graficoE"))
+    desenharGraficoRegistrosPorMes(document.getElementById('graficoF'), $("#graficoF"))
+
+    $("#modalExpandirCanvas").on('show.bs.modal', function() {
+        canvasModal.remove()
+        $(this).find('.modal-body').html('<canvas class="bg-light p-4 border border-dark" id="graficoModal"></canvas>')
+        canvasModal = document.getElementById('graficoModal')
+    })
+
+    configurarCanvas();
+
+    $(".nav-link").removeClass('active')
+    $("#navLinkRelatorios").addClass('active')
+})
+
+function configurarCanvas() {
+
+    $("#graficoA").click(function() {
+        $("#modalExpandirCanvas").modal('show')
+        $("#modalExpandirCanvas").find('#graficoModal').attr('data-texto', $(this).data('texto'))
+        desenharGraficoTiposUsuarios(canvasModal, $("#graficoModal"))
+    })
+
+    $("#graficoB").click(function() {
+        $("#modalExpandirCanvas").modal('show')
+        $("#modalExpandirCanvas").find('#graficoModal').attr('data-texto', $(this).data('texto'))
+        desenharGraficoModelosBikes(canvasModal, $("#graficoModal"))
+    })
+
+    $("#graficoC").click(function() {
+        $("#modalExpandirCanvas").modal('show')
+        $("#modalExpandirCanvas").find('#graficoModal').attr('data-texto', $(this).data('texto'))
+        desenharGraficoBikesRfid(canvasModal, $("#graficoModal"))
+    })
+
+    $("#graficoD").click(function() {
+        $("#modalExpandirCanvas").modal('show')
+        $("#modalExpandirCanvas").find('#graficoModal').attr('data-texto', $(this).data('texto'))
+        desenharGraficoRegistrosPorDia(canvasModal, $("#graficoModal"))
+    })
+
+    $("#graficoE").click(function() {
+        $("#modalExpandirCanvas").modal('show')
+        $("#modalExpandirCanvas").find('#graficoModal').attr('data-texto', $(this).data('texto'))
+        desenharGraficoRegistrosPorSemana(canvasModal, $("#graficoModal"))
+    })
+
+    $("#graficoF").click(function() {
+        $("#modalExpandirCanvas").modal('show')
+        $("#modalExpandirCanvas").find('#graficoModal').attr('data-texto', $(this).data('texto'))
+        desenharGraficoRegistrosPorMes(canvasModal, $("#graficoModal"))
+    })
+}
+
+function baixarPDFModal() {
+
+    var pdf = new jsPDF()
+    pdf = adicionarCapa(pdf)
+
+    pdf.setFontSize(14)
+
+    var texto = $("#graficoModal").data('texto')
+    pdf.text(15, 25, '# ' + texto)
+    pdf.addImage(canvasModal.toDataURL('image/png'), 'PNG', 15, 40, 180, 90)
+
+    pdf.save('Bike-IFS_Relatorio_' + getDataHoraAtual('_'))
+}
+
+function baixarPDFGraficos() {
+    if (!$("input[type='checkbox']").is(":checked")) {
+        alert('Nenhum gráfico selecionado!')
+        return
+    }
+    var pdf = new jsPDF()
+    pdf = adicionarCapa(pdf)
+
+    pdf.setFontSize(14)
+
+    var distanciaTopo = 25;
+
+    var checkboxesSelecionados = $("input[type='checkbox']:checked").toArray()
+    checkboxesSelecionados.forEach((checkbox, index) => {
+        var texto = $("#" + $(checkbox).data('canvas')).data('texto')
+        var grafico = document.getElementById($(checkbox).data('canvas')).toDataURL('image/png')
+
+        pdf.text(15, distanciaTopo, '# ' + texto)
+        distanciaTopo += 15 // 25 + 15 = 40 ou 155 + 15 = 170 
+        pdf.addImage(grafico, 'PNG', 15, distanciaTopo, 180, 90)
+        distanciaTopo += 115 // 40 + 115 = 155 ou 170 + 115 = 285 
+
+        if (distanciaTopo > 155 && index != checkboxesSelecionados.length - 1) {
+            pdf.addPage()
+            distanciaTopo = 25
+        }
+    })
+
+    pdf.save('Bike-IFS_Relatorio_'+ getDataHoraAtual('_'))
+}
+
+function adicionarCapa(pdf) {
+    getDataUri(BASE_URL + 'public/img/img-logo.png', function(logo) {
+        localStorage.setItem('logo-uri', logo)
+    });
+
+    pdf.setFontSize(26)
+    pdf.text(90, 150, 'Bike IFS')
+
+    pdf.setFontSize(20)
+    pdf.text(60, 160, 'Relatório de dados do sistema')
+
+    pdf.addImage(localStorage.getItem('logo-uri'), 'PNG', 80, 90, 55, 50)
+
+    pdf.addPage()
+
+    return pdf
+}
+
 function desenharGraficoTiposUsuarios(canvas, ctx) {
     $.ajax({
-        url: '<?= base_url() ?>/app/src/controller/contar/tipos-de-usuarios.php',
+        url: BASE_URL + 'crudAjax/ajaxContarTiposDeUsuarios',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -44,7 +168,7 @@ function desenharGraficoTiposUsuarios(canvas, ctx) {
 
 function desenharGraficoModelosBikes(canvas, ctx) {
     $.ajax({
-        url: '<?= base_url() ?>/app/src/controller/contar/modelos-de-bikes.php',
+        url: BASE_URL + 'crudAjax/ajaxContarModelosDeBikes',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -100,7 +224,7 @@ function desenharGraficoModelosBikes(canvas, ctx) {
 
 function desenharGraficoBikesRfid(canvas, ctx) {
     $.ajax({
-        url: '<?= base_url() ?>/app/src/controller/contar/bikes-com-rfid.php',
+        url: BASE_URL + 'crudAjax/ajaxContarBikesComRFID',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -135,14 +259,14 @@ function desenharGraficoBikesRfid(canvas, ctx) {
 
 function desenharGraficoRegistrosPorDia(canvas, ctx) {
     $.ajax({
-        url: '<?= base_url() ?>/app/src/controller/contar/registros-por-dia.php',
+        url: BASE_URL + 'crudAjax/ajaxContarRegistrosPorDia',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
 
             var labels = []
             var dados = []
-
+            
             res.forEach(b => {
                 labels.push(b.dia)
                 dados.push(b.count)
@@ -203,7 +327,7 @@ function desenharGraficoRegistrosPorDia(canvas, ctx) {
 
 function desenharGraficoRegistrosPorSemana(canvas, ctx) {
     $.ajax({
-        url: '<?= base_url() ?>/app/src/controller/contar/registros-por-semana.php',
+        url: BASE_URL + 'crudAjax/ajaxContarRegistrosPorSemana',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -259,7 +383,7 @@ function desenharGraficoRegistrosPorSemana(canvas, ctx) {
 
 function desenharGraficoRegistrosPorMes(canvas, ctx) {
     $.ajax({
-        url: '<?= base_url() ?>/app/src/controller/contar/registros-por-mes.php',
+        url: BASE_URL + 'crudAjax/ajaxContarRegistrosPorMes',
         method: 'GET',
         dataType: 'json',
         success: function(res) {

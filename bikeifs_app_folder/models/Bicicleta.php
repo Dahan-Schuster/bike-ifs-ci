@@ -1,6 +1,7 @@
 <?php
 
 require_once(APPPATH . 'models/SituacaoBicicleta.php');
+require_once(APPPATH . 'models/ModeloBike.php');
 
 class Bicicleta extends CI_Model
 {
@@ -115,18 +116,33 @@ class Bicicleta extends CI_Model
 
 
     /**
-     * Lista os modelos das bicicletas cadastradas
+     * Conta a quantidade de cada modelo dentre as bikes cadastradas
      * Usado para criação de relatórios.
-     * O controlador Relatorio irá contar a quantidade de cada modelo
-     * e retornar um JSON para ser transformado em gráfico via js
      * 
-     * @return array - Array com os modelos em formatados como Objetos
+     * @return array - Array com a quantidade de cada modelo de bike
      * 
      */
-    public function listarModelos()
+    public function contarModelos()
     {
-        $result = $this->db->select('modelo')->get('BICICLETA');
-        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
+        $urbanas = $this->db->where('modelo', ModeloBike::URBANA)->from('BICICLETA')->count_all_results();
+        $dobraveis = $this->db->where('modelo', ModeloBike::DOBRAVEL)->from('BICICLETA')->count_all_results();
+        $fixas = $this->db->where('modelo', ModeloBike::FIXA)->from('BICICLETA')->count_all_results();
+        $mountains = $this->db->where('modelo', ModeloBike::MOUNTAIN)->from('BICICLETA')->count_all_results();
+        $speeds = $this->db->where('modelo', ModeloBike::SPEED)->from('BICICLETA')->count_all_results();
+        $bmxs = $this->db->where('modelo', ModeloBike::BMX)->from('BICICLETA')->count_all_results();
+        $downhills = $this->db->where('modelo', ModeloBike::DOWNHILL)->from('BICICLETA')->count_all_results();
+        $eletricas = $this->db->where('modelo', ModeloBike::ELETRICA)->from('BICICLETA')->count_all_results();
+        
+        return array(
+            'urbanas' => $urbanas,
+            'dobraveis' => $dobraveis,
+            'fixas' => $fixas,
+            'mountains' => $mountains,
+            'speeds' => $speeds,
+            'bmxs' => $bmxs,
+            'downhills' => $downhills,
+            'eletricas' => $eletricas
+        );
     }
 
     /**

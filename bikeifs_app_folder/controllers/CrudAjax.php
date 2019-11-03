@@ -429,7 +429,7 @@ class CrudAjax extends CI_Controller
         $this->usuario_model->editar(
             $usuario->id,
             array(
-                'perfil_privado' => $usuario->perfil_privado == 'f' ? 't' : 'f' 
+                'perfil_privado' => $usuario->perfil_privado == 'f' ? 't' : 'f'
             )
         );
 
@@ -1419,6 +1419,113 @@ class CrudAjax extends CI_Controller
 
         echo json_encode($response);
     }
+
+    /************************************\
+    |* MÉTODOS DE LEVANTAMENTO DE DADOS *|
+    \************************************/
+
+
+    /**
+     * Função acessada via requisiçãoes AJAX para geração de relatórios
+     */
+    public function ajaxContarTiposDeUsuarios()
+    {
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido aceso direto aos scripts.");
+
+        $this->load->model('usuario_model');
+
+        $dados = $this->usuario_model->contarTipos();
+
+        echo json_encode($dados);
+    }
+
+    /**
+     * Função acessada via requisiçãoes AJAX para geração de relatórios
+     */
+    public function ajaxContarModelosDeBikes()
+    {
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido aceso direto aos scripts.");
+
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido aceso direto aos scripts.");
+
+        $this->load->model('bicicleta');
+
+        $dados = $this->bicicleta->contarModelos();
+
+        echo json_encode($dados);
+    }
+
+    /**
+     * Função acessada via requisiçãoes AJAX para geração de relatórios
+     */
+    public function ajaxContarBikesComRFID()
+    {
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido aceso direto aos scripts.");
+
+        $this->load->model('bicicleta');
+        $this->load->model('tagrfid');
+
+        $response['com'] = $this->tagrfid->getTotalDeLinhas();
+        $response['sem'] = $this->bicicleta->getTotalDeLinhas() - $response['com'];
+
+        echo json_encode($response);
+    }
+
+
+    /**
+     * Função acessada via requisiçãoes AJAX para geração de relatórios
+     */
+    public function ajaxContarRegistrosPorDia()
+    {
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido aceso direto aos scripts.");
+
+        $this->load->model('registro');
+
+        $response = $this->registro->contarRegistrosDosUltimos14Dias();
+
+        echo json_encode($response);
+    }
+
+    /**
+     * Função acessada via requisiçãoes AJAX para geração de relatórios
+     */
+    public function ajaxContarRegistrosPorMes()
+    {
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido aceso direto aos scripts.");
+
+        $this->load->model('registro');
+
+        $response = $this->registro->contarRegistrosDosUltimos12Meses();
+
+        echo json_encode($response);
+    }
+
+    /**
+     * Função acessada via requisiçãoes AJAX para geração de relatórios
+     */
+    public function ajaxContarRegistrosPorSemana()
+    {
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido aceso direto aos scripts.");
+
+        $this->load->model('registro');
+
+        $response = $this->registro->contarRegistrosDasUltimas8Semanas();
+
+        echo json_encode($response);
+    }
+
+
+
+    /********************\
+    |* MÉTODOS DIVERSOS *|
+    \********************/
 
     public function gerarOpcoesDeBikesPorUsuario()
     {

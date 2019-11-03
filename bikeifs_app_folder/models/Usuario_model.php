@@ -2,6 +2,7 @@
 
 require_once('Tools.php');
 require_once(APPPATH . 'models/SituacaoUsuario.php');
+require_once(APPPATH . 'models/TipoUsuario.php');
 
 class Usuario_model extends CI_Model
 {
@@ -32,7 +33,7 @@ class Usuario_model extends CI_Model
 
         return false;
     }
-    
+
     /**
      * Exclui registros da tabela Usuario.
      * 
@@ -135,18 +136,23 @@ class Usuario_model extends CI_Model
 
 
     /**
-     * Lista os tipos dos usuários cadastrados
+     * Conta a quantidade de cada tipo dentre os usuários cadastrados
      * Usado para criação de relatórios.
-     * O controlador Relatorio irá contar a quantidade de cada tipo
-     * e retornar um JSON para ser transformado em gráfico via js
      * 
-     * @return array - Array com os tipos em formatados como Objetos
+     * @return array - Array com a quantidade de cada tipo de usuário
      * 
      */
-    public function listarTipos()
+    public function contarTipos()
     {
-        $result = $this->db->select('tipo')->from('USUARIO')->get();
-        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
+        $alunos = $this->db->where('tipo', TipoUsuario::ALUNO)->from('USUARIO')->count_all_results();
+        $servidores = $this->db->where('tipo', TipoUsuario::SERVIDOR)->from('USUARIO')->count_all_results();
+        $visitantes = $this->db->where('tipo', TipoUsuario::VISITANTE)->from('USUARIO')->count_all_results();
+        
+        return array(
+            'alunos' => $alunos,
+            'servidores' => $servidores,
+            'visitantes' => $visitantes
+        );
     }
 
     /**

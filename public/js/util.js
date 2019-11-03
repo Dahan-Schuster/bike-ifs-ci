@@ -143,7 +143,7 @@ function getDataUri(url, callback) {
 }
 
 /**
- * Retorna a data atual
+ * Retorna o timestamp atual ou da data enviada por parâmetro
  */
 function getTimeStampAtual(data = null) {
     if (data) {
@@ -153,6 +153,16 @@ function getTimeStampAtual(data = null) {
     var horaUTC = date.getTime()
     var fusoHorarioLocal = (-1) * date.getTimezoneOffset() * 60000
     return Math.round(new Date(horaUTC + fusoHorarioLocal).getTime() / 1000)
+}
+
+/**
+ * Retorna a data atual
+ */
+function getDataHoraAtual(separator = ' ') {
+    var today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    return date + separator + time;
 }
 
 
