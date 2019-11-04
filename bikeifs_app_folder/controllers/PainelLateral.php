@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('Não é permitido acesso direto aos scripts.');
 
+require_once APPPATH . 'models/SituacaoBicicleta.php';
+require_once APPPATH . 'models/ModeloBike.php';
 require_once APPPATH . 'models/SituacaoFuncionario.php';
 require_once APPPATH . 'models/SituacaoUsuario.php';
 require_once APPPATH . 'models/TipoUsuario.php';
@@ -46,29 +48,23 @@ class PainelLateral extends CI_Controller
 
     public function bicicleta($id = null)
     {
+        if (null === $id)
+            show_404();
+
+        $this->load->model('bicicleta_model');
+        $this->load->model('usuario_model');
+        
+        $bicicleta = $this->bicicleta_model->carregarPorId($id);
+        $bicicleta->nome_modelo = ModeloBike::getNomeModelo($bicicleta->modelo);
+        $bicicleta->ativa = ($bicicleta->situacao == SituacaoBicicleta::ATIVA);
+        $usuario = $this->usuario_model->carregarPorId($bicicleta->id_usuario);
+        $bicicleta->dono = $usuario->nome;
 
         $data = array(
-            'scripts' => array(
-                'datatables.min.js',
-                'dataTables.responsive.min.js',
-                'gijgo.min.js',
-                'snackbar.min.js',
-                'util.js',
-                'escolher.cores.js',
-                "pages/bicicletas.usuario.js",
-            ),
-            'styles' => array(
-                'datatables.min.css',
-                'responsive.dataTables.min.css',
-                'gijgo.min.css',
-                'snackbar.min.css'
-            ),
-            'nome' => $this->session->userdata('nome')
+            'bicicleta' => $bicicleta
         );
 
-        $this->load->view('templates/header-usuario', $data);
-        $this->load->view("pages/usuario/bicicletas", $data);
-        $this->load->view('templates/footer-usuario', $data);
+        $this->load->view("pages/painel-lateral/bicicleta", $data);
     }
 
     public function funcionario($id = null)
