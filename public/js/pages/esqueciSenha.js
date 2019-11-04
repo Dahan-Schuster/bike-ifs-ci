@@ -8,7 +8,7 @@ $("#formEsqueciSenha").submit(function(form) {
 
     $.ajax({
         type: 'post',
-        url: BASE_URL + 'email/ajaxEnviarNovaSenha',
+        url: BASE_URL + 'mailer/ajaxEnviarNovaSenha',
         dataType: 'json',
         data: $(this).serialize(),
         beforeSend: function() {

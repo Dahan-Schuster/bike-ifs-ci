@@ -112,3 +112,4 @@
 <!---------------------->
 
 <?php include_once('public/views/modals/popperEscolherCores.html'); ?>
+<script>const id_usuario = <?= $id_usuario ?> </script>

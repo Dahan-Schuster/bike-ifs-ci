@@ -36,7 +36,7 @@ $("#formCadastroFuncionario")
 
         $.ajax({
             type: 'POST',
-            url: BASE_URL + 'crudAjax/ajaxSalvarFuncionario',
+            url: BASE_URL + 'funcionario',
             dataType: 'json',
             data: $(this)
                 .serialize(),
@@ -129,7 +129,7 @@ function desativarFuncionariosSelecionados() {
 function enviarAjaxAtivar(ids_funcionarios) {
     $.ajax({
         type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxAtivarFuncionarios',
+        url: BASE_URL + 'funcionario/ativar',
         dataType: 'json',
         data: { ids_funcionarios },
         beforeSend: function() {
@@ -157,7 +157,7 @@ function enviarAjaxAtivar(ids_funcionarios) {
 function enviarAjaxDesativar(ids_funcionarios) {
     $.ajax({
         type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxDesativarFuncionarios',
+        url: BASE_URL + 'funcionario/desativar',
         dataType: 'json',
         data: { ids_funcionarios },
         beforeSend: function() {
@@ -244,8 +244,8 @@ function popularTabela() {
                 "url": BASE_URL + "public/js/Portuguese.json"
             },
             ajax: {
-                type: "POST",
-                url: BASE_URL + 'crudAjax/ajaxListarFuncionarios'
+                type: "GET",
+                url: BASE_URL + 'funcionario'
             },
             'processing': true,
             "columns": [{

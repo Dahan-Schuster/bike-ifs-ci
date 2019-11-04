@@ -40,7 +40,7 @@
                 <div class="collapse navbar-collapse" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a id="navLinkRelatorios" class="nav-link" href="<?= base_url('admin/relatorios') ?>">
+                            <a id="navLinkRelatorios" class="nav-link" href="<?= base_url('admin/view/relatorios') ?>">
                                 Relatórios
                             </a>
                         </li>
@@ -64,7 +64,7 @@
                                 Excluir
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="<?= base_url('admin/excluir/registros') ?>">Registros</a>
+                                <a class="dropdown-item" href="<?= base_url('admin/view/excluir-registros') ?>">Registros</a>
                             </div>
                         </li>
                     </ul>
@@ -79,7 +79,7 @@
                                 <i class="material-icons">more_horiz</i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                <a class="dropdown-item" href="<?= base_url('admin/perfil') ?>">
+                                <a class="dropdown-item" href="<?= base_url('admin/me') ?>">
                                     Perfil&nbsp;
                                     <i class="material-icons">person</i>
                                 </a>

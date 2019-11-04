@@ -1,7 +1,7 @@
 <?php
 
 
-class Saida extends CI_Model
+class Saida_model extends CI_Model
 {
     /**
      * Saida constructor.

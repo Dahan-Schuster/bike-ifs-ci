@@ -137,7 +137,7 @@ function enviarAjaxEditarSenha(senhaAtual, novaSenha, confirmarNovaSenha) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxEditarSenha',
+        url: BASE_URL + 'funcionario/updatePassword',
         data: {
             senhaAtual,
             novaSenha,
@@ -158,7 +158,7 @@ function enviarAjaxEditarEmail(codigo) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxVerificarCodigoEditarEmail',
+        url: BASE_URL + 'funcionario/updateEmail',
         data: {
             codigo
         },
@@ -182,7 +182,7 @@ function enviarAjaxEditarNome(id, nome) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxSalvarFuncionario',
+        url: BASE_URL + 'funcionario',
         data: {
             id,
             nome
@@ -202,7 +202,7 @@ function enviarAjaxEditarTelefone(id, telefone) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxSalvarFuncionario',
+        url: BASE_URL + 'funcionario',
         data: {
             id,
             telefone
@@ -223,7 +223,7 @@ function ajaxEnviarCodigoEmail(botao) {
     $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: BASE_URL + 'email/ajaxEnviarCodigo',
+        url: BASE_URL + 'mailer/ajaxEnviarCodigo',
         data: { email },
         beforeSend: function() {
             $("#aviso").html("")
@@ -320,12 +320,8 @@ function popularTabelaRegistros(timestamp) {
             "url": BASE_URL + "public/js/Portuguese.json"
         },
         ajax: {
-            type: "POST",
-            url: BASE_URL + "crudAjax/ajaxListarRegistrosDoDia",
-            data: {
-                from_logged_user : true,
-                timestamp
-            }
+            type: "GET",
+            url: BASE_URL + `funcionario/historico/${timestamp}`
         },
         'processing': true,
         "columns": [{

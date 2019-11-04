@@ -50,5 +50,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'home';
+
+$route['admin/me'] = 'admin/index';
+$route['admin']['POST'] = 'admin/insert';
+$route['admin']['GET'] = 'admin/select_all';
+
+$route['funcionario/me'] = 'funcionario/perfil';
+$route['funcionario']['GET'] = 'funcionario/select_all';
+$route['funcionario/(:num)']['GET'] = 'funcionario/select/$1';
+$route['funcionario']['POST'] = 'funcionario/insert';
+
+$route['usuario/me'] = 'usuario/perfil';
+$route['usuario']['GET'] = 'usuario/select_all';
+$route['usuario/(:num)']['GET'] = 'usuario/select/$1';
+$route['usuario']['POST'] = 'usuario/insert';
+
+$route['bicicleta']['GET'] = 'bicicleta/select_all';
+$route['usuario/(:num)/bicicletas']['GET'] = 'bicicleta/select_from_user/$1';
+$route['tagrfid/(:any)/bicicleta']['GET'] = 'bicicleta/select_from_uid/$1';
+$route['bicicleta']['POST'] = 'bicicleta/insert';
+
+$route['email/(:any)']['GET'] = 'email/select_from_day/$1';
+$route['email']['POST'] = 'email/insert';   
+
+$route['registro/(:any)']['GET'] = 'registro/select_from_day/$1';
+$route['usuario/historico/(:any)']['GET'] = 'registro/select_from_day/$1/true';
+$route['funcionario/historico/(:any)']['GET'] = 'registro/select_from_day/$1/true';
+$route['registro/filtrar']['POST'] = 'registro/select_from_filter';
+$route['registro/checkin']['POST'] = 'registro/insert';
+$route['registro/checkout']['POST'] = 'registro/checkout';
+$route['registro/checkout/desfazer']['POST'] = 'registro/undo_checkout';
+
+$route['tagRFID']['POST'] = 'tagRFID/insert';
+$route['tagRFID']['GET'] = 'tagRFID/select_all';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

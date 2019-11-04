@@ -156,7 +156,7 @@ function enviarAjaxEditarSenha(senhaAtual, novaSenha, confirmarNovaSenha) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxEditarSenha',
+        url: BASE_URL + 'usuario/updatePassword',
         data: {
             senhaAtual,
             novaSenha,
@@ -177,7 +177,7 @@ function enviarAjaxEditarEmail(codigo) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxVerificarCodigoEditarEmail',
+        url: BASE_URL + 'usuario/updateEmail',
         data: {
             codigo
         },
@@ -201,7 +201,7 @@ function enviarAjaxEditarNome(id, nome) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxSalvarUsuario',
+        url: BASE_URL + 'usuario',
         data: {
             id,
             nome
@@ -221,7 +221,7 @@ function enviarAjaxEditarTelefone(id, telefone) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxSalvarUsuario',
+        url: BASE_URL + 'usuario',
         data: {
             id,
             telefone
@@ -242,7 +242,7 @@ function ajaxEnviarCodigoEmail(botao) {
     $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: BASE_URL + 'email/ajaxEnviarCodigo',
+        url: BASE_URL + 'mailer/ajaxEnviarCodigo',
         data: { email },
         beforeSend: function() {
             $("#aviso").html("")
@@ -276,7 +276,7 @@ function enviarAjaxAlterarPrivacidade() {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxAlterarPrivacidadeUsuario',
+        url: BASE_URL + 'usuario/updatePrivacy',
         success: function(response) {
             if (response['status'] == 1) {
                 snackBarSucesso()

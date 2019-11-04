@@ -3,7 +3,7 @@
 require_once(APPPATH . 'models/SituacaoBicicleta.php');
 require_once(APPPATH . 'models/ModeloBike.php');
 
-class Bicicleta extends CI_Model
+class Bicicleta_model extends CI_Model
 {
     /**
      * Bicicleta constructor.

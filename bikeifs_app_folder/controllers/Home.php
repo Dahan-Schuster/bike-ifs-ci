@@ -90,17 +90,17 @@ class Home extends CI_Controller
                 case 'funcionario':
                     $this->load->model('funcionario_model');
                     $result = $this->funcionario_model->verificarLogin($login, $senha);
-                    if ($result) $json['location'] = base_url('funcionario');    # Rota para redirecionamento após o login
+                    if ($result) $json['location'] = base_url('funcionario/listar/registros-do-dia');    # Rota para redirecionamento após o login
                     break;
                 case 'usuario':
                     $this->load->model('usuario_model');
                     $result = $this->usuario_model->verificarLogin($login, $senha);
-                    if ($result) $json['location'] = base_url('usuario');
+                    if ($result) $json['location'] = base_url('usuario/me');
                     break;
                 case 'admin':
-                    $this->load->model("administrador");
-                    $result = $this->administrador->verificarLogin($login, $senha);
-                    if ($result) $json['location'] = base_url('admin');
+                    $this->load->model('administrador_model');
+                    $result = $this->administrador_model->verificarLogin($login, $senha);
+                    if ($result) $json['location'] = base_url('admin/me');
                     break;
                 default:
                     $json['status'] = 0;

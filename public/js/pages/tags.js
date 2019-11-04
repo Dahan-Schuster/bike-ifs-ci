@@ -46,7 +46,7 @@ $("#formCadastroTag")
 
         $.ajax({
             type: 'POST',
-            url: BASE_URL + 'crudAjax/ajaxSalvarTagRFID',
+            url: BASE_URL + 'tagRFID',
             dataType: 'json',
             data: $(this)
                 .serialize(),
@@ -122,7 +122,7 @@ function excluirTagsSelecionadas() {
 function enviarAjaxExclusao(ids_tags) {
     $.ajax({
         type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxDeletarTagsRFID',
+        url: BASE_URL + 'tagRFID/delete',
         dataType: 'json',
         data: { ids_tags },
         beforeSend: function() {
@@ -234,8 +234,8 @@ function popularTabela() {
         },
         'processing': true,
         ajax: {
-            type: "POST",
-            url: BASE_URL + 'crudAjax/ajaxListarTagsRFID'
+            type: "GET",
+            url: BASE_URL + 'tagRFID'
         },
         "columns": [{
                 data: "tags.id"
@@ -279,7 +279,7 @@ function configurarSelectBicicleta() {
         if (id_usuario) {
             $.ajax({
                 type: 'POST',
-                url: BASE_URL + 'crudAjax/gerarOpcoesDeBikesPorUsuario',
+                url: BASE_URL + 'bicicleta/gerarOpcoesDeBikesPorUsuario',
                 data: { id_usuario },
                 success: function(html) {
                     $('#selectBicicleta').html(html);

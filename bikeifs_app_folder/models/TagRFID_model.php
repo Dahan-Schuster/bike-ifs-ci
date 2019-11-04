@@ -1,7 +1,7 @@
 <?php
 
 
-class TagRFID extends CI_Model
+class TagRFID_model extends CI_Model
 {
     /**
      * TagRFID constructor.

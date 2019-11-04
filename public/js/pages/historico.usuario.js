@@ -40,12 +40,8 @@ function popularTabela(timestamp) {
             "url": BASE_URL + "public/js/Portuguese.json"
         },
         ajax: {
-            type: "POST",
-            url: BASE_URL + "crudAjax/ajaxListarRegistrosDoDia",
-            data: {
-                from_logged_user: true,
-                timestamp
-            }
+            type: "GET",
+            url: BASE_URL + `usuario/historico/${timestamp}`
         },
         'processing': true,
         "columns": [{

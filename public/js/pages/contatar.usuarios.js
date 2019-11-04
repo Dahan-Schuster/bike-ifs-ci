@@ -13,7 +13,7 @@ $(document).ready(function() {
     })
 
     $("#inputNome").focus()
-    
+
     // Inicializa o editor de texto do Gijgo
     $("#inputCorpo").editor()
 
@@ -25,6 +25,12 @@ $(document).ready(function() {
         $('div [contenteditable="true"]').html('')
         $("#inputNome").focus()
     })
+
+
+    $(".nav-link")
+        .removeClass('active')
+    $("#navLinkContatar")
+        .addClass('active')
 });
 
 
@@ -40,7 +46,7 @@ $("#formEnvioEmail").submit(function(form) {
 
     $.ajax({
         type: "POST",
-        url: BASE_URL + 'email/ajaxContatarUsuarios',
+        url: BASE_URL + 'mailer/ajaxContatarUsuarios',
         dataType: 'json',
         data: {
             remetente,
@@ -57,7 +63,7 @@ $("#formEnvioEmail").submit(function(form) {
             if (response['status'] == 1) {
                 snackBarSucesso('Enviado com sucesso!')
                 limparFormulario();
-            } else if (response['status'] == 0){
+            } else if (response['status'] == 0) {
                 showErrors(response['error_list'])
             } else if (response['status'] == -1) {
                 limparFormulario();

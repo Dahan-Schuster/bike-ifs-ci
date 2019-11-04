@@ -37,7 +37,7 @@ $("#formCadastroAdmin")
 
         $.ajax({
             type: 'POST',
-            url: BASE_URL + 'crudAjax/ajaxSalvarAdmin',
+            url: BASE_URL + 'admin',
             dataType: 'json',
             data: $(this)
                 .serialize(),
@@ -133,7 +133,7 @@ function excluirAdminsSelecionados() {
 function enviarAjaxExclusao(senha, ids_admins) {
     $.ajax({
         type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxDeletarAdmins',
+        url: BASE_URL + 'admin/delete',
         dataType: 'json',
         data: { senha, ids_admins },
         beforeSend: function() {
@@ -192,8 +192,8 @@ function popularTabela() {
                 "url": BASE_URL + "public/js/Portuguese.json"
             },
             ajax: {
-                type: "POST",
-                url: BASE_URL + 'crudAjax/ajaxListarAdmins'
+                type: "GET",
+                url: BASE_URL + 'admin'
             },
             "processing": true,
             "columns": [{

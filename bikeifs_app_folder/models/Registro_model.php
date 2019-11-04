@@ -3,7 +3,7 @@
 require_once(APPPATH . 'models/SituacaoFuncionario.php');
 require_once(APPPATH . 'models/SituacaoUsuario.php');
 
-class Registro extends CI_Model
+class Registro_model extends CI_Model
 {
     /**
      * Registro constructor.

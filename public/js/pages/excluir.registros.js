@@ -110,7 +110,7 @@ function excluirRegistrosSelecionados() {
 function enviarAjaxExclusao(senha, ids_registros) {
     $.ajax({
         type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxDeletarRegistros',
+        url: BASE_URL + 'registro/delete',
         dataType: 'json',
         data: { senha, ids_registros },
         beforeSend: function() {
@@ -140,9 +140,9 @@ function enviarAjaxExclusao(senha, ids_registros) {
 
 function preencherSelectsFuncionario() {
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxListarFuncionarios',
+        url: BASE_URL + 'funcionario',
         success: function(response) {
             let funcionarios = response['data']
             $.each(funcionarios, function(i, funcionario) {
@@ -278,7 +278,7 @@ function popularTabelaRegistros(filtro) {
         },
         ajax: {
             type: 'POST',
-            url: BASE_URL + 'crudAjax/ajaxListarRegistrosFiltrados',
+            url: BASE_URL + 'registro/filtrar',
             data: {
                 filtro
             }

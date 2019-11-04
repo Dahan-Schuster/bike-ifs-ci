@@ -30,7 +30,7 @@
     <header>
         <nav class="navbar sticky-top navbar-expand-xl navbar-dark bg-dark-primary">
             <div class="container">
-                <a class="navbar-brand mr-5" href="<?= base_url('funcionario/view/home') ?>">
+                <a class="navbar-brand mr-5" href="<?= base_url('funcionario/home') ?>">
                     <img class="icon-logo" src="<?= base_url() ?>/public/img/icon.svg" title="Logo" alt="Logo">
                     <img class='logo' src="<?= base_url() ?>/public/img/nome-logo.png" title="Bike IFS" alt="Bike IFS">
                 </a>
@@ -40,7 +40,7 @@
                 <div class="collapse navbar-collapse" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a id="navLinkRegistros" class="nav-link" href="<?= base_url('funcionario') ?>">
+                            <a id="navLinkRegistros" class="nav-link" href="<?= base_url('funcionario/listar/registros-do-dia') ?>">
                                 Registros
                             </a>
                         </li>
@@ -57,7 +57,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a id="navLinkPendencias" class="nav-link" href="<?= base_url('funcionario') ?>">
+                            <a id="navLinkPendencias" class="nav-link" href="<?= base_url('funcionario/listar/registros-do-dia') ?>">
                                 Pendências
                             </a>
                         </li>
@@ -78,7 +78,7 @@
                                 <i class="material-icons">more_horiz</i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                <a class="dropdown-item" href="<?= base_url('funcionario/perfil') ?>">
+                                <a class="dropdown-item" href="<?= base_url('funcionario/me') ?>">
                                     Perfil&nbsp;
                                     <i class="material-icons">person</i>
                                 </a>

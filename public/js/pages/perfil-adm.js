@@ -116,7 +116,7 @@ function enviarAjaxRemoverConta(senha) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxDeletarAdmins',
+        url: BASE_URL + 'admin/delete',
         data: {
             senha
         },
@@ -134,7 +134,7 @@ function enviarAjaxEditarSenha(senhaAtual, novaSenha, confirmarNovaSenha) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxEditarSenha',
+        url: BASE_URL + 'admin/updatePassword',
         data: {
             senhaAtual,
             novaSenha,
@@ -155,7 +155,7 @@ function enviarAjaxEditarEmail(codigo) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxVerificarCodigoEditarEmail',
+        url: BASE_URL + 'admin/updateEmail',
         data: {
             codigo
         },
@@ -179,7 +179,7 @@ function enviarAjaxEditarNome(id, nome) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: BASE_URL + 'crudAjax/ajaxSalvarAdmin',
+        url: BASE_URL + 'admin',
         data: {
             id,
             nome
@@ -200,7 +200,7 @@ function ajaxEnviarCodigoEmail(botao) {
     $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: BASE_URL + 'email/ajaxEnviarCodigo',
+        url: BASE_URL + 'mailer/ajaxEnviarCodigo',
         data: { email },
         beforeSend: function() {
             $("#aviso").html("")

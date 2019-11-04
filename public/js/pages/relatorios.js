@@ -124,7 +124,7 @@ function adicionarCapa(pdf) {
 
 function desenharGraficoTiposUsuarios(canvas, ctx) {
     $.ajax({
-        url: BASE_URL + 'crudAjax/ajaxContarTiposDeUsuarios',
+        url: BASE_URL + 'relatorio/ajaxContarTiposDeUsuarios',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -168,7 +168,7 @@ function desenharGraficoTiposUsuarios(canvas, ctx) {
 
 function desenharGraficoModelosBikes(canvas, ctx) {
     $.ajax({
-        url: BASE_URL + 'crudAjax/ajaxContarModelosDeBikes',
+        url: BASE_URL + 'relatorio/ajaxContarModelosDeBikes',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -224,7 +224,7 @@ function desenharGraficoModelosBikes(canvas, ctx) {
 
 function desenharGraficoBikesRfid(canvas, ctx) {
     $.ajax({
-        url: BASE_URL + 'crudAjax/ajaxContarBikesComRFID',
+        url: BASE_URL + 'relatorio/ajaxContarBikesComRFID',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -259,7 +259,7 @@ function desenharGraficoBikesRfid(canvas, ctx) {
 
 function desenharGraficoRegistrosPorDia(canvas, ctx) {
     $.ajax({
-        url: BASE_URL + 'crudAjax/ajaxContarRegistrosPorDia',
+        url: BASE_URL + 'relatorio/ajaxContarRegistrosPorDia',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -327,7 +327,7 @@ function desenharGraficoRegistrosPorDia(canvas, ctx) {
 
 function desenharGraficoRegistrosPorSemana(canvas, ctx) {
     $.ajax({
-        url: BASE_URL + 'crudAjax/ajaxContarRegistrosPorSemana',
+        url: BASE_URL + 'relatorio/ajaxContarRegistrosPorSemana',
         method: 'GET',
         dataType: 'json',
         success: function(res) {
@@ -383,7 +383,7 @@ function desenharGraficoRegistrosPorSemana(canvas, ctx) {
 
 function desenharGraficoRegistrosPorMes(canvas, ctx) {
     $.ajax({
-        url: BASE_URL + 'crudAjax/ajaxContarRegistrosPorMes',
+        url: BASE_URL + 'relatorio/ajaxContarRegistrosPorMes',
         method: 'GET',
         dataType: 'json',
         success: function(res) {

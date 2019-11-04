@@ -46,9 +46,8 @@ function configurarModalLerTag() {
 
 function pesquisarBikePorUID(uid) {
     $.ajax({
-        type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxBuscarBicicletaPorUID',
-        data: { uid },
+        type: 'GET',
+        url: BASE_URL + `tagrfid/${uid}/bicicleta`,
         success: function(response) {
             console.log(response)
             // TODO: registro automático

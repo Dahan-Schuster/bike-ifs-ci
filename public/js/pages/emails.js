@@ -76,11 +76,8 @@ function popularTabela(timestamp) {
                 "url": BASE_URL + "public/js/Portuguese.json"
             },
             ajax: {
-                type: "POST",
-                url: BASE_URL + "crudAjax/ajaxListarEmailsDoDia",
-                data: {
-                    timestamp
-                }
+                type: "GET",
+                url: BASE_URL + `email/${timestamp}`,
             },
             'processing': true,
             "columns": [{

@@ -27,3 +27,4 @@
     </table>
 </div>
 <br>
+<script>const id_usuario = <?= $id_usuario ?> </script>

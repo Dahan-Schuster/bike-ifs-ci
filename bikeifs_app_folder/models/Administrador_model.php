@@ -2,7 +2,7 @@
 
 require_once('Tools.php');
 
-class Administrador extends CI_Model
+class Administrador_model extends CI_Model
 {
     /**
      * Administrador constructor.

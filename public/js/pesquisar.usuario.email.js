@@ -16,8 +16,8 @@ function popularTabelaPesquisarUsuario() {
             "url": BASE_URL + "public/js/Portuguese.json"
         },
         ajax: {
-            type: "POST",
-            url: BASE_URL + "crudAjax/ajaxListarUsuarios"
+            type: "GET",
+            url: BASE_URL + 'usuario'
         },
         "processing": true,
         "columns": [

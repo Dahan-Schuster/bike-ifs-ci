@@ -173,7 +173,7 @@ function getDataHoraAtual(separator = ' ') {
 function enviarAjaxAtivarBicicletas(ids_bicicletas) {
     $.ajax({
         type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxAtivarBicicletas',
+        url: BASE_URL + 'bicicleta/ativar',
         dataType: 'json',
         data: { ids_bicicletas },
         beforeSend: function() {
@@ -201,7 +201,7 @@ function enviarAjaxAtivarBicicletas(ids_bicicletas) {
 function enviarAjaxDesativarBicicletas(ids_bicicletas) {
     $.ajax({
         type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxDesativarBicicletas',
+        url: BASE_URL + 'bicicleta/desativar',
         dataType: 'json',
         data: { ids_bicicletas },
         beforeSend: function() {
@@ -229,7 +229,7 @@ function enviarAjaxDesativarBicicletas(ids_bicicletas) {
 function enviarAjaxAtivarUsuarios(ids_usuarios) {
     $.ajax({
         type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxAtivarUsuarios',
+        url: BASE_URL + 'usuario/activate',
         dataType: 'json',
         data: { ids_usuarios },
         beforeSend: function() {
@@ -257,7 +257,7 @@ function enviarAjaxAtivarUsuarios(ids_usuarios) {
 function enviarAjaxDesativarUsuarios(ids_usuarios) {
     $.ajax({
         type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxDesativarUsuarios',
+        url: BASE_URL + 'usuario/disable',
         dataType: 'json',
         data: { ids_usuarios },
         beforeSend: function() {

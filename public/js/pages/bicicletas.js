@@ -53,7 +53,7 @@ $("#formSalvarBike")
 
         $.ajax({
             type: 'POST',
-            url: BASE_URL + 'crudAjax/ajaxSalvarBicicleta',
+            url: BASE_URL + 'bicicleta',
             dataType: 'json',
             data: $(this)
                 .serialize(),
@@ -237,8 +237,8 @@ function popularTabela() {
             "url": BASE_URL + "public/js/Portuguese.json"
         },
         ajax: {
-            type: "POST",
-            url: BASE_URL + "crudAjax/ajaxListarBicicletas"
+            type: "GET",
+            url: BASE_URL + "bicicleta"
         },
         "processing": true,
         "columns": [{

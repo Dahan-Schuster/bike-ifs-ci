@@ -13,7 +13,7 @@ $(document)
     .ready(function() {
         let timestamp = getTimeStampAtual()
         popularTabelaRegistros(timestamp);
-        
+
         setInterval(function() {
             datatable.ajax.reload();
         }, 1800000); // atualiza a tabela a cada 2 minutos
@@ -25,7 +25,10 @@ $(document)
         configurarSelectBicicleta();
         configurarRegistroAutomatico();
 
-        ativarMenuListar()
+        $(".nav-link")
+            .removeClass('active')
+        $("#navLinkRegistros")
+            .addClass('active')
     });
 
 
@@ -37,7 +40,7 @@ $("#formRegistrarEntradaManual").submit(function(form) {
 
     $.ajax({
         type: 'POST',
-        url: BASE_URL + 'crudAjax/ajaxInserirRegistro',
+        url: BASE_URL + 'registro/checkin',
         dataType: 'json',
         data: $(this)
             .serialize(),
@@ -139,7 +142,7 @@ function confirmarCheckOut(botao) {
 function enviarAjaxCheckout(obs, id_registro) {
     $.ajax({
         type: "POST",
-        url: BASE_URL + "crudAjax/ajaxCheckoutRegistro",
+        url: BASE_URL + "registro/checkout",
         dataType: 'json',
         data: {
             obs,
@@ -159,7 +162,7 @@ function enviarAjaxCheckout(obs, id_registro) {
 function desfazerCheckout(id_registro, id_saida) {
     $.ajax({
         type: "POST",
-        url: BASE_URL + "crudAjax/ajaxDesfazerCheckout",
+        url: BASE_URL + "registro/checkout/desfazer",
         dataType: 'json',
         data: {
             id_registro,
@@ -257,11 +260,8 @@ function popularTabelaRegistros(timestamp) {
             "url": BASE_URL + "public/js/Portuguese.json"
         },
         ajax: {
-            type: "POST",
-            url: BASE_URL + "crudAjax/ajaxListarRegistrosDoDia",
-            data: {
-                timestamp
-            }
+            type: "GET",
+            url: BASE_URL + `registro/${timestamp}`,
         },
         'processing': true,
         "columns": [{
@@ -333,7 +333,7 @@ function configurarSelectBicicleta() {
         if (id_usuario) {
             $.ajax({
                 type: 'POST',
-                url: BASE_URL + 'crudAjax/gerarOpcoesDeBikesPorUsuario',
+                url: BASE_URL + 'bicicleta/gerarOpcoesDeBikesPorUsuario',
                 data: { id_usuario },
                 success: function(html) {
                     $('#modalRegistroManual').find('#selectBicicleta').html(html);
