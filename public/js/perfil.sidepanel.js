@@ -7,7 +7,16 @@ function openNavPerfil() {
     if (innerWidth < 440) // se a largura da tela for pequena demais, o painel tomará todo o espaço (100%)
         document.getElementById("sidenav-perfil").style.width = "100%";
     else
-        document.getElementById("sidenav-perfil").style.width = "350px";
+        document.getElementById("sidenav-perfil").style.width = "300px";
+
+    document.getElementById("sidenav-perfil").style.top = `${90 - scrollY}px`
+
+    if (!document.onscroll) {
+        document.onscroll = function() {
+            document.getElementById("sidenav-perfil").style.top = `${90 - scrollY}px`
+            document.getElementById("sidenav-bike").style.top = `${90 - scrollY}px`
+        }
+    }
 
 }
 

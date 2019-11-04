@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('Não é permitido acesso direto aos scripts.');
 
+require_once APPPATH . 'models/SituacaoFuncionario.php';
 require_once APPPATH . 'models/SituacaoUsuario.php';
 require_once APPPATH . 'models/TipoUsuario.php';
 
@@ -17,26 +18,17 @@ class PainelLateral extends CI_Controller
     }
 
     /**
-     * Carrega a página inicial do sistema para sessões não logadas
+     * Nada para ver aqui...
      */
     public function index()
     {
-        $data = array(
-            'scripts' => array(
-                'util.js'
-            ),
-            'nome' => $this->session->userdata('nome')
-        );
-
-        $this->load->view('templates/header-usuario', $data);
-        $this->load->view("pages/home", $data);
-        $this->load->view('templates/footer-usuario', $data);
+        show_404();
     }
 
     public function usuario($id = null)
     {
         if (null === $id)
-            header('location: ' . base_url('painelLateral'));
+            show_404();
 
         $this->load->model('usuario_model');
         $usuario = $this->usuario_model->carregarPorId($id);
@@ -54,7 +46,7 @@ class PainelLateral extends CI_Controller
 
     public function bicicleta($id = null)
     {
-        
+
         $data = array(
             'scripts' => array(
                 'datatables.min.js',
@@ -81,28 +73,19 @@ class PainelLateral extends CI_Controller
 
     public function funcionario($id = null)
     {
+        if (null === $id)
+            show_404();
 
-        $this->load->model('usuario_model');
-        $usuario = $this->usuario_model->carregarPorId($this->session->userdata['logged_user_id']);
-        unset($usuario->senha);
+        $this->load->model('funcionario_model');
+        $funcionario = $this->funcionario_model->carregarPorId($id);
+        $funcionario->nome_situacao = SituacaoFuncionario::getTipoSituacao($funcionario->situacao);
+        $funcionario->ativo = ($funcionario->situacao == SituacaoFuncionario::ATIVO);
+        unset($funcionario->senha);
 
         $data = array(
-            'styles' => array(
-                'perfil.css',
-                'snackbar.min.css'
-            ),
-            'scripts' => array(
-                'pages/perfil-user.js',
-                'snackbar.min.js',
-                'jquery.mask.min.js',
-                'util.js'
-            ),
-            'nome' => $this->session->userdata('nome'),
-            'usuario' => $usuario
+            'funcionario' => $funcionario
         );
 
-        $this->load->view('templates/header-usuario', $data);
-        $this->load->view("pages/usuario/perfil", $data);
-        $this->load->view('templates/footer-usuario', $data);
+        $this->load->view("pages/painel-lateral/funcionario", $data);
     }
 }

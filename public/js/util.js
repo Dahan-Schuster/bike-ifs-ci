@@ -186,7 +186,10 @@ function enviarAjaxAtivarBicicletas(ids_bicicletas) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+            try {
+                atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+            } catch (e) {
+            }
         },
         error: function(response) {
             console.log(response)
@@ -214,7 +217,10 @@ function enviarAjaxDesativarBicicletas(ids_bicicletas) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+            try {
+                atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+            } catch (e) {
+            }
         },
         error: function(response) {
             console.log(response)
@@ -242,7 +248,10 @@ function enviarAjaxAtivarUsuarios(ids_usuarios) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+            try {
+                atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+            } catch (e) {
+            }
         },
         error: function(response) {
             console.log(response)
@@ -270,7 +279,10 @@ function enviarAjaxDesativarUsuarios(ids_usuarios) {
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }
-            atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+            try {
+                atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+            } catch (e) {
+            }
         },
         error: function(response) {
             console.log(response)
@@ -340,7 +352,7 @@ function configurarBotaoSelecionarLinhas(botao, idTabela, datatable) {
         // Irá retornar a quantidade ANTES do usuário clicar em uma linha
         // Por isso é necessário adicionar o somador
         let linhasSelecionadas = datatable.rows({ selected: true }).count() + somador
-        
+
         // A depender da quantidade de linhas selecionadas, altera o ícone e o comportamento do botão
         if (linhasSelecionadas == 0) {
             alterarBotaoParaBlank(botao, datatable)

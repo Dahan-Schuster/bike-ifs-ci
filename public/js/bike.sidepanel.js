@@ -7,7 +7,9 @@ function openNavBike() {
     if (innerWidth < 440) // se a largura da tela for pequena demais, o painel tomará todo o espaço (100%)
         document.getElementById("sidenav-bike").style.width = "100%";
     else
-        document.getElementById("sidenav-bike").style.width = "350px";
+        document.getElementById("sidenav-bike").style.width = "300px";
+
+    document.getElementById("sidenav-bike").style.top = `${90 - scrollY}px`
 
 }
 
