@@ -340,7 +340,7 @@ function configurarBotaoSelecionarLinhas(botao, idTabela, datatable) {
         // Irá retornar a quantidade ANTES do usuário clicar em uma linha
         // Por isso é necessário adicionar o somador
         let linhasSelecionadas = datatable.rows({ selected: true }).count() + somador
-
+        
         // A depender da quantidade de linhas selecionadas, altera o ícone e o comportamento do botão
         if (linhasSelecionadas == 0) {
             alterarBotaoParaBlank(botao, datatable)

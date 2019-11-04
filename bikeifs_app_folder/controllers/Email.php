@@ -26,8 +26,16 @@ class Email extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+
+        # Carrega o model Email
         $this->load->model('email_model');
+
+        # Carrega a biblioteca de sessão
         $this->load->library('session');
+
+        # Define o fuso horário do sistema
+        date_default_timezone_set('America/Maceio');
+
         $this->mail = new PHPMailer();
 
         # Configurações do gmail

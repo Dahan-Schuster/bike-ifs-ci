@@ -314,7 +314,7 @@ class Registro extends CI_Model
             }
 
             // Verifica se deve listar apenas registros com checking feito por funcionários ainda ativos
-            if ($filtro['apenasFuncionariosAtivosCheckin']) {
+            if ($filtro['apenasFuncionariosAtivosCheckin'] == 'true') {
                 $this->db->where('"fun_entrada".situacao', SituacaoFuncionario::ATIVO);
             }
 
@@ -325,7 +325,7 @@ class Registro extends CI_Model
             }
 
             // Verifica se deve listar apenas registros com checking feito por funcionários ainda ativos
-            if ($filtro['apenasFuncionariosAtivosCheckout']) {
+            if ($filtro['apenasFuncionariosAtivosCheckout'] == 'true') {
                 $this->db->where('"fun_saida".situacao', SituacaoFuncionario::ATIVO);
             }
 
@@ -352,7 +352,7 @@ class Registro extends CI_Model
             }
 
             // Verifica se deve listar apenas registros com checking feito por funcionários ainda ativos
-            if ($filtro['apenasUsuariosAtivos']) {
+            if ($filtro['apenasUsuariosAtivos'] == 'true') {
                 $this->db->where('"USUARIO".situacao', SituacaoUsuario::ATIVO);
             }
 

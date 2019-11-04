@@ -879,6 +879,8 @@ class CrudAjax extends CI_Controller
 
         $senha = $this->input->post('senha');
         $admin = $this->administrador->carregarPorId($this->session->userdata('logged_user_id'));
+        
+        // Verifica se deve excluir os admins com IDs enviados via post ou o admin logado
         $ids = null !== $this->input->post('ids_admins') ? $this->input->post('ids_admins') : array($admin->id);
 
         if (password_verify($senha, $admin->senha)) {
@@ -927,13 +929,26 @@ class CrudAjax extends CI_Controller
         # Carrega o model Registro
         $this->load->model('registro');
 
+        # Carrega o model Administrador
+        $this->load->model('administrador');
+
         # Array de resposta
         $response = array();
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
 
+        $senha = $this->input->post('senha');
         $ids = $this->input->post('ids_registros');
-        $this->registro->excluir($ids);
+        $admin = $this->administrador->carregarPorId($this->session->userdata('logged_user_id'));
+
+        if (password_verify($senha, $admin->senha)) {
+            $this->registro->excluir($ids);
+        }
+        else {
+            $response['status'] = 0;
+            $response['error_list']['#divInputSenhaExcluir'] = 'Senha incorreta.';
+        }
+        
 
         echo json_encode($response);
     }

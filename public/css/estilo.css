@@ -73,9 +73,23 @@
     transform: scale(1.1);
 }
 
+.btn-filtro {
+    width: 100%;
+    border: 1px solid #ffffff8a; 
+    text-align: left;
+    border-radius: 0.5rem;
+    background-color: #FFF;
+}
+
 .dropdown-filtro {
     /* Estiliza o container do filtro de pesquisa */
     box-shadow: 2px 2px 3px rgb(130, 130, 130);
+}
+
+.dropdown-filtro-item {
+    min-width: 100% !important;
+    padding-bottom: 0;
+    padding-top: 0;
 }
 
 .dropdown-filtro-item:active,

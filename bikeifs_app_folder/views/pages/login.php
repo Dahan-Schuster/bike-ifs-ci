@@ -13,7 +13,7 @@
             <div class="input-group">
                 <input id="inputSenha" class="pt-0 form-control" type="password" name="senha" tabindex="2">
                 <div class="input-group-append">
-                    <button id="botaoVisibilidade" type="button" class="btn" style="outline: none; box-shadow: none; padding: 0 .75rem">
+                    <button id="botaoVisibilidade" type="button" class="btn">
                         <i class="material-icons">visibility</i>
                     </button>
                 </div>
