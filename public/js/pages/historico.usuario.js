@@ -2,7 +2,7 @@ var datatable;
 
 $(document).ready(function() {
     let timestamp = getTimeStampAtual()
-    popularTabela(timestamp);
+    popularTabelaHistorico(timestamp);
     criarEConfigurarSelectData()
     setInterval(function() {
         datatable.ajax.reload();
@@ -15,7 +15,11 @@ $(document).ready(function() {
 
 });
 
-function popularTabela(timestamp) {
+function popularTabelaHistorico(timestamp) {
+
+    url = BASE_URL 
+    url +=  (id_usuario) ? `usuario/${id_usuario}/historico/${timestamp}` : `usuario/historico/${timestamp}`
+
     datatable = $('#tableRegistros').DataTable({
         "dom": `frt"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"`,
         "columnDefs": [{
@@ -41,7 +45,7 @@ function popularTabela(timestamp) {
         },
         ajax: {
             type: "GET",
-            url: BASE_URL + `usuario/historico/${timestamp}`
+            url
         },
         'processing': true,
         "columns": [{
@@ -77,7 +81,7 @@ function popularTabela(timestamp) {
 
 /**
  * Cria um input, instancia-o com o método datepicker() (Framework Gijgo.js),
- * e configura para destruir e repopopular a datatable com o método popularTabela
+ * e configura para destruir e repopopular a datatable com o método popularTabelaHistorico
  * 
  * Utilizado nas tabelas com listagem por dia (registros, registros-do-dia, emails)
  * 
@@ -106,7 +110,7 @@ function criarEConfigurarSelectData() {
         change: function(e) {
             datatable.destroy()
             let data = $(selectData).val().substring(6) + '-' + $(selectData).val().substring(3, 5) + '-' + $(selectData).val().substring(0, 2)
-            popularTabela(getTimeStampAtual(data))
+            popularTabelaHistorico(getTimeStampAtual(data))
         }
     })
 }

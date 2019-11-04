@@ -177,7 +177,7 @@ class Registro extends CI_Controller
      * 
      * Retorna um JSON de objetos
      */
-    public function select_from_day($timestamp = 'time()', $from_logged_user = false)
+    public function select_from_day($timestamp = 'time()', $from_logged_user = false, $user_id = null)
     {
         if (!$this->input->is_ajax_request())
             exit("Não é permitido aceso direto aos scripts.");
@@ -187,11 +187,11 @@ class Registro extends CI_Controller
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
 
-        $data = $this->input->post();
+
         $foreingKey = NULL;
         $foreingKeyValue = NULL;
 
-        if ($from_logged_user) {
+        if ($from_logged_user == 'true') {
             if ($this->session->userdata('permissions_level') == 'funcionario') {
                 $foreingKey = 'id_funcionario';
             } elseif ($this->session->userdata('permissions_level') == 'usuario') {
@@ -199,9 +199,9 @@ class Registro extends CI_Controller
             }
 
             $foreingKeyValue = $this->session->userdata('logged_user_id');
-        } elseif ($from_logged_user) {
-            $foreingKey = 'id_bicicleta';
-            $foreingKeyValue = $data['id_bicicleta'];
+        } elseif ($user_id) {
+            $foreingKey = 'id_usuario';
+            $foreingKeyValue = $user_id;
         }
 
         $registros = $this->registro_model->listarRegistrosPorDia($timestamp, $foreingKey, $foreingKeyValue);

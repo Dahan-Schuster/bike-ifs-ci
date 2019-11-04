@@ -161,9 +161,6 @@ class Usuario extends CI_Controller
         )
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
 
-        if (!$this->input->is_ajax_request())
-            header('location: ' . base_url('usuario/me'));
-
         $header = 'header-' . $this->session->permissions_level;
         $footer = 'footer-' . $this->session->permissions_level;
 
@@ -173,13 +170,22 @@ class Usuario extends CI_Controller
 
         $data = array(
             'styles' => array(
-                'perfil.css',
-                'snackbar.min.css'
+                'datatables.min.css',
+                'responsive.dataTables.min.css',
+                'gijgo.min.css',
+                'snackbar.min.css',
+                'perfil.css'
             ),
             'scripts' => array(
-                //'pages/perfil-adm.js',
+                'datatables.min.js',
+                'dataTables.responsive.min.js',
+                'gijgo.min.js',
                 'snackbar.min.js',
-                'util.js'
+                'util.js',
+                'escolher.cores.js',
+                "pages/historico.usuario.js",
+                "pages/bicicletas.usuario.js",
+                'pages/perfil-publico-user.js'
             ),
             'nome' => $this->session->userdata('nome'),
             'usuario' => $usuario

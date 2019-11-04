@@ -57,7 +57,6 @@ $route['admin']['GET'] = 'admin/select_all';
 
 $route['funcionario/me'] = 'funcionario/perfil';
 $route['funcionario']['GET'] = 'funcionario/select_all';
-$route['funcionario/(:num)']['GET'] = 'funcionario/select/$1';
 $route['funcionario']['POST'] = 'funcionario/insert';
 
 $route['usuario/me'] = 'usuario/perfil';
@@ -76,6 +75,7 @@ $route['email']['POST'] = 'email/insert';
 $route['registro/(:any)']['GET'] = 'registro/select_from_day/$1';
 $route['usuario/historico/(:any)']['GET'] = 'registro/select_from_day/$1/true';
 $route['funcionario/historico/(:any)']['GET'] = 'registro/select_from_day/$1/true';
+$route['usuario/(:num)/historico/(:any)']['GET'] = 'registro/select_from_day/$2/false/$1';
 $route['registro/filtrar']['POST'] = 'registro/select_from_filter';
 $route['registro/checkin']['POST'] = 'registro/insert';
 $route['registro/checkout']['POST'] = 'registro/checkout';

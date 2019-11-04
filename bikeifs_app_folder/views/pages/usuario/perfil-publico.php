@@ -1,120 +1,223 @@
 <?php
-@session_start();
-if (isset($_SESSION['login']) and ($_SESSION['tipoAcesso'] == 'admin' || $_SESSION['tipoAcesso'] == 'funcionario' || $_SESSION['tipoAcesso'] == 'usuario')) { ?>
-
-    <head>
-        <link rel="stylesheet" type="text/css" href="./../../css/perfil.css">
-    </head>
-    <h2>Perfil de usuário</h2>
-    <hr>
-    <div class="jumbotron jumbotron-cadastro pt-3 pl-2">
-        <div class="col-md-12 col-md-offset-2">
-            <div class="row perfil">
-                <div class="col-lg-3 col-md-5">
-                    <div class="perfil-sidebar pb-3">
-                        <div class="perfil-foto">
-                            <img src="<?= base_url() ?>/public/img/icons/cyclist.png" title="Usuário" class="img-responsive" alt="Usuário">
+require_once APPPATH . 'models/TipoUsuario.php';
+require_once APPPATH . 'models/ModeloBike.php';
+?>
+<h4>Perfil de usuário</h4>
+<hr class="bg-dark">
+<div class="jumbotron jumbotron-cadastro pt-3 pl-2">
+    <div class="col-md-12">
+        <div class="row perfil">
+            <div class="col-lg-3 col-md-5">
+                <div class="perfil-sidebar">
+                    <div class="perfil-foto">
+                        <img src="<?= base_url() ?>/public/img/icons/cyclist.png" title="Funcionário" class="img-responsive" alt="Funcionário">
+                    </div>
+                    <div class="perfil-titulo">
+                        <div id="perfil-nome" class="perfil-titulo-nome">
+                            <?= $usuario->nome ?>
                         </div>
-                        <div class="perfil-titulo">
-                            <div id="perfil-nome" class="perfil-titulo-nome">
-                            </div>
-                            <div id="perfil-tipo" class="perfil-titulo-tipo">
-                            </div>
+                        <div class="perfil-titulo-tipo">
+                            <?= TipoUsuario::getNomeTipo($usuario->tipo) ?>
                         </div>
-                        <div class="perfil-menu">
-                            <ul class="nav">
-                                <li>
-                                    <button type="button" data-toggle="modal" data-target="#modalBicicletasUsuario">
-                                        <img src="<?= base_url() ?>/public/img/icons/bikes.png" title="Bicicletas do usuário" alt="Bicicletas">
-                                        <span>Bicicletas</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" data-toggle="modal" data-target="#modalHistoricoUsuario">
-                                        <img src="<?= base_url() ?>/public/img/icons/history.png" title="Histórico do usuário" alt="Histórico">
-                                        <span>Histórico do usuário</span>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
+                    </div>
+                    <div class="perfil-menu">
+                        <ul class="nav">
+                            <li class="active">
+                                <button id="btn-info">
+                                    <i class="material-icons mr-3">info</i>
+                                    <span>Informações do usuário</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="btn-registros">
+                                    <i class="material-icons mr-3">query_builder</i>
+                                    <span>Histórico do usuário</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="btn-bicicletas">
+                                    <i class="material-icons mr-3">directions_bike</i>
+                                    <span>Bicicletas do usuário</span>
+                                </button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-
-                <div class="col-lg-9 col-md-7 conteudo-perfil" id="conteudo-perfil">
+            </div>
+            <div class="col-lg-9 col-md-7 conteudo-perfil" id="conteudo-perfil">
+                <div id="informacoes">
                     <div class="form-group row">
-                        <label for="nome" class="col-md-4 col-form-label">Nome</label>
-                        <div class="col-md-8">
-                            <span id="nome" name="nome" class="form-control"></span>
+                        <label for="nome" class="col-3 col-form-label">Nome</label>
+                        <div class="col-6">
+                            <span id="spanNome" class="form-control"><?= $usuario->nome ?></span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="telefone" class="col-md-4 col-form-label">Telefone</label>
-                        <div class="col-md-8">
-                            <span id="telefone" class="form-control"></span>
+                        <label for="email" class="col-3 col-form-label">Email</label>
+                        <div class="col-6">
+                            <span id="spanEmail" class="form-control"><?= $usuario->email ?></span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="email" class="col-md-4 col-form-label">Email</label>
-                        <div class="col-md-8">
-                            <span id="email" class="form-control"></span>
-                        </div>
-                    </div>
-                    <hr class="my-4">
-                    <div class="form-group row">
-                        <label for="tipo" class="col-md-4 col-form-label">Tipo de usuário</label>
-                        <div class="col-md-8">
-                            <span id="tipo" class="form-control"></span>
-
+                        <label for="email" class="col-3 col-form-label">Telefone</label>
+                        <div class="col-6">
+                            <span id="spanTelefone" class="form-control">
+                                <?= $usuario->perfil_privado == 'f' ? (trim($usuario->telefone) ? $usuario->telefone : 'Não informado') : 'Privado' ?>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="situacao" class="col-md-4 col-form-label">Situação</label>
-                        <div class="col-md-8">
-                            <span id="situacao" class="form-control"></span>
+                        <label for="cpf" class="col-3 col-form-label">CPF</label>
+                        <div class="col-6">
+                            <span class="form-control">
+                                <?= $usuario->perfil_privado == 'f' ? $usuario->cpf : 'Privado' ?>
+                            </span>
                         </div>
+                    </div>
+                    <?php if ($usuario->tipo != TipoUsuario::VISITANTE) : ?>
+                        <div class="form-group row">
+                            <label for="matricula" class="col-3 col-form-label">Matrícula</label>
+                            <div class="col-6">
+                                <span class="form-control"><?= (trim($usuario->matricula) ? $usuario->matricula : 'Não informada') ?></span>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div id="registros" class="hidden">
+                    <div class="table-responsive">
+                        <table class="table table-sm responsive table-striped table-hover table-datepicker" id="tableRegistros" style="width: 100%;">
+                            <caption style="caption-side: top;">
+                                <div class="div-datepicker"></div>
+                            </caption>
+                            <thead class="bg-default-primary">
+                                <tr>
+                                    <th></th>
+                                    <th class="all">Hora entrada</th>
+                                    <th class="desktop">Obs entrada</th>
+                                    <th class="all">Bicicleta</th>
+                                    <th class="min-tablet">Func. entrada</th>
+                                    <th class="none">Nº trava:</th>
+                                    <th class="none">Hora saída:</th>
+                                    <th class="none">Obs saída:</th>
+                                    <th class="none">Funcionário saída:</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="bicicletas" class="hidden">
+                    <div class="table-responsive">
+                        <table class="table table-sm responsive table-striped table-hover" id="tableBikes" style="width: 100%;">
+                            <caption>
+                                &nbsp;
+                                <button data-toggle="modal" data-target="#modalSalvarBike" data-backdrop="static" data-keyboard="false" title="Cadastrar novo" type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
+                                    <i class="material-icons">add</i>
+                                </button>
+                                <button id="btnAtivarSelecionados" onclick="ativarBicicletasSelecionadas()" title="Ativar selecionadas" type="button" class="btn btn-info bmd-btn-fab bmd-btn-fab-sm">
+                                    <i class="material-icons">thumb_up</i>
+                                </button>
+                                <button id="btnDestivarSelecionados" onclick="desativarBicicletasSelecionadas()" title="Desativar selecionadas" type="button" class="btn btn-danger bmd-btn-fab bmd-btn-fab-sm">
+                                    <i class="material-icons">thumb_down</i>
+                                </button>
+                                <button id="btnSelecionarLinhas" title="Selecionar todos" type="button" class="btn accent-color bmd-btn-fab bmd-btn-fab-sm text-light">
+                                    <i class="material-icons">check_box_outline_blank</i>
+                                </button>
+                            </caption>
+                            <thead class="bg-default-primary">
+                                <tr>
+                                    <th>&#9432;</th>
+                                    <th>Cores</th>
+                                    <th>Modelo</th>
+                                    <th>Marca</th>
+                                    <th>Obs</th>
+                                    <th>Aro</th>
+                                    <th>Situacao</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<?php } else { ?>
-    <div class="alert alert-danger" role="alert">
-        É necessário fazer login para acessar esta página.
-    </div>
-<?php } ?>
+</div>
 <br>
-<?php
-include_once('../modals/modalBicicletasUsuario.html');
-include_once('../modals/modalHistoricoUsuario.html');
-?>
-<script language="javascript" src="<?= base_url() ?>/public/js/bicicletas.usuario.js"></script>
-<script language="javascript" src="<?= base_url() ?>/public/js/historico.usuario.js"></script>
-<script language="JavaScript" src="<?= base_url() ?>/public/js/escolher.cores.slim.js"></script>
-<script>
-    var tabelaHistorico;
-    $(document).ready(function() {
-        $.ajax({
-            type: "POST",
-            url: '<?= base_url() ?>/app/src/controller/carregar/usuario-por-id.php',
-            data: {
-                user: "<?php echo $_GET['user'] ?>"
-            },
-            success: function(user) {
-                $("#perfil-nome").html(user.nome.split(" ")[0]);
-                $("#perfil-tipo").html(user.tipo);
-                $("#nome").html(user.nome);
-                $("#telefone").html(user.telefone);
-                $("#email").html(user.email);
-                $("#tipo").html(user.tipo);
-                $("#situacao").html(user.situacao);
+<!-- Modal salvar bicicleta -->
+<div id="modalSalvarBike" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
 
-                popularTabelaBicicletasUsuario(user.id);
-                configurarModalBicicletasUsuarios();
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header raised pb-3">
+                <h3 class="modal-title">Salvar bicicleta</h3>
+                <button type="button" class="close closePopover" data-dismiss="modal">&times;</button>
+            </div>
+            <form id="formSalvarBike" autocomplete="off">
+                <div class="modal-body">
+                    <input type="hidden" id="idBicicleta" name="id">
+                    <div id="divInputCores" class="form-group">
+                        <label for="inputCores" class="bmd-label-floating mb-0 pb-0">Cor</label>
+                        <input name="cores" type="hidden" id="inputCores">
+                        <div class="input-group">
+                            <div id="divCores" class="form-control bike-color">
+                                <i class="material-icons">directions_bike</i>
+                            </div>
+                            <div class="input-group-append">
+                                <button type="button" class="btn" id="btnPalette">
+                                    <i class="material-icons">palette</i>
+                                </button>
+                            </div>
+                        </div>
+                        <span class="invalid-feedback"></span>
+                    </div>
+                    <div class="form-row">
+                        <div id="divInputMarca" class="form-group col-12 col-sm-4">
+                            <label for="inputMarca" class="bmd-label-floating mb-3">Marca</label>
+                            <input name="marca" type="text" placeholder="Caloi, Shimano etc" class="form-control" id="inputMarca">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                        <div id="divInputAro" class="form-group col-12 col-sm-4">
+                            <label for="inputAro" class="bmd-label-floating mb-3">Aro</label>
+                            <input name="aro" type="number" placeholder="20, 24, 26 etc" class="form-control" id="inputAro">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                        <div id="divSelectModelo" class="form-group col-12 col-sm-4">
+                            <label for="selectModelo" class="bmd-label-floating">Modelo</label>
+                            <select name="modelo" class="form-control" id="selectModelo">
+                                <option value="">Selecione</option>
+                                <option value="<?= ModeloBike::URBANA ?>">Urbana</option>
+                                <option value="<?= ModeloBike::DOBRAVEL ?>">Dobrável</option>
+                                <option value="<?= ModeloBike::FIXA ?>">Fixa</option>
+                                <option value="<?= ModeloBike::MOUNTAIN ?>">Mountain</option>
+                                <option value="<?= ModeloBike::SPEED ?>">Speed</option>
+                                <option value="<?= ModeloBike::BMX ?>">BMX</option>
+                                <option value="<?= ModeloBike::DOWNHILL ?>">Downhill</option>
+                                <option value="<?= ModeloBike::ELETRICA ?>">Elétrica</option>
+                            </select>
+                            <span class="invalid-feedback"></span>
+                        </div>
+                    </div>
+                    <div id="divInputObs" class="form-group">
+                        <label for="inputObs" class="bmd-label-floating">Observações sobre a bicicleta</label>
+                        <textarea name="obs" class="form-control" id="inputObs"></textarea>
+                        <span class="invalid-feedback"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary mr-auto closePopover" data-dismiss="modal">Cancelar</button>
+                    <button id="btnEnviar" type="submit" class="btn btn-primary closePopover">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Fim modal salvar bicicleta -->
+<!---------------------->
 
-                tabelaHistorico = popularTabelaHistoricoUsuario(user.id);
-                configurarModalHistoricoUsuarios(tabelaHistorico);
-            }
-        });
-    });
-
-</script>
+<?php include_once('public/views/modals/popperEscolherCores.html'); ?>
+<script>const id_usuario = <?= $usuario->id ?>; </script>

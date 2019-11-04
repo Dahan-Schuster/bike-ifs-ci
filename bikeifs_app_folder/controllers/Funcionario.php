@@ -253,46 +253,6 @@ class Funcionario extends CI_Controller
         $this->load->view('templates/footer-funcionario', $data);
     }
 
-
-    /**
-     * Carrega o perfil público de um funcionário
-     */
-    public function select($id = null)
-    {
-        if (
-            $this->session->permissions_level != 'funcionario' &&
-            $this->session->permissions_level != 'admin'
-        )
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
-
-        if (!$this->input->is_ajax_request())
-            header('location: ' . base_url('funcionario/me'));
-
-        $header = 'header-' . $this->session->permissions_level;
-        $footer = 'footer-' . $this->session->permissions_level;
-
-        $funcionario = $this->funcionario_model->carregarPorId($id);
-        unset($funcionario->senha);
-
-        $data = array(
-            'styles' => array(
-                'perfil.css',
-                'snackbar.min.css'
-            ),
-            'scripts' => array(
-                //'pages/perfil-adm.js',
-                'snackbar.min.js',
-                'util.js'
-            ),
-            'nome' => $this->session->userdata('nome'),
-            'funcionario' => $funcionario
-        );
-
-        $this->load->view("templates/$header", $data);
-        $this->load->view("pages/funcionario/perfil-publico", $data);
-        $this->load->view("templates/$footer", $data);
-    }
-
     /**
      * Destrói a sessão e redireciona para a página inicial
      */

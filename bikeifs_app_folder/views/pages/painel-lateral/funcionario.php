@@ -54,22 +54,10 @@
                             <span id="cpf"><?= $funcionario->cpf ?></span>
                         </div>
                     </div>
-                    <hr class="my-4 bg-dark">
-                    <a id="linkPerfil">Abrir perfil em uma nova guia &nearhk;</a>
                 </div>
             </div>
         </div>
     </div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="<?= base_url() ?>public/js/util.js"></script>
-<script>
-    const id_funcionario = <?= $funcionario->id ?>;
-
-    $(document).ready(function() {
-        $("#linkPerfil").attr('href', `${BASE_URL}funcionario/${id_funcionario}`)
-        $("#linkPerfil").attr('target', '_blank')
-    })
-</script>
 
 </html>

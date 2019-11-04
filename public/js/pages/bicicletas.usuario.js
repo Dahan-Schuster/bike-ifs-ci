@@ -3,7 +3,7 @@ var datatable;
 // Configuração da página
 $(document)
     .ready(() => {
-        popularTabela();
+        popularTabelaBicicletas();
         setInterval(function() {
             atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable);
         }, 120000); // atualiza a tabela a cada 2 minutos
@@ -148,7 +148,7 @@ function desativarBicicletasSelecionadas() {
 
 // Listagem de bicicletas
 
-function popularTabela() {
+function popularTabelaBicicletas() {
     datatable = $('#tableBikes').DataTable({
         "fixedHeader": {
             footer: true
