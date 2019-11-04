@@ -20,6 +20,6 @@ function closeNavBike() {
 
 /* Método chamado ao clicar no nome de um usuário nas tabelas */
 function abrirPainelLateralBike(id) {
-    document.getElementById("iframePainelBike").src = "<?= base_url() ?>/public/view/painel_lateral_bike.php?bike=" + id
+    document.getElementById("iframePainelBike").src = `${BASE_URL}/painelLateral/bicicleta/${id}`
     openNavBike()
 }

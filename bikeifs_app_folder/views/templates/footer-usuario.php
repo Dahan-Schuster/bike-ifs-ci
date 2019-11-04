@@ -8,6 +8,8 @@
   <script language="javascript" src="<?= base_url() ?>public/js/bootstrap-material-design.js"></script>
   <script language="javascript" src="<?= base_url() ?>public/js/botao.topo.js"></script>
   <script language="javascript" src="<?= base_url() ?>public/js/sweetalert2.all.min.js"></script>
+  <script language="javascript" src="<?= base_url() ?>public/js/perfil.sidepanel.js"></script>
+  <script language="javascript" src="<?= base_url() ?>public/js/bike.sidepanel.js"></script>
   
   <?php
   if (isset($scripts)) :
