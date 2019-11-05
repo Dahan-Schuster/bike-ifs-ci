@@ -67,7 +67,7 @@
                     <div class="form-group row">
                         <label for="email" class="col-md-4 col-form-label"><b>Email</b></label>
                         <div class="col-md-8">
-                            <span id="email"><?= $usuario->email ?></span>
+                            <span id="email"><?= trim($usuario->email) ? $usuario->email : 'Não informado' ?></span>
                         </div>
                     </div>
                     <hr class="my-0 py-0">

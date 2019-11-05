@@ -46,4 +46,4 @@
     <button type="reset" class="btn btn-secondary">Limpar</button>
 </form>
 <br>
-<?php include_once('public/views/modals/modalPesquisarUsuarioEmail.html'); ?>
+<?php include_once('public/views/dialogs/modalPesquisarUsuarioEmail.html'); ?>

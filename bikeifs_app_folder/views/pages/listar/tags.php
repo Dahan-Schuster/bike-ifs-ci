@@ -104,5 +104,5 @@
     </div>
 </div>
 <!-- Fim Modal Cadastrar Tag -->
-<?php include_once('public/views/modals/modalPesquisarUsuario.html'); ?>
-<?php include_once('public/views/modals/modalLerTag.html'); ?>
+<?php include_once('public/views/dialogs/modalPesquisarUsuario.html'); ?>
+<?php include_once('public/views/dialogs/modalLerTag.html'); ?>

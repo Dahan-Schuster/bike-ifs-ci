@@ -111,5 +111,5 @@
 <!-- Fim modal salvar bicicleta -->
 <!---------------------->
 
-<?php include_once('public/views/modals/popperEscolherCores.html'); ?>
+<?php include_once('public/views/dialogs/popperEscolherCores.html'); ?>
 <script>const id_usuario = <?= $id_usuario ?> </script>

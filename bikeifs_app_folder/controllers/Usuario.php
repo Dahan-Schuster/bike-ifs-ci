@@ -218,10 +218,10 @@ class Usuario extends CI_Controller
             $user['tipo'] = TipoUsuario::getNomeTipo($user['tipo']);
             $user['situacao'] = SituacaoUsuario::getTipoSituacao($user['situacao']);
 
-            $user['telefone'] = ($user['perfil_privado'] ? "Privado" : (!trim($user['telefone']) ? 'Não informado' : $user['telefone']));
+            $user['telefone'] = ($user['perfil_privado'] == 't' ? "Privado" : (!trim($user['telefone']) ? 'Não informado' : $user['telefone']));
 
             $user['email'] = (!trim($user['email']) ? 'Não informado' : $user['email']);
-            $user['cpf'] = ($user['perfil_privado'] ? "Privado" : $user['cpf']);
+            $user['cpf'] = ($user['perfil_privado'] == 't' ? "Privado" : $user['cpf']);
             $user['matricula'] = (!trim($user['matricula']) ? "Não informado" : $user['matricula']);
 
             $usuarios[$key] = $user;

@@ -55,7 +55,7 @@ require_once APPPATH . 'models/ModeloBike.php';
                     <div class="form-group row">
                         <label for="email" class="col-3 col-form-label">Email</label>
                         <div class="col-6">
-                            <span id="spanEmail" class="form-control"><?= $usuario->email ?></span>
+                            <span id="spanEmail" class="form-control"><?= trim($usuario->email) ? $usuario->email : 'Não informado' ?></span>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -158,6 +158,7 @@ require_once APPPATH . 'models/ModeloBike.php';
                 <button type="button" class="close closePopover" data-dismiss="modal">&times;</button>
             </div>
             <form id="formSalvarBike" autocomplete="off">
+                <input name="id_usuario" type="hidden" value="<?= $usuario->id ?>">
                 <div class="modal-body">
                     <input type="hidden" id="idBicicleta" name="id">
                     <div id="divInputCores" class="form-group">
@@ -219,5 +220,7 @@ require_once APPPATH . 'models/ModeloBike.php';
 <!-- Fim modal salvar bicicleta -->
 <!---------------------->
 
-<?php include_once('public/views/modals/popperEscolherCores.html'); ?>
-<script>const id_usuario = <?= $usuario->id ?>; </script>
+<?php include_once('public/views/dialogs/popperEscolherCores.html'); ?>
+<script>
+    const id_usuario = <?= $usuario->id ?>;
+</script>

@@ -331,7 +331,7 @@ class Registro extends CI_Controller
                 'id' => $user->id,
                 'nome' => $user->nome, // Retorna apenas o primeiro nome do usuário
                 'matricula' => (!trim($user->matricula) ? "Não informado" : $user->matricula),
-                'cpf' => ($user->perfil_privado ? 'Privado' : $user->cpf)
+                'cpf' => ($user->perfil_privado == 't' ? 'Privado' : $user->cpf)
             );
 
             ## Formata as informãoes importantes sobre o registro de saída (checkout)

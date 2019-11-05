@@ -128,5 +128,5 @@
 <!-- Fim modal salvar bicicleta -->
 <!---------------------->
 
-<?php include_once('public/views/modals/popperEscolherCores.html'); ?>
-<?php include_once('public/views/modals/modalPesquisarUsuario.html'); ?>
+<?php include_once('public/views/dialogs/popperEscolherCores.html'); ?>
+<?php include_once('public/views/dialogs/modalPesquisarUsuario.html'); ?>

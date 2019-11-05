@@ -155,6 +155,6 @@
 <!-- Fim Modal registro automático -->
 
 <?php
-include_once('public/views/modals/modalPesquisarUsuario.html');
-include_once('public/views/modals/modalLerTag.html');
+include_once('public/views/dialogs/modalPesquisarUsuario.html');
+include_once('public/views/dialogs/modalLerTag.html');
 ?>

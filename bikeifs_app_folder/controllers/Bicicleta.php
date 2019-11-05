@@ -58,7 +58,7 @@ class Bicicleta extends CI_Controller
 
         echo json_encode($response);
     }
-    
+
     /**
      * Função acessada por requisições AJAX para buscar uma
      * bicicleta a partir do UID da Tag RFID associada a ela
@@ -223,9 +223,11 @@ class Bicicleta extends CI_Controller
                 if (!$usuarioExiste)
                     $response['error_list']['#divSelectUsuario'] = 'Usuário não cadastrado. Selecione um usuário da lista.';
             endif;
-        } else {
+        } elseif ($this->session->permissions_level == 'usuario') {
             $data['id_usuario'] = $this->session->logged_user_id;
         }
+
+        // TODO: se tipo de acesso == funcionário, verificada = true; se não, verificada = false;
 
         ## Fim validação
         if (!empty($response['error_list'])) :
