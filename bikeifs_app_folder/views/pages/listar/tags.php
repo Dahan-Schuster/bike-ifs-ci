@@ -22,7 +22,8 @@
             <tr>
                 <th>&#9432;</th>
                 <th>Codigo</th>
-                <th>Bike</th>
+                <th class="none">Cor da bike</th>
+                <th class="min-desktop">Foto</th>
                 <th>Modelo</th>
                 <th>Marca</th>
                 <th>Aro</th>
@@ -106,3 +107,4 @@
 <!-- Fim Modal Cadastrar Tag -->
 <?php include_once('public/views/dialogs/modalPesquisarUsuario.html'); ?>
 <?php include_once('public/views/dialogs/modalLerTag.html'); ?>
+<?php include_once('public/views/dialogs/popperZoomImagem.html'); ?>

@@ -17,7 +17,7 @@
         <div class="perfil">
             <div class="perfil-sidebar pb-3">
                 <div class="perfil-foto">
-                    <img src="<?= base_url() ?>public/img/icons/bike-<?= strtolower($bicicleta->nome_modelo) ?>-colored.png" id="modelo-bike-colorido" title="Bicicleta" class="img-responsive" alt="Bicicleta">
+                    <img src="<?= $bicicleta->foto ?>" id="modelo-bike-colorido" title="Bicicleta" class="img-responsive" alt="Bicicleta">
                 </div>
                 <div class="perfil-titulo">
                     <div id="bike-modelo" class="perfil-titulo-nome">

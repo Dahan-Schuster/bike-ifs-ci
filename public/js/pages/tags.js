@@ -180,11 +180,20 @@ function popularTabela() {
                 "targets": 2 // Coluna referente à cor.
             },
             {
+                // Define uma imagem da foto da bike
+                "render": function(foto_url, type, row) {
+                    return `<img onclick="abrirPainelLateralBike(${row.bikes.id})"
+                                rel="popover" class="img-fluid img-thumbnail" 
+                                src="${foto_url}" title="Foto da bike" alt="foto">`;
+                },
+                "targets": 3 // Coluna referente à foto.
+            },
+            {
                 // Estiliza a coluna referente à situação da bicicleta
                 "render": function(situacao) {
                     return `<i class="material-icons ${situacao == 'Ativa' ? 'text-success"> thumb_up' : 'text-danger"> thumb_down'}</i>`;
                 },
-                "targets": 6
+                "targets": 7
             },
             {
                 // Adiciona um link para o perfil de cada usuário
@@ -196,21 +205,25 @@ function popularTabela() {
                     output += '</span>'
                     return output
                 },
-                "targets": 7 // Coluna referente ao nome.
+                "targets": -2 // Coluna referente ao nome.
             },
             {
                 "width": "15%",
                 "targets": 2
             }, // Garante que a coluna da cor terá um tamanho adequado
+            {
+                "width": "8%",
+                "targets": 3
+            }, // Garante que a coluna da foto terá um tamanho adequado
 
             // Define a ordem de prioridade de visibilidade de cada coluna
             {
                 responsivePriority: 10001,
-                targets: 7
+                targets: 8
             },
             {
                 responsivePriority: 10002,
-                targets: 3
+                targets: 4
             },
         ],
         // Configura o comportamento do botão '+' (mais informações)
@@ -247,6 +260,9 @@ function popularTabela() {
                 data: "bikes.cores"
             },
             {
+                data: "bikes.foto_url"
+            },
+            {
                 data: "bikes.nome_modelo"
             },
             {
@@ -268,7 +284,10 @@ function popularTabela() {
                             </button>`;
                 }
             }
-        ]
+        ],
+        drawCallback: function() {
+            configurarZoomImagens($("#popperZoomImagem"))
+        }
     });
 }
 

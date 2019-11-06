@@ -17,6 +17,9 @@ $(document)
 
         configurarPopoverCores();
 
+        configurarBotaoUploadFoto();
+        configurarZoomImagens($("#popperZoomImagem"))
+
         // Reseta o formulário e os erros do modal de cadastro ao abrir
         $('#modalSalvarBike')
             .on('show.bs.modal', function() {
@@ -77,6 +80,12 @@ $("#formSalvarBike")
 
         return false;
     })
+
+// Verificar bicicletas
+
+function verificarBicicleta(bike) {
+    enviarAjaxVerificarBicicleta(bike)
+}
 
 // Ativar/desativar bicicletas
 
@@ -148,89 +157,107 @@ function desativarBicicletasSelecionadas() {
 
 function popularTabela() {
     datatable = $('#tableBikes').DataTable({
-        "fixedHeader": {
-            footer: true
-        },
-        "order": [
-            [6, "asc"]
-        ],
-        'select': {
-            'style': 'multi'
-        },
-        "columnDefs": [{
-                // Centraliza o conteúdo das colunas referentes aos botões
-                "className": "dt-center",
-                "targets": '_all'
-            },
-            {
-                // Remove a opção 'ordenar' das colunas referentes aos botões
-                "orderable": false,
-                "targets": [1, -1, -2]
-            },
-            {
-                // Altera a coluna referente à cor da bike para uma div com a respectiva cor.
-                // O correto funcionamento depende de que a cor esteja em formado hexadecimal (#000000 -
-                // - #ffffff), o que é garantido pelo formulário de cadastro de bicicletas. 
-                "render": function(cores, type, row) {
-                    let modelo = row.bikes.nome_modelo.toLowerCase()
-                    let output = `<div onclick="abrirPainelLateralBike(${row.bikes.id})" 
+                "fixedHeader": {
+                    footer: true
+                },
+                "order": [
+                    [6, "asc"]
+                ],
+                'select': {
+                    'style': 'multi'
+                },
+                "columnDefs": [{
+                            // Centraliza o conteúdo das colunas referentes aos botões
+                            "className": "dt-center",
+                            "targets": '_all'
+                        },
+                        {
+                            // Remove a opção 'ordenar' das colunas referentes aos botões
+                            "orderable": false,
+                            "targets": [1, -1, -2]
+                        },
+                        {
+                            // Altera a coluna referente à cor da bike para uma div com a respectiva cor.
+                            // O correto funcionamento depende de que a cor esteja em formado hexadecimal (#000000 -
+                            // - #ffffff), o que é garantido pelo formulário de cadastro de bicicletas. 
+                            "render": function(cores, type, row) {
+                                let modelo = row.bikes.nome_modelo.toLowerCase()
+                                let output = `<div onclick="abrirPainelLateralBike(${row.bikes.id})" 
                                 class="bike-color" style="background: ${cores};">`
-                    output += `<img src="${BASE_URL}public/img/icons/bike-${modelo}.png" title="Bike" alt=""></div>`
-                    return output
-                },
-                "targets": 1 // Coluna referente à cor.
-            },
-            {
-                // Adiciona um link para o perfil de cada usuário
-                "render": function(nome, type, row) {
-                    let output = '<div class="tooltip-w3 tooltip-w3-dotted">'
-                    output += `<span onclick="abrirPerfilLateralUsuario(${row.users.id})">${nome.split(" ")[0]}</span>`
-                    output += '<span class="tooltiptext-w3">'
-                    output += 'Clique para ver mais'
-                    output += '</span>'
-                    return output
-                },
-                "targets": 6 // Coluna referente ao nome.
-            },
-            {
-                // Define um switch para a situação da bike
-                "render": function(situacao, type, row) {
-                    var checked = ''
+                                output += `<img src="${BASE_URL}public/img/icons/bike-${modelo}.png" title="Bike" alt=""></div>`
+                                return output
+                            },
+                            "targets": 1 // Coluna referente à cor.
+                        },
+                        {
+                            // Adiciona um link para o perfil de cada usuário
+                            "render": function(nome, type, row) {
+                                let output = '<div class="tooltip-w3 tooltip-w3-dotted">'
+                                output += `<span onclick="abrirPerfilLateralUsuario(${row.users.id})">${nome.split(" ")[0]}</span>`
+                                output += '<span class="tooltiptext-w3">'
+                                output += 'Clique para ver mais'
+                                output += '</span>'
+                                return output
+                            },
+                            "targets": 7 // Coluna referente ao nome.
+                        },
+                        {
+                            // Define um switch para a situação da bike
+                            "render": function(situacao, type, row) {
+                                var checked = ''
 
-                    if (situacao == 'Ativa')
-                        checked = 'checked'
+                                if (situacao == 'Ativa')
+                                    checked = 'checked'
 
-                    return `<input onchange="alterarSituacaoBicicleta('${row.bikes.id}','${situacao}')" 
+                                return `<input onchange="alterarSituacaoBicicleta('${row.bikes.id}','${situacao}')" 
                                 type="checkbox" class="custom-switch hidden" id="switchSituacao${row.bikes.id}" ${checked}>
                             <label class="custom-switch-label" for="switchSituacao${row.bikes.id}"></label>`;
+                            },
+                            "targets": -3 // Coluna referente à situação.
+                        },
+                        {
+                            // Define um o ícone referente à verificação da bike
+                            "render": function(verificada, type, row) {
+                                    return `<i class="material-icons" ${verificada ?
+                        'title="Bike verificada">verified_user' : 
+                        `title="Verificar" style="cursor: pointer" onclick="verificarBicicleta('${row.bikes.id}')">arrow_downward`}</i>`
                 },
                 "targets": -2 // Coluna referente à situação.
             },
             {
+                // Define uma imagem da foto da bike
+                "render": function(foto_url, type, row) {
+                    return `<img onclick="abrirPainelLateralBike(${row.bikes.id})"
+                                rel="popover" class="img-fluid img-thumbnail" 
+                                src="${foto_url}" title="Foto da bike" alt="foto">`;
+                },
+                "targets": 2 // Coluna referente à foto.
+            },
+            {
                 "width": "10%",
-                "targets": 1
-            }, // Garante que a coluna da cor terá um tamanho adequado
+                "targets": [1, 2]
+            }, // Garante que as colunas da cor e da foto terão um tamanho adequado
 
             // Define a ordem de prioridade de visibilidade de cada coluna
             {
                 responsivePriority: 10001,
-                targets: 7
-            },
-            {
-                responsivePriority: 10002,
                 targets: 8
             },
             {
+                responsivePriority: 10002,
+                targets: 9
+            },
+            {
                 responsivePriority: 10003,
-                targets: 3
+                targets: 4
             },
             {
                 responsivePriority: 10004,
-                targets: 5
+                targets: 6
             },
             {
                 responsivePriority: 10005,
-                targets: 4
+                targets: 5
             },
         ],
         "language": {
@@ -246,6 +273,9 @@ function popularTabela() {
             },
             {
                 data: "bikes.cores"
+            },
+            {
+                data: "bikes.foto_url"
             },
             {
                 data: "bikes.nome_modelo"
@@ -266,6 +296,9 @@ function popularTabela() {
                 data: "bikes.situacao"
             },
             {
+                data: "bikes.verificada"
+            },
+            {
                 "render": function() {
                     return `<button class="btn btn-primary bmd-btn-icon" onclick='atualizarCamposModal(this)'
                                     data-toggle="modal" data-target="#modalSalvarBike" 
@@ -275,13 +308,22 @@ function popularTabela() {
                 </button>`;
                 }
             }
-        ]
+        ],
+        drawCallback: function() {
+            configurarZoomImagens($("#popperZoomImagem"))
+        }
     });
 }
 
 // Fim Métodos de controle
 
 // Métodos chamados por outros métodos
+
+function configurarBotaoUploadFoto() {
+    $("#btn_upload_bike_img").change(function() {
+        uploadImg($(this), $("#bike_img_path"), $("#bike_img"))
+    })
+}
 
 function configurarPopoverCores() {
     var popover = $("#popoverEscolherCores")
@@ -312,6 +354,7 @@ function atualizarCamposModal(botao) {
 
     let id = bike.id;
     let cores = bike.cores;
+    let foto = bike.foto_url;
     let marca = bike.marca;
     let aro = bike.aro;
     let modelo = bike.modelo;
@@ -320,6 +363,7 @@ function atualizarCamposModal(botao) {
 
     $('#modalSalvarBike').find('.modal-body').find('#idBicicleta').val(id);
     $('#modalSalvarBike').find('.modal-body').find('#inputCores').val(cores);
+    $('#modalSalvarBike').find('.modal-body').find('#bike_img_path').attr('src', foto);
     $('#modalSalvarBike').find('.modal-body').find('#divCores').css('background', cores);
     $('#modalSalvarBike').find('.modal-body').find('#inputMarca').val(marca);
     $('#modalSalvarBike').find('.modal-body').find('#inputObs').val(obs);

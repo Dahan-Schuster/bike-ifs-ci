@@ -128,7 +128,8 @@ require_once APPPATH . 'models/ModeloBike.php';
                             <thead class="bg-default-primary">
                                 <tr>
                                     <th>&#9432;</th>
-                                    <th>Cores</th>
+                                    <th class="none">Cores</th>
+                                    <th class="min-desktop">Foto</th>
                                     <th>Modelo</th>
                                     <th>Marca</th>
                                     <th>Obs</th>
@@ -176,6 +177,18 @@ require_once APPPATH . 'models/ModeloBike.php';
                         </div>
                         <span class="invalid-feedback"></span>
                     </div>
+                    <div class="form-group">
+                        <label for="bike_img" class="bmd-label-floating mb-0 pb-0">Foto</label>
+                        <div class="col-lg-12">
+                            <img rel="popover" class="img-fluid img-thumbnail img-zoom" src="" id="bike_img_path">
+                            <label class="btn btn-info">
+                                <i class="material-icons"></i>&nbsp;&nbsp;Importar imagem
+                                <input type="file" id="btn_upload_bike_img" accept="image/*" style="display: none">
+                            </label>
+                            <input type="hidden" id="bike_img" name="foto_url">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                    </div>
                     <div class="form-row">
                         <div id="divInputMarca" class="form-group col-12 col-sm-4">
                             <label for="inputMarca" class="bmd-label-floating mb-3">Marca</label>
@@ -221,6 +234,7 @@ require_once APPPATH . 'models/ModeloBike.php';
 <!---------------------->
 
 <?php include_once('public/views/dialogs/popperEscolherCores.html'); ?>
+<?php include_once('public/views/dialogs/popperZoomImagem.html'); ?>
 <script>
     const id_usuario = <?= $usuario->id ?>;
 </script>

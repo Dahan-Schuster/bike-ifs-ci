@@ -15,6 +15,7 @@ $(document)
             datatable)
 
         configurarPopoverCores();
+        configurarZoomImagens($("#popperZoomImagem"))
 
         // Reseta o formulário e os erros do modal de cadastro ao abrir
         $('#modalSalvarBike')
@@ -197,31 +198,36 @@ function popularTabelaBicicletas() {
                 "targets": -2 // Coluna referente à situação.
             },
             {
+                // Define uma imagem da foto da bike
+                "render": function(foto_url, type, row) {
+                    return `<img onclick="abrirPainelLateralBike(${row.id})"
+                            rel="popover" class="img-fluid img-thumbnail" 
+                            src="${foto_url}" title="Foto da bike" alt="foto">`;
+                },
+                "targets": 2 // Coluna referente à foto.
+            },
+            {
                 "width": "10%",
-                "targets": 1
-            }, // Garante que a coluna da cor terá um tamanho adequado
+                "targets": [1, 2]
+            }, // Garante que as colunas da cor e da foto terão um tamanho adequado
 
             // Define a ordem de prioridade de visibilidade de cada coluna
             {
                 responsivePriority: 10001,
-                targets: 6
-            },
-            {
-                responsivePriority: 10002,
                 targets: 7
             },
             {
-                responsivePriority: 10003,
-                targets: 3
+                responsivePriority: 10002,
+                targets: 8
             },
             {
-                responsivePriority: 10004,
+                responsivePriority: 10003,
                 targets: 4
             },
             {
-                responsivePriority: 10005,
-                targets: 3
-            },
+                responsivePriority: 10004,
+                targets: 5
+            }
         ],
         "language": {
             "url": BASE_URL + "public/js/Portuguese.json"
@@ -236,6 +242,9 @@ function popularTabelaBicicletas() {
             },
             {
                 data: "cores"
+            },
+            {
+                data: "foto_url"
             },
             {
                 data: "nome_modelo"
@@ -262,7 +271,10 @@ function popularTabelaBicicletas() {
                             </button>`;
                 }
             }
-        ]
+        ],
+        drawCallback: function() {
+            configurarZoomImagens($("#popperZoomImagem"))
+        }
     });
 }
 

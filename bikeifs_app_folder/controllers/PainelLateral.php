@@ -53,12 +53,14 @@ class PainelLateral extends CI_Controller
 
         $this->load->model('bicicleta_model');
         $this->load->model('usuario_model');
-        
+
         $bicicleta = $this->bicicleta_model->carregarPorId($id);
         $bicicleta->nome_modelo = ModeloBike::getNomeModelo($bicicleta->modelo);
         $bicicleta->ativa = ($bicicleta->situacao == SituacaoBicicleta::ATIVA);
         $usuario = $this->usuario_model->carregarPorId($bicicleta->id_usuario);
         $bicicleta->dono = $usuario->nome;
+        $bicicleta->foto = trim($bicicleta->foto_url) && file_exists(getcwd() . $bicicleta->foto_url) ?
+            base_url($bicicleta->foto_url) : base_url('public/img/icons/bike-' . strtolower($bicicleta->nome_modelo) . '-colored.png');
 
         $data = array(
             'bicicleta' => $bicicleta

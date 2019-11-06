@@ -12,7 +12,7 @@
 .jumbotron-main {
     box-shadow: 5px 5px 20px gray;
     background: linear-gradient(rgba(30, 30, 50, 0.9), rgba(30, 30, 50, 0.9)), url('http://bikeifs.com/public/img/jumbotrom-bg.jpg');
-  }
+}
 
 .div-datepicker {
     display: inline-flex;
@@ -38,7 +38,6 @@
     .div-datepicker div {
         width: 100% !important;
     }
-
     .pagination {
         justify-content: center !important;
     }
@@ -75,7 +74,7 @@
 
 .btn-filtro {
     width: 100%;
-    border: 1px solid #ffffff8a; 
+    border: 1px solid #ffffff8a;
     text-align: left;
     border-radius: 0.5rem;
     background-color: #FFF;
@@ -151,6 +150,7 @@ table.dataTable tr.dtrg-group td {
 .snackbar-sucesso span {
     background-color: teal !important;
 }
+
 .tooltip-w3 {
     position: relative;
     display: inline-block;
@@ -291,6 +291,17 @@ table.dataTable tr.dtrg-group td {
 
 .img-home.img-thumbnail {
     background-color: #cbcbcbd4;
+}
+
+.img-zoom {
+    max-width: 120px;
+    max-height: 120px;
+    border-radius: 5%;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+img[rel=popover] {
+    cursor: pointer;
 }
 
 .autocomplete {

@@ -102,6 +102,65 @@ function loadingImg(message = '') {
     return "<div class='spinner-border spinner-border-sm'></div>" + message
 }
 
+function configurarZoomImagens(popover) {
+    $('img[rel=popover]').hover(function() {
+        popover.find("#imagem-zoom").attr('src', $(this).attr('src'))
+        popover.toggle()
+        var popper = new Popper($(this), popover, {
+            placement: 'left',
+            modifiers: {
+                flip: {
+                    behavior: ['left', 'right', 'top', 'bottom']
+                },
+                arrow: {
+                    enabled: true
+                }
+            }
+        })
+
+    });
+}
+
+/**
+ * Envia um AJAX com uma imagem para o servidor salvar temporariamente
+ * 
+ * @param {HTMLInputElement} input_file o campo input responsável por receber a imagem
+ * @param {HTMLImageElement} img imagem escolhida pelo usuário
+ * @param {HTMLInputElement} input_path campo input do tipo hidden responsável por armazenar a url da imagem após upload
+ */
+function uploadImg(input_file, img, input_path) {
+    let src_before = img.attr('src')
+
+    img_file = input_file[0].files[0]
+
+    form_data = new FormData()
+    form_data.append('image_file', img_file)
+
+    $.ajax({
+        type: 'POST',
+        url: BASE_URL + 'image/import',
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,
+        success: function(response) {
+            clearErrors()
+            if (response['status'] == 1) {
+                img.attr('src', response['img_path'])
+                input_path.val(response['img_path'])
+            } else {
+                img.attr('src', src_before)
+                input_path.siblings('.invalid-feedback').html(response['error_message'])
+            }
+        },
+        error: function() {
+            img.attr('src', src_before)
+        }
+    })
+
+}
+
 /**
  * Formata uma enviada no formato USA (YYYY-MM-DD) para o formato padrão BR (DD/MM/AAAA)
  * @param {string} data_usa 
@@ -169,6 +228,27 @@ function getDataHoraAtual(separator = ' ') {
 // #####################################################
 // Métodos AJAX utilizados em mais de uma página
 
+function enviarAjaxVerificarBicicleta(id_bicicleta) {
+    $.ajax({
+        type: 'POST',
+        url: BASE_URL + 'bicicleta/verificar',
+        dataType: 'json',
+        data: { id_bicicleta },
+        success: function(response) {
+            if (response['status'] == 1) {
+                snackBarSucesso('Bicicleta verificada com sucesso.')
+            } else {
+                swal.fire("Erro", response['error_message'], "error")
+            }
+            try {
+                atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+            } catch (e) {}
+        },
+        error: function(response) {
+            console.log(response)
+        }
+    })
+}
 
 function enviarAjaxAtivarBicicletas(ids_bicicletas) {
     $.ajax({
@@ -188,8 +268,7 @@ function enviarAjaxAtivarBicicletas(ids_bicicletas) {
             }
             try {
                 atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
-            } catch (e) {
-            }
+            } catch (e) {}
         },
         error: function(response) {
             console.log(response)
@@ -219,8 +298,7 @@ function enviarAjaxDesativarBicicletas(ids_bicicletas) {
             }
             try {
                 atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
-            } catch (e) {
-            }
+            } catch (e) {}
         },
         error: function(response) {
             console.log(response)
@@ -250,8 +328,7 @@ function enviarAjaxAtivarUsuarios(ids_usuarios) {
             }
             try {
                 atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
-            } catch (e) {
-            }
+            } catch (e) {}
         },
         error: function(response) {
             console.log(response)
@@ -281,8 +358,7 @@ function enviarAjaxDesativarUsuarios(ids_usuarios) {
             }
             try {
                 atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
-            } catch (e) {
-            }
+            } catch (e) {}
         },
         error: function(response) {
             console.log(response)

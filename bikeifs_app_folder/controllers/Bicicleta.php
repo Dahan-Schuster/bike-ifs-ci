@@ -50,6 +50,10 @@ class Bicicleta extends CI_Controller
             $bike['obs'] = (!trim($bike['obs']) ? 'Nenhuma observação' : $bike['obs']);
             $bike['nome_modelo'] = ModeloBike::getNomeModelo($bike['modelo']);
             $bike['situacao'] = SituacaoBicicleta::getTipoSituacao($bike['situacao']);
+            $bike['verificada'] = $bike['verificada'] == 't' ? true : false;
+            $bike['foto_url'] = trim($bike['foto_url']) && file_exists(getcwd() . $bike['foto_url']) ?
+                base_url($bike['foto_url']) : base_url('public/img/icons/bike-' . strtolower($bike['nome_modelo']) . '-colored.png');
+
 
             array_push($bicicletasFormatadas, $bike); # adiciona ao array resultado um novo array de objetos
         endforeach;
@@ -157,6 +161,9 @@ class Bicicleta extends CI_Controller
             $bike['obs'] = (!trim($bike['obs']) ? 'Nenhuma observação' : $bike['obs']);
             $bike['nome_modelo'] = ModeloBike::getNomeModelo($bike['modelo']);
             $bike['situacao'] = SituacaoBicicleta::getTipoSituacao($bike['situacao']);
+            $bike['verificada'] = $bike['verificada'] == 't' ? true : false;
+            $bike['foto_url'] = trim($bike['foto_url']) && file_exists(getcwd() . $bike['foto_url']) ?
+                base_url($bike['foto_url']) : base_url('public/img/icons/bike-' . strtolower($bike['nome_modelo']) . '-colored.png');
 
             $bikeAndUser['bikes'] = $bike;      # salva as informações da bike no objeto que contém a bicicleta e seu usuário
             $bikeAndUser['users'] = $userInfo;  # salva as informações do usuário no objeto que contém a bicicleta e seu usuário
@@ -227,24 +234,81 @@ class Bicicleta extends CI_Controller
             $data['id_usuario'] = $this->session->logged_user_id;
         }
 
-        // TODO: se tipo de acesso == funcionário, verificada = true; se não, verificada = false;
-
         ## Fim validação
         if (!empty($response['error_list'])) :
             $response['status'] = 0;
         else :
+
+            # Verifica se deve salvar uma foto para a bike
+            if (!empty($data['foto_url'])) :
+                $arquivo = basename($data['foto_url']);
+                $url_antiga = getcwd() . '/tmp/' . $arquivo;
+                $nova_url = getcwd() . '/public/img/bikes/' . $arquivo;
+
+                rename($url_antiga, $nova_url);
+                $data['foto_url'] = '/public/img/bikes/' . $arquivo;
+            else :
+                unset($data['foto_url']); # Previne que salve uma foto vazia no banco de dados
+            endif;
+
+            # Verifica se a bike foi salva por um funcionário e, portanto, já se encontra verificada
+            if ($this->session->permissions_level == 'funcionario')
+                $data['verificada'] = 't'; // true
+            else
+                $data['verificada'] = 'f'; // false
+
             # Verifica se um ID foi passado por parâmetro (em caso de edição)
             if (empty($data['id'])) :   # Se não, insere um novo registro
                 unset($data['id']);
-                $this->bicicleta_model->inserir($data);
+                $id_bicicleta = $this->bicicleta_model->inserir($data);
             else :                      # Se sim, edita o registro referente ao ID
-                $id = $data['id'];      # Armazena o ID em uma variável ...
+                $id_bicicleta = $data['id'];      # Armazena o ID em uma variável ...
                 unset($data['id']);     # ... e remove o ID da lista de campos para editar
-                $this->bicicleta_model->editar($id, $data);
+                $this->bicicleta_model->editar($id_bicicleta, $data);
             endif;
+
+            # Se a bike não estiver verificada, cria uma nova requisição de verificação
+            if ($data['verificada'] == 'f') {
+                $this->load->model('requisicao_model');
+                $this->requisicao_model->apagarRequisicoesEmAberto($id_bicicleta);
+                $this->requisicao_model->inserir(
+                    array(
+                        'atendida' => 'f',
+                        'data_hora' => date('Y-m-d H:i:s'),
+                        'id_bicicleta' => $id_bicicleta
+                    )
+                );
+            }
         endif;
 
         # Retorna o array de resposta à requisição AJAX
+        echo json_encode($response);
+    }
+
+    /**
+     * Função acessada via requisições AJAX para verificar Bicicletas
+     */
+    public function verificar()
+    {
+        # Verifica se o método está sendo acessado por uma requisição AJAX
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido acesso direto aos scripts.");
+
+        # Array de resposta
+        $response = array();
+        # status == 0: algo deu errado | status == 1: tudo certo
+        $response['status'] = 1;
+
+        # Verifica se o usuário logado pode verificar bicicletas (apenas funcionários podem)
+        if ($this->session->permissions_level == 'funcionario') {
+            # Dados enviados via POST
+            $id_bicicleta = $this->input->post('id_bicicleta');
+            $this->bicicleta_model->verificar($id_bicicleta, $this->session->logged_user_id);
+        } else {
+            $response['status'] = 0;
+            $response['error_message'] = 'Você não possui permissão para verificar bicicletas.';
+        }
+
         echo json_encode($response);
     }
 

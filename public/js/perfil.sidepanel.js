@@ -9,12 +9,12 @@ function openNavPerfil() {
     else
         document.getElementById("sidenav-perfil").style.width = "300px";
 
-    document.getElementById("sidenav-perfil").style.top = `${90 - scrollY}px`
+    document.getElementById("sidenav-perfil").style.top = 90 - scrollY > 0 ? `${90 - scrollY}px` : 0
 
     if (!document.onscroll) {
         document.onscroll = function() {
-            document.getElementById("sidenav-perfil").style.top = `${90 - scrollY}px`
-            document.getElementById("sidenav-bike").style.top = `${90 - scrollY}px`
+            document.getElementById("sidenav-perfil").style.top = 90 - scrollY > 0 ? `${90 - scrollY}px` : 0
+            document.getElementById("sidenav-bike").style.top = 90 - scrollY > 0 ? `${90 - scrollY}px` : 0
         }
     }
 

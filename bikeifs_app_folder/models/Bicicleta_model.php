@@ -13,7 +13,7 @@ class Bicicleta_model extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-    
+
     /**
      * Exclui registros da tabela Bicicleta.
      * 
@@ -89,6 +89,21 @@ class Bicicleta_model extends CI_Model
     }
 
     /**
+     * Verifica as Bicicletas encontradas com o array de IDs enviado
+     * 
+     * @param array $ids - os ids das bicicletas a serem verificadas
+     */
+    public function verificar($id_bicicleta, $id_funcionario)
+    {
+        $this->db->where('id', $id_bicicleta);
+        $this->db->update('BICICLETA', array('verificada' => 't'));
+
+        $this->db->where('id_bicicleta', $id_bicicleta);
+        $this->db->update('REQUISICAO', array('atendida' => 't', 'id_funcionario' => $id_funcionario));
+
+    }
+
+    /**
      * Ativa as Bicicletas encontradas com o array de IDs enviado
      * 
      * @param array $ids - os ids das bicicletas a seresm ativadas
@@ -132,7 +147,7 @@ class Bicicleta_model extends CI_Model
         $bmxs = $this->db->where('modelo', ModeloBike::BMX)->from('BICICLETA')->count_all_results();
         $downhills = $this->db->where('modelo', ModeloBike::DOWNHILL)->from('BICICLETA')->count_all_results();
         $eletricas = $this->db->where('modelo', ModeloBike::ELETRICA)->from('BICICLETA')->count_all_results();
-        
+
         return array(
             'urbanas' => $urbanas,
             'dobraveis' => $dobraveis,

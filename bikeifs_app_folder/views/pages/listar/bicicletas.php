@@ -25,13 +25,15 @@
         <thead class="bg-default-primary">
             <tr>
                 <th>&#9432;</th>
-                <th>Cor</th>
+                <th class="none">Cores</th>
+                <th class="min-desktop">Foto</th>
                 <th>Modelo</th>
                 <th>Marca</th>
                 <th class="none">Obs</th>
                 <th>Aro</th>
                 <th>Dono</th>
                 <th>Situacao</th>
+                <th>Verificada</th>
                 <th>Editar</th>
             </tr>
         </thead>
@@ -67,6 +69,18 @@
                             </div>
                         </div>
                         <span class="invalid-feedback"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="bike_img" class="bmd-label-floating mb-0 pb-0">Foto</label>
+                        <div class="col-lg-12">
+                            <img rel="popover" class="img-fluid img-thumbnail img-zoom" src="" id="bike_img_path">
+                            <label class="btn btn-info">
+                                <i class="material-icons"></i>&nbsp;&nbsp;Importar imagem
+                                <input type="file" id="btn_upload_bike_img" accept="image/*" style="display: none">
+                            </label>
+                            <input type="hidden" id="bike_img" name="foto_url">
+                            <span class="invalid-feedback"></span>
+                        </div>
                     </div>
                     <div class="form-row">
                         <div id="divInputMarca" class="form-group col-12 col-sm-4">
@@ -119,7 +133,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary mr-auto closePopover" data-dismiss="modal">Cancelar</button>
-                    <button id="btnEnviar" type="submit" class="btn btn-primary closePopover">Salvar</button>
+                    <button id="btnEnviar" type="submit" class="btn btn-raised btn-primary closePopover">Salvar</button>
                 </div>
             </form>
         </div>
@@ -129,4 +143,5 @@
 <!---------------------->
 
 <?php include_once('public/views/dialogs/popperEscolherCores.html'); ?>
+<?php include_once('public/views/dialogs/popperZoomImagem.html'); ?>
 <?php include_once('public/views/dialogs/modalPesquisarUsuario.html'); ?>
