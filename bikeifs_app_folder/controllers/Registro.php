@@ -19,6 +19,9 @@ class Registro extends CI_Controller
 
         $this->load->model('registro_model');
         $this->load->model('saida_model');
+        
+        # Define o fuso horário do sistema
+        date_default_timezone_set('America/Maceio');
 
         if (!isset($this->session->userdata['permissions_level']))
             header('location: ' . base_url('home/view/login'));
