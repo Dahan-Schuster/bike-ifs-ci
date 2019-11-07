@@ -314,6 +314,7 @@ function configurarModalCadastroRegistro() {
     $("#modalRegistroManual").on('show.bs.modal', function() {
         $(this).find('form').trigger('reset')
         $(this).find('#selectedBikeColor').css('background', '')
+        $(this).find('#selectBicicleta').html('<option value="">Primeiramente, selecione um usuário.</option>');
     })
 
     $("#modalRegistroAutomatico").on('show.bs.modal', function() {
