@@ -29,6 +29,13 @@ $(document)
             .removeClass('active')
         $("#navLinkRegistros")
             .addClass('active')
+
+
+        onAjaxSend((event, request, settings) =>  {
+            if (settings.url.includes('registro/checkin')) {
+                atualizarDataTable(null, datatable)
+            }
+        })
     });
 
 

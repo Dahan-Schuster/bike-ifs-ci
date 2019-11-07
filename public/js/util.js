@@ -29,7 +29,22 @@ $(function() {
         .on('selectstart', function() {
             return false
         })
+
+
 });
+
+/**
+ * Define um listener global para requisições AJAX
+ * 
+ * @param {function} callback função a ser chamada quando requisições AJAX ocorrerem
+ */
+function onAjaxSend(callback) {
+    $(document).ajaxSend(
+        function(event, request, settings) {
+            return callback(event, request, settings)
+        }
+    );
+}
 
 /**
  * Fecha o modal enviado por parâmetro
