@@ -14,6 +14,7 @@ $(document)
             '#tableBikes',
             datatable)
 
+        configurarBotaoUploadFoto()
         configurarPopoverCores();
         configurarZoomImagens($("#popperZoomImagem"))
 
@@ -33,8 +34,11 @@ $(document)
                     .find('#divCores')
                     .css('background', 'black')
                 $('#formSalvarBike')
-                    .find('#selectUsuario')
-                    .val('')
+                    .find('#bike_img')
+                    .attr('src', '');
+                $('#formSalvarBike')
+                    .find('#bike_img_path')
+                    .val('');
                 $('#popoverEscolherCores')
                     .find('#popoverCoresBody')
                     .find('.selecionada')
@@ -195,13 +199,23 @@ function popularTabelaBicicletas() {
                                 type="checkbox" class="custom-switch hidden" id="switchSituacao${row.id}" ${checked}>
                             <label class="custom-switch-label" for="switchSituacao${row.id}"></label>`;
                 },
-                "targets": -2 // Coluna referente à situação.
+                "targets": -3 // Coluna referente à situação.
+            },
+            {
+                // Define um o ícone referente à verificação da bike
+                "render": function(verificada, type, row) {
+                    return `<i class="material-icons" 
+                                ${verificada ? 
+                                    ' title="Bike verificada"> verified_user' : 
+                                    ' title="Em espera"> highlight_off'}</i>`
+                },
+                "targets": -2 // Coluna referente à verificação.
             },
             {
                 // Define uma imagem da foto da bike
                 "render": function(foto_url, type, row) {
                     return `<img onclick="abrirPainelLateralBike(${row.id})"
-                            rel="popover" class="img-fluid img-thumbnail" 
+                            rel="popover" class="dt-foto img-fluid img-thumbnail" 
                             src="${foto_url}" title="Foto da bike" alt="foto">`;
                 },
                 "targets": 2 // Coluna referente à foto.
@@ -262,6 +276,9 @@ function popularTabelaBicicletas() {
                 data: "situacao"
             },
             {
+                data: "verificada"
+            },
+            {
                 "render": function() {
                     return `<button class="btn btn-primary bmd-btn-icon" onclick='atualizarCamposModal(this)'
                                     data-toggle="modal" data-target="#modalSalvarBike" 
@@ -281,6 +298,13 @@ function popularTabelaBicicletas() {
 // Fim Métodos de controle
 
 // Métodos chamados por outros métodos
+
+function configurarBotaoUploadFoto() {
+    $("#btn_upload_bike_img").change(function() {
+        uploadImg($(this), $("#bike_img_path"), $("#bike_img"))
+    })
+}
+
 
 function configurarPopoverCores() {
     var popover = $("#popoverEscolherCores")
@@ -311,13 +335,17 @@ function atualizarCamposModal(botao) {
 
     let id = bike.id;
     let cores = bike.cores;
+    let foto = bike.foto_url;
     let marca = bike.marca;
     let aro = bike.aro;
     let modelo = bike.modelo;
     let obs = bike.obs;
 
+    console.log(foto)
+
     $('#modalSalvarBike').find('.modal-body').find('#idBicicleta').val(id);
     $('#modalSalvarBike').find('.modal-body').find('#inputCores').val(cores);
+    $('#modalSalvarBike').find('.modal-body').find('#bike_img').attr('src', foto);
     $('#modalSalvarBike').find('.modal-body').find('#divCores').css('background', cores);
     $('#modalSalvarBike').find('.modal-body').find('#inputMarca').val(marca);
     $('#modalSalvarBike').find('.modal-body').find('#inputObs').val(obs);

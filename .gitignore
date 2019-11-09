@@ -1,5 +1,7 @@
 .DS_Store
 
+tmp/
+
 bikeifs_app_folder/cache/*
 !bikeifs_app_folder/cache/index.html
 

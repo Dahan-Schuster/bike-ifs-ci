@@ -25,13 +25,14 @@
         <thead class="bg-default-primary">
             <tr>
                 <th>&#9432;</th>
-                <th class="none">Cores</th>
+                <th class="min-tablet">Cores</th>
                 <th class="min-desktop">Foto</th>
-                <th>Modelo</th>
+                <th class="none">Modelo</th>
                 <th>Marca</th>
-                <th>Obs</th>
-                <th>Aro</th>
+                <th class="none">Obs</th>
+                <th class="min-tablet">Aro</th>
                 <th>Situacao</th>
+                <th>Verificada</th>
                 <th>Editar</th>
             </tr>
         </thead>
@@ -71,12 +72,12 @@
                     <div class="form-group">
                         <label for="bike_img" class="bmd-label-floating mb-0 pb-0">Foto</label>
                         <div class="col-lg-12">
-                            <img rel="popover" class="img-fluid img-thumbnail img-zoom" src="" id="bike_img_path">
+                            <img rel="popover" class="img-fluid img-thumbnail img-zoom" src="" id="bike_img">
                             <label class="btn btn-info">
                                 <i class="material-icons"></i>&nbsp;&nbsp;Importar imagem
                                 <input type="file" id="btn_upload_bike_img" accept="image/*" style="display: none">
                             </label>
-                            <input type="hidden" id="bike_img" name="foto_url">
+                            <input type="hidden" id="bike_img_path" name="foto_url">
                             <span class="invalid-feedback"></span>
                         </div>
                     </div>
@@ -126,4 +127,6 @@
 
 <?php include_once('public/views/dialogs/popperEscolherCores.html'); ?>
 <?php include_once('public/views/dialogs/popperZoomImagem.html'); ?>
-<script>const id_usuario = <?= $id_usuario ?> </script>
+<script>
+    const id_usuario = <?= $id_usuario ?>
+</script>

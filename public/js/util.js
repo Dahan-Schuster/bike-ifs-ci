@@ -143,7 +143,7 @@ function configurarZoomImagens(popover) {
  * @param {HTMLImageElement} img imagem escolhida pelo usuário
  * @param {HTMLInputElement} input_path campo input do tipo hidden responsável por armazenar a url da imagem após upload
  */
-function uploadImg(input_file, img, input_path) {
+function uploadImg(input_file, input_path, img) {
     let src_before = img.attr('src')
 
     img_file = input_file[0].files[0]
@@ -242,6 +242,12 @@ function getDataHoraAtual(separator = ' ') {
 
 // #####################################################
 // Métodos AJAX utilizados em mais de uma página
+
+// Verificar bicicletas
+
+function verificarBicicleta(bike) {
+    enviarAjaxVerificarBicicleta(bike)
+}
 
 function enviarAjaxVerificarBicicleta(id_bicicleta) {
     $.ajax({

@@ -27,7 +27,7 @@ class Image extends CI_Controller
 
         $config['upload_path'] = './tmp/';
         $config['allowed_types'] = "gif|png|jpg";
-        $config['overwrite'] = TRUE;
+        $config['overwrite'] = FALSE;
 
         $this->load->library('upload', $config);
         $this->upload->initialize($config);

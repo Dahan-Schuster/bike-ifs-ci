@@ -9,6 +9,11 @@
     margin: 40px auto;
 }
 
+.dt-foto {
+    width: 4rem;
+    height: auto;
+}
+
 .jumbotron-main {
     box-shadow: 5px 5px 20px gray;
     background: linear-gradient(rgba(30, 30, 50, 0.9), rgba(30, 30, 50, 0.9)), url('http://bikeifs.com/public/img/jumbotrom-bg.jpg');
