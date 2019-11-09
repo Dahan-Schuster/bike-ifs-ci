@@ -20,6 +20,9 @@
             <button id="btnSelecionarLinhas" title="Selecionar todos" type="button" class="btn accent-color bmd-btn-fab bmd-btn-fab-sm text-light">
                 <i class="material-icons">check_box_outline_blank</i>
             </button>
+            <button onclick="atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)" title="Atualizar tabela" type="button" class="btn btn-secondary bmd-btn-fab bmd-btn-fab-sm text-light">
+                <i class="material-icons">refresh</i>
+            </button>
         </caption>
         <thead class="bg-default-primary">
             <tr>
