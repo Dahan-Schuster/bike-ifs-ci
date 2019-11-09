@@ -68,7 +68,7 @@
         </div>
     </div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="<?= base_url() ?>public/js/snackbar.min.js"></script>
 <script src="<?= base_url() ?>public/js/util.js"></script>
 <script>

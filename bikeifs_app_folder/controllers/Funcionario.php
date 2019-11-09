@@ -173,10 +173,14 @@ class Funcionario extends CI_Controller
 
         if ($page == 'bicicletas' || $page == 'tags' || $page == 'registros-do-dia') {
             array_push($data['scripts'], 'pesquisar.usuario.js');
+
             if ($page == 'bicicletas') :
                 array_push($data['scripts'], 'escolher.cores.js');
+
             else :
                 array_push($data['scripts'], 'ler.tag.js');
+                array_push($data['scripts'], 'jquery.ddslick.min.js');
+
                 if ($page == 'registros-do-dia') :
                     $data['pode_registrar'] = TRUE;
                 endif;

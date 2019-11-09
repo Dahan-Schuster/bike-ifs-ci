@@ -44,7 +44,7 @@ class Admin extends CI_Controller
         $this->load->view("pages/admin/perfil", $data);
         $this->load->view('templates/footer-admin', $data);
     }
-  
+
 
     public function view($page = 'home')
     {
@@ -84,7 +84,6 @@ class Admin extends CI_Controller
 
             $page = 'registros';
             $page_dir = "pages/excluir/";
-
         } else {
             $page = 'home';
             $page_dir = 'pages/';
@@ -136,7 +135,7 @@ class Admin extends CI_Controller
             if ($page == 'bicicletas') :
                 array_push($data['scripts'], 'escolher.cores.js');
 
-            elseif ($page == 'tags' || $page == 'registros-do-dia') :
+            else :
                 array_push($data['scripts'], 'ler.tag.js');
 
                 if ($page == 'registros-do-dia') :

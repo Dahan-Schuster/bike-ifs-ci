@@ -6,7 +6,7 @@
             <div class="col-lg-3 col-md-5">
                 <div class="perfil-sidebar">
                     <div class="perfil-foto">
-                        <img src="<?= base_url() ?>/public/img/icons/admin.png" title="Administrador" class="img-responsive" alt="Admin">
+                        <img src="<?= base_url() ?>public/img/icons/admin.png" title="Administrador" class="img-responsive" alt="Admin">
                     </div>
                     <div class="perfil-titulo">
                         <div id="perfil-nome" class="perfil-titulo-nome">

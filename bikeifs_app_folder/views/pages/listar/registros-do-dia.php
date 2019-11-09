@@ -6,13 +6,13 @@
         <div class="col-12 col-md-3">
             <button data-backdrop="static" class="btn btn-raised bg-accent text-light" type="button" data-toggle="modal" data-target="#modalRegistroManual">
                 <span class="mr-3">Registrar entrada</span>
-                <img src="<?= base_url() ?>/public/img/icons/registrar.png" class="img-responsive ml-3" title="Registrar entrada" alt="Registrar entrada">
+                <img src="<?= base_url() ?>public/img/icons/registrar.png" class="img-responsive ml-3" title="Registrar entrada" alt="Registrar entrada">
             </button>
         </div>
         <div class="col-12 offset-md-1 col-md-3">
             <button class="btn btn-raised py-1" style="background: lightgray;" type="button" data-toggle="modal" data-target="#modalLerTag">
                 <span class="mr-3">Ler Tag Rfid</span>
-                <img src="<?= base_url() ?>/public/img/icons/rfid.png" class="img-responsive ml-3" title="Ler Tag RFID" alt="Ler Tag Rfid">
+                <img src="<?= base_url() ?>public/img/icons/rfid.png" class="img-responsive ml-3" title="Ler Tag RFID" alt="Ler Tag Rfid">
             </button>
         </div>
     <?php endif; ?>
@@ -71,7 +71,7 @@
                         <span class="invalid-feedback"></span>
                     </div>
                     <div class="form-row">
-                        <div id="divSelectBicicleta" class="form-group col-12 col-sm-6">
+                        <div id="divSelectBicicleta" class="form-group col-12 ">
                             <label for="selectBicicleta" class="bmd-label-floating">
                                 Selecione a bicicleta
                             </label>
@@ -80,12 +80,12 @@
                             </select>
                             <span class="invalid-feedback"></span>
                         </div>
-                        <div class="form-group col-12 col-sm-6">
+                        <!--<div class="form-group col-12 col-sm-6">
                             <label for="selectedBikeColor" class="bmd-label-floating">Cor da bicicleta selecionada</label>
                             <div id="selectedBikeColor" class="form-control bike-color">
                                 <i class="material-icons">directions_bike</i>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="form-group">
                         <label for="inputObs">Observações sobre a entrada</label>
@@ -126,7 +126,7 @@
                 <div class="form-group">
                     <label for="divBicicleta">Bicicleta</label>
                     <div id="divBicicleta" class="form-control bike-color">
-                        <img src="<?= base_url() ?>/public/img/icons/bycicle.png" title="Bike" alt="">
+                        <img src="<?= base_url() ?>public/img/icons/bycicle.png" title="Bike" alt="">
                     </div>
                     <input type="hidden" id="bikeId" />
                 </div>
@@ -157,4 +157,5 @@
 <?php
 include_once('public/views/dialogs/modalPesquisarUsuario.html');
 include_once('public/views/dialogs/modalLerTag.html');
+include_once('public/views/dialogs/popperZoomImagem.html');
 ?>

@@ -77,9 +77,11 @@ class Registro extends CI_Controller
         else :
             $bike = $this->bicicleta_model->carregarPorId($data['id_bicicleta']);
             $user = $this->usuario_model->carregarPorId($bike->id_usuario);
+
+            $bike->verificada = $bike->verificada == 'f' ? false : true;
             if (!$bike) :
                 $response['error_list']['#divSelectBicicleta'] = 'Bike não cadastrada. Selecione um usuário da lista e então escolha uma entre suas bicicletas.';
-            elseif ($bike->situacao == SituacaoBicicleta::INATIVA || $user->situacao == SituacaoUsuario::INATIVO) : // TODO: Bike verificada/não verificada
+            elseif ($bike->situacao == SituacaoBicicleta::INATIVA || !$bike->verificada || $user->situacao == SituacaoUsuario::INATIVO) :
                 $response['objetos']['bicicleta'] = $bike;
                 $response['objetos']['usuario'] = $user;
             elseif ($this->registro_model->listarRegistrosEmAberto($data['id_bicicleta'])) :

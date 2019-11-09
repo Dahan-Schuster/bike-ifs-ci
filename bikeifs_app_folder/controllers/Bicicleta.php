@@ -51,8 +51,7 @@ class Bicicleta extends CI_Controller
             $bike['nome_modelo'] = ModeloBike::getNomeModelo($bike['modelo']);
             $bike['situacao'] = SituacaoBicicleta::getTipoSituacao($bike['situacao']);
             $bike['verificada'] = $bike['verificada'] == 't' ? true : false;
-            $bike['foto_url'] = trim($bike['foto_url']) && file_exists(getcwd() . $bike['foto_url']) ?
-                base_url($bike['foto_url']) : base_url('public/img/icons/bike-' . strtolower($bike['nome_modelo']) . '-colored.png');
+            $bike['foto_url'] = $this->getBikeFoto($bike);
 
 
             array_push($bicicletasFormatadas, $bike); # adiciona ao array resultado um novo array de objetos
@@ -162,8 +161,7 @@ class Bicicleta extends CI_Controller
             $bike['nome_modelo'] = ModeloBike::getNomeModelo($bike['modelo']);
             $bike['situacao'] = SituacaoBicicleta::getTipoSituacao($bike['situacao']);
             $bike['verificada'] = $bike['verificada'] == 't' ? true : false;
-            $bike['foto_url'] = trim($bike['foto_url']) && file_exists(getcwd() . $bike['foto_url']) ?
-                base_url($bike['foto_url']) : base_url('public/img/icons/bike-' . strtolower($bike['nome_modelo']) . '-colored.png');
+            $bike['foto_url'] = $this->getBikeFoto($bike);
 
             $bikeAndUser['bikes'] = $bike;      # salva as informações da bike no objeto que contém a bicicleta e seu usuário
             $bikeAndUser['users'] = $userInfo;  # salva as informações do usuário no objeto que contém a bicicleta e seu usuário
@@ -370,14 +368,24 @@ class Bicicleta extends CI_Controller
             if (sizeof($bicicletas) > 0) {
                 echo '<option value="">Selecione uma bicicleta</option>';
                 foreach ($bicicletas as $bike) {
+                    $foto_url = $this->getBikeFoto($bike);
                     $bike['marca'] = (!trim($bike['marca']) ? "Marca não informada" : $bike['marca']);
-                    echo '<option value="' . $bike['id'] . '" data-color="' . $bike['cores'] . '">' .
-                        ModeloBike::getNomeModelo($bike['modelo']) . ', ' .
-                        $bike['marca'] . ', ' . $bike['aro'] .
+                    echo '<option 
+                            value="' . $bike['id'] . '" ' .
+                            'data-imagesrc="' . $foto_url .'">' .
+                            ModeloBike::getNomeModelo($bike['modelo']) . ', ' .
+                            $bike['marca'] . ', ' . $bike['aro'] .
                         '</option>';
                 }
             } else
                 echo '<option value="">Nenhuma bicicleta cadastrada.</option>';
         }
+    }
+
+    private function getBikeFoto($bike)
+    {
+        if (!isset($bike['nome_modelo'])) $bike['nome_modelo'] =  ModeloBike::getNomeModelo($bike['modelo']);
+        return trim($bike['foto_url']) && file_exists(getcwd() . $bike['foto_url']) ?
+                base_url($bike['foto_url']) : base_url('public/img/icons/bike-' . strtolower($bike['nome_modelo']) . '-colored.png');
     }
 }

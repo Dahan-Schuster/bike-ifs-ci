@@ -4,6 +4,7 @@
   <div class="container">
     Bike IFS
   </div>
+  <script language="javascript" src="<?= base_url() ?>public/js/jquery.min.js"></script>
   <script language="javascript" src="<?= base_url() ?>public/js/popper.min.js"></script>
   <script language="javascript" src="<?= base_url() ?>public/js/bootstrap-material-design.js"></script>
   <script language="javascript" src="<?= base_url() ?>public/js/botao.topo.js"></script>

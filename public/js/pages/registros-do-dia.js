@@ -31,7 +31,7 @@ $(document)
             .addClass('active')
 
 
-        onAjaxSend((event, request, settings) =>  {
+        onAjaxSend((event, request, settings) => {
             if (settings.url.includes('registro/checkin')) {
                 atualizarDataTable(null, datatable)
             }
@@ -45,12 +45,13 @@ $(document)
 $("#formRegistrarEntradaManual").submit(function(form) {
     form.preventDefault();
 
+    const data = `id_bicicleta=${$('.dd-selected-value').val()}&${$(this).serialize()}`
+
     $.ajax({
         type: 'POST',
         url: BASE_URL + 'registro/checkin',
         dataType: 'json',
-        data: $(this)
-            .serialize(),
+        data: data,
         beforeSend: function() {
             $("#btnCheckinManual")
                 .html(loadingImg('Validando dados...'))
@@ -334,6 +335,9 @@ function configurarModalCadastroRegistro() {
  * Configura o comportamento dos selects Usuário e Bicicleta no modal de inserção de registros
  */
 function configurarSelectBicicleta() {
+    $('#selectBicicleta').ddslick({
+        width: '100%'
+    })
 
     // Atualizar select bicicleta ao escolher um usuário
     $('#modalRegistroManual').find('#selectUsuario').on('change', function() {
@@ -344,20 +348,26 @@ function configurarSelectBicicleta() {
                 url: BASE_URL + 'bicicleta/gerarOpcoesDeBikesPorUsuario',
                 data: { id_usuario },
                 success: function(html) {
+                    $('#selectBicicleta').ddslick('destroy')
                     $('#modalRegistroManual').find('#selectBicicleta').html(html);
+
+                    // Plugin JQuery que irá transformar os atributos data-imagesrc de cada option em imagens
+                    // Esses atributos são preenchidos pelo controlador com as fotos da bikes
+                    $('#selectBicicleta').ddslick({
+                        width: '100%',
+                        height: '220px',
+                        onSelected: function() {
+                            configurarZoomImagens($("#popperZoomImagem"))
+                        }
+                    });
+
+                    configurarZoomImagens($("#popperZoomImagem"))
                 }
             });
         } else {
             $('#modalRegistroManual').find('#selectBicicleta').html('<option value="">Primeiramente, selecione um usuário.</option>');
         }
     });
-
-    // Atualizar a div cores ao escolher uma bicicleta
-    $('#modalRegistroManual').find('#selectBicicleta').change(function() {
-        var cores = $('#selectBicicleta option:selected').data('color');
-        if (!cores) cores = '#fff'
-        $('#modalRegistroManual').find("#selectedBikeColor").css('background', cores)
-    })
 
 }
 
@@ -431,31 +441,45 @@ function alertarBicicletaOuUsuarioInativos(objetos) {
         allowOutsideClick: false,
         title: 'Permissão negada',
         html: `Um ou mais problemas foram encontrados com a bicicleta e o usuário. Por favor, verifique os erros abaixo e tome as devidas providências.
-                <hr><div class="row d-fler justify-content-center">
+                <hr><div class="row d-flex justify-content-center">
                 <div class="row col-12">
+                <span class="col-6">Bike verificada</span> <input 
+                type="radio" class="custom-switch hidden" id="radioBikeVerificada" 
+                        ${objetos.bicicleta.verificada ? 'checked' : ''}>
+                <label class="custom-switch-label" for="radioBikeVerificada"></label>
+                </div>
+                <div class="row col-12 my-4">
                 <span class="col-6">Situação da bike</span> <input 
-                    type="checkbox" class="custom-switch hidden" id="switchSituacaoBike" ${objetos.bicicleta.situacao == 0 ? 'checked' : ''}>
+                    type="checkbox" class="custom-switch hidden" id="switchSituacaoBike" 
+                        ${objetos.bicicleta.situacao == 0 ? 'checked' : ''}>
                 <label class="custom-switch-label" for="switchSituacaoBike"></label>
                 </div>
                 <div class="row col-12">
                 <span class="col-6">Situação do usuário</span> <input 
-                    type="checkbox" class="custom-switch hidden" id="switchSituacaoUser" ${objetos.usuario.situacao == 0 ? 'checked' : ''}>
+                    type="checkbox" class="custom-switch hidden" id="switchSituacaoUser" 
+                        ${objetos.usuario.situacao == 0 ? 'checked' : ''}>
                 <label class="custom-switch-label" for="switchSituacaoUser"></label>
-                </div>`, // TODO: bike verificada/não verificada
+                </div>`,
         showCancelButton: true,
         confirmButtonText: 'Enviar e Registrar entrada',
-        cancelButtonText: 'Enviar'
+        cancelButtonText: 'Enviar',
+        showCloseButton: true
     }).then((querRegistrar) => {
-        if ($('#switchSituacaoBike').is(':checked')) {
-            enviarAjaxAtivarBicicletas([objetos.bicicleta.id])
+        if (querRegistrar.dismiss != 'close') {
+            if ($('#radioBikeVerificada').is(':checked')) {
+                enviarAjaxVerificarBicicleta(objetos.bicicleta.id)
+            }
+            if ($('#switchSituacaoBike').is(':checked')) {
+                enviarAjaxAtivarBicicletas([objetos.bicicleta.id])
+            }
+            if ($('#switchSituacaoUser').is(':checked')) {
+                enviarAjaxAtivarUsuarios([objetos.usuario.id])
+            }
+            if (querRegistrar.value)
+                $('#btnCheckinManual').click()
+            else
+                swal.fire('Sucesso', 'Operação realizada com sucesso. Tente registrar a entrada novamente', 'success')
         }
-        if ($('#switchSituacaoUser').is(':checked')) {
-            enviarAjaxAtivarUsuarios([objetos.usuario.id])
-        }
-        if (querRegistrar.value)
-            $('#btnCheckinManual').click()
-        else
-            swal.fire('Sucesso', 'Operação realizada com sucesso. Tente registrar a entrada novamente', 'success')
     })
 }
 
