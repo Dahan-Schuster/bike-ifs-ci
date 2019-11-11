@@ -23,6 +23,7 @@ class Registro extends CI_Controller
         # Define o fuso horário do sistema
         date_default_timezone_set('America/Maceio');
 
+        # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level']))
             header('location: ' . base_url('home/view/login'));
     }

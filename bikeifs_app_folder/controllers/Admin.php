@@ -13,6 +13,7 @@ class Admin extends CI_Controller
         $this->load->library('session');
         $this->load->model('administrador_model');
 
+        # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'admin')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");

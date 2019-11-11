@@ -23,6 +23,7 @@ class Usuario extends CI_Controller
      */
     public function index()
     {
+        # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
@@ -42,6 +43,7 @@ class Usuario extends CI_Controller
     public function home()
     {
 
+        # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
@@ -61,6 +63,7 @@ class Usuario extends CI_Controller
     public function historico()
     {
 
+        # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
@@ -90,6 +93,7 @@ class Usuario extends CI_Controller
     public function bicicletas()
     {
 
+        # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
@@ -121,6 +125,7 @@ class Usuario extends CI_Controller
 
     public function perfil()
     {
+        # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
