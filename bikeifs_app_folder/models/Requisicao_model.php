@@ -70,7 +70,6 @@ class Requisicao_model extends CI_Model
         return ($result->num_rows() > 0) ? $result->row() : NULL;
     }
 
-
     /**
      * Lista todos os registros da tabela Requisicao
      * 
@@ -79,6 +78,17 @@ class Requisicao_model extends CI_Model
     public function listarTodos()
     {
         $result = $this->db->get('REQUISICAO');
+        return ($result->num_rows() > 0) ? $result->result_array() : NULL;
+    }
+
+    /**
+     * Lista todos os registros da tabela Requisicao
+     * 
+     * @return array - Array associativo com os registros e seus atributos. 
+     */
+    public function listarRequisicoesEmAberto()
+    {
+        $result = $this->db->where('atendida', 'f')->get('REQUISICAO');
         return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 

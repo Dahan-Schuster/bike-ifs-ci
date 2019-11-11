@@ -84,5 +84,7 @@ $route['registro/checkout/desfazer']['POST'] = 'registro/undo_checkout';
 $route['tagRFID']['POST'] = 'tagRFID/insert';
 $route['tagRFID']['GET'] = 'tagRFID/select_all';
 
+$route['pendencias']['GET'] = 'requisicao/select_all_open';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
