@@ -9,6 +9,14 @@
     margin: 40px auto;
 }
 
+.lista-pendencias {
+    overflow-y: scroll;
+    width: 100%;
+    height: auto;
+    max-height: 60rem;
+    background-color: #fff;
+}
+
 .dd-option-image {
     box-shadow: 1px 1px 5px gray;
     border-radius: 50%;
