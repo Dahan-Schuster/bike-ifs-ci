@@ -139,7 +139,7 @@ class Funcionario extends CI_Controller
     public function listar($page = NULL)
     {
 
-        if ($this->session->userdata['permissions_level'] != 'funcionario')
+        if (isset($this->session->permissions_level) && $this->session->userdata['permissions_level'] != 'funcionario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
         elseif (!$page || !file_exists(APPPATH . "views/pages/listar/$page.php"))
             show_404();
