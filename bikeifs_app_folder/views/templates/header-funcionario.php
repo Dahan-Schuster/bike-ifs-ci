@@ -56,7 +56,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a id="navLinkPendencias" class="nav-link" href="<?= base_url('funcionario/listar/pendencias') ?>">
+                            <a id="navLinkPendencias" class="nav-link mr-3" href="<?= base_url('funcionario/listar/pendencias') ?>">
                                 Pendências
                             </a>
                         </li>
