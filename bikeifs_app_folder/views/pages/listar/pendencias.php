@@ -4,7 +4,7 @@
     </span>
 </div>
 <hr class="my-3">
-<div class="container">&#1F609;
+<div class="container">
     <div id="listaPendencias" class="lista-pendencias">
         
     </div>

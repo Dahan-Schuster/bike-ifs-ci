@@ -31,7 +31,17 @@ const listarPendencias = () => {
 }
 
 const criarHtmlListaPendencias = pendencias => {
-    console.log(pendencias)
+    pendencias.forEach(item => adicionarItemNaLista(item))
+}
+
+const adicionarItemNaLista = item => $('#listaPendencias').append(criarItemLista(item))
+
+
+const criarItemLista = item => {
+    let div = $('<div class="pendencia-item">')
+    div.attr('id', `itemPendencia${item.pendencias.id}`)
+    div.html(item.users.nome)
+    return div
 }
 
 const avisarListaDePendenciasVazia = () => {
@@ -39,4 +49,4 @@ const avisarListaDePendenciasVazia = () => {
     $('#listaPendencias').html(avisoNenhumaPendencia)
 }
 
-const criarHtmlNenhumaPendencia = () => $('<div class="pendencia-item">').html('Nenuma pendência encontrada. Fique tranquilo! Avisaremos quando uma nova requisição chegar &#1F609;')
+const criarHtmlNenhumaPendencia = () => $('<div class="pendencia-item nenhuma-pendencia">').html('Nenuma pendência encontrada. Fique tranquilo! Avisaremos quando uma nova requisição chegar 😉')
