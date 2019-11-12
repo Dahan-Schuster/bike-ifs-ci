@@ -17,8 +17,8 @@ $(document).ready(function() {
 
 function popularTabelaHistorico(timestamp) {
 
-    url = BASE_URL 
-    url +=  (id_usuario) ? `usuario/${id_usuario}/historico/${timestamp}` : `usuario/historico/${timestamp}`
+    url = BASE_URL
+    url += (id_usuario) ? `usuario/${id_usuario}/historico/${timestamp}` : `usuario/historico/${timestamp}`
 
     datatable = $('#tableRegistros').DataTable({
         "dom": `frt"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"`,
@@ -107,10 +107,13 @@ function criarEConfigurarSelectData() {
         format: 'dd/mm/yyyy',
         uiLibrary: 'materialdesign',
         iconsLibrary: 'materialicons',
+        showOnFocus: false,
         change: function(e) {
             datatable.destroy()
             let data = $(selectData).val().substring(6) + '-' + $(selectData).val().substring(3, 5) + '-' + $(selectData).val().substring(0, 2)
             popularTabelaHistorico(getTimeStampAtual(data))
         }
     })
+
+    $(selectData).mask('00/00/0000')
 }

@@ -399,12 +399,15 @@ function criarEConfigurarSelectData() {
         format: 'dd/mm/yyyy',
         uiLibrary: 'materialdesign',
         iconsLibrary: 'materialicons',
+        showOnFocus: false,
         change: function(e) {
             datatable.destroy()
             let data = $(selectData).val().substring(6) + '-' + $(selectData).val().substring(3, 5) + '-' + $(selectData).val().substring(0, 2)
             popularTabelaRegistros(getTimeStampAtual(data))
         }
     })
+
+    $(selectData).mask('00/00/0000')
 }
 
 /**
