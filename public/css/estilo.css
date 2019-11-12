@@ -10,10 +10,8 @@
 }
 
 .lista-pendencias {
-    overflow-y: scroll;
     width: 100%;
     height: auto;
-    max-height: 60rem;
 }
 
 .pendencia-item {
@@ -72,17 +70,17 @@
 }
 
 .header-gradient {
-    background: -moz-linear-gradient(140deg, #379944 0%, #3a9d47 8%, #3da94b 13%, #009BBA 73%);
+    background: -moz-linear-gradient(140deg, #055b6d 0%, #068099 8%, #0590ab 13%, #286a31 73%);
     /* ff3.6+ */
-    background: -webkit-gradient(linear, left top, right bottom, color-stop(27%, #009BBA), color-stop(87%, #3da94b), color-stop(92%, #3a9d47), color-stop(100%, #379944));
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(27%, #286a31), color-stop(87%, #0590ab), color-stop(92%, #068099), color-stop(100%, #055b6d));
     /* safari4+,chrome */
-    background: -webkit-linear-gradient(140deg, #379944 0%, #3a9d47 8%, #3da94b 13%, #009BBA 73%);
+    background: -webkit-linear-gradient(140deg, #055b6d 0%, #068099 8%, #0590ab 13%, #286a31 73%);
     /* safari5.1+,chrome10+ */
-    background: -o-linear-gradient(140deg, #379944 0%, #3a9d47 8%, #3da94b 13%, #009BBA 73%);
+    background: -o-linear-gradient(140deg, #055b6d 0%, #068099 8%, #0590ab 13%, #286a31 73%);
     /* opera 11.10+ */
-    background: -ms-linear-gradient(140deg, #379944 0%, #3a9d47 8%, #3da94b 13%, #009BBA 73%);
+    background: -ms-linear-gradient(140deg, #055b6d 0%, #068099 8%, #0590ab 13%, #286a31 73%);
     /* ie10+ */
-    background: linear-gradient(310deg, #379944 0%, #3a9d47 8%, #3da94b 13%, #009BBA 73%);
+    background: linear-gradient(310deg, #055b6d 0%, #068099 8%, #0590ab 13%, #286a31 73%);
     /* w3c */
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#009BBA', endColorstr='#379944', GradientType=1);
 }

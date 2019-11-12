@@ -1,7 +1,18 @@
 <?php
 
+require_once(APPPATH . 'models/ModeloBike.php');
+
 class Tools
 {
+    /**
+     * Retorna a url da foto da bicicleta ou o ícone de seu modelo
+     */
+    public static function getBikeFoto($bike)
+    {
+        if (!isset($bike['nome_modelo'])) $bike['nome_modelo'] =  ModeloBike::getNomeModelo($bike['modelo']);
+        return trim($bike['foto_url']) && file_exists(getcwd() . $bike['foto_url']) ?
+                base_url($bike['foto_url']) : base_url('public/img/icons/bike-' . strtolower($bike['nome_modelo']) . '-colored.png');
+    }
 
     /**
      * Configura a localização e o fuso horário e retorna um String 

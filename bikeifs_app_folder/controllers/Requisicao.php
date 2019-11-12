@@ -50,7 +50,7 @@ class Requisicao extends CI_Controller
 
         # Verifica se houve um resultado e, se não, retorna status 0 e encerra a execução
         if (!$pendencias) {
-            $response['status'] == 0;
+            $response['status'] = 0;
             echo json_encode($response);
             exit();
         }
@@ -71,7 +71,8 @@ class Requisicao extends CI_Controller
                 'cores' => $bike->cores,
                 'modelo' => ModeloBike::getNomeModelo($bike->modelo),
                 'marca' => (!trim($bike->marca) ? 'Não informado' : $bike->marca),
-                'aro' => $bike->aro
+                'aro' => $bike->aro,
+                'foto_url' => Tools::getBikeFoto(array('modelo' => $bike->modelo, 'foto_url' => $bike->foto_url))
             );
 
             ## Formata as informações importantes sobre o usuário (dono da bike)
@@ -88,7 +89,7 @@ class Requisicao extends CI_Controller
             $pendencia['pendencias'] = $pen;                # info. sobre a requisição
             $pendencia['bikes'] = $bikeInfo;                # info. sobre a bicicleta
             $pendencia['users'] = $userInfo;                # info. sobre o dono da bicicleta
-           
+
             array_push($pendenciasFormatadas, $pendencia); // adiciona à lista de pendencias uma nova requisição (array de objetos)
         endforeach;
 
