@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('Não é permitido acesso direto aos scripts.');
 
+require_once(APPPATH . 'models/Tools.php');
 require_once(APPPATH . 'models/ModeloBike.php');
 require_once(APPPATH . 'models/SituacaoBicicleta.php');
 

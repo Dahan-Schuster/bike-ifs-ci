@@ -38,7 +38,7 @@ const criarHtmlListaPendencias = pendencias => {
 const adicionarCardNoDeck = item => $('#deck').append(criarCard(item))
 
 const criarCard = item => {
-    let card = $('<div class="card col-12 col-sm-6 col-md-4 col-lg-3 px-0">')
+    let card = $('<div class="card col-12 col-sm-6 col-md-4 col-lg-3 px-0 m-1">')
     card.attr('id', `cardPendencia${item.pendencias.id}`)
     card.append(`<img class="card-img-top" src="${item.bikes.foto_url}" alt="Foto da bicicleta">`)
     card.append(

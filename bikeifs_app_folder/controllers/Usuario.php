@@ -420,7 +420,7 @@ class Usuario extends CI_Controller
         }
 
         if (isset($data['telefone'])) {
-            if (isset($data['telefone']) && $this->usuario_model->estaCadastrado('telefone', $data['telefone'])) :
+            if (!empty($data['telefone']) && $this->usuario_model->estaCadastrado('telefone', $data['telefone'])) :
                 $response['error_list']['#divInputTelefone'] = 'Este telefone já está cadastrado.';
             endif;
         }
