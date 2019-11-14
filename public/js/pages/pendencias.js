@@ -19,31 +19,34 @@ const listarPendencias = () => {
         beforeSend: function() {
             $('#loading').css('display', 'block')
         },
-        success: function(response) {
+        success: async function(response) {
             console.log(response)
             if (response['status'] == 1) {
-                // limpa a lista antes de (re)preencher
-                $('#deck').html('')
+                await limparDeck()
                 criarHtmlListaPendencias(response['data'])
             } else if (response['status'] == 0)
                 avisarListaDePendenciasVazia()
-        },
-        complete: function() {
-            $('#loading').css('display', 'none')
         }
 
     })
 }
 
+const limparDeck = async function() {
+    $('.card-pendencia').fadeOut(1000)    // esconde todos os cards com uma animação de 1s
+    await sleep(1000)           // espera por 1s a animação terminar
+    $('.card-pendencia').remove()         // após a animação, remove de fato os cards
+}
+
 const criarHtmlListaPendencias = pendencias => {
     pendencias.forEach(item => adicionarCardNoDeck(item))
+    $('#loading').css('display', 'none')
 }
 
 const adicionarCardNoDeck = item => $('#deck').append(criarCard(item))
 
 const criarCard = item => {
     const urgencia = calcularUrgenciaRequisicao(item.pendencias.data_hora)
-    let card = $(`<div class="card card-${urgencia}">`)
+    let card = $(`<div class="card card-pendencia card-${urgencia}">`)
     card.attr('id', `cardPendencia${item.pendencias.id}`)
     card.append(`
         <div class="d-flex justify-content-center">
