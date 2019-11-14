@@ -62,7 +62,7 @@ class TagRFID extends CI_Controller
                 'aro' => $bike->aro,
                 'situacao' => SituacaoBicicleta::getTipoSituacao($bike->situacao),
                 'foto_url' => trim($bike->foto_url) && file_exists(getcwd() . $bike->foto_url) ?
-                base_url($bike->foto_url) : base_url('public/img/icons/bike-' . strtolower(ModeloBike::getNomeModelo($bike->modelo)) . '-colored.png')
+                base_url($bike->foto_url) : base_url('public/img/icons/bike-' . mb_strtolower(ModeloBike::getNomeModelo($bike->modelo)) . '-colored.png')
             );
 
             ## Salva as informações importantes sobre o usuário (dono da bike)

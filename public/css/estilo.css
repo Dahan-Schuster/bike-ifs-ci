@@ -453,10 +453,103 @@ img[rel=popover] {
     cursor: pointer;
 }
 
+.card {
+    transition: box-shadow 0.1s linear;
+    -webkit-transition: box-shadow 0.1s linear;
+    -moz-transition: box-shadow 0.1s linear;
+}
+
+.card-urgente {
+    box-shadow: 0 0 0 3px #ff434382;
+}
+
+.card-urgente:hover {
+    box-shadow: 0 0 0 8px #ff4343;
+}
+
+
+.card-intermediario {
+    box-shadow: 0 0 0 3px #ff9e438e;
+}
+
+.card-intermediario:hover {
+    box-shadow: 0 0 0 8px #ff9e43;
+}
+
+
+.card-recente {
+    box-shadow: 0 0 0 3px #60a72d82;
+}
+
+.card-recente:hover {
+    box-shadow: 0 0 0 8px #60a72d;
+}
+
+.card-tempo {
+    text-align: center;
+    position: absolute;
+    width: 160px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s linear;
+    -webkit-transition: visibility 0s, opacity 0.3s linear;
+    -moz-transition: visibility 0s, opacity 0.3s linear;
+    top: 0;
+    padding: .5rem .3rem;
+    margin-top: 0.5rem;
+    border-radius: 5px;
+    font-weight: bold;
+    font-family: monospace;
+    color: #000;
+    background: #eee;
+}
+
+.card:hover .card-tempo {
+    visibility: visible;
+    opacity: 1;
+}
+
+.btn-verificar-bike {
+    text-align: center;
+    width: 100%;
+    transition: width .5s ease;
+    -webkit-transition: width .5s ease;
+    -moz-transition: width .5s ease;
+}
+
+.btn-verificar-bike button {
+    transition: width .3s linear, border-radius .3s linear;
+    -webkit-transition: width .3s linear, border-radius .3s linear;
+    -moz-transition: width .3s linear, border-radius .3s linear;
+}
+
+.span-verificar-bike {
+    display: none;
+    font-size: 12pt !important;
+    line-height: 26pt;
+    font-weight: 500 !important;
+    text-transform: none;
+    margin-bottom: .5rem;
+}
+
+.card:hover .btn-verificar-bike {
+    width: 0;
+}
+
+.card:hover .btn-verificar-bike button {
+    border-radius: 15px !important;
+    width: 120px;
+}
+
+.card:hover .span-verificar-bike {
+    display: inline;
+}
+
 
 /* Container que representa a(s) cor(es) das bicicletas */
 
 .bike-color {
+    cursor: pointer;
     width: 100%;
     text-align: center;
     padding: 8px;

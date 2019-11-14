@@ -17,6 +17,9 @@ class Bicicleta extends CI_Controller
         $this->load->library('session');
 
         $this->load->model('bicicleta_model');
+        
+        # Define o fuso horário do sistema
+        date_default_timezone_set('America/Maceio');
 
         # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level']))

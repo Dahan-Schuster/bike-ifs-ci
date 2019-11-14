@@ -11,7 +11,7 @@ class Tools
     {
         if (!isset($bike['nome_modelo'])) $bike['nome_modelo'] =  ModeloBike::getNomeModelo($bike['modelo']);
         return trim($bike['foto_url']) && file_exists(getcwd() . $bike['foto_url']) ?
-                base_url($bike['foto_url']) : base_url('public/img/icons/bike-' . strtolower($bike['nome_modelo']) . '-colored.png');
+                base_url($bike['foto_url']) : base_url('public/img/icons/bike-' . mb_strtolower($bike['nome_modelo']) . '-colored.png');
     }
 
     /**

@@ -30,8 +30,8 @@ class Requisicao extends CI_Controller
 
         if ($this->session->permissions_level != 'funcionario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
-        //elseif (!$this->input->is_ajax_request())
-        //    header('location: ' . base_url('funcionario/me'));
+        elseif (!$this->input->is_ajax_request())
+            header('location: ' . base_url('funcionario/me'));
 
         # Carrega o model Bicicleta
         $this->load->model('bicicleta_model');
@@ -72,7 +72,7 @@ class Requisicao extends CI_Controller
                 'modelo' => ModeloBike::getNomeModelo($bike->modelo),
                 'marca' => (!trim($bike->marca) ? 'Não informado' : $bike->marca),
                 'aro' => $bike->aro,
-                'foto_url' => Tools::getBikeFoto(array('modelo' => $bike->modelo, 'foto_url' => $bike->foto_url))
+                'foto_url' =>  Tools::getBikeFoto(array('modelo' => $bike->modelo, 'foto_url' => $bike->foto_url))
             );
 
             ## Formata as informações importantes sobre o usuário (dono da bike)

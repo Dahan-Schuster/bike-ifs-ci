@@ -60,7 +60,7 @@ class PainelLateral extends CI_Controller
         $usuario = $this->usuario_model->carregarPorId($bicicleta->id_usuario);
         $bicicleta->dono = $usuario->nome;
         $bicicleta->foto = trim($bicicleta->foto_url) && file_exists(getcwd() . $bicicleta->foto_url) ?
-            base_url($bicicleta->foto_url) : base_url('public/img/icons/bike-' . strtolower($bicicleta->nome_modelo) . '-colored.png');
+            base_url($bicicleta->foto_url) : base_url('public/img/icons/bike-' . mb_strtolower($bicicleta->nome_modelo) . '-colored.png');
 
         $data = array(
             'bicicleta' => $bicicleta

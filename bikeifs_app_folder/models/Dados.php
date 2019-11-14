@@ -131,7 +131,7 @@ class Dados {
 
 	private static function pegarPrimeiroNomeMinusculo($nome)
 	{
-		return strtolower(preg_split('/\s/', $nome)[0]);
+		return mb_strtolower(preg_split('/\s/', $nome)[0]);
 	}
 
 	private static function escolherDDDAleatorio()

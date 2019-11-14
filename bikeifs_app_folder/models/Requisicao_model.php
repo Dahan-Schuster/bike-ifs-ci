@@ -88,7 +88,7 @@ class Requisicao_model extends CI_Model
      */
     public function listarRequisicoesEmAberto()
     {
-        $result = $this->db->where('atendida', 'f')->get('REQUISICAO');
+        $result = $this->db->where('atendida', 'f')->order_by('data_hora ASC')->get('REQUISICAO');
         return ($result->num_rows() > 0) ? $result->result_array() : NULL;
     }
 

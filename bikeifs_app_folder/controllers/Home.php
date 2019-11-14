@@ -122,7 +122,7 @@ class Home extends CI_Controller
                         array(
                             "logged_user_id" => $result->id,
                             "nome" => $result->nome,
-                            "permissions_level" => strtolower($tipoAcesso) // TODO: foto do usuário
+                            "permissions_level" => mb_strtolower($tipoAcesso) // TODO: foto do usuário
                         )
                     );
                 endif;

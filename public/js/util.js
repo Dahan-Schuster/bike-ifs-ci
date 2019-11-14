@@ -245,11 +245,7 @@ function getDataHoraAtual(separator = ' ') {
 
 // Verificar bicicletas
 
-function verificarBicicleta(bike) {
-    enviarAjaxVerificarBicicleta(bike)
-}
-
-function enviarAjaxVerificarBicicleta(id_bicicleta) {
+function enviarAjaxVerificarBicicleta(id_bicicleta, callback) {
     $.ajax({
         type: 'POST',
         url: BASE_URL + 'bicicleta/verificar',
@@ -258,6 +254,7 @@ function enviarAjaxVerificarBicicleta(id_bicicleta) {
         success: function(response) {
             if (response['status'] == 1) {
                 snackBarSucesso('Bicicleta verificada com sucesso.')
+                if (null != callback) callback()
             } else {
                 swal.fire("Erro", response['error_message'], "error")
             }

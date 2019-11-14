@@ -31,7 +31,7 @@
                     <label for="cor" class="col-12 col-form-label"><b>Cor</b></label>
                     <div class="col-12 pt-2">
                         <div id="cor" class="bike-color" style="background: <?= $bicicleta->cores ?>;">
-                            <img src="<?= base_url() ?>public/img/icons/bike-<?= strtolower($bicicleta->nome_modelo) ?>.png" id="modelo-icone" title="Cor" alt="cor">
+                            <img src="<?= base_url() ?>public/img/icons/bike-<?= mb_strtolower($bicicleta->nome_modelo) ?>.png" id="modelo-icone" title="Cor" alt="cor">
                         </div>
                     </div>
                 </div>
