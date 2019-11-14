@@ -6,7 +6,7 @@
 <hr class="my-3">
 <div class="container">
     <div id="listaPendencias" class="lista-pendencias">
-        <div id="deck" class="card-columns">
+        <div id="deck" class="row">
         </div>
     </div>
 </div>

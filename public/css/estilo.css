@@ -8,7 +8,9 @@
     position: relative;
     margin: 40px auto;
 }
-
+.card-pendencia {
+    max-width: 310px;
+}
 .lista-pendencias {
     width: 100%;
     height: auto;

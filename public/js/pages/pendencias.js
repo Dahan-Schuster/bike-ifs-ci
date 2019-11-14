@@ -45,22 +45,24 @@ const criarHtmlListaPendencias = pendencias => {
 const adicionarCardNoDeck = item => $('#deck').append(criarCard(item))
 
 const criarCard = item => {
-    const urgencia = calcularUrgenciaRequisicao(item.pendencias.data_hora)
-    let card = $(`<div class="card card-pendencia card-${urgencia}">`)
+    let card = $(`<div 
+        class="card card-pendencia card-${item.pendencias.urgencia.nivel}
+                h-100 col-12 col-sm-6 col-md-4 mx-auto mb-3">`)
     card.attr('id', `cardPendencia${item.pendencias.id}`)
     card.append(`
         <div class="d-flex justify-content-center">
-            <div class="card-tempo">2 dias atrás</div>
+            <div class="card-tempo">${item.pendencias.urgencia.mensagem}</div>
             <img style=" max-height: 214px; max-width: 100%;" src="${item.bikes.foto_url}" alt="Foto da bicicleta">
         </div>`)
+    let nomeArray = item.users.nome.split(' ');
     card.append(
         `<div class="card-body">
-            <h5 class="card-title">${item.users.nome}</h5>
-            <p class="card-text">
+            <h5 class="card-title">${nomeArray[0] + ' ' + nomeArray[nomeArray.length - 1]}</h5>
+            <div class="card-text">
                 <div onclick="abrirPainelLateralBike(${item.bikes.id})" class="bike-color" style="background: ${item.bikes.cores};">
                     <img src="${BASE_URL}public/img/icons/bike-${item.bikes.modelo.toLowerCase()}.png" title="Bike" alt="">
                 </div>
-            </p>
+            </div>
             <div class="card-footer">
                 <div class="btn-verificar-bike">
                     <button onclick="verificarBicicleta('${item.bikes.id}')" title="Verificar bike" type="button" class="btn bg-accent bmd-btn-fab bmd-btn-fab-sm text-light">
@@ -75,8 +77,6 @@ const criarCard = item => {
     adicionarPopupsInfo(item, card)
     return card
 }
-
-const calcularUrgenciaRequisicao = data => 'recente'
 
 const adicionarPopupsInfo = (item, card) => {
     let popover = $("#popperInfo")
