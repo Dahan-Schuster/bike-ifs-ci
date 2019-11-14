@@ -48,6 +48,7 @@ $("#formCadastroAdmin")
             success: function(response) {
                 if (response['status'] == 1) {
                     atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+                    fecharModal($('#modalCadastroAdmin'))
                     swal.fire('Sucesso!', 'Administrador cadastrado com sucesso. Aguarde a atualização da tabela.', 'success')
                 } else {
                     showErrors(response['error_list'])

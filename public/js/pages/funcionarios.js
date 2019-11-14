@@ -48,6 +48,7 @@ $("#formCadastroFuncionario")
                 console.log(response)
                 if (response['status'] == 1) {
                     atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable)
+                    fecharModal($('#modalCadastroFuncionario'))
                     swal.fire('Sucesso!', 'Funcionário cadastrado com sucesso. Aguarde a atualização da tabela.', 'success')
                 } else {
                     showErrors(response['error_list'])
