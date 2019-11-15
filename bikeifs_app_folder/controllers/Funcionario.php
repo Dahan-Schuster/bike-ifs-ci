@@ -50,6 +50,7 @@ class Funcionario extends CI_Controller
             ),
             'pode_registrar' => TRUE,
             'nome' => $this->session->userdata('nome'),
+            'foto_url' => $this->session->userdata('foto_url'),
             'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto()
         );
 
@@ -68,6 +69,7 @@ class Funcionario extends CI_Controller
                 'util.js'
             ),
             'nome' => $this->session->userdata('nome'),
+            'foto_url' => $this->session->userdata('foto_url'),
             'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto()
         );
 
@@ -109,6 +111,7 @@ class Funcionario extends CI_Controller
                 'snackbar.min.css'
             ),
             'nome' => $this->session->userdata('nome'),
+            'foto_url' => $this->session->userdata('foto_url'),
             'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto()
         );
 
@@ -157,6 +160,7 @@ class Funcionario extends CI_Controller
                 'snackbar.min.css'
             ),
             'nome' => $this->session->userdata('nome'),
+            'foto_url' => $this->session->userdata('foto_url'),
             'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto()
         );
 
@@ -173,6 +177,8 @@ class Funcionario extends CI_Controller
 
         $funcionario = $this->funcionario_model->carregarPorId($this->session->userdata['logged_user_id']);
         unset($funcionario->senha);
+
+        $funcionario->foto_url = Tools::getFuncionarioFoto($funcionario->foto_url);
 
         $data = array(
             'styles' => array(
@@ -192,6 +198,7 @@ class Funcionario extends CI_Controller
                 'util.js'
             ),
             'nome' => $this->session->userdata('nome'),
+            'foto_url' => $this->session->userdata('foto_url'),
             'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto(),
             'funcionario' => $funcionario
         );
@@ -326,6 +333,39 @@ class Funcionario extends CI_Controller
         endif;
 
         # Retorna o array de resposta à requisição AJAX
+        echo json_encode($response);
+    }
+
+    /**
+     * Função acessada via requisições AJAX para alterar a foto de perfil
+     */
+    public function updateProfileFoto()
+    {
+        if ($this->session->permissions_level != 'funcionario' && $this->session->permissions_level != 'admin')
+            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+        # Verifica se o método está sendo acessado por uma requisição AJAX
+        elseif (!$this->input->is_ajax_request())
+            exit("Não é permitido acesso direto aos scripts.");
+
+        $id =  $this->session->userdata('logged_user_id');
+        $data = $this->input->post();
+
+        $response = array();
+        $response['status'] = 1;
+
+        if (!empty($data['foto_url'])) :
+            $arquivo = basename($data['foto_url']);
+            $url_antiga = getcwd() . '/tmp/' . $arquivo;
+            $nova_url = getcwd() . '/public/img/users/' . $arquivo;
+
+            rename($url_antiga, $nova_url);
+            $data['foto_url'] = '/public/img/users/' . $arquivo;
+            $this->funcionario_model->editar($id, $data);
+        else :
+            $response['status'] = 0;
+            $response['error_message'] = 'Não é permitido o envio de uma foto vazia.';
+        endif;
+
         echo json_encode($response);
     }
 

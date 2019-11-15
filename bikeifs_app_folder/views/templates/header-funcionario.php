@@ -77,7 +77,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="btn bmd-btn-icon dropdown-toggl text-light" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">more_horiz</i>
+                                <img title="Mais opções" src="<?= $foto_url ?>" class="perfil-header">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                                 <a class="dropdown-item" href="<?= base_url('funcionario/me') ?>">
