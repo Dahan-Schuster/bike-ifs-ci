@@ -6,8 +6,13 @@
         <div class="row perfil">
             <div class="col-lg-3 col-md-5">
                 <div class="perfil-sidebar">
-                    <div class="perfil-foto">
-                        <img src="<?= base_url() ?>public/img/icons/cyclist.png" title="Funcionário" class="img-responsive" alt="Funcionário">
+                    <div class="perfil-foto foto-upload">
+                        <label for="upload_foto">
+                            <img id="foto_perfil" src="<?= $usuario->foto_url ?>" title="Alterar foto de perfil" class="img-responsive img-thumbnail" alt="Usuário">
+                        </label>
+                        <input id="upload_foto" accept="image/*" type="file" />
+                        <input type="hidden" id="foto_path" name="foto_url">
+                        <span id="erro_upload" class="invalid-feedback"></span>
                     </div>
                     <div class="perfil-titulo">
                         <div id="perfil-nome" class="perfil-titulo-nome">

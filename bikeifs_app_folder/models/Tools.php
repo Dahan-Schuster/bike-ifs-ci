@@ -29,7 +29,7 @@ class Tools
     public static function getUsuarioFoto($foto_url)
     {
         return trim($foto_url) && file_exists(getcwd() . $foto_url) ?
-                base_url($foto_url) : base_url('public/img/icons/manager.png');
+                base_url($foto_url) : base_url('public/img/icons/cyclist.png');
     }
 
     /**

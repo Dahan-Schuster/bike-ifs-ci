@@ -38,6 +38,7 @@ class PainelLateral extends CI_Controller
         $usuario->nome_tipo = TipoUsuario::getNomeTipo($usuario->tipo);
         $usuario->nome_situacao = SituacaoUsuario::getTipoSituacao($usuario->situacao);
         $usuario->ativo = ($usuario->situacao == SituacaoUsuario::ATIVO);
+        $usuario->foto_url = Tools::getUsuarioFoto($usuario->foto_url);
         unset($usuario->senha);
 
         $data = array(

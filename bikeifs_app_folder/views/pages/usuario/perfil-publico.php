@@ -10,7 +10,7 @@ require_once APPPATH . 'models/ModeloBike.php';
             <div class="col-lg-3 col-md-5">
                 <div class="perfil-sidebar">
                     <div class="perfil-foto">
-                        <img src="<?= base_url() ?>public/img/icons/cyclist.png" title="Funcionário" class="img-responsive" alt="Funcionário">
+                        <img src="<?= $usuario->foto_url ?>" title="Usuário" class="img-responsive img-thumbnail" alt="Usuário">
                     </div>
                     <div class="perfil-titulo">
                         <div id="perfil-nome" class="perfil-titulo-nome">
