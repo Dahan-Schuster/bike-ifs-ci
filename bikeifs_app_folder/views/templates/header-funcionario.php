@@ -58,7 +58,9 @@
                         <li class="nav-item">
                             <a id="navLinkPendencias" class="nav-link mr-3" href="<?= base_url('funcionario/listar/pendencias') ?>">
                                 Pendências
-                                <img src="<?= base_url('public/img/icons/' . ($quantidadePendencias > 9 ? '9_plus' : $quantidadePendencias) . '.png'); ?>">
+                                <?php if ($quantidadePendencias > 0) : ?>
+                                    <img src="<?= base_url('public/img/icons/' . ($quantidadePendencias > 9 ? '9_plus' : $quantidadePendencias) . '.png'); ?>">
+                                <?php endif; ?>
                             </a>
                         </li>
                         <li class="nav-item">
