@@ -171,6 +171,8 @@ class Usuario extends CI_Controller
 
 
         $usuario = $this->usuario_model->carregarPorId($id);
+        if (!$usuario) show_404();
+
         unset($usuario->senha);
 
         $data = array(

@@ -82,7 +82,7 @@ class Requisicao_model extends CI_Model
     }
 
     /**
-     * Lista todos os registros da tabela Requisicao
+     * Lista todas as requisições não atendidas (pendências)
      * 
      * @return array - Array associativo com os registros e seus atributos. 
      */
@@ -90,6 +90,16 @@ class Requisicao_model extends CI_Model
     {
         $result = $this->db->where('atendida', 'f')->order_by('data_hora ASC')->get('REQUISICAO');
         return ($result->num_rows() > 0) ? $result->result_array() : NULL;
+    }
+
+    /**
+     * Conta todas as requisições não atendidas (pendências)
+     * 
+     * @return integer - quantidade de pendências
+     */
+    public function contarRequisicoesEmAberto()
+    {
+        return $this->db->where('atendida', 'f')->from('REQUISICAO')->count_all_results();
     }
 
     /**

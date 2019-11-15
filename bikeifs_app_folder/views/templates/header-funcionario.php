@@ -33,7 +33,7 @@
                     <img class="icon-logo" src="<?= base_url() ?>public/img/icon.svg" title="Logo" alt="Logo">
                     <img class='logo' src="<?= base_url() ?>public/img/nome-logo.png" title="Bike IFS" alt="Bike IFS">
                 </a>
-                <button  style="background: #ffffff21" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button style="background: #ffffff21" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="material-icons">menu</i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarMenu">
@@ -58,6 +58,7 @@
                         <li class="nav-item">
                             <a id="navLinkPendencias" class="nav-link mr-3" href="<?= base_url('funcionario/listar/pendencias') ?>">
                                 Pendências
+                                <img src="<?= base_url('public/img/icons/' . ($quantidadePendencias > 9 ? '9_plus' : $quantidadePendencias) . '.png'); ?>">
                             </a>
                         </li>
                         <li class="nav-item">

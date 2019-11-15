@@ -12,15 +12,6 @@
 <br>
 <div class="row canvas-list">
     <div class="col-12 col-md-6 my-3">
-        <canvas title="Clique para expandir" class="bg-light p-4 border border-dark" id="graficoA" data-texto='Relação entre os tipos de usuários cadastrados no sistema'></canvas>
-    </div>
-    <div class="col-12 col-md-6 my-3">
-        <canvas title="Clique para expandir" class="bg-light p-4 border border-dark" id="graficoB" data-texto='Quantidade de cada modelo de bicicleta cadastrado no sistema'></canvas>
-    </div>
-    <div class="col-12 col-md-6 my-3">
-        <canvas title="Clique para expandir" class="bg-light p-4 border border-dark" id="graficoC" data-texto='Relação entre as bicicletas que possuem e não possuem Tag RFID'></canvas>
-    </div>
-    <div class="col-12 col-md-6 my-3">
         <canvas title="Clique para expandir" class="bg-light p-4 border border-dark" id="graficoD" data-texto='Quantidade de registros de cada dia desde <?php echo date('d/m/Y', strtotime('-13 days')); ?> até <?php echo date('d/m/Y'); ?>.'></canvas>
     </div>
     <div class="col-12 col-md-6 my-3">
@@ -28,6 +19,15 @@
     </div>
     <div class="col-12 col-md-6 my-3">
         <canvas title="Clique para expandir" class="bg-light p-4 border border-dark" id="graficoF" data-texto='Quantidade de registros de cada mês do ano'></canvas>
+    </div>
+    <div class="col-12 col-md-6 my-3">
+        <canvas title="Clique para expandir" class="bg-light p-4 border border-dark" id="graficoA" data-texto='Relação entre os tipos de usuários cadastrados no sistema'></canvas>
+    </div>
+    <div class="col-12 col-md-6 my-3">
+        <canvas title="Clique para expandir" class="bg-light p-4 border border-dark" id="graficoB" data-texto='Quantidade de cada modelo de bicicleta cadastrado no sistema'></canvas>
+    </div>
+    <div class="col-12 col-md-6 my-3">
+        <canvas title="Clique para expandir" class="bg-light p-4 border border-dark" id="graficoC" data-texto='Relação entre as bicicletas que possuem e não possuem Tag RFID'></canvas>
     </div>
 </div>
 <!-- --------------------------- -->
@@ -70,18 +70,6 @@
                 <p class="lead">Selecione quais gráficos deseja incluir no PDF.</p>
                 <hr>
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" data-canvas="graficoA" class="custom-control-input" id="switchImprimirGraficoTiposDeUsuarios">
-                    <label class="custom-control-label" for="switchImprimirGraficoTiposDeUsuarios">Tipos de Usuários</label>
-                </div>
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" data-canvas="graficoB" class="custom-control-input" id="switchImprimirGraficoModelosDeBikes">
-                    <label class="custom-control-label" for="switchImprimirGraficoModelosDeBikes">Modelos de Bikes</label>
-                </div>
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" data-canvas="graficoC" class="custom-control-input" id="switchImprimirGraficoBikesComTag">
-                    <label class="custom-control-label" for="switchImprimirGraficoBikesComTag">Bikes que possuem Tag RFID</label>
-                </div>
-                <div class="custom-control custom-switch">
                     <input type="checkbox" data-canvas="graficoD" class="custom-control-input" id="switchImprimirGraficoRegPorDia">
                     <label class="custom-control-label" for="switchImprimirGraficoRegPorDia">Registros dos últimos 14 dias</label>
                 </div>
@@ -92,6 +80,18 @@
                 <div class="custom-control custom-switch">
                     <input type="checkbox" data-canvas="graficoF" class="custom-control-input" id="switchImprimirGraficoRegPorAno">
                     <label class="custom-control-label" for="switchImprimirGraficoRegPorAno">Registros do ano por mês</label>
+                </div>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" data-canvas="graficoA" class="custom-control-input" id="switchImprimirGraficoTiposDeUsuarios">
+                    <label class="custom-control-label" for="switchImprimirGraficoTiposDeUsuarios">Tipos de Usuários</label>
+                </div>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" data-canvas="graficoB" class="custom-control-input" id="switchImprimirGraficoModelosDeBikes">
+                    <label class="custom-control-label" for="switchImprimirGraficoModelosDeBikes">Modelos de Bikes</label>
+                </div>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" data-canvas="graficoC" class="custom-control-input" id="switchImprimirGraficoBikesComTag">
+                    <label class="custom-control-label" for="switchImprimirGraficoBikesComTag">Bikes que possuem Tag RFID</label>
                 </div>
             </div>
             <div class="modal-footer">

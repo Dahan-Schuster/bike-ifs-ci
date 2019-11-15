@@ -16,6 +16,7 @@ class Funcionario extends CI_Controller
         $this->load->library('session');
 
         $this->load->model('funcionario_model');
+        $this->load->model('requisicao_model');
 
         # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level']))
@@ -48,7 +49,8 @@ class Funcionario extends CI_Controller
                 'snackbar.min.css'
             ),
             'pode_registrar' => TRUE,
-            'nome' => $this->session->userdata('nome')
+            'nome' => $this->session->userdata('nome'),
+            'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto()
         );
 
         $this->load->view('templates/header-funcionario', $data);
@@ -65,74 +67,12 @@ class Funcionario extends CI_Controller
             'scripts' => array(
                 'util.js'
             ),
-            'nome' => $this->session->userdata('nome')
+            'nome' => $this->session->userdata('nome'),
+            'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto()
         );
 
         $this->load->view('templates/header-funcionario', $data);
         $this->load->view("pages/home", $data);
-        $this->load->view('templates/footer-funcionario', $data);
-    }
-
-    /**
-     * Carrega o perfil público de um funcionário
-     */
-    public function funcionarios($id = null)
-    {
-
-        if ($this->session->userdata['permissions_level'] != 'funcionario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
-
-        $funcionario = $this->funcionario_model->carregarPorId($id);
-        unset($funcionario->senha);
-
-        $data = array(
-            'styles' => array(
-                'perfil.css',
-                'snackbar.min.css'
-            ),
-            'scripts' => array(
-                //'pages/perfil-adm.js',
-                'snackbar.min.js',
-                'util.js'
-            ),
-            'nome' => $this->session->userdata('nome'),
-            'funcionario' => $funcionario
-        );
-
-        $this->load->view('templates/header-funcionario', $data);
-        $this->load->view("pages/funcionario/perfil-publico", $data);
-        $this->load->view('templates/footer-funcionario', $data);
-    }
-
-    /**
-     * Carrega o perfil público de um usuário
-     */
-    public function usuarios($id = null)
-    {
-
-        if ($this->session->userdata['permissions_level'] != 'funcionario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
-
-        $this->load->model('usuario_model');
-        $usuario = $this->usuario_model->carregarPorId($id);
-        unset($usuario->senha);
-
-        $data = array(
-            'styles' => array(
-                'perfil.css',
-                'snackbar.min.css'
-            ),
-            'scripts' => array(
-                //'pages/perfil-adm.js',
-                'snackbar.min.js',
-                'util.js'
-            ),
-            'nome' => $this->session->userdata('nome'),
-            'usuario' => $usuario
-        );
-
-        $this->load->view('templates/header-funcionario', $data);
-        $this->load->view("pages/usuario/perfil-publico", $data);
         $this->load->view('templates/footer-funcionario', $data);
     }
 
@@ -168,7 +108,8 @@ class Funcionario extends CI_Controller
                 'gijgo.min.css',
                 'snackbar.min.css'
             ),
-            'nome' => $this->session->userdata('nome')
+            'nome' => $this->session->userdata('nome'),
+            'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto()
         );
 
 
@@ -215,7 +156,8 @@ class Funcionario extends CI_Controller
                 'gijgo.min.css',
                 'snackbar.min.css'
             ),
-            'nome' => $this->session->userdata('nome')
+            'nome' => $this->session->userdata('nome'),
+            'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto()
         );
 
         $this->load->view('templates/header-funcionario', $data);
@@ -250,6 +192,7 @@ class Funcionario extends CI_Controller
                 'util.js'
             ),
             'nome' => $this->session->userdata('nome'),
+            'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto(),
             'funcionario' => $funcionario
         );
 

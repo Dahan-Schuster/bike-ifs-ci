@@ -16,6 +16,9 @@ class Requisicao extends CI_Controller
 
         $this->load->model('requisicao_model');
 
+        # Define o fuso horário do sistema
+        date_default_timezone_set('America/Maceio');
+
         # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level']))
             header('location: ' . base_url('home/view/login'));
@@ -61,6 +64,7 @@ class Requisicao extends CI_Controller
         foreach ($pendencias as $pen) :
 
             $pen['atendida'] = $pen['atendida'] == 'f' ? false : true;
+            $pen['urgencia'] = $this->calcularUrgenciaRequisicao($pen['data_hora']);
             $pen['data_hora'] = Tools::formatarTimestamp(strtotime($pen['data_hora']));
 
             ## Formata as informações importantes sobre a bicicleta
@@ -96,5 +100,35 @@ class Requisicao extends CI_Controller
         $response['data'] = $pendenciasFormatadas;
 
         echo json_encode($response);
+    }
+
+    private function calcularUrgenciaRequisicao($dataRequisicao)
+    {
+        $dateObjRequisicao = new DateTime($dataRequisicao);
+        $dateObjHoje = new DateTime();
+
+        $intervalo = $dateObjHoje->diff($dateObjRequisicao);
+        return $this->formatarUrgencia($intervalo);
+    }
+
+    private function formatarUrgencia($intervalo)
+    {
+        $dias = $intervalo->d;
+        $horas = $intervalo->h;
+        $minutos = $intervalo->i;
+
+        if ($dias <= 1) {
+
+            if ($horas == 0 && $minutos < 10) $mensagem = 'Agora mesmo';
+            elseif ($horas < 1 && $minutos <= 59) $mensagem = 'Há poucos minutos';
+            elseif ($horas == 1 && $minutos <= 59) $mensagem = 'Há uma hora';
+            elseif ($horas > 1 && $minutos <= 59) $mensagem = "Há $horas horas";
+
+            return array('mensagem' => $mensagem, 'nivel' => 'recente');
+
+        } elseif ($dias <= 3)
+            return array('mensagem' => "Há $dias dias", 'nivel' => 'intermediario');
+        else
+            return array('mensagem' => "Há $dias dias", 'nivel' => 'urgente');
     }
 }

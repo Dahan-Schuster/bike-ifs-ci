@@ -62,12 +62,12 @@ function configurarCanvas() {
 function baixarPDFModal() {
 
     var pdf = new jsPDF()
-    pdf = adicionarCapa(pdf)
+    pdf = adicionarCabecalho(pdf)
 
     pdf.setFontSize(14)
 
     var texto = $("#graficoModal").data('texto')
-    pdf.text(15, 25, '# ' + texto)
+    pdf.text(15, 40, '# ' + texto)
     pdf.addImage(canvasModal.toDataURL('image/png'), 'PNG', 15, 40, 180, 90)
 
     pdf.save('Bike-IFS_Relatorio_' + getDataHoraAtual('_'))
@@ -79,14 +79,13 @@ function baixarPDFGraficos() {
         return
     }
     var pdf = new jsPDF()
-    pdf = adicionarCapa(pdf)
-
-    pdf.setFontSize(14)
-
     var distanciaTopo = 25;
 
     var checkboxesSelecionados = $("input[type='checkbox']:checked").toArray()
     checkboxesSelecionados.forEach((checkbox, index) => {
+        pdf = adicionarCabecalho(pdf)
+    
+        pdf.setFontSize(14)
         var texto = $("#" + $(checkbox).data('canvas')).data('texto')
         var grafico = document.getElementById($(checkbox).data('canvas')).toDataURL('image/png')
 
@@ -104,20 +103,18 @@ function baixarPDFGraficos() {
     pdf.save('Bike-IFS_Relatorio_'+ getDataHoraAtual('_'))
 }
 
-function adicionarCapa(pdf) {
+function adicionarCabecalho(pdf) {
     getDataUri(BASE_URL + 'public/img/img-logo.png', function(logo) {
         localStorage.setItem('logo-uri', logo)
     });
 
-    pdf.setFontSize(26)
-    pdf.text(90, 150, 'Bike IFS')
+    pdf.setFontSize(14)
+    pdf.text(30, 10, 'Bike IFS')
 
-    pdf.setFontSize(20)
-    pdf.text(60, 160, 'Relatório de dados do sistema')
+    pdf.setFontSize(12)
+    pdf.text(30, 15, 'Relatório de dados do sistema')
 
-    pdf.addImage(localStorage.getItem('logo-uri'), 'PNG', 80, 90, 55, 50)
-
-    pdf.addPage()
+    pdf.addImage(localStorage.getItem('logo-uri'), 'PNG', 10, 5, 15, 12)
 
     return pdf
 }
