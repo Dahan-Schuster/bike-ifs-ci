@@ -20,7 +20,7 @@ class Image extends CI_Controller
         show_404();
     }
 
-    public function import()
+    public function upload()
     {
         if (!$this->input->is_ajax_request())
             exit("Não é permitido acesso direto aos scripts.");

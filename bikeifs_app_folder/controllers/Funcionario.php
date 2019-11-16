@@ -17,10 +17,6 @@ class Funcionario extends CI_Controller
 
         $this->load->model('funcionario_model');
         $this->load->model('requisicao_model');
-
-        # Verifica se o usuário está logado e, se não, redireciona para a tela de login
-        if (!isset($this->session->userdata['permissions_level']))
-            header('location: ' . base_url('home/view/login'));
     }
 
     /**
@@ -28,7 +24,8 @@ class Funcionario extends CI_Controller
      */
     public function index()
     {
-        if ($this->session->userdata['permissions_level'] != 'funcionario')
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
+        elseif ($this->session->userdata['permissions_level'] != 'funcionario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
 
         $data = array(
@@ -50,6 +47,7 @@ class Funcionario extends CI_Controller
             ),
             'pode_registrar' => TRUE,
             'nome' => $this->session->userdata('nome'),
+            'foto_url' => $this->session->userdata('foto_url'),
             'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto()
         );
 
@@ -60,7 +58,8 @@ class Funcionario extends CI_Controller
 
     public function home()
     {
-        if ($this->session->userdata['permissions_level'] != 'funcionario')
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
+        elseif ($this->session->userdata['permissions_level'] != 'funcionario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
 
         $data = array(
@@ -68,6 +67,7 @@ class Funcionario extends CI_Controller
                 'util.js'
             ),
             'nome' => $this->session->userdata('nome'),
+            'foto_url' => $this->session->userdata('foto_url'),
             'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto()
         );
 
@@ -79,7 +79,8 @@ class Funcionario extends CI_Controller
     public function listar($page = NULL)
     {
 
-        if (isset($this->session->permissions_level) && $this->session->userdata['permissions_level'] != 'funcionario')
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
+        elseif (isset($this->session->permissions_level) && $this->session->userdata['permissions_level'] != 'funcionario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
         elseif (!$page || !file_exists(APPPATH . "views/pages/listar/$page.php"))
             show_404();
@@ -109,6 +110,7 @@ class Funcionario extends CI_Controller
                 'snackbar.min.css'
             ),
             'nome' => $this->session->userdata('nome'),
+            'foto_url' => $this->session->userdata('foto_url'),
             'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto()
         );
 
@@ -137,7 +139,8 @@ class Funcionario extends CI_Controller
     public function contatar()
     {
 
-        if ($this->session->userdata['permissions_level'] != 'funcionario')
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
+        elseif ($this->session->userdata['permissions_level'] != 'funcionario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
 
         $data = array(
@@ -157,6 +160,7 @@ class Funcionario extends CI_Controller
                 'snackbar.min.css'
             ),
             'nome' => $this->session->userdata('nome'),
+            'foto_url' => $this->session->userdata('foto_url'),
             'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto()
         );
 
@@ -168,11 +172,14 @@ class Funcionario extends CI_Controller
     public function perfil()
     {
 
-        if ($this->session->userdata['permissions_level'] != 'funcionario')
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
+        elseif ($this->session->userdata['permissions_level'] != 'funcionario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
 
         $funcionario = $this->funcionario_model->carregarPorId($this->session->userdata['logged_user_id']);
         unset($funcionario->senha);
+
+        $funcionario->foto_url = Tools::getFuncionarioFoto($funcionario->foto_url);
 
         $data = array(
             'styles' => array(
@@ -192,6 +199,7 @@ class Funcionario extends CI_Controller
                 'util.js'
             ),
             'nome' => $this->session->userdata('nome'),
+            'foto_url' => $this->session->userdata('foto_url'),
             'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto(),
             'funcionario' => $funcionario
         );
@@ -330,13 +338,46 @@ class Funcionario extends CI_Controller
     }
 
     /**
+     * Função acessada via requisições AJAX para alterar a foto de perfil
+     */
+    public function updateProfileFoto()
+    {
+        if ($this->session->permissions_level != 'funcionario')
+            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+        # Verifica se o método está sendo acessado por uma requisição AJAX
+        elseif (!$this->input->is_ajax_request())
+            exit("Não é permitido acesso direto aos scripts.");
+
+        $id =  $this->session->userdata('logged_user_id');
+        $data = $this->input->post();
+
+        $response = array();
+        $response['status'] = 1;
+
+        if (!empty($data['foto_url'])) :
+            $arquivo = basename($data['foto_url']);
+            $url_antiga = getcwd() . '/tmp/' . $arquivo;
+            $nova_url = getcwd() . '/public/img/users/' . $arquivo;
+
+            rename($url_antiga, $nova_url);
+            $data['foto_url'] = '/public/img/users/' . $arquivo;
+            $this->funcionario_model->editar($id, $data);
+        else :
+            $response['status'] = 0;
+            $response['error_message'] = 'Não é permitido o envio de uma foto vazia.';
+        endif;
+
+        echo json_encode($response);
+    }
+
+    /**
      * Função acessada via requisições AJAX para verificar o código de confirmação
      * (salvo temporariamente na sessão após chamar o controlador de Emails) e editar
      * o atributo Email na tabela referente ao tipo de acesso do usuário logado (admin, funcionário, usuário)
      */
     public function updateEmail()
     {
-        if ($this->session->permissions_level != 'funcionario' && $this->session->permissions_level != 'admin')
+        if ($this->session->permissions_level != 'funcionario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
         # Verifica se o método está sendo acessado por uma requisição AJAX
         elseif (!$this->input->is_ajax_request())
@@ -371,7 +412,7 @@ class Funcionario extends CI_Controller
      */
     public function updatePassword()
     {
-        if ($this->session->permissions_level != 'funcionario' && $this->session->permissions_level != 'admin')
+        if ($this->session->permissions_level != 'funcionario')
             show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
         # Verifica se o método está sendo acessado por uma requisição AJAX
         elseif (!$this->input->is_ajax_request())

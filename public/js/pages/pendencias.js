@@ -16,9 +16,7 @@ const listarPendencias = () => {
         type: 'GET',
         dataType: 'json',
         url: BASE_URL + 'pendencias',
-        beforeSend: function() {
-            $('#loading').css('display', 'block')
-        },
+        beforeSend: () => $('#loading').css('display', 'block'),
         success: async function(response) {
             console.log(response)
             if (response['status'] == 1) {
@@ -26,20 +24,20 @@ const listarPendencias = () => {
                 criarHtmlListaPendencias(response['data'])
             } else if (response['status'] == 0)
                 avisarListaDePendenciasVazia()
-        }
+        },
+        complete: () => $('#loading').css('display', 'none')
 
     })
 }
 
 const limparDeck = async function() {
-    $('.card-pendencia').fadeOut(1000)    // esconde todos os cards com uma animação de 1s
-    await sleep(1000)           // espera por 1s a animação terminar
-    $('.card-pendencia').remove()         // após a animação, remove de fato os cards
+    $('.card-pendencia').fadeOut(1000) // esconde todos os cards com uma animação de 1s
+    await sleep(1000) // espera por 1s a animação terminar
+    $('.card-pendencia').remove() // após a animação, remove de fato os cards
 }
 
 const criarHtmlListaPendencias = pendencias => {
     pendencias.forEach(item => adicionarCardNoDeck(item))
-    $('#loading').css('display', 'none')
 }
 
 const adicionarCardNoDeck = item => $('#deck').append(criarCard(item))
@@ -133,9 +131,7 @@ const adicionarPopupInfoBicicleta = (item, card, popover) => {
 const verificarBicicleta = bike => enviarAjaxVerificarBicicleta(bike, listarPendencias)
 
 
-const avisarListaDePendenciasVazia = () => {
-    const avisoNenhumaPendencia = criarHtmlNenhumaPendencia()
-    $('#listaPendencias').html(avisoNenhumaPendencia)
-}
+const avisarListaDePendenciasVazia = () => $('#listaPendencias').html(criarHtmlNenhumaPendencia())
+
 
 const criarHtmlNenhumaPendencia = () => $('<div class="pendencia-item">').html('Nenhuma pendência encontrada. Fique tranquilo! Avisaremos quando uma nova requisição chegar 😉')

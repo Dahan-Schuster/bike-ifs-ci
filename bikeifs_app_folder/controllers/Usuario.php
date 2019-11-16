@@ -32,6 +32,7 @@ class Usuario extends CI_Controller
             'scripts' => array(
                 'util.js'
             ),
+            'foto_url' => $this->session->userdata('foto_url'),
             'nome' => $this->session->userdata('nome')
         );
 
@@ -52,6 +53,7 @@ class Usuario extends CI_Controller
             'scripts' => array(
                 'util.js'
             ),
+            'foto_url' => $this->session->userdata('foto_url'),
             'nome' => $this->session->userdata('nome')
         );
 
@@ -81,6 +83,7 @@ class Usuario extends CI_Controller
                 'responsive.dataTables.min.css',
                 'gijgo.min.css',
             ),
+            'foto_url' => $this->session->userdata('foto_url'),
             'nome' => $this->session->userdata('nome'),
             'id_usuario' => $this->session->logged_user_id
         );
@@ -114,6 +117,7 @@ class Usuario extends CI_Controller
                 'gijgo.min.css',
                 'snackbar.min.css'
             ),
+            'foto_url' => $this->session->userdata('foto_url'),
             'nome' => $this->session->userdata('nome'),
             'id_usuario' => $this->session->logged_user_id
         );
@@ -132,6 +136,7 @@ class Usuario extends CI_Controller
 
 
         $usuario = $this->usuario_model->carregarPorId($this->session->userdata['logged_user_id']);
+        $usuario->foto_url = Tools::getUsuarioFoto($usuario->foto_url);
         unset($usuario->senha);
 
         $data = array(
@@ -145,6 +150,7 @@ class Usuario extends CI_Controller
                 'jquery.mask.min.js',
                 'util.js'
             ),
+            'foto_url' => $this->session->userdata('foto_url'),
             'nome' => $this->session->userdata('nome'),
             'usuario' => $usuario
         );
@@ -159,7 +165,8 @@ class Usuario extends CI_Controller
      */
     public function select($id = null)
     {
-        if (
+        if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
+        elseif (
             $this->session->permissions_level != 'usuario' &&
             $this->session->permissions_level != 'funcionario' &&
             $this->session->permissions_level != 'admin'
@@ -169,11 +176,13 @@ class Usuario extends CI_Controller
         $header = 'header-' . $this->session->permissions_level;
         $footer = 'footer-' . $this->session->permissions_level;
 
-
         $usuario = $this->usuario_model->carregarPorId($id);
         if (!$usuario) show_404();
 
+        $usuario->foto_url = Tools::getUsuarioFoto($usuario->foto_url);
         unset($usuario->senha);
+
+        $this->load->model('requisicao_model');
 
         $data = array(
             'styles' => array(
@@ -188,13 +197,16 @@ class Usuario extends CI_Controller
                 'dataTables.responsive.min.js',
                 'gijgo.min.js',
                 'snackbar.min.js',
+                'jquery.mask.min.js',
                 'util.js',
                 'escolher.cores.js',
                 "pages/historico.usuario.js",
                 "pages/bicicletas.usuario.js",
                 'pages/perfil-publico-user.js'
             ),
+            'foto_url' => $this->session->userdata('foto_url'),
             'nome' => $this->session->userdata('nome'),
+            'quantidadePendencias' => $this->requisicao_model->contarRequisicoesEmAberto(),
             'usuario' => $usuario
         );
 
@@ -236,6 +248,39 @@ class Usuario extends CI_Controller
         endforeach;
 
         $response['data'] = $usuarios;
+
+        echo json_encode($response);
+    }
+
+    /**
+     * Função acessada via requisições AJAX para alterar a foto de perfil
+     */
+    public function updateProfileFoto()
+    {
+        if ($this->session->permissions_level != 'usuario')
+            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+        # Verifica se o método está sendo acessado por uma requisição AJAX
+        elseif (!$this->input->is_ajax_request())
+            exit("Não é permitido acesso direto aos scripts.");
+
+        $id =  $this->session->userdata('logged_user_id');
+        $data = $this->input->post();
+
+        $response = array();
+        $response['status'] = 1;
+
+        if (!empty($data['foto_url'])) :
+            $arquivo = basename($data['foto_url']);
+            $url_antiga = getcwd() . '/tmp/' . $arquivo;
+            $nova_url = getcwd() . '/public/img/users/' . $arquivo;
+
+            rename($url_antiga, $nova_url);
+            $data['foto_url'] = '/public/img/users/' . $arquivo;
+            $this->usuario_model->editar($id, $data);
+        else :
+            $response['status'] = 0;
+            $response['error_message'] = 'Não é permitido o envio de uma foto vazia.';
+        endif;
 
         echo json_encode($response);
     }

@@ -16,7 +16,7 @@
         <div class="perfil">
             <div class="perfil-sidebar pb-3">
                 <div class="perfil-foto">
-                    <img src="<?= base_url('public/img/icons/manager.png') ?>" title="Usuário" class="img-responsive" alt="Usuário">
+                    <img src="<?= $funcionario->foto_url ?>" title="Funcionário" class="img-responsive img-thumbnail" alt="Usuário">
                 </div>
                 <div class="perfil-titulo">
                     <div id="perfil-nome" class="perfil-titulo-nome">

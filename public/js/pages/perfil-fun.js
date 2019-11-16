@@ -2,6 +2,7 @@ $(document).ready(function() {
     let timestamp = getTimeStampAtual()
     popularTabelaRegistros(timestamp);
     criarEConfigurarSelectData()
+    configurarBotaoUploadFoto()
 
     $("#btn-info").click(function() {
         $("#btn-info").parent().addClass('active')
@@ -24,6 +25,31 @@ $(document).ready(function() {
         $("#informacoes, #registros").addClass('hidden')
     })
 })
+
+function configurarBotaoUploadFoto() {
+    $("#upload_foto").change(function() {
+        uploadImg($(this), $("#foto_path"), $("#foto_perfil"), true)
+    })
+    $("#foto_path").change(function() {
+        ajaxEnviarFoto()
+    })
+}
+
+const ajaxEnviarFoto = () => {
+    const foto_url = $("#foto_path").val()
+    console.log(foto_url)
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: BASE_URL + 'funcionario/updateProfileFoto',
+        data: { foto_url },
+        success: response => {
+            if (response['status'] == 0)
+                swal.fire('Foto inválida', response['error_message'], 'warning')
+        },
+        error: error => console.log(error)
+    })
+}
 
 function atualizarNome(id, nome_antigo) {
     swal.fire({

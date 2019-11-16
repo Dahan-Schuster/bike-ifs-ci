@@ -2,6 +2,7 @@
 defined('BASEPATH') or exit('Não é permitido acesso direto aos scripts.');
 
 require_once(APPPATH . 'models/SituacaoUsuario.php');
+require_once(APPPATH . 'models/Tools.php');
 
 class Home extends CI_Controller
 {
@@ -117,14 +118,20 @@ class Home extends CI_Controller
 
                 # Se não estiver...
                 else :
-                    # ... salva o ID do usuário e o tipo de acesso (nível de permissão) no array de sessão
+                    # ... salva o nome, o ID do usuário e o tipo de acesso (nível de permissão) no array de sessão
                     $this->session->set_userdata(
                         array(
                             "logged_user_id" => $result->id,
                             "nome" => $result->nome,
-                            "permissions_level" => mb_strtolower($tipoAcesso) // TODO: foto do usuário
+                            "permissions_level" => mb_strtolower($tipoAcesso)
                         )
                     );
+                    if (isset($result->foto_url)) {
+                        if (mb_strtolower($tipoAcesso) == 'funcionario')
+                            $this->session->set_userdata("foto_url", Tools::getFuncionarioFoto($result->foto_url));
+                        else if (mb_strtolower($tipoAcesso) == 'usuario')
+                            $this->session->set_userdata("foto_url", Tools::getUsuarioFoto($result->foto_url));
+                    }
                 endif;
             else :
                 $json['status'] = 0;

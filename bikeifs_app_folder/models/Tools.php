@@ -13,6 +13,24 @@ class Tools
         return trim($bike['foto_url']) && file_exists(getcwd() . $bike['foto_url']) ?
                 base_url($bike['foto_url']) : base_url('public/img/icons/bike-' . mb_strtolower($bike['nome_modelo']) . '-colored.png');
     }
+    
+    /**
+     * Retorna a url da foto do funcionário ou uma imagem padrão
+     */
+    public static function getFuncionarioFoto($foto_url)
+    {
+        return trim($foto_url) && file_exists(getcwd() . $foto_url) ?
+                base_url($foto_url) : base_url('public/img/icons/manager.png');
+    }
+    
+    /**
+     * Retorna a url da foto do usuário ou uma imagem padrão
+     */
+    public static function getUsuarioFoto($foto_url)
+    {
+        return trim($foto_url) && file_exists(getcwd() . $foto_url) ?
+                base_url($foto_url) : base_url('public/img/icons/cyclist.png');
+    }
 
     /**
      * Configura a localização e o fuso horário e retorna um String 

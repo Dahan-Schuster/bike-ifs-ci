@@ -78,7 +78,7 @@
                         <div class="col-lg-12">
                             <img rel="popover" class="img-fluid img-thumbnail img-zoom" src="" id="bike_img">
                             <label class="btn btn-info">
-                                <i class="material-icons"></i>&nbsp;&nbsp;Importar imagem
+                                <i class="material-icons">cloud_upload</i>&nbsp;&nbsp;Importar imagem
                                 <input type="file" id="btn_upload_bike_img" accept="image/*" style="display: none">
                             </label>
                             <input type="hidden" id="bike_img_path" name="foto_url">

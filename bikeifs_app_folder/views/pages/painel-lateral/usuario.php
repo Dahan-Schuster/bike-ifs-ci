@@ -19,7 +19,7 @@
         <div class="perfil">
             <div class="perfil-sidebar pb-3">
                 <div class="perfil-foto">
-                    <img src="<?= base_url('public/img/icons/cyclist.png') ?>" title="Usuário" class="img-responsive" alt="Usuário">
+                    <img src="<?= $usuario->foto_url ?>" title="Usuário" class="img-responsive img-thumbnail" alt="Usuário">
                 </div>
                 <div class="perfil-titulo">
                     <div id="perfil-nome" class="perfil-titulo-nome">
@@ -119,10 +119,10 @@
     const id_usuario = <?= $usuario->id ?>;
 
     $(document).ready(function() {
-        
+
         $("#linkPerfil").attr('href', `${BASE_URL}usuario/${id_usuario}`)
         $("#linkPerfil").attr('target', '_blank')
-        
+
         configurarDivConteudo()
         popularTabelaBicicletasUsuario()
     });

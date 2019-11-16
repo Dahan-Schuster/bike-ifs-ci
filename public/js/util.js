@@ -142,8 +142,9 @@ function configurarZoomImagens(popover) {
  * @param {HTMLInputElement} input_file o campo input responsável por receber a imagem
  * @param {HTMLImageElement} img imagem escolhida pelo usuário
  * @param {HTMLInputElement} input_path campo input do tipo hidden responsável por armazenar a url da imagem após upload
+ * @param {boolean} dispararSwal define se deve mostrar erros em um sweetAlert ao invés de preencher um .invalid-feedback
  */
-function uploadImg(input_file, input_path, img) {
+function uploadImg(input_file, input_path, img, dispararSwal = false) {
     let src_before = img.attr('src')
 
     img_file = input_file[0].files[0]
@@ -153,7 +154,7 @@ function uploadImg(input_file, input_path, img) {
 
     $.ajax({
         type: 'POST',
-        url: BASE_URL + 'image/import',
+        url: BASE_URL + 'image/upload',
         dataType: 'json',
         cache: false,
         contentType: false,
@@ -164,9 +165,13 @@ function uploadImg(input_file, input_path, img) {
             if (response['status'] == 1) {
                 img.attr('src', response['img_path'])
                 input_path.val(response['img_path'])
+                input_path.change()
             } else {
                 img.attr('src', src_before)
-                input_path.siblings('.invalid-feedback').html(response['error_message'])
+                if (dispararSwal)
+                    swal.fire('Imagem inválida', response['error_message'], 'warning')
+                else
+                    input_path.siblings('.invalid-feedback').html(response['error_message'])
             }
         },
         error: function() {

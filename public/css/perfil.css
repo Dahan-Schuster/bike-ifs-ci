@@ -1,89 +1,100 @@
 .perfil-sidebar {
-  background: #fff;
-  margin-bottom: 20px;
+    background: #fff;
+    margin-bottom: 20px;
 }
 
 .perfil-foto {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .perfil-foto img {
-  float: none;
-  margin: 10px auto 0;
-  width: 50%;
-  height: 50%;
+    width: 128px;
+    float: none;
+    margin: 10px auto 0;
+}
+
+.foto-upload>input {
+    display: none;
+}
+
+.foto-upload img {
+    cursor: pointer;
+}
+
+.foto-upload:hover {
+  opacity: 0.5;
 }
 
 .perfil-titulo {
-  text-align: center;
-  margin-top: 20px;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .perfil-titulo-nome {
-  color: #5a7391;
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 7px;
+    color: #5a7391;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 7px;
 }
 
 .perfil-titulo-tipo {
-  text-transform: uppercase;
-  color: #5b9bd1;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 15px;
+    text-transform: uppercase;
+    color: #5b9bd1;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 15px;
 }
-   
+
 .perfil-titulo-email {
-  color: #5b9bd1;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 15px;
+    color: #5b9bd1;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 15px;
 }
 
 .perfil-menu {
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 .perfil-menu ul li {
-  border-bottom: 1px solid #f0f4f7;
-  padding: 6px;
-  padding-left: 3px;
-  width: 100%;
+    border-bottom: 1px solid #f0f4f7;
+    padding: 6px;
+    padding-left: 3px;
+    width: 100%;
 }
 
 .perfil-menu ul li:hover,
 .perfil-menu ul li.active:hover {
-  cursor: pointer;
-  background-color: #5be76e3d;
+    cursor: pointer;
+    background-color: #5be76e3d;
 }
 
 .perfil-menu ul li.active {
-  border-bottom: 4px solid #044D29;
-  background-color: #45b65497;
+    border-bottom: 4px solid #044D29;
+    background-color: #45b65497;
 }
 
 .perfil-menu ul li button {
-  font-size: 14px;
-  padding: 10px;
-  padding-left: 3px;
-  border: 0px;
-  background-color: rgba(255, 255, 255, 0);
-  outline: none;
-  width: -webkit-fill-available;
-  display: flex;
+    font-size: 14px;
+    padding: 10px;
+    padding-left: 3px;
+    border: 0px;
+    background-color: rgba(255, 255, 255, 0);
+    outline: none;
+    width: -webkit-fill-available;
+    display: flex;
 }
 
 .perfil-menu ul li button:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .perfil-menu ul li button span {
-  margin-top: 0.45rem;
+    margin-top: 0.45rem;
 }
 
 .conteudo-perfil {
-  padding: 20px;
-  background: #fff;
+    padding: 20px;
+    background: #fff;
 }

@@ -87,6 +87,12 @@
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#009BBA', endColorstr='#379944', GradientType=1);
 }
 
+.perfil-header {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
 .raised {
     box-shadow: 0px 2px 6px gray !important;
 }

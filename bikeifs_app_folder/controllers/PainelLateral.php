@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('Não é permitido acesso direto aos scripts.');
 
+require_once APPPATH . 'models/Tools.php';
 require_once APPPATH . 'models/SituacaoBicicleta.php';
 require_once APPPATH . 'models/ModeloBike.php';
 require_once APPPATH . 'models/SituacaoFuncionario.php';
@@ -37,6 +38,7 @@ class PainelLateral extends CI_Controller
         $usuario->nome_tipo = TipoUsuario::getNomeTipo($usuario->tipo);
         $usuario->nome_situacao = SituacaoUsuario::getTipoSituacao($usuario->situacao);
         $usuario->ativo = ($usuario->situacao == SituacaoUsuario::ATIVO);
+        $usuario->foto_url = Tools::getUsuarioFoto($usuario->foto_url);
         unset($usuario->senha);
 
         $data = array(
@@ -78,6 +80,7 @@ class PainelLateral extends CI_Controller
         $funcionario = $this->funcionario_model->carregarPorId($id);
         $funcionario->nome_situacao = SituacaoFuncionario::getTipoSituacao($funcionario->situacao);
         $funcionario->ativo = ($funcionario->situacao == SituacaoFuncionario::ATIVO);
+        $funcionario->foto_url = Tools::getFuncionarioFoto($funcionario->foto_url);
         unset($funcionario->senha);
 
         $data = array(
