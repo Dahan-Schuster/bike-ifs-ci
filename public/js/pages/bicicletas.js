@@ -91,7 +91,7 @@ $("#formSalvarBike")
 // Ativar/desativar bicicletas
 
 function alterarSituacaoBicicleta(bike, situacao) {
-    var ids_bicicletas = [bike];
+    const ids_bicicletas = [bike];
     if (situacao == 'Ativa')
         enviarAjaxDesativarBicicletas(ids_bicicletas)
     else if (situacao == 'Inativa')
@@ -99,7 +99,7 @@ function alterarSituacaoBicicleta(bike, situacao) {
 }
 
 function ativarBicicletasSelecionadas() {
-    var ids_bicicletas = []
+    const ids_bicicletas = []
     datatable.rows({ selected: true })
         .data()
         .toArray()
@@ -127,7 +127,7 @@ function ativarBicicletasSelecionadas() {
 }
 
 function desativarBicicletasSelecionadas() {
-    var ids_bicicletas = []
+    const ids_bicicletas = []
     datatable.rows({ selected: true })
         .data()
         .toArray()

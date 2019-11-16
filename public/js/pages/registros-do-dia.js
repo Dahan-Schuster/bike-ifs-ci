@@ -341,7 +341,7 @@ function configurarSelectBicicleta() {
 
     // Atualizar select bicicleta ao escolher um usuário
     $('#modalRegistroManual').find('#selectUsuario').on('change', function() {
-        var id_usuario = $(this).val();
+        const id_usuario = $(this).val();
         if (id_usuario) {
             $.ajax({
                 type: 'POST',

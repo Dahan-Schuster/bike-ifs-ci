@@ -82,7 +82,7 @@ function alterarSituacaoUsuario(user, situacao) {
 }
 
 function ativarUsuariosSelecionados() {
-    var ids_usuarios = []
+    const ids_usuarios = []
     datatable.rows({ selected: true })
         .data()
         .toArray()
@@ -110,7 +110,7 @@ function ativarUsuariosSelecionados() {
 }
 
 function desativarUsuariosSelecionados() {
-    var ids_usuarios = []
+    const ids_usuarios = []
     datatable.rows({ selected: true })
         .data()
         .toArray()

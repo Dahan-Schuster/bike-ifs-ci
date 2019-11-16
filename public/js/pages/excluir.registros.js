@@ -64,7 +64,7 @@ function excluirRegistro(botao) {
 }
 
 function excluirRegistrosSelecionados() {
-    var ids_registros = []
+    const ids_registros = []
     datatable.rows({ selected: true })
         .data()
         .toArray()

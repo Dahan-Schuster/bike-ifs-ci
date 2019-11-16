@@ -93,7 +93,7 @@ function excluirTag(botao) {
 }
 
 function excluirTagsSelecionadas() {
-    var ids_tags = []
+    const ids_tags = []
     datatable.rows({ selected: true })
         .data()
         .toArray()
@@ -295,7 +295,7 @@ function popularTabela() {
 function configurarSelectBicicleta() {
     // Atualizar select bicicleta ao escolher um usuário
     $('#selectUsuario').change(function() {
-        var id_usuario = $(this).val();
+        const id_usuario = $(this).val();
         if (id_usuario) {
             $.ajax({
                 type: 'POST',

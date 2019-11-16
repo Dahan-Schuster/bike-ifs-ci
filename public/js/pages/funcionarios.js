@@ -72,7 +72,7 @@ function alterarSituacaoFuncionario(fun, situacao) {
 }
 
 function ativarFuncionariosSelecionados() {
-    var ids_funcionarios = []
+    const ids_funcionarios = []
     datatable.rows({ selected: true })
         .data()
         .toArray()
@@ -100,7 +100,7 @@ function ativarFuncionariosSelecionados() {
 }
 
 function desativarFuncionariosSelecionados() {
-    var ids_funcionarios = []
+    const ids_funcionarios = []
     datatable.rows({ selected: true })
         .data()
         .toArray()

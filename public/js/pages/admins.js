@@ -92,13 +92,11 @@ function excluirAdmin(botao) {
 }
 
 function excluirAdminsSelecionados() {
-    var ids_admins = []
+    const ids_admins = []
     datatable.rows({ selected: true })
         .data()
         .toArray()
-        .forEach((row) => {
-            ids_admins.push(row.id)
-        })
+        .forEach(row => ids_admins.push(row.id))
 
     if (ids_admins.length == 0) {
         swal.fire("Excluir selecionados", "Nenhuma linha selecionada. Selecione um administrador clicando em sua linha na tabela.", "error")
