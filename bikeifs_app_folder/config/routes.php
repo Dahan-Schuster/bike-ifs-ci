@@ -86,5 +86,9 @@ $route['tagRFID']['GET'] = 'tagRFID/select_all';
 
 $route['pendencias']['GET'] = 'requisicao/select_all_open';
 
+$route['database/backup/baixar'] = 'database/download';
+$route['database/backup/enviar'] = 'mailer/send_current_backup';
+$route['database/backup/enviar/ultimo'] = 'mailer/send_last_backup';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

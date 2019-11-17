@@ -11,6 +11,7 @@
   <script language="javascript" src="<?= base_url() ?>public/js/sweetalert2.all.min.js"></script>
   <script language="javascript" src="<?= base_url() ?>public/js/perfil.sidepanel.js"></script>
   <script language="javascript" src="<?= base_url() ?>public/js/bike.sidepanel.js"></script>
+  <script language="javascript" src="<?= base_url() ?>public/js/backups.js"></script>
   <?php
   if (isset($scripts)) :
     foreach ($scripts as $script) :

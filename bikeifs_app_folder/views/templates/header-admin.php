@@ -33,7 +33,7 @@
                     <img class="icon-logo" src="<?= base_url() ?>public/img/icon.svg" title="Logo" alt="Logo">
                     <img class='logo' src="<?= base_url() ?>public/img/nome-logo.png" title="Bike IFS" alt="Bike IFS">
                 </a>
-                <button  style="background: #ffffff21" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button style="background: #ffffff21" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="material-icons">menu</i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarMenu">
@@ -64,6 +64,23 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="<?= base_url('admin/view/excluir-registros') ?>">Registros</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="navLinkBackup" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Realizar backup
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <form action="<?= base_url('database/backup/baixar') ?>" method="post">
+                                    <button name="current" class="dropdown-item" type="submit">
+                                        Baixar backup atual
+                                    </button>
+                                    <button name="last" class="dropdown-item" type="submit">
+                                        Baixar último backup
+                                    </button>
+                                </form>
+                                <a class="dropdown-item" href="#" onclick="ajaxEnviarBackupAtual()">Enviar backup atual por email</a>
+                                <a class="dropdown-item" href="#" onclick="ajaxEnviarUltimoBackup()">Enviar último backup por email</a>
                             </div>
                         </li>
                     </ul>

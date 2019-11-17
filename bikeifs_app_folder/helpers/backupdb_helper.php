@@ -73,11 +73,15 @@ if (!function_exists('backup')) {
      */
     function backup($force = false)
     {
-        if ($force || !existeArquivoBackup() || necessitaBackup()) {
-            realizarBackup();
-            return true;
+        try {
+            if ($force || !existeArquivoBackup() || necessitaBackup()) {
+                realizarBackup();
+                return true;
+            }
+            return false;
+        } catch (\Exception $e) {
+            return false;
         }
-        return false;
     }
 }
 

@@ -249,6 +249,79 @@ class Mailer extends CI_Controller
         echo json_encode($response);
     }
 
+    public function send_current_backup()
+    {
+        # Verifica se o método está sendo acessado por uma requisição AJAX
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido acesso direto aos scripts.");
+
+        $response = array();
+        $response['status'] = 1;
+
+        if (backup(true)) {
+            if (!$this->enviarBackup())
+                $response['status'] = 3;
+        } else
+            $response['status'] = 4;
+
+        echo json_encode($response);
+    }
+
+    public function send_last_backup()
+    {
+        # Verifica se o método está sendo acessado por uma requisição AJAX
+        if (!$this->input->is_ajax_request())
+            exit("Não é permitido acesso direto aos scripts.");
+
+        $response = array();
+        $response['status'] = 1;
+
+        if (!$this->enviarBackup())
+            $response['status'] = 0;
+
+        echo json_encode($response);
+    }
+
+    private function enviarBackup()
+    {
+        $this->load->model('administrador_model');
+        $this->load->library('zip');
+
+        $destinatario = $this->administrador_model->carregarPorId($this->session->logged_user_id);
+
+        $this->mail->addAddress($destinatario->email);
+
+        $this->mail->Subject = "Backup do sistema - Bike IFS";
+
+        # Recupera o arquivo html salvo no arquivo pagina-email.html
+        $rawBody = file_get_contents(APPPATH . 'views/phpmailer-html/pagina-backup.html');
+
+        # Substitui a palavra '!nomeUser!', previamente posicionada no arquivo,
+        # pelo nome do usuário
+        $body = preg_replace('/\bnomeUser\b/', strtoupper($destinatario->nome), $rawBody);
+
+        $this->mail->Body = $body;
+
+        $arquivo = 'backup.zip';
+
+        $this->zip->read_file(
+            APPPATH . 'core' .
+                DIRECTORY_SEPARATOR . 'database' .
+                DIRECTORY_SEPARATOR . 'database_backup.backup'
+        );
+
+        $this->zip->archive(FCPATH . '/tmp/' . $arquivo);
+        $this->mail->addAttachment(FCPATH . '/tmp/' . $arquivo);
+
+        # Envia o e-mail
+        $result = $this->mail->Send();
+
+        # Limpa os destinatários
+        $this->mail->ClearAllRecipients();
+
+        return $result;
+    }
+
     /**
      *  Gera uma sequencia de oito caracteres aletaórios   
      */
