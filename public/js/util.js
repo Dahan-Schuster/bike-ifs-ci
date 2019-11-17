@@ -11,24 +11,26 @@ $(function() {
      *   Dispara o evento 'show.bs.modal' ao abrir modais
      *   Existe nativamente no bootstrap, mas não no material bootstrap
      * */
-    $('[data-toggle="modal"]')
-        .click(function(e) {
-            $(e.delegateTarget.dataset.target)
-                .trigger('show.bs.modal')
-        })
+    $('[data-toggle="modal"]').click(e => $(e.delegateTarget.dataset.target).trigger('show.bs.modal'))
+
+    /**
+     * Transforma os modais em draggable (framework Gijgo.js)
+     */
     try {
         $('.modal').draggable({
             handle: $('.modal-header')
         })
     } catch (e) {}
+
+    /**
+     * Estiliza os modais draggable
+     */
     $('[data-type="draggable"]')
         .find('.modal-header')
         .css('cursor', 'move')
     $('[data-type="draggable"]')
         .find('.modal-content')
-        .on('selectstart', function() {
-            return false
-        })
+        .on('selectstart', () => false)
 
 
 });
@@ -38,12 +40,8 @@ $(function() {
  * 
  * @param {function} callback função a ser chamada quando requisições AJAX ocorrerem
  */
-function onAjaxSend(callback) {
-    $(document).ajaxSend(
-        function(event, request, settings) {
-            return callback(event, request, settings)
-        }
-    );
+const onAjaxSend = callback => {
+    $(document).ajaxSend((event, request, settings) => callback(event, request, settings))
 }
 
 /**
@@ -51,27 +49,23 @@ function onAjaxSend(callback) {
  * 
  * @param {object} modal objeto retornado pelo JQuery ao referenciar o modal
  */
-function fecharModal(modal) {
-    modal.find('.close').click()
-}
+const fecharModal = modal => modal.find('.close').click()
+
 
 /**
  * Mostra um snackbar estilizado como sucesso
  */
-function snackBarSucesso(mensagem = 'Operação realizada com sucesso') {
-    var options = {
+const snackBarSucesso = (mensagem = 'Operação realizada com sucesso') =>
+    $.snackbar({
         content: `<i class='material-icons'>check_circle_outline</i> <span class='mb-5'>${mensagem}</span>`, // text of the snackbar
         style: "snackbar snackbar-sucesso",
         timeout: 5000
-    }
-
-    $.snackbar(options);
-}
+    })
 
 /** 
  * Ativa o menu 'Listar' na navbar
  */
-function ativarMenuListar() {
+const ativarMenuListar = () => {
     $(".nav-link")
         .removeClass('active')
     $("#navLinkListagem")
@@ -81,7 +75,7 @@ function ativarMenuListar() {
 /**
  * Limpa os erros mostrados em um formulário
  */
-function clearErrors() {
+const clearErrors = () => {
     $(".is-invalid")
         .removeClass('is-invalid')
     $(".invalid-feedback")
@@ -94,10 +88,10 @@ function clearErrors() {
  * 
  * @param {array} error_list lista de erros no formato [{'#containerOndeMostrarOErro' = 'Mensagem do erro'}, ...]
  */
-function showErrors(error_list) {
+const showErrors = error_list => {
     clearErrors()
 
-    $.each(error_list, function(error_container, message) {
+    $.each(error_list, (error_container, message) => {
         $(error_container)
             .find('.form-control')
             .addClass('is-invalid')
@@ -112,12 +106,11 @@ function showErrors(error_list) {
  * Retorna um bootstrap spinner + uma mensagem
  * @param {*} message 
  */
-function loadingImg(message = '') {
-    if (message.trim()) message = '&nbsp;&nbsp;&nbsp;' + message
-    return "<div class='spinner-border spinner-border-sm'></div>" + message
-}
+const loadingImg = message =>
+    `<div class='spinner-border spinner-border-sm'></div>${message && message.trim() ? '&nbsp;&nbsp;&nbsp;' : ''}${message}`
 
-function configurarZoomImagens(popover) {
+
+const configurarZoomImagens = popover => {
     $('img[rel=popover]').hover(function() {
         popover.find("#imagem-zoom").attr('src', $(this).attr('src'))
         popover.toggle()
