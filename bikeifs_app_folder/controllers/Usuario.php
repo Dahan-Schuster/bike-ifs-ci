@@ -27,7 +27,7 @@ class Usuario extends CI_Controller
         # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
         $data = array(
             'scripts' => array(
@@ -48,7 +48,7 @@ class Usuario extends CI_Controller
         # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
         $data = array(
             'scripts' => array(
@@ -69,7 +69,7 @@ class Usuario extends CI_Controller
         # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
         $data = array(
             'scripts' => array(
@@ -100,7 +100,7 @@ class Usuario extends CI_Controller
         # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
         $data = array(
             'scripts' => array(
@@ -133,7 +133,7 @@ class Usuario extends CI_Controller
         # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'usuario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
 
         $usuario = $this->usuario_model->carregarPorId($this->session->userdata['logged_user_id']);
@@ -172,7 +172,7 @@ class Usuario extends CI_Controller
             $this->session->permissions_level != 'funcionario' &&
             $this->session->permissions_level != 'admin'
         )
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
         $header = 'header-' . $this->session->permissions_level;
         $footer = 'footer-' . $this->session->permissions_level;
@@ -259,7 +259,7 @@ class Usuario extends CI_Controller
     public function updateProfileFoto()
     {
         if ($this->session->permissions_level != 'usuario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
         # Verifica se o método está sendo acessado por uma requisição AJAX
         elseif (!$this->input->is_ajax_request())
             exit("Não é permitido acesso direto aos scripts.");

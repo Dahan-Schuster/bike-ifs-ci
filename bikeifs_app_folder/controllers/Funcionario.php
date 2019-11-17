@@ -27,7 +27,7 @@ class Funcionario extends CI_Controller
     {
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'funcionario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
         $data = array(
             'scripts' => array(
@@ -61,7 +61,7 @@ class Funcionario extends CI_Controller
     {
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'funcionario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
         $data = array(
             'scripts' => array(
@@ -82,7 +82,7 @@ class Funcionario extends CI_Controller
 
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif (isset($this->session->permissions_level) && $this->session->userdata['permissions_level'] != 'funcionario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
         elseif (!$page || !file_exists(APPPATH . "views/pages/listar/$page.php"))
             show_404();
 
@@ -91,7 +91,7 @@ class Funcionario extends CI_Controller
             $page == 'emails' ||
             $page == 'funcionarios'
         ) {
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
         }
 
         $data = array(
@@ -142,7 +142,7 @@ class Funcionario extends CI_Controller
 
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'funcionario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
         $data = array(
             'scripts' => array(
@@ -175,7 +175,7 @@ class Funcionario extends CI_Controller
 
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'funcionario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
         $funcionario = $this->funcionario_model->carregarPorId($this->session->userdata['logged_user_id']);
         unset($funcionario->senha);
@@ -228,7 +228,7 @@ class Funcionario extends CI_Controller
     {
 
         if ($this->session->permissions_level != 'funcionario' && $this->session->permissions_level != 'admin')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
         elseif (!$this->input->is_ajax_request())
             header('location: ' . base_url('funcionario/me'));
 
@@ -260,7 +260,7 @@ class Funcionario extends CI_Controller
     public function insert()
     {
         if ($this->session->permissions_level != 'funcionario' && $this->session->permissions_level != 'admin')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
         # Verifica se o método está sendo acessado por uma requisição AJAX
         elseif (!$this->input->is_ajax_request())
             exit("Não é permitido acesso direto aos scripts.");
@@ -344,7 +344,7 @@ class Funcionario extends CI_Controller
     public function updateProfileFoto()
     {
         if ($this->session->permissions_level != 'funcionario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
         # Verifica se o método está sendo acessado por uma requisição AJAX
         elseif (!$this->input->is_ajax_request())
             exit("Não é permitido acesso direto aos scripts.");
@@ -379,7 +379,7 @@ class Funcionario extends CI_Controller
     public function updateEmail()
     {
         if ($this->session->permissions_level != 'funcionario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
         # Verifica se o método está sendo acessado por uma requisição AJAX
         elseif (!$this->input->is_ajax_request())
             exit("Não é permitido acesso direto aos scripts.");
@@ -414,7 +414,7 @@ class Funcionario extends CI_Controller
     public function updatePassword()
     {
         if ($this->session->permissions_level != 'funcionario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
         # Verifica se o método está sendo acessado por uma requisição AJAX
         elseif (!$this->input->is_ajax_request())
             exit("Não é permitido acesso direto aos scripts.");
@@ -462,7 +462,7 @@ class Funcionario extends CI_Controller
     {
 
         if ($this->session->permissions_level != 'admin')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
         # Verifica se o método está sendo acessado por uma requisição AJAX
         elseif (!$this->input->is_ajax_request())
             exit("Não é permitido acesso direto aos scripts.");
@@ -488,7 +488,7 @@ class Funcionario extends CI_Controller
     public function desativar()
     {
         if ($this->session->permissions_level != 'admin')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
         # Verifica se o método está sendo acessado por uma requisição AJAX
         elseif (!$this->input->is_ajax_request())
             exit("Não é permitido acesso direto aos scripts.");

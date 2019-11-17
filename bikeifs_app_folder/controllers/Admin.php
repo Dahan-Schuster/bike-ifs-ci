@@ -24,7 +24,7 @@ class Admin extends CI_Controller
         # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'admin')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
         $admin = $this->administrador_model->carregarPorId($this->session->logged_user_id);
         unset($admin->senha);
@@ -55,7 +55,7 @@ class Admin extends CI_Controller
         # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'admin')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
         if ($page == 'relatorios') {
             $data = array(
@@ -118,7 +118,7 @@ class Admin extends CI_Controller
         # Verifica se o usuário está logado e, se não, redireciona para a tela de login
         if (!isset($this->session->userdata['permissions_level'])) header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'admin')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
 
         if (!$page || !file_exists(APPPATH . "views/pages/listar/$page.php"))
             show_404();

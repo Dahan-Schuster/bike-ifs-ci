@@ -33,7 +33,7 @@ class Requisicao extends CI_Controller
     {
 
         if ($this->session->permissions_level != 'funcionario')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
         elseif (!$this->input->is_ajax_request())
             header('location: ' . base_url('funcionario/me'));
 

@@ -23,7 +23,7 @@ class Email extends CI_Controller
         if (!isset($this->session->userdata['permissions_level']))
             header('location: ' . base_url('home/view/login'));
         elseif ($this->session->userdata['permissions_level'] != 'admin')
-            show_error("<h2 style='padding-left: 2rem;'><b>Acesso negado.</b></h2>");
+            show_404();
     }
 
     /**
