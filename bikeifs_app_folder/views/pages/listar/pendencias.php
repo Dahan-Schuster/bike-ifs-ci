@@ -15,10 +15,6 @@
     <div class="spinner-border"></div>
     &nbsp;&nbsp;&nbsp;&nbsp;Carregando...
 </div>
-<div id="popperInfo" class="popover hidden" role="tooltip">
-    <div class="popover-header">
-        Informações
-    </div>
-    <div class="popover-body">
-    </div>
-</div>
+<?php
+include_once('public/views/dialogs/popperInfo.html');
+?>

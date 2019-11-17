@@ -74,7 +74,7 @@ class Registro extends CI_Controller
         endif;
 
         if (empty($data['id_bicicleta'])) :
-            $response['error_list']['#divSelectBicicleta'] = 'Por favor, seleciona a bike que irá receber a Tag.';
+            $response['error_list']['#divSelectBicicleta'] = 'Por favor, seleciona a bicicleta.';
         else :
             $bike = $this->bicicleta_model->carregarPorId($data['id_bicicleta']);
             $user = $this->usuario_model->carregarPorId($bike->id_usuario);

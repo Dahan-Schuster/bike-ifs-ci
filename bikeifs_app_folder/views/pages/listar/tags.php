@@ -52,20 +52,6 @@
             </div>
             <form autocomplete="off" id="formCadastroTag">
                 <div class="modal-body">
-                    <div id="divInputUid" class="form-group">
-                        <label for="inputUid" class="bmd-label-floating">
-                            Clique no botão ao lado para ler uma Tag RFID
-                        </label>
-                        <div class="input-group">
-                            <input name="codigo" type="text" placeholder="Código UID" class="form-control" id="inputUid">
-                            <div class="input-group-append">
-                                <button type="button" class="btn" data-toggle="modal" data-target="#modalLerTag">
-                                    <img src="<?= base_url('public/img/icons/rfid.png') ?>" class="img-responsive" title="Ler Tag RFID" alt="Ler Tag Rfid">
-                                </button>
-                            </div>
-                        </div>
-                        <span class="invalid-feedback"></span>
-                    </div>
                     <div id="divSelectUsuario" class="form-group">
                         <label for="selectUsuario" class="bmd-label-floating">
                             Pesquise um usuário clicando no botão ao lado
@@ -84,20 +70,27 @@
                     </div>
                     <div id="divSelectBicicleta" class="form-group">
                         <label for="selectBicicleta" class="bmd-label-floating">
-                            Selecione a bicicleta que portará a Tag RFID
+                            Selecione a bicicleta
                         </label>
                         <select class="form-control" id="selectBicicleta" name="id_bicicleta">
                             <option value="">Primeiramente, selecione um usuário.</option>
                         </select>
                         <span class="invalid-feedback"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="selectedBikeColor" class="bmd-label-floating">Cor da bicicleta selecionada</label>
-                        <div id="selectedBikeColor" class="form-control bike-color">
-                            <i class="material-icons">directions_bike</i>
+                    <div id="divInputUid" class="form-group">
+                        <label for="inputUID" class="bmd-label-floating">
+                            Clique no botão ao lado para ler uma Tag RFID
+                        </label>
+                        <div class="input-group">
+                            <input name="codigo" type="text" placeholder="Código UID" class="form-control" id="inputUID">
+                            <div class="input-group-append">
+                                <button type="button" class="btn" data-toggle="modal" data-target="#modalLerTag">
+                                    <img src="<?= base_url('public/img/icons/rfid.png') ?>" class="img-responsive" title="Ler Tag RFID" alt="Ler Tag Rfid">
+                                </button>
+                            </div>
                         </div>
+                        <span class="invalid-feedback"></span>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cancelar</button>

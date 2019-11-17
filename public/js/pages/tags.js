@@ -4,15 +4,16 @@ $(document)
     .ready(function() {
         popularTabela();
         popularTabelaPesquisarUsuario();
-        configurarModalLerTag();
         configurarSelectBicicleta();
+        configurarModalLerTag();
+        escutarIframe()
 
         setInterval(function() {
             atualizarDataTable(document.getElementById('btnSelecionarLinhas'), datatable);
         }, 120000); // atualiza a tabela a cada 2 minutos
 
         // Máscara do UID da tag RFID no formulário de cadastro
-        $("#inputUid")
+        $("#inputUID")
             .mask('ZZ ZZ ZZ ZZ', {
                 translation: {
                     'Z': {
@@ -36,6 +37,10 @@ $(document)
                 clearErrors();
                 $('#formCadastroTag')
                     .trigger('reset')
+                $(this)
+                    .find('#selectBicicleta')
+                    .html('<option value="">Primeiramente, selecione um usuário.</option>');
+
             })
 
     });
@@ -44,12 +49,13 @@ $("#formCadastroTag")
     .submit(function(form) {
         form.preventDefault()
 
+        const data = `id_bicicleta=${$('.dd-selected-value').val()}&${$(this).serialize()}`
+
         $.ajax({
             type: 'POST',
             url: BASE_URL + 'tagRFID',
             dataType: 'json',
-            data: $(this)
-                .serialize(),
+            data: data,
             beforeSend: function() {
                 $("#btnEnviarCadastro")
                     .html(loadingImg('Validando dados...'))
@@ -293,8 +299,12 @@ function popularTabela() {
 }
 
 function configurarSelectBicicleta() {
+    $('#selectBicicleta').ddslick({
+        width: '100%'
+    })
+
     // Atualizar select bicicleta ao escolher um usuário
-    $('#selectUsuario').change(function() {
+    $('#selectUsuario').on('change', function() {
         const id_usuario = $(this).val();
         if (id_usuario) {
             $.ajax({
@@ -302,7 +312,20 @@ function configurarSelectBicicleta() {
                 url: BASE_URL + 'bicicleta/gerarOpcoesDeBikesPorUsuario',
                 data: { id_usuario },
                 success: function(html) {
+                    $('#selectBicicleta').ddslick('destroy')
                     $('#selectBicicleta').html(html);
+
+                    // Plugin JQuery que irá transformar os atributos data-imagesrc de cada option em imagens
+                    // Esses atributos são preenchidos pelo controlador com as fotos da bikes
+                    $('#selectBicicleta').ddslick({
+                        width: '100%',
+                        height: '190px',
+                        onSelected: function() {
+                            configurarZoomImagens($("#popperZoomImagem"))
+                        }
+                    });
+
+                    configurarZoomImagens($("#popperZoomImagem"))
                 }
             });
         } else {
@@ -310,10 +333,4 @@ function configurarSelectBicicleta() {
         }
     });
 
-    // Atualizar a div cores ao escolher uma bicicleta
-    $('#selectBicicleta').change(function() {
-        var cores = $('#selectBicicleta option:selected').data('color');
-        if (!cores) cores = '#fff'
-        $("#selectedBikeColor").css('background', cores)
-    })
 }

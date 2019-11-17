@@ -90,7 +90,7 @@ class Bicicleta extends CI_Controller
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
 
-        $uid = $this->input->post('uid');
+        $uid = Tools::formatarUid($uid);
 
         $tags = $this->tagrfid_model->listarPorCampos(array('codigo' => $uid));
 
@@ -108,14 +108,15 @@ class Bicicleta extends CI_Controller
                 # Verifica se há marca e formata
                 'marca' => (!trim($bike->marca) ? 'Não informado' : $bike->marca),
                 'aro' => $bike->aro,
-                'situacao' => SituacaoBicicleta::getTipoSituacao($bike->situacao)
+                'foto_url' => Tools::getBikeFoto(json_decode(json_encode($bike), true))
             );
 
             # salva as informações interessantes sobre a o usuario (dono da bike)
             $userInfo = array(
-                'id' => $user->id,
                 'nome' => preg_split('/\s/', $user->nome)[0],  // Retorna apenas o primeiro nome do usuário
-                'matricula' => (!trim($user->matricula) ? "Não informado" : $user->matricula) // Verifica se há matrícula e formata
+                'matricula' => (!trim($user->matricula) ? "Não informado" : $user->matricula), // Verifica se há matrícula e formata
+                'cpf' => ($user->perfil_privado == 't' ? "Privado" : $user->cpf), 
+                'foto_url' => Tools::getUsuarioFoto($user->foto_url)
             );
 
             $response['data']['bike'] = $bikeInfo;

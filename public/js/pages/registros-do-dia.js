@@ -7,8 +7,6 @@ var botaoCheckoutRealizado = `<button onclick="alertarCheckoutRealizado()" class
                                     <i class="material-icons">check</i>
                             </button`;
 
-// TODO: Inserção automática de registros (RFID)
-
 $(document)
     .ready(function() {
         let timestamp = getTimeStampAtual()
@@ -24,6 +22,8 @@ $(document)
         configurarModalCadastroRegistro();
         configurarSelectBicicleta();
         configurarRegistroAutomatico();
+        configurarModalLerTag();
+        escutarIframe()
 
         $(".nav-link")
             .removeClass('active')
@@ -44,9 +44,18 @@ $(document)
  */
 $("#formRegistrarEntradaManual").submit(function(form) {
     form.preventDefault();
-
     const data = `id_bicicleta=${$('.dd-selected-value').val()}&${$(this).serialize()}`
+    enviarAjaxCheckin(data, $("#modalRegistroManual"))
+    return false;
+});
 
+$("#formRegistroAutomatico").submit(function(form) {
+    form.preventDefault()
+    enviarAjaxCheckin($(this).serialize(), $("#modalRegistroAutomatico"))
+    return false;
+})
+
+function enviarAjaxCheckin(data, modal) {
     $.ajax({
         type: 'POST',
         url: BASE_URL + 'registro/checkin',
@@ -60,7 +69,7 @@ $("#formRegistrarEntradaManual").submit(function(form) {
             if (response['status'] == 1) {
                 atualizarDataTable(null, datatable)
                 snackBarSucesso()
-                fecharModal($("#modalRegistroManual"));
+                fecharModal(modal);
             } else if (response['status'] == -1) {
                 swal.fire('Permissão negada', response['error_message'], 'error')
             } else if (response['status'] == -2) {
@@ -74,9 +83,8 @@ $("#formRegistrarEntradaManual").submit(function(form) {
                 .html('<i>Check-in</i>')
         }
     })
+}
 
-    return false;
-});
 
 /**
  * Abre um sweetalert com dois modais para vericação dos dados da bicicleta
@@ -321,7 +329,6 @@ function popularTabelaRegistros(timestamp) {
 function configurarModalCadastroRegistro() {
     $("#modalRegistroManual").on('show.bs.modal', function() {
         $(this).find('form').trigger('reset')
-        $(this).find('#selectedBikeColor').css('background', '')
         $(this).find('#selectBicicleta').html('<option value="">Primeiramente, selecione um usuário.</option>');
     })
 
@@ -411,7 +418,7 @@ function criarEConfigurarSelectData() {
 }
 
 /**
- * Confira o input de texto que é preenchido após a leitura de uma tag RFID
+ * Configura o input de texto que é preenchido após a leitura de uma tag RFID
  * para chamar a função que irá pesquisar por uma bicicleta através do UID
  * da Tag assim que o evento UidDetectado for disparado.
  * 
@@ -419,9 +426,114 @@ function criarEConfigurarSelectData() {
  * 
  */
 function configurarRegistroAutomatico() {
-    $('#inputUID').on('UidDetectado', function() {
-        pesquisarBikePorUID($('#inputUID').html());
+    $(document).on('UidDetectado', (e, uid) => pesquisarBikePorUID(uid))
+}
+
+/**
+ * Envia uma requisição AJAX para pesquisar uma bicicleta através do UID da Tag RFID associada a ela
+ * 
+ * @param {string} uid UID do cartão lido através do leitor RFID
+ */
+function pesquisarBikePorUID(uid) {
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: BASE_URL + `tagrfid/${uid}/bicicleta`,
+        success: function(response) {
+            if (response['status'] == 1) {
+                preencherModalRegistroAutomatico(response['data'])
+                $('#openModalRegistroAutomatico').click()
+            }
+        }
     });
+}
+
+function preencherModalRegistroAutomatico(data) {
+
+    let userNome = data.user.nome
+    let userMat = data.user.matricula
+    let userCpf = data.user.cpf
+    let userFoto = data.user.foto_url
+
+
+    let bikeId = data.bike.id
+    let bikeCores = data.bike.cores
+    let bikeModelo = data.bike.modelo
+    let bikeMarca = data.bike.marca
+    let bikeAro = data.bike.aro
+    let bikeFoto = data.bike.foto_url
+
+    $('#modalRegistroAutomatico').find('.modal-body').find("#spanUsuario").html(userNome);
+    $('#modalRegistroAutomatico').find('.modal-body').find("#fotoUsuario").attr('src', userFoto);
+
+    $('#modalRegistroAutomatico').find('.modal-body').find("#bikeId").val(bikeId);
+    $('#modalRegistroAutomatico').find('.modal-body').find("#spanBicicleta").html(bikeModelo);
+    $('#modalRegistroAutomatico').find('.modal-body').find("#fotoBicicleta").attr('src', bikeFoto);
+
+
+    let popover = $("#popperInfo")
+    adicionarPopupInfoUsuario(userMat, userCpf, popover)
+    adicionarPopupInfoBicicleta(bikeCores, bikeMarca, bikeAro, bikeModelo, popover)
+    configurarZoomImagens($("#popperZoomImagem"))
+}
+
+
+
+const adicionarPopupInfoUsuario = (userMat, userCpf, popover) => {
+    $('#modalRegistroAutomatico')
+        .find('.modal-body')
+        .find("#fotoUsuario")
+        .hover(function() {
+            popover
+                .find('.popover-body')
+                .html(
+                    `<b>Matricula:</b> ${userMat}
+                    <br>
+                    <b>CPF:</b> ${userCpf}`
+                )
+            popover.toggle()
+            new Popper($(this), popover, {
+                placement: 'right',
+                modifiers: {
+                    flip: {
+                        behavior: ['left', 'right', 'top', 'bottom']
+                    },
+                    arrow: {
+                        enabled: true
+                    }
+                }
+            })
+        });
+}
+
+const adicionarPopupInfoBicicleta = (bikeCores, bikeMarca, bikeAro, bikeModelo, popover) => {
+    $('#modalRegistroAutomatico')
+        .find('.modal-body')
+        .find("#fotoBicicleta")
+        .hover(function() {
+            popover
+                .find('.popover-body')
+                .html(
+                    `<b>Modelo</b>: ${bikeModelo}
+                    <br>
+                    <b>Marca</b>: ${bikeMarca}
+                    <br>
+                    <b>Aro</b>: ${bikeAro}
+                    <div class="bike-color" style="background:${bikeCores}"><i class="material-icons">directions_bike</i></div>`
+                )
+            popover.toggle()
+            new Popper($(this), popover, {
+                placement: 'right',
+                modifiers: {
+                    flip: {
+                        behavior: ['left', 'right', 'top', 'bottom']
+                    },
+                    arrow: {
+                        enabled: true
+                    }
+                }
+            })
+        });
 }
 
 /**
@@ -479,7 +591,7 @@ function alertarBicicletaOuUsuarioInativos(objetos) {
                 enviarAjaxAtivarUsuarios([objetos.usuario.id])
             }
             if (querRegistrar.value)
-                $('#btnCheckinManual').click()
+                $('.modal.show').find('button:submit').click()
             else
                 swal.fire('Sucesso', 'Operação realizada com sucesso. Tente registrar a entrada novamente', 'success')
         }

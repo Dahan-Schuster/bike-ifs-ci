@@ -4,6 +4,19 @@ require_once(APPPATH . 'models/ModeloBike.php');
 
 class Tools
 {
+
+    public static function formatarUid($uid) {
+        $uid = substr($uid, 0, 8);
+        $uid = preg_replace('/\s/', '', $uid);
+        $letters = str_split($uid);
+        $output = '';
+        for($i = 0; $i < strlen($uid); $i++) {
+            $output .= $letters[$i] . ($i % 2 != 0 ? ' ' : '');
+        }
+
+        return trim($output);
+    }
+
     /**
      * Retorna a url da foto da bicicleta ou o ícone de seu modelo
      */
