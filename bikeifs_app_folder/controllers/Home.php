@@ -126,7 +126,7 @@ class Home extends CI_Controller
                             "permissions_level" => mb_strtolower($tipoAcesso)
                         )
                     );
-                    if (isset($result->foto_url)) {
+                    if (property_exists($result, 'foto_url')) {
                         if (mb_strtolower($tipoAcesso) == 'funcionario')
                             $this->session->set_userdata("foto_url", Tools::getFuncionarioFoto($result->foto_url));
                         else if (mb_strtolower($tipoAcesso) == 'usuario')
