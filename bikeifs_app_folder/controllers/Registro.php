@@ -15,6 +15,7 @@ class Registro extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        backup();
         $this->load->library('session');
 
         $this->load->model('registro_model');
