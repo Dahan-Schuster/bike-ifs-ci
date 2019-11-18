@@ -17,6 +17,11 @@
   <?php endforeach;
   endif;
   ?>
+  <script>
+    try {
+      new Parallax(document.getElementById('scene'))
+    } catch (e) {}
+  </script>
 </footer>
 </div> <!-- fechamento da div pagina -->
 </body>

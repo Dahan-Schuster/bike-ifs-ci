@@ -38,7 +38,13 @@
 
 .jumbotron-main {
     box-shadow: 5px 5px 20px gray;
-    background: linear-gradient(rgba(30, 30, 50, 0.9), rgba(30, 30, 50, 0.9)), url('http://bikeifs.com/public/img/jumbotrom-bg.jpg');
+    background: linear-gradient(rgba(30, 30, 50, 0.9), rgba(30, 30, 50, 0.9)), url('./../img/jumbotrom-bg.jpg');
+}
+
+.jumbotron-login {
+    box-shadow: 5px 5px 20px gray;
+    background: #1e1e3279 !important;
+    padding: 1rem 0 !important;
 }
 
 .div-datepicker {
