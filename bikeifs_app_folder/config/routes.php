@@ -51,6 +51,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'home';
 
+$route['login/usuario'] = 'home/login/usuario';
+$route['login/funcionario'] = 'home/login/funcionario';
+$route['login/admin'] = 'home/login/admin';
+
 $route['admin/me'] = 'admin/index';
 $route['admin']['POST'] = 'admin/insert';
 $route['admin']['GET'] = 'admin/select_all';
