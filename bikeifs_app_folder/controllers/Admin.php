@@ -168,7 +168,7 @@ class Admin extends CI_Controller
     public function sair()
     {
         $this->session->sess_destroy();
-        header('location: ' . base_url('home/view/login'));
+        header('location: ' . base_url('login/admin'));
     }
 
     /**
