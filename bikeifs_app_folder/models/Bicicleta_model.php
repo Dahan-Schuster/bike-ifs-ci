@@ -193,4 +193,20 @@ class Bicicleta_model extends CI_Model
     {
         return $this->db->from('BICICLETA')->count_all_results();
     }
+
+    /**
+     * Conta quantas bikes estão verificadas do sistema
+     * Se o id de um usuário for enviado por parâmetro, irá listar as bikes desse usuário
+     * 
+     * @param int $id_usuario
+     * @return array - array de uma posição com a quantidade de bikes cadastradas
+     * 
+     */
+    public function getTotalDeBikesVerificadas($id_usuario = null)
+    {
+        if ($id_usuario)
+            $this->db->where('id_usuario', $id_usuario);
+            
+        return $this->db->where('verificada', 't')->from('BICICLETA')->count_all_results();
+    }
 }

@@ -150,19 +150,20 @@ function confirmarCheckOut(botao) {
         }
     ]).then((result) => {
         if (result.value) {
-            enviarAjaxCheckout(result.value[1], data.registros.id)
+            enviarAjaxCheckout(result.value[1], data.registros.id, data.users.id)
         }
     })
 }
 
-function enviarAjaxCheckout(obs, id_registro) {
+function enviarAjaxCheckout(obs, id_registro, id_usuario) {
     $.ajax({
         type: "POST",
         url: BASE_URL + "registro/checkout",
         dataType: 'json',
         data: {
             obs,
-            id_registro
+            id_registro,
+            id_usuario
         },
         success: function(response) {
             if (response['status'] == 1) {

@@ -28,6 +28,9 @@ class PainelLateral extends CI_Controller
     {
         show_404();
     }
+    
+    // TODO: painel Recompensa
+    // TODO: painel Medalhas
 
     public function usuario($id = null)
     {

@@ -1,0 +1,100 @@
+{
+    "Sistema de medalhas": {
+        "Ideia 1": {
+            "descricao": "Tabela Medalha no postgre com chave estrangeira em funcionário e em usuário",
+            "tabelas": [
+                {
+                    "medalha": {
+                        "id": "serial primary key",
+                        "titulo": {
+                            "tipo": "varchar",
+                            "descricao": "Nome da medalha que é mostrado pro usuário ao receber"
+                        },
+                        "tipo_usuario": {
+                            "tipo": "integer",
+                            "descricao": "Qual tabela deverá ter uma associação com esta medalha: Usuario ou Funcionario"
+                        },
+                        "tipo_objetivo": {
+                            "tipo": "varchar",
+                            "templates": [
+                                "quantidade_registros",
+                                "quantidade_bikes",
+                                "quantidade_horas"
+                            ]
+                        },
+                        "objetivo": "integer",
+                        "descricao_objetivo": "varchar"
+                    }
+                },
+                {
+                    "recompensa": {
+                        "id": "serial primary key",
+                        "id_pessoa": "integer",
+                        "id_medalha": {
+                            "tipo": "integer",
+                            "index": "foreign key",
+                            "references": "medalha (id)"
+                        },
+                        "data_hora": "timestamp without timezone"
+                    }
+                }
+            ],
+            "controlador_medalha": {
+                "metodos": {
+                    "select": {
+                        "descricao": "carrega a medalha com ID enviado por parâmetro.",
+                        "parametros": "id",
+                        "return": {
+                            "tipo": "json",
+                            "descricao": "Objeto contendo todas os atibutos e valores da medalha",
+                            "prototipo": {
+                                "data": {
+                                    "id": "1",
+                                    "titulo": "Ciclista",
+                                    "tipo_objetivo": "quantidade_bikes",
+                                    "objetivo": "5",
+                                    "descricao_objetivo": "5 bicicletas cadastradas e verificadas",
+                                    "data_hora": "2019-11-19 00:06:32",
+                                    "icon_url": "public/img/icons/medalhas/5_bikes.png"
+                                }
+                            }
+                        }
+                    },
+                    "select_all_from_user": {
+                        "descricao": "lista as medalhas recebidas pelo usuário com ID enviado por parâmetro.",
+                        "parametros": [
+                            "tipoUsuario",
+                            "idUsuario"
+                        ],
+                        "return": {
+                            "tipo": "json",
+                            "descricao": "Array de objetos incluíndo todas as medalhas e se foram ou não ganhas pelo usuário",
+                            "prototipo": {
+                                "data": [{
+                                        "id": "1",
+                                        "titulo": "Ciclista",
+                                        "tipo_objetivo": "quantidade_bikes",
+                                        "objetivo": "5",
+                                        "tipo_usuario": "usuario",
+                                        "descricao_objetivo": "5 bicicletas cadastradas e verificadas",
+                                        "data_hora": "2019-11-19 00:06:32"
+                                    },
+                                    {
+                                        "id": "2",
+                                        "titulo": "You gotta record it all!",
+                                        "tipo_objetivo": "quantidade_registros",
+                                        "objetivo": "1000",
+                                        "tipo_usuario": "funcionario",
+                                        "descricao_objetivo": "1000 registros de entradas realizados",
+                                        "data_hora": "2019-11-19 00:10:03"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "visualizacao": "Grade de medalhas em forma de retângulos com ícone e título. Ao clicar abre painel lateral com todas as informações."
+        }
+    }
+}

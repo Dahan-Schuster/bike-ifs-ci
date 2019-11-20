@@ -118,13 +118,47 @@ class Registro_model extends CI_Model
 
     /**
      * Conta quantos registros estão cadastrados do sistema
+     * Se o id de uma bicicleta for enviado, conta os regisros dessa bike
      * 
+     * @param integer $id_bicicleta (opicional)
      * @return array - array de uma posição com a quantidade de registros cadastrados
      * 
      */
-    public function getTotalDeLinhas()
+    public function getTotalDeLinhas($id_bicicleta = null)
     {
+        if ($id_bicicleta)
+            $this->db->where("id_bicicleta", $id_bicicleta);
         return $this->db->from('REGISTRO')->count_all_results();
+    }
+
+    /**
+     * Conta quantos registros um determinado usuário realizou
+     * 
+     * @param integer $id_usuario
+     * @return array - array de uma posição com a quantidade de registros cadastrados
+     * 
+     */
+    public function getTotalDeRegistrosUsuario($id_usuario = 0)
+    {
+        $this->db->from('REGISTRO')
+        ->join("BICICLETA", 'REGISTRO.id_bicicleta = "BICICLETA".id', 'inner')
+        ->join("USUARIO", 'BICICLETA.id_usuario = "USUARIO".id', 'inner')
+        ->where("BICICLETA.id_usuario", $id_usuario);
+        
+        return $this->db->count_all_results();
+    }
+
+    /**
+     * Conta quantos registros um determinado funcionário realizou
+     * 
+     * @param integer $id_bicicleta (opicional)
+     * @return array - array de uma posição com a quantidade de registros cadastrados
+     * 
+     */
+    public function getTotalDeRegistrosFuncionario($id_funcionario = 0)
+    {
+        $this->db->from('REGISTRO')->where("id_funcionario", $id_funcionario);
+        return $this->db->count_all_results();
     }
 
     /**

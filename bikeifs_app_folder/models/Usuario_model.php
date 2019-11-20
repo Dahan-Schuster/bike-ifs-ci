@@ -179,7 +179,7 @@ class Usuario_model extends CI_Model
     }
 
     /**
-     * Conta quantas usuarios estão cadastradas do sistema
+     * Conta quantos usuarios estão cadastrados no sistema
      * 
      * @return array - array de uma posição com a quantidade de usuarios cadastradas
      * 

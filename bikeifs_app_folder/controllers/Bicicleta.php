@@ -283,6 +283,8 @@ class Bicicleta extends CI_Controller
                         'id_bicicleta' => $id_bicicleta
                     )
                 );
+            } else {
+                $this->verificarRecompensaUsuario($data['id_usuario']);
             }
         endif;
 
@@ -304,11 +306,16 @@ class Bicicleta extends CI_Controller
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
 
+        $this->load->model('usuario_model');
+
         # Verifica se o usuário logado pode verificar bicicletas (apenas funcionários podem)
         if ($this->session->permissions_level == 'funcionario') {
             # Dados enviados via POST
             $id_bicicleta = $this->input->post('id_bicicleta');
             $this->bicicleta_model->verificar($id_bicicleta, $this->session->logged_user_id);
+
+            $bike = $this->bicicleta_model->carregarPorId($id_bicicleta);
+            $response['recompensa'] = $this->verificarRecompensaUsuario($bike->id_usuario);
         } else {
             $response['status'] = 0;
             $response['error_message'] = 'Você não possui permissão para verificar bicicletas.';
@@ -387,6 +394,55 @@ class Bicicleta extends CI_Controller
             } else
                 echo '<option value="">Nenhuma bicicleta cadastrada.</option>';
         }
+    }
+
+    private function recompensarUsuario($id_usuario, $medalha)
+    {
+        # Carrega o model Recompensa
+        $this->load->model('recompensa_model');
+        $dados = array(
+            'tipo_usuario' => 'usuario',
+            'id_pessoa' => $id_usuario,
+            'id_medalha' => $medalha['id'],
+            'data_hora' =>  date('Y-m-d H:i:s')
+        );
+        $this->recompensa_model->inserir($dados);
+    }
+
+    /**
+     * Confere se o usuário que cadastrou uma bike e/ou teve sua bike verificada recebeu alguma medalha
+     */
+    private function verificarRecompensaUsuario($id_usuario)
+    {
+
+        # Carrega o model Usuário
+        $this->load->model('usuario_model');
+        # Carrega o model Medalha
+        $this->load->model('medalha_model');
+
+        // Carrega o funcionário correspondente ao id enviado por parâmetro
+        $usuario = $this->usuario_model->carregarPorId($id_usuario);
+
+        if ($usuario) {
+            // Quanta a quantidade de bikes verificadas do usuário
+            $quantidadeBikes = $this->bicicleta_model->getTotalDeBikesVerificadas($usuario->id);
+
+            // Confere se bate com alguma medalha
+            $medalhas = $this->medalha_model->listarPorCampos(
+                array(
+                    'tipo_usuario' => 'usuario',
+                    'tipo_objetivo' => 'quantidade_bikes',
+                    'objetivo' => $quantidadeBikes
+                )
+            );
+
+            // Se sim, irá cadastrar uma recompensa para o usuário
+            if ($medalhas) {
+                $medalha = $medalhas[0];
+                $this->recompensarUsuario($usuario->id, $medalha);
+                return $medalha;
+            } else return false;
+        } else return false;
     }
 
 }

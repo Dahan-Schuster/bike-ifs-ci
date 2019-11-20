@@ -20,7 +20,7 @@ class Registro extends CI_Controller
 
         $this->load->model('registro_model');
         $this->load->model('saida_model');
-        
+
         # Define o fuso horário do sistema
         date_default_timezone_set('America/Maceio');
 
@@ -105,7 +105,14 @@ class Registro extends CI_Controller
         elseif ($response['status'] != -1) :
             $data['data_hora'] = date('Y-m-d H:i:s');
             $data['id_funcionario'] = $this->session->userdata['logged_user_id'];
-            $this->registro_model->inserir($data);
+            if ($this->registro_model->inserir($data)) {
+                $this->verificarRecompensaUsuarioCheckin($user);
+                $response['recompensa'] = $this->verificarRecompensaFuncionario($data['id_funcionario']);
+            } else {
+                $response['status'] = -1;
+                $response['error_message'] = 'Ocorreu um erro ao realizar o checkin. Tente novamente.';
+            }
+
         endif;
 
         # Retorna o array de resposta à requisição AJAX
@@ -148,6 +155,8 @@ class Registro extends CI_Controller
         $response['id_saida'] = $this->saida_model->inserir($checkoutData);
         # ... e a associa ao registro de entrada que possui o ID recebido via POST 
         $this->registro_model->editar($data['id_registro'], array('id_saida' => $response['id_saida']));
+
+        $this->verificarRecompensaUsuarioCheckout($checkoutData['data_hora'], $response['id_registro'], $data['id_usuario']);
 
         # Retorna o array de resposta à requisição AJAX
         echo json_encode($response);
@@ -390,5 +399,116 @@ class Registro extends CI_Controller
         endforeach;
 
         return $registrosFormatados;
+    }
+
+    private function recompensar($tipo_usuario, $id_usuario, $medalha)
+    {
+        # Carrega o model Recompensa
+        $this->load->model('recompensa_model');
+        $dados = array(
+            'tipo_usuario' => $tipo_usuario,
+            'id_pessoa' => $id_usuario,
+            'id_medalha' => $medalha['id'],
+            'data_hora' =>  date('Y-m-d H:i:s')
+        );
+        $this->recompensa_model->inserir($dados);
+    }
+
+    /**
+     * Confere se o funcionário que realizou o checkin recebeu alguma medalha
+     */
+    private function verificarRecompensaFuncionario($id_funcionario)
+    {
+
+        # Carrega o model Usuário
+        $this->load->model('funcionario_model');
+        # Carrega o model Medalha
+        $this->load->model('medalha_model');
+
+        // Carrega o funcionário correspondente ao id enviado por parâmetro
+        $funcionario = $this->funcionario_model->carregarPorId($id_funcionario);
+
+        if ($funcionario) {
+            // Quanta a quantidade de registros do usuário até agora
+            $quantidadeRegistros = $this->registro_model->getTotalDeRegistrosFuncionario($funcionario->id);
+
+            // Confere se bate com alguma medalha
+            $medalhas = $this->medalha_model->listarPorCampos(
+                array(
+                    'tipo_usuario' => 'funcionario',
+                    'tipo_objetivo' => 'quantidade_registros',
+                    'objetivo' => $quantidadeRegistros
+                )
+            );
+
+            // Se sim, irá cadastrar uma recompensa para o usuário
+            if ($medalhas) {
+                $medalha = $medalhas[0];
+                $this->recompensar('funcionario', $funcionario->id, $medalha);
+                return $medalha;
+            } else return false;
+        } else return false;
+    }
+
+    /**
+     * Confere se o usuário que realizou o checkin recebeu alguma medalha
+     */
+    private function verificarRecompensaUsuarioCheckin($usuario)
+    {
+        # Carrega o model Medalha
+        $this->load->model('medalha_model');
+
+        // Quanta a quantidade de registros do usuário até agora
+        $quantidadeRegistros = $this->registro_model->getTotalDeRegistrosUsuario($usuario->id);
+
+        // Confere se bate com alguma medalha
+        $medalhas = $this->medalha_model->listarPorCampos(
+            array(
+                'tipo_usuario' => 'usuario',
+                'tipo_objetivo' => 'quantidade_registros',
+                'objetivo' => $quantidadeRegistros
+            )
+        );
+
+        // Se sim, irá cadastrar uma recompensa para o usuário
+        if ($medalhas) {
+            $medalha = $medalhas[0];
+            $this->recompensar('usuario', $usuario->id, $medalha);
+        }
+    }
+
+    /**
+     * Confere se o usuário que realizou o checkin recebeu alguma medalha
+     */
+    private function verificarRecompensaUsuarioCheckout($data_saida, $id_registro, $id_usuario)
+    {
+        # Carrega o model Medalha
+        $this->load->model('medalha_model');
+        # Carrega o model Saida
+        $this->load->model('saida_model');
+
+        // Carrega o objeto Registro para obter sua data
+        $registro = $this->registro_model->carregarPorId($id_registro);
+
+        $dataEntrada = new DateTime($registro->data_hora);
+        $dataSaida = new DateTime($data_saida);
+
+        $intervalo = $dataSaida->diff($dataEntrada);
+        $quantidadeHoras = $intervalo->h;
+
+        // Confere se bate com alguma medalha
+        $medalhas = $this->medalha_model->listarPorCampos(
+            array(
+                'tipo_usuario' => 'usuario',
+                'tipo_objetivo' => 'quantidade_horas',
+                'objetivo' => $quantidadeHoras
+            )
+        );
+
+        // Se sim, irá cadastrar uma recompensa para o usuário
+        if ($medalhas) {
+            $medalha = $medalhas[0];
+            $this->recompensar('usuario', $id_usuario, $medalha);
+        }
     }
 }
