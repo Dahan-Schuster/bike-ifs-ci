@@ -29,7 +29,7 @@ $(document)
 
         // Desabilita o campo Matrícula quando o usuário for Visitante
         $("#selectTipo").change(function() {
-            if ($(this).val() == 2) {
+            if ($(this).val() == 3) {
                 $('#inputMatricula').attr('disabled', 'true')
                 $('#inputMatricula').val('')
             } else {
