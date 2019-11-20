@@ -70,6 +70,9 @@ function enviarAjaxCheckin(data, modal) {
                 atualizarDataTable(null, datatable)
                 snackBarSucesso()
                 fecharModal(modal);
+                if (response['recompensa']) {
+                    avisarRecompensa(response['recompensa'])
+                }
             } else if (response['status'] == -1) {
                 swal.fire('Permissão negada', response['error_message'], 'error')
             } else if (response['status'] == -2) {

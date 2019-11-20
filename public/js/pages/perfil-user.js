@@ -7,6 +7,8 @@ $(document).ready(function() {
         $("#btn-medalhas").parent().removeClass('active')
         $("#medalhas").addClass('hidden')
     })
+    
+    carregarMedalhas();
     $("#btn-medalhas").click(function() {
         $("#btn-medalhas").parent().addClass('active')
         $("#medalhas").removeClass('hidden')
@@ -14,6 +16,18 @@ $(document).ready(function() {
         $("#informacoes").addClass('hidden')
     })
 })
+
+const carregarMedalhas = () => {
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: BASE_URL + 'usuario/medalhas',
+        success: response => {
+            preencherListaMedalhas(response.data)
+        },
+        error: error => console.log(error)
+    })
+}
 
 function configurarBotaoUploadFoto() {
     $("#upload_foto").change(function() {

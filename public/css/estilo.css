@@ -8,9 +8,35 @@
     position: relative;
     margin: 40px auto;
 }
+
+.medalha {
+    background: linear-gradient(to right, #61daad, #00c0f7);
+    cursor: pointer;
+    filter: grayscale(1);
+    margin: 8px;
+    max-width: 30%;
+    box-shadow: 2px 2px 5px cadetblue;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 767px) {
+    .medalha {
+        max-width: 100%;
+    }
+}
+
+.medalha:hover {
+    background: linear-gradient(to right, #00c0f7, #61daad);
+}
+
+.recompensa {
+    filter: none !important;
+}
+
 .card-pendencia {
     max-width: 310px;
 }
+
 .lista-pendencias {
     width: 100%;
     height: auto;
@@ -480,7 +506,6 @@ img[rel=popover] {
     box-shadow: 0 0 0 8px #ff4343;
 }
 
-
 .card-intermediario {
     box-shadow: 0 0 0 3px #ff9e438e;
 }
@@ -488,7 +513,6 @@ img[rel=popover] {
 .card-intermediario:hover {
     box-shadow: 0 0 0 8px #ff9e43;
 }
-
 
 .card-recente {
     box-shadow: 0 0 0 3px #60a72d82;

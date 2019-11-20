@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <div id="medalhas" class="hidden">
-                    Minhas medalhas
+                    <div id="lista-medalhas" class="row"></div>
                 </div>
             </div>
         </div>

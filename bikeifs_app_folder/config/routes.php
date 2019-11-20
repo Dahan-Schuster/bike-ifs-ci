@@ -90,5 +90,8 @@ $route['database/backup/baixar'] = 'database/download';
 $route['database/backup/enviar'] = 'mailer/send_current_backup';
 $route['database/backup/enviar/ultimo'] = 'mailer/send_last_backup';
 
+$route['funcionario/medalhas']['GET'] = 'recompensa/select_from_user';
+$route['usuario/medalhas']['GET'] = 'recompensa/select_from_user';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

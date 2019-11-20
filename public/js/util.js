@@ -35,6 +35,31 @@ $(function() {
 
 });
 
+const avisarRecompensa = medalha => {
+    swal.fire({
+        "type": 'success',
+        "title": medalha['titulo'],
+        "text": `Você conseguiu alcançar a marca de ${medalha['descricao_objetivo']} 
+                e por isso foi recompensado! Acesse seu perfil para conferir as outras medalhas e recompensas.`
+    })
+}
+
+const preencherListaMedalhas = medalhas => medalhas.forEach(medalha => adicionarMedalha(medalha))
+
+const adicionarMedalha = medalha => $('#lista-medalhas').append(criarDivMedalha(medalha))
+
+const criarDivMedalha = medalha => {
+    const div = $(document.createElement('div'))
+    div.addClass('alert medalha col-12 col-sm-4')
+    div.html(medalha.titulo)
+    if (medalha.recompensa) {
+        div.addClass('recompensa')
+        div.on('click', () => abrirPainelLateralRecompensa(medalha.recompensa.id))
+    } else
+        div.on('click', () => abrirPainelLateralMedalha(medalha.id))
+    return div
+}
+
 /**
  * Define um listener global para requisições AJAX
  * 

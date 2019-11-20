@@ -28,9 +28,41 @@ class PainelLateral extends CI_Controller
     {
         show_404();
     }
-    
-    // TODO: painel Recompensa
-    // TODO: painel Medalhas
+
+    public function recompensa($id = null)
+    {
+        if (null === $id)
+            show_404();
+
+        $this->load->model('recompensa_model');
+        $recompensa = $this->recompensa_model->carregarPorId($id);
+        $recompensa->data_hora = Tools::formatarTimestamp(strtotime($recompensa->data_hora));
+
+        $this->load->model('medalha_model');
+        $medalha = $this->medalha_model->carregarPorId($recompensa->id_medalha);
+
+        $data = array(
+            'recompensa' => $recompensa,
+            'medalha' => $medalha
+        );
+
+        $this->load->view("pages/painel-lateral/recompensa", $data);
+    }
+
+    public function medalha($id = null)
+    {
+        if (null === $id)
+            show_404();
+
+        $this->load->model('medalha_model');
+        $medalha = $this->medalha_model->carregarPorId($id);
+
+        $data = array(
+            'medalha' => $medalha
+        );
+
+        $this->load->view("pages/painel-lateral/medalha", $data);
+    }
 
     public function usuario($id = null)
     {

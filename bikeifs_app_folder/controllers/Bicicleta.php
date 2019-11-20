@@ -18,7 +18,7 @@ class Bicicleta extends CI_Controller
         $this->load->library('session');
 
         $this->load->model('bicicleta_model');
-        
+
         # Define o fuso horário do sistema
         date_default_timezone_set('America/Maceio');
 
@@ -116,7 +116,7 @@ class Bicicleta extends CI_Controller
             $userInfo = array(
                 'nome' => preg_split('/\s/', $user->nome)[0],  // Retorna apenas o primeiro nome do usuário
                 'matricula' => (!trim($user->matricula) ? "Não informado" : $user->matricula), // Verifica se há matrícula e formata
-                'cpf' => ($user->perfil_privado == 't' ? "Privado" : $user->cpf), 
+                'cpf' => ($user->perfil_privado == 't' ? "Privado" : $user->cpf),
                 'foto_url' => Tools::getUsuarioFoto($user->foto_url)
             );
 
@@ -315,7 +315,7 @@ class Bicicleta extends CI_Controller
             $this->bicicleta_model->verificar($id_bicicleta, $this->session->logged_user_id);
 
             $bike = $this->bicicleta_model->carregarPorId($id_bicicleta);
-            $response['recompensa'] = $this->verificarRecompensaUsuario($bike->id_usuario);
+            $this->verificarRecompensaUsuario($bike->id_usuario);
         } else {
             $response['status'] = 0;
             $response['error_message'] = 'Você não possui permissão para verificar bicicletas.';
@@ -386,9 +386,9 @@ class Bicicleta extends CI_Controller
                     $bike['marca'] = (!trim($bike['marca']) ? "Marca não informada" : $bike['marca']);
                     echo '<option 
                             value="' . $bike['id'] . '" ' .
-                            'data-imagesrc="' . $foto_url .'">' .
-                            ModeloBike::getNomeModelo($bike['modelo']) . ', ' .
-                            $bike['marca'] . ', ' . $bike['aro'] .
+                        'data-imagesrc="' . $foto_url . '">' .
+                        ModeloBike::getNomeModelo($bike['modelo']) . ', ' .
+                        $bike['marca'] . ', ' . $bike['aro'] .
                         '</option>';
                 }
             } else
@@ -420,29 +420,23 @@ class Bicicleta extends CI_Controller
         # Carrega o model Medalha
         $this->load->model('medalha_model');
 
-        // Carrega o funcionário correspondente ao id enviado por parâmetro
-        $usuario = $this->usuario_model->carregarPorId($id_usuario);
+        // Quanta a quantidade de bikes verificadas do usuário
+        $quantidadeBikes = $this->bicicleta_model->getTotalDeBikesVerificadas($id_usuario);
 
-        if ($usuario) {
-            // Quanta a quantidade de bikes verificadas do usuário
-            $quantidadeBikes = $this->bicicleta_model->getTotalDeBikesVerificadas($usuario->id);
+        // Confere se bate com alguma medalha
+        $medalhas = $this->medalha_model->listarPorCampos(
+            array(
+                'tipo_usuario' => 'usuario',
+                'tipo_objetivo' => 'quantidade_bikes',
+                'objetivo' => $quantidadeBikes
+            )
+        );
 
-            // Confere se bate com alguma medalha
-            $medalhas = $this->medalha_model->listarPorCampos(
-                array(
-                    'tipo_usuario' => 'usuario',
-                    'tipo_objetivo' => 'quantidade_bikes',
-                    'objetivo' => $quantidadeBikes
-                )
-            );
-
-            // Se sim, irá cadastrar uma recompensa para o usuário
-            if ($medalhas) {
-                $medalha = $medalhas[0];
-                $this->recompensarUsuario($usuario->id, $medalha);
-                return $medalha;
-            } else return false;
+        // Se sim, irá cadastrar uma recompensa para o usuário
+        if ($medalhas) {
+            $medalha = $medalhas[0];
+            $this->recompensarUsuario($id_usuario, $medalha);
+            return $medalha;
         } else return false;
     }
-
 }

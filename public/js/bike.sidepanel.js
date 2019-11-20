@@ -27,8 +27,20 @@ function closeNavBike() {
     document.getElementById("sidenav-perfil").style.width = "0";
 }
 
-/* Método chamado ao clicar no nome de um usuário nas tabelas */
+/* Método chamado ao clicar no íncone de uma bike nas tabelas */
 function abrirPainelLateralBike(id) {
     document.getElementById("iframePainelBike").src = `${BASE_URL}/painelLateral/bicicleta/${id}`
+    openNavBike()
+}
+
+/* Método chamado ao clicar em uma recompensa ná página de perfil */
+function abrirPainelLateralRecompensa(id) {
+    document.getElementById("iframePainelBike").src = `${BASE_URL}/painelLateral/recompensa/${id}`
+    openNavBike()
+}
+
+/* Método chamado ao clicar em uma medalha ná página de perfil */
+function abrirPainelLateralMedalha(id) {
+    document.getElementById("iframePainelBike").src = `${BASE_URL}/painelLateral/medalha/${id}`
     openNavBike()
 }

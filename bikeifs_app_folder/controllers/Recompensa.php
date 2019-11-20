@@ -59,7 +59,7 @@ class Recompensa extends CI_Controller
      * 
      * Retorna um JSON de objetos
      */
-    public function select_from_user($tipo_usuario = 'usuario', $id_pessoa = 0)
+    public function select_from_user()
     {
         if (!$this->input->is_ajax_request())
             exit("Não é permitido aceso direto aos scripts.");
@@ -72,7 +72,11 @@ class Recompensa extends CI_Controller
         # status == 0: algo deu errado | status == 1: tudo certo
         $response['status'] = 1;
 
-        $medalhas = $this->medalha_model->listarTodos();
+        $medalhas = $this->medalha_model->listarPorCampos(
+            array(
+                'tipo_usuario' => $this->session->permissions_level
+            )
+        );
 
         $medalhas = !$medalhas ? array() : $medalhas;
         $medalhasFormatadas = array();
@@ -82,12 +86,12 @@ class Recompensa extends CI_Controller
             $recompensa = $this->recompensa_model->listarPorCampos(
                 array(
                     'id_medalha' => $medalha['id'],
-                    'id_pessoa' => $id_pessoa,
-                    'tipo_usuario' => $tipo_usuario
+                    'id_pessoa' => $this->session->logged_user_id,
+                    'tipo_usuario' => $this->session->permissions_level
                 )
             );
 
-            $medalha['recompensa'] = $recompensa ? $recompensa : 0 ;
+            $medalha['recompensa'] = $recompensa ? $recompensa[0] : false ;
             
             array_push($medalhasFormatadas, $medalha); # adiciona ao array resultado um novo array de objetos
         endforeach;
