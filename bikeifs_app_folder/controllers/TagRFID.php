@@ -160,7 +160,7 @@ class TagRFID extends CI_Controller
         $response['status'] = 1;
 
         $ids = $this->input->post('ids_tags');
-        $this->tagrfid->excluir($ids);
+        $this->tagrfid_model->excluir($ids);
 
         echo json_encode($response);
     }
